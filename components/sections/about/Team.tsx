@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Github, Linkedin } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -37,9 +38,20 @@ export function Team() {
             >
               {member.isFounder ? (
                 <div className="card-hover rounded-xl border border-border bg-background p-6 text-center">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-brand text-2xl font-black text-text-primary">
-                    {member.name.charAt(0)}
-                  </div>
+                  {member.photo ? (
+                    <Image
+                      src={member.photo}
+                      alt={member.name}
+                      width={200}
+                      height={200}
+                      quality={90}
+                      className="mx-auto h-20 w-20 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-brand text-2xl font-black text-text-primary">
+                      {member.name.charAt(0)}
+                    </div>
+                  )}
                   <h3 className="mt-4 text-lg font-semibold text-text-primary">{member.name}</h3>
                   <p className="text-sm text-orange">{member.role}</p>
                   <p className="mt-3 text-sm leading-relaxed text-text-secondary">{member.bio}</p>

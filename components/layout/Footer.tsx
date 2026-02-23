@@ -17,15 +17,16 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Col 1: Brand */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-3">
               <Image
                 src="/logo.png"
-                alt="Orbit"
-                width={32}
-                height={32}
-                className={cn('h-8 w-8', theme === 'light' && 'invert')}
+                alt="ORBIT"
+                width={160}
+                height={160}
+                quality={100}
+                className={cn('h-12 w-12 object-contain', theme === 'light' && 'invert')}
               />
-              <span className="text-lg font-bold tracking-tight text-text-primary">Orbit</span>
+              <span className="font-montserrat text-lg font-bold tracking-[0.3em] text-text-primary">ORBIT</span>
             </Link>
             <p className="text-sm leading-relaxed text-text-secondary">{COMPANY.tagline}</p>
             <div className="flex items-center gap-4">

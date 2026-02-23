@@ -16,7 +16,7 @@ export const SOCIAL_LINKS = {
 export const COMPANY = {
   name: 'Orbit',
   tagline: 'Engineered for the Future. Built for Today.',
-  email: 'hello@orbittech.io',
+  email: 'hello.theorbit@gmail.com',
   location: 'Pakistan — Remote First',
   phone: '+92 XXX XXXXXXX',
 }
