@@ -54,8 +54,8 @@ export function ServicesSnapshot() {
               >
                 <Card className="h-full">
                   <Icon className="h-6 w-6 text-orange" />
-                  <h3 className="mt-4 text-lg font-semibold text-white">{service.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-gray-1">{service.description}</p>
+                  <h3 className="mt-4 text-lg font-semibold text-text-primary">{service.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">{service.description}</p>
                   <Link
                     href={service.href}
                     className="mt-4 inline-block text-sm font-medium text-orange transition-colors hover:underline"

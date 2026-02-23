@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -58,11 +59,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={montserrat.variable}>
-      <body className="bg-black font-montserrat text-white antialiased">
-        <Navbar />
-        <main id="main-content">{children}</main>
-        <Footer />
+    <html lang="en" className={`${montserrat.variable} dark`} suppressHydrationWarning>
+      <body className="bg-background font-montserrat text-foreground antialiased">
+        <ThemeProvider>
+          <Navbar />
+          <main id="main-content">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )

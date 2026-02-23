@@ -60,8 +60,8 @@ export function Values() {
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-orange-dim">
                   <value.icon className="h-6 w-6 text-orange" />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-white">{value.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-1">{value.description}</p>
+                <h3 className="mt-4 text-lg font-semibold text-text-primary">{value.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-text-secondary">{value.description}</p>
               </Card>
             </motion.div>
           ))}

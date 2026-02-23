@@ -39,11 +39,11 @@ export function HowItWorks() {
               viewport={{ once: true, margin: '-50px' }}
               className="text-center"
             >
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-orange text-white">
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-orange text-text-primary">
                 <step.icon className="h-6 w-6" />
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-white">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-1">{step.description}</p>
+              <h3 className="mt-4 text-lg font-semibold text-text-primary">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-text-secondary">{step.description}</p>
             </motion.div>
           ))}
         </div>

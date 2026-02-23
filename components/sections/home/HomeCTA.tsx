@@ -21,10 +21,10 @@ export function HomeCTA() {
           transition={{ duration: 0.6, ease }}
           viewport={{ once: true, margin: '-50px' }}
         >
-          <h2 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
+          <h2 className="text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
             Ready to Build the Future?
           </h2>
-          <p className="mt-4 text-lg text-gray-1">
+          <p className="mt-4 text-lg text-text-secondary">
             Tell us about your project — we respond within 24 hours.
           </p>
           <div className="mt-8">

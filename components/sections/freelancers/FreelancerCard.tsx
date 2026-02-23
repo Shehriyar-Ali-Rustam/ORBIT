@@ -22,15 +22,15 @@ export function FreelancerCard({ freelancer }: FreelancerCardProps) {
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand text-xl font-bold text-white">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand text-xl font-bold text-text-primary">
             {freelancer.name.charAt(0)}
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-white">{freelancer.name}</h3>
+              <h3 className="font-semibold text-text-primary">{freelancer.name}</h3>
               {freelancer.available && <GlowDot />}
             </div>
-            <p className="text-sm text-gray-1">{freelancer.title}</p>
+            <p className="text-sm text-text-secondary">{freelancer.title}</p>
           </div>
         </div>
       </div>
@@ -47,26 +47,26 @@ export function FreelancerCard({ freelancer }: FreelancerCardProps) {
             <Star key={i} className="h-3.5 w-3.5 fill-orange text-orange" />
           ))}
         </div>
-        <span className="text-sm text-gray-1">
+        <span className="text-sm text-text-secondary">
           {freelancer.rating} ({freelancer.reviewCount} reviews)
         </span>
       </div>
 
-      <p className="mt-3 text-sm leading-relaxed text-gray-1">{freelancer.bio}</p>
+      <p className="mt-3 text-sm leading-relaxed text-text-secondary">{freelancer.bio}</p>
 
       <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
         <div>
           <Badge variant="default">{freelancer.level}</Badge>
-          <span className="ml-3 text-sm font-bold text-white">{freelancer.hourlyRate}</span>
+          <span className="ml-3 text-sm font-bold text-text-primary">{freelancer.hourlyRate}</span>
         </div>
         <div className="flex items-center gap-2">
           {freelancer.github && (
-            <a href={freelancer.github} target="_blank" rel="noopener noreferrer" className="text-gray-2 transition-colors hover:text-orange" aria-label="GitHub">
+            <a href={freelancer.github} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-orange" aria-label="GitHub">
               <Github className="h-4 w-4" />
             </a>
           )}
           {freelancer.linkedin && (
-            <a href={freelancer.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-2 transition-colors hover:text-orange" aria-label="LinkedIn">
+            <a href={freelancer.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-orange" aria-label="LinkedIn">
               <Linkedin className="h-4 w-4" />
             </a>
           )}

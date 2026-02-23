@@ -17,8 +17,8 @@ export function ContactInfo() {
       className="space-y-8"
     >
       <div>
-        <h3 className="text-lg font-semibold text-white">Contact Information</h3>
-        <p className="mt-2 text-sm text-gray-1">
+        <h3 className="text-lg font-semibold text-text-primary">Contact Information</h3>
+        <p className="mt-2 text-sm text-text-secondary">
           Reach out through any of the channels below, or fill out the contact form.
         </p>
       </div>
@@ -29,8 +29,8 @@ export function ContactInfo() {
             <Mail className="h-5 w-5 text-orange" />
           </div>
           <div>
-            <p className="text-xs text-gray-2">Email</p>
-            <a href={`mailto:${COMPANY.email}`} className="text-sm text-white transition-colors hover:text-orange">
+            <p className="text-xs text-text-tertiary">Email</p>
+            <a href={`mailto:${COMPANY.email}`} className="text-sm text-text-primary transition-colors hover:text-orange">
               {COMPANY.email}
             </a>
           </div>
@@ -41,8 +41,8 @@ export function ContactInfo() {
             <Phone className="h-5 w-5 text-orange" />
           </div>
           <div>
-            <p className="text-xs text-gray-2">Phone</p>
-            <p className="text-sm text-white">{COMPANY.phone}</p>
+            <p className="text-xs text-text-tertiary">Phone</p>
+            <p className="text-sm text-text-primary">{COMPANY.phone}</p>
           </div>
         </div>
 
@@ -51,8 +51,8 @@ export function ContactInfo() {
             <MapPin className="h-5 w-5 text-orange" />
           </div>
           <div>
-            <p className="text-xs text-gray-2">Location</p>
-            <p className="text-sm text-white">{COMPANY.location}</p>
+            <p className="text-xs text-text-tertiary">Location</p>
+            <p className="text-sm text-text-primary">{COMPANY.location}</p>
           </div>
         </div>
       </div>
@@ -65,13 +65,13 @@ export function ContactInfo() {
       </div>
 
       <div className="flex items-center gap-4">
-        <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className="text-gray-2 transition-colors hover:text-orange" aria-label="GitHub">
+        <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-orange" aria-label="GitHub">
           <Github className="h-5 w-5" />
         </a>
-        <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-2 transition-colors hover:text-orange" aria-label="LinkedIn">
+        <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-orange" aria-label="LinkedIn">
           <Linkedin className="h-5 w-5" />
         </a>
-        <a href={SOCIAL_LINKS.fiverr} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-gray-2 transition-colors hover:text-orange" aria-label="Fiverr">
+        <a href={SOCIAL_LINKS.fiverr} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-text-tertiary transition-colors hover:text-orange" aria-label="Fiverr">
           Fiverr
         </a>
       </div>

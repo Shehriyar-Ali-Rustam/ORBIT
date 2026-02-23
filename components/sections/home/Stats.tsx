@@ -32,7 +32,7 @@ export function Stats() {
                 prefix={stat.prefix}
                 className="text-4xl font-black text-orange md:text-5xl"
               />
-              <p className="mt-2 text-sm text-gray-1">{stat.label}</p>
+              <p className="mt-2 text-sm text-text-secondary">{stat.label}</p>
             </motion.div>
           ))}
         </div>

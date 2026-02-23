@@ -43,7 +43,7 @@ export function AIShowcase() {
               <br />
               We <span className="text-gradient">Build It.</span>
             </SectionHeading>
-            <p className="mt-6 leading-relaxed text-gray-1">
+            <p className="mt-6 leading-relaxed text-text-secondary">
               From custom ChatGPT-powered chatbots to fine-tuned language models, Orbit delivers AI
               solutions built specifically for your business — not off-the-shelf tools, but
               intelligence trained on your data.
@@ -52,7 +52,7 @@ export function AIShowcase() {
               {features.map((feature) => (
                 <li key={feature} className="flex items-center gap-3">
                   <Check className="h-4 w-4 shrink-0 text-green-500" />
-                  <span className="text-sm text-gray-1">{feature}</span>
+                  <span className="text-sm text-text-secondary">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -74,9 +74,9 @@ export function AIShowcase() {
               {/* Chat header */}
               <div className="flex items-center gap-3 border-b border-border px-4 py-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-brand">
-                  <span className="text-xs font-bold text-white">O</span>
+                  <span className="text-xs font-bold text-text-primary">O</span>
                 </div>
-                <span className="text-sm font-semibold text-white">Orbit AI</span>
+                <span className="text-sm font-semibold text-text-primary">Orbit AI</span>
                 <GlowDot />
               </div>
 
@@ -94,8 +94,8 @@ export function AIShowcase() {
                     <div
                       className={`max-w-[80%] rounded-lg px-4 py-2.5 text-sm ${
                         msg.role === 'user'
-                          ? 'bg-orange text-white'
-                          : 'bg-surface-2 text-gray-1'
+                          ? 'bg-orange text-text-primary'
+                          : 'bg-surface-2 text-text-secondary'
                       }`}
                     >
                       {msg.text}
@@ -107,12 +107,12 @@ export function AIShowcase() {
               {/* Input bar */}
               <div className="border-t border-border p-3">
                 <div className="flex items-center gap-2 rounded-lg bg-surface-2 px-4 py-2.5">
-                  <span className="flex-1 text-sm text-gray-2">Ask Orbit AI...</span>
+                  <span className="flex-1 text-sm text-text-tertiary">Ask Orbit AI...</span>
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange">
-                    <span className="text-xs text-white">&rarr;</span>
+                    <span className="text-xs text-text-primary">&rarr;</span>
                   </div>
                 </div>
-                <p className="mt-2 text-center text-xs text-gray-2">Powered by Orbit AI</p>
+                <p className="mt-2 text-center text-xs text-text-tertiary">Powered by Orbit AI</p>
               </div>
             </div>
           </motion.div>

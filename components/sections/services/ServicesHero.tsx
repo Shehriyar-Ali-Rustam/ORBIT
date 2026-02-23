@@ -16,11 +16,11 @@ export function ServicesHero() {
           transition={{ duration: 0.6, ease }}
         >
           <SectionLabel>Services</SectionLabel>
-          <h1 className="mt-4 text-5xl font-black tracking-tighter text-white md:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-5xl font-black tracking-tighter text-text-primary md:text-6xl lg:text-7xl">
             Full-Service Technology{' '}
             <span className="text-gradient">Solutions</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-1">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary">
             From AI chatbots to mobile apps, we deliver end-to-end technology solutions
             that drive growth and innovation for businesses worldwide.
           </p>

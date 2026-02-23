@@ -20,8 +20,8 @@ export function MissionVision() {
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-dim">
               <Target className="h-6 w-6 text-orange" />
             </div>
-            <h3 className="mt-6 text-2xl font-bold text-white">Our Mission</h3>
-            <p className="mt-4 leading-relaxed text-gray-1">
+            <h3 className="mt-6 text-2xl font-bold text-text-primary">Our Mission</h3>
+            <p className="mt-4 leading-relaxed text-text-secondary">
               To deliver world-class AI-powered software solutions that empower businesses to grow,
               innovate, and compete globally — regardless of their size or location.
             </p>
@@ -37,8 +37,8 @@ export function MissionVision() {
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-dim">
               <Eye className="h-6 w-6 text-orange" />
             </div>
-            <h3 className="mt-6 text-2xl font-bold text-white">Our Vision</h3>
-            <p className="mt-4 leading-relaxed text-gray-1">
+            <h3 className="mt-6 text-2xl font-bold text-text-primary">Our Vision</h3>
+            <p className="mt-4 leading-relaxed text-text-secondary">
               To become a globally recognized technology company from Pakistan — proving that
               innovation knows no borders and that the best solutions can come from anywhere.
             </p>

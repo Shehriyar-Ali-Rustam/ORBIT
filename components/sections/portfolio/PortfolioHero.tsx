@@ -16,11 +16,11 @@ export function PortfolioHero() {
           transition={{ duration: 0.6, ease }}
         >
           <SectionLabel>Our Work</SectionLabel>
-          <h1 className="mt-4 text-5xl font-black tracking-tighter text-white md:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-5xl font-black tracking-tighter text-text-primary md:text-6xl lg:text-7xl">
             Projects That Speak{' '}
             <span className="text-gradient">For Themselves</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-1">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary">
             Every project is a story of collaboration, innovation, and excellence.
             Browse our portfolio to see what we can build together.
           </p>

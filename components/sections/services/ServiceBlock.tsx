@@ -35,15 +35,15 @@ export function ServiceBlock() {
                   <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-orange-dim">
                     {Icon && <Icon className="h-7 w-7 text-orange" />}
                   </div>
-                  <h2 className="mt-6 text-3xl font-bold tracking-tight text-white">
+                  <h2 className="mt-6 text-3xl font-bold tracking-tight text-text-primary">
                     {service.title}
                   </h2>
-                  <p className="mt-4 leading-relaxed text-gray-1">{service.fullDescription}</p>
+                  <p className="mt-4 leading-relaxed text-text-secondary">{service.fullDescription}</p>
                   <ul className="mt-6 space-y-3">
                     {service.includes.map((item) => (
                       <li key={item} className="flex items-start gap-3">
                         <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
-                        <span className="text-sm text-gray-1">{item}</span>
+                        <span className="text-sm text-text-secondary">{item}</span>
                       </li>
                     ))}
                   </ul>

@@ -16,12 +16,12 @@ export function FreelancersHero() {
           transition={{ duration: 0.6, ease }}
         >
           <SectionLabel>Talent Network</SectionLabel>
-          <h1 className="mt-4 text-5xl font-black tracking-tighter text-white md:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-5xl font-black tracking-tighter text-text-primary md:text-6xl lg:text-7xl">
             Find Expert Freelancers
             <br />
             From the <span className="text-gradient">Orbit Network</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-1">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary">
             Browse our curated network of vetted professionals — developers, designers,
             AI engineers, and marketers ready to bring your project to life.
           </p>

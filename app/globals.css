@@ -3,6 +3,53 @@
 @tailwind utilities;
 
 @layer base {
+  /* ─── DARK THEME (default) ─────────────────────────── */
+  :root,
+  .dark {
+    --color-bg: #000000;
+    --color-fg: #ffffff;
+    --color-surface: #0d0d0d;
+    --color-surface-2: #141414;
+    --color-border: #1a1a1a;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #a0a0a0;
+    --color-text-tertiary: #606060;
+    --color-text-disabled: #2a2a2a;
+    --color-orange-dim: rgba(255, 117, 31, 0.06);
+    --color-dot-grid: #ffffff08;
+    --color-glass-bg: rgba(0, 0, 0, 0.7);
+    --color-glass-border: rgba(255, 255, 255, 0.05);
+    --color-selection-bg: #ff751f30;
+    --color-selection-fg: #ff751f;
+    --color-scrollbar-track: #000000;
+    --color-scrollbar-thumb: #ff751f40;
+    --color-input-bg: #0d0d0d;
+    --shadow-card-hover: 0 0 0 1px #ff751f30, 0 8px 32px #ff751f10;
+  }
+
+  /* ─── LIGHT THEME ──────────────────────────────────── */
+  .light {
+    --color-bg: #ffffff;
+    --color-fg: #111111;
+    --color-surface: #f5f5f5;
+    --color-surface-2: #ebebeb;
+    --color-border: #e0e0e0;
+    --color-text-primary: #111111;
+    --color-text-secondary: #555555;
+    --color-text-tertiary: #888888;
+    --color-text-disabled: #cccccc;
+    --color-orange-dim: rgba(255, 117, 31, 0.08);
+    --color-dot-grid: #00000008;
+    --color-glass-bg: rgba(255, 255, 255, 0.8);
+    --color-glass-border: rgba(0, 0, 0, 0.06);
+    --color-selection-bg: #ff751f20;
+    --color-selection-fg: #d05a10;
+    --color-scrollbar-track: #f5f5f5;
+    --color-scrollbar-thumb: #ff751f30;
+    --color-input-bg: #f5f5f5;
+    --shadow-card-hover: 0 0 0 1px #ff751f20, 0 8px 32px #ff751f08;
+  }
+
   * {
     box-sizing: border-box;
     margin: 0;
@@ -16,25 +63,28 @@
   }
 
   body {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
     font-family: var(--font-montserrat), sans-serif;
     overflow-x: hidden;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
   }
 
   ::selection {
-    background-color: #ff751f30;
-    color: #ff751f;
+    background-color: var(--color-selection-bg);
+    color: var(--color-selection-fg);
   }
 
   ::-webkit-scrollbar {
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #000000;
+    background: var(--color-scrollbar-track);
   }
   ::-webkit-scrollbar-thumb {
-    background: #ff751f40;
+    background: var(--color-scrollbar-thumb);
     border-radius: 3px;
   }
   ::-webkit-scrollbar-thumb:hover {
@@ -44,7 +94,7 @@
 
 @layer utilities {
   .dot-grid {
-    background-image: radial-gradient(circle, #ffffff08 1px, transparent 1px);
+    background-image: radial-gradient(circle, var(--color-dot-grid) 1px, transparent 1px);
     background-size: 32px 32px;
   }
 
@@ -58,15 +108,15 @@
   .border-gradient {
     border: 1px solid transparent;
     background:
-      linear-gradient(#0d0d0d, #0d0d0d) padding-box,
+      linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
       linear-gradient(135deg, #ff751f, #ff9a3c) border-box;
   }
 
   .glass {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    background: rgba(0, 0, 0, 0.7);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--color-glass-bg);
+    border-bottom: 1px solid var(--color-glass-border);
   }
 
   .orange-glow {
@@ -79,9 +129,7 @@
 
   .card-hover:hover {
     border-color: #ff751f40;
-    box-shadow:
-      0 0 0 1px #ff751f30,
-      0 8px 32px #ff751f10;
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-4px);
   }
 

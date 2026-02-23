@@ -31,7 +31,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease }}
-          className="mx-auto max-w-5xl text-6xl font-black leading-none tracking-tighter text-white md:text-7xl lg:text-8xl"
+          className="mx-auto max-w-5xl text-6xl font-black leading-none tracking-tighter text-text-primary md:text-7xl lg:text-8xl"
         >
           We Build Software
           <br />
@@ -44,7 +44,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease }}
-          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-1 md:text-xl"
+          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary md:text-xl"
         >
           Orbit is a full-service technology company specializing in AI chatbots, model training,
           custom software, and design — built to compete globally.
@@ -81,7 +81,7 @@ export function Hero() {
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <ChevronDown className="h-6 w-6 text-gray-2" />
+          <ChevronDown className="h-6 w-6 text-text-tertiary" />
         </motion.div>
       </motion.div>
     </section>

@@ -17,7 +17,7 @@ const variants = {
   primary:
     'bg-orange text-white hover:bg-orange-hover shadow-orange-glow-sm hover:shadow-orange-glow',
   ghost: 'border border-orange text-orange hover:bg-orange-dim',
-  outline: 'border border-border text-white hover:border-orange',
+  outline: 'border border-border text-text-primary hover:border-orange',
   link: 'text-orange hover:underline underline-offset-4',
 }
 

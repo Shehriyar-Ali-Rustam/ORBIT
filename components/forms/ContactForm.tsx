@@ -25,7 +25,7 @@ const budgetOptions = [
   { value: 'not-sure', label: 'Not sure yet' },
 ]
 
-const inputClass = 'w-full rounded-lg border border-border bg-surface px-4 py-3 text-sm text-white placeholder:text-gray-2 transition-all focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/20'
+const inputClass = 'w-full rounded-lg border border-border bg-surface px-4 py-3 text-sm text-text-primary placeholder:text-text-tertiary transition-all focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/20'
 
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -71,7 +71,7 @@ export function ContactForm() {
     return (
       <div className="rounded-xl border border-green-500/20 bg-green-500/5 p-8 text-center">
         <h3 className="text-xl font-semibold text-green-500">Message Sent!</h3>
-        <p className="mt-2 text-sm text-gray-1">
+        <p className="mt-2 text-sm text-text-secondary">
           Thank you for reaching out. We&apos;ll get back to you within 24 hours.
         </p>
         <button
@@ -88,7 +88,7 @@ export function ContactForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="mb-2 block text-sm font-medium text-white">
+          <label htmlFor="name" className="mb-2 block text-sm font-medium text-text-primary">
             Name *
           </label>
           <input
@@ -102,7 +102,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="email" className="mb-2 block text-sm font-medium text-white">
+          <label htmlFor="email" className="mb-2 block text-sm font-medium text-text-primary">
             Email *
           </label>
           <input
@@ -117,8 +117,8 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="phone" className="mb-2 block text-sm font-medium text-white">
-          Phone <span className="text-gray-2">(optional)</span>
+        <label htmlFor="phone" className="mb-2 block text-sm font-medium text-text-primary">
+          Phone <span className="text-text-tertiary">(optional)</span>
         </label>
         <input
           id="phone"
@@ -131,7 +131,7 @@ export function ContactForm() {
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="service" className="mb-2 block text-sm font-medium text-white">
+          <label htmlFor="service" className="mb-2 block text-sm font-medium text-text-primary">
             Service *
           </label>
           <select
@@ -148,7 +148,7 @@ export function ContactForm() {
         </div>
 
         <div>
-          <label htmlFor="budget" className="mb-2 block text-sm font-medium text-white">
+          <label htmlFor="budget" className="mb-2 block text-sm font-medium text-text-primary">
             Budget *
           </label>
           <select
@@ -166,7 +166,7 @@ export function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="mb-2 block text-sm font-medium text-white">
+        <label htmlFor="message" className="mb-2 block text-sm font-medium text-text-primary">
           Message *
         </label>
         <textarea

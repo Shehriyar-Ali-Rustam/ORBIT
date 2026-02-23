@@ -6,6 +6,7 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -13,30 +14,26 @@ const config: Config = {
         montserrat: ['var(--font-montserrat)', 'sans-serif'],
       },
       colors: {
-        black: '#000000',
-        surface: '#0D0D0D',
-        'surface-2': '#141414',
-        border: '#1A1A1A',
+        background: 'var(--color-bg)',
+        foreground: 'var(--color-fg)',
+        surface: 'var(--color-surface)',
+        'surface-2': 'var(--color-surface-2)',
+        border: 'var(--color-border)',
+        'text-primary': 'var(--color-text-primary)',
+        'text-secondary': 'var(--color-text-secondary)',
+        'text-tertiary': 'var(--color-text-tertiary)',
+        'text-disabled': 'var(--color-text-disabled)',
         orange: {
           DEFAULT: '#FF751F',
           hover: '#FF8C3F',
-          dim: '#FF751F10',
+          dim: 'var(--color-orange-dim)',
           glow: '#FF751F20',
           border: '#FF751F40',
-        },
-        gray: {
-          1: '#A0A0A0',
-          2: '#606060',
-          3: '#2A2A2A',
         },
       },
       backgroundImage: {
         'gradient-brand': 'linear-gradient(135deg, #FF751F 0%, #FF9A3C 100%)',
         'gradient-text': 'linear-gradient(135deg, #FF751F, #FFB347)',
-        'dot-grid': 'radial-gradient(circle, #ffffff08 1px, transparent 1px)',
-      },
-      backgroundSize: {
-        'dot-grid': '32px 32px',
       },
       animation: {
         'fade-up': 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',

@@ -32,10 +32,10 @@ export function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.1, ease }}
               viewport={{ once: true, margin: '-50px' }}
-              className="rounded-xl border border-border bg-black p-6"
+              className="rounded-xl border border-border bg-background p-6"
             >
               <span className="text-4xl font-bold text-orange">&ldquo;</span>
-              <p className="mt-2 leading-relaxed text-gray-1">{testimonial.quote}</p>
+              <p className="mt-2 leading-relaxed text-text-secondary">{testimonial.quote}</p>
               <div className="mt-6 h-px w-full bg-orange/20" />
               <div className="mt-4 flex items-center gap-1">
                 {Array.from({ length: testimonial.rating }).map((_, j) => (
@@ -47,8 +47,8 @@ export function Testimonials() {
                   {testimonial.author.charAt(0)}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">{testimonial.author}</p>
-                  <p className="text-xs text-gray-2">{testimonial.role}, {testimonial.company}</p>
+                  <p className="text-sm font-semibold text-text-primary">{testimonial.author}</p>
+                  <p className="text-xs text-text-tertiary">{testimonial.role}, {testimonial.company}</p>
                 </div>
               </div>
             </motion.div>

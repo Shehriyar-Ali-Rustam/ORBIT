@@ -26,8 +26,8 @@ export function FilterBar({ active, onChange }: FilterBarProps) {
           className={cn(
             'relative rounded-full px-5 py-2 text-sm font-medium transition-colors',
             active === filter.value
-              ? 'text-white'
-              : 'text-gray-1 hover:text-white'
+              ? 'text-text-primary'
+              : 'text-text-secondary hover:text-text-primary'
           )}
         >
           {active === filter.value && (

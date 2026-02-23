@@ -42,11 +42,11 @@ export function Process() {
               {i < steps.length - 1 && (
                 <div className="absolute left-1/2 top-6 hidden h-0.5 w-full bg-orange/20 md:block" />
               )}
-              <div className="relative mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-orange text-sm font-bold text-white">
+              <div className="relative mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-orange text-sm font-bold text-text-primary">
                 {step.number}
               </div>
-              <h3 className="mt-4 text-lg font-semibold text-white">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-1">{step.description}</p>
+              <h3 className="mt-4 text-lg font-semibold text-text-primary">{step.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-text-secondary">{step.description}</p>
             </motion.div>
           ))}
         </div>

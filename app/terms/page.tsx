@@ -9,14 +9,14 @@ export default function TermsPage() {
   return (
     <section className="pt-24 section-padding">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
-        <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">
+        <h1 className="text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
           Terms of Service
         </h1>
-        <p className="mt-4 text-sm text-gray-2">Last updated: February 2026</p>
+        <p className="mt-4 text-sm text-text-tertiary">Last updated: February 2026</p>
 
-        <div className="mt-12 space-y-8 text-gray-1">
+        <div className="mt-12 space-y-8 text-text-secondary">
           <div>
-            <h2 className="text-xl font-semibold text-white">1. Acceptance of Terms</h2>
+            <h2 className="text-xl font-semibold text-text-primary">1. Acceptance of Terms</h2>
             <p className="mt-3 leading-relaxed">
               By accessing and using Orbit&apos;s website and services, you agree to be bound by
               these Terms of Service. If you do not agree with any part of these terms, please do not
@@ -25,7 +25,7 @@ export default function TermsPage() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold text-white">2. Services</h2>
+            <h2 className="text-xl font-semibold text-text-primary">2. Services</h2>
             <p className="mt-3 leading-relaxed">
               Orbit provides software development, AI solutions, graphic design, and freelancer
               marketplace services. All projects are governed by individual agreements that outline
@@ -34,7 +34,7 @@ export default function TermsPage() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold text-white">3. Intellectual Property</h2>
+            <h2 className="text-xl font-semibold text-text-primary">3. Intellectual Property</h2>
             <p className="mt-3 leading-relaxed">
               Upon full payment, clients receive full ownership of all deliverables unless otherwise
               stated in the project agreement. Orbit retains the right to showcase completed work in
@@ -43,7 +43,7 @@ export default function TermsPage() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold text-white">4. Payment Terms</h2>
+            <h2 className="text-xl font-semibold text-text-primary">4. Payment Terms</h2>
             <p className="mt-3 leading-relaxed">
               Payment terms are defined in individual project agreements. Standard terms include an
               upfront deposit of 50%, with the remainder due upon project completion or at agreed
@@ -52,7 +52,7 @@ export default function TermsPage() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold text-white">5. Confidentiality</h2>
+            <h2 className="text-xl font-semibold text-text-primary">5. Confidentiality</h2>
             <p className="mt-3 leading-relaxed">
               We treat all client information as confidential. We are happy to sign NDAs upon
               request. Our team members are bound by confidentiality agreements.
@@ -60,7 +60,7 @@ export default function TermsPage() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold text-white">6. Limitation of Liability</h2>
+            <h2 className="text-xl font-semibold text-text-primary">6. Limitation of Liability</h2>
             <p className="mt-3 leading-relaxed">
               Orbit shall not be liable for any indirect, incidental, or consequential damages
               arising from the use of our services. Our total liability is limited to the amount paid
@@ -69,7 +69,7 @@ export default function TermsPage() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold text-white">7. Contact</h2>
+            <h2 className="text-xl font-semibold text-text-primary">7. Contact</h2>
             <p className="mt-3 leading-relaxed">
               For any questions about these terms, please contact us at{' '}
               <a href="mailto:hello@orbittech.io" className="text-orange hover:underline">

@@ -14,10 +14,10 @@ export default function FreelancerApplyPage() {
           <span className="text-xs font-semibold uppercase tracking-widest text-orange">
             Join Orbit
           </span>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight text-white md:text-5xl">
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
             Apply as a <span className="text-gradient">Freelancer</span>
           </h1>
-          <p className="mt-4 text-gray-1">
+          <p className="mt-4 text-text-secondary">
             Fill out the form below and our team will review your application within 48 hours.
           </p>
         </div>

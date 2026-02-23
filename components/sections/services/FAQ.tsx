@@ -42,7 +42,7 @@ export function FAQ() {
                 className="flex w-full items-center justify-between px-6 py-4 text-left"
                 aria-expanded={openId === faq.id}
               >
-                <span className="pr-4 font-semibold text-white">{faq.question}</span>
+                <span className="pr-4 font-semibold text-text-primary">{faq.question}</span>
                 <motion.div
                   animate={{ rotate: openId === faq.id ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
@@ -58,7 +58,7 @@ export function FAQ() {
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.3, ease }}
                   >
-                    <div className="px-6 pb-4 leading-relaxed text-gray-1">{faq.answer}</div>
+                    <div className="px-6 pb-4 leading-relaxed text-text-secondary">{faq.answer}</div>
                   </motion.div>
                 )}
               </AnimatePresence>

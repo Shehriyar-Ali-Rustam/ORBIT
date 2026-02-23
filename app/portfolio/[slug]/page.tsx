@@ -40,7 +40,7 @@ export default function ProjectDetailPage({ params }: Props) {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-2 text-sm text-gray-1 transition-colors hover:text-orange"
+            className="inline-flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-orange"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Portfolio
@@ -59,17 +59,17 @@ export default function ProjectDetailPage({ params }: Props) {
           <div className="mt-12 grid gap-12 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <Badge variant="orange">{project.category.toUpperCase()}</Badge>
-              <h1 className="mt-4 text-4xl font-bold tracking-tight text-white md:text-5xl">
+              <h1 className="mt-4 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
                 {project.title}
               </h1>
-              <p className="mt-6 whitespace-pre-line leading-relaxed text-gray-1">
+              <p className="mt-6 whitespace-pre-line leading-relaxed text-text-secondary">
                 {project.fullDescription}
               </p>
             </div>
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-2">
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-text-tertiary">
                   Tech Stack
                 </h3>
                 <div className="mt-3 flex flex-wrap gap-2">
@@ -80,10 +80,10 @@ export default function ProjectDetailPage({ params }: Props) {
               </div>
 
               <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-2">
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-text-tertiary">
                   Completed
                 </h3>
-                <p className="mt-2 text-sm text-gray-1">
+                <p className="mt-2 text-sm text-text-secondary">
                   {new Date(project.completedAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
@@ -115,10 +115,10 @@ export default function ProjectDetailPage({ params }: Props) {
           {/* Next project */}
           {nextProject && (
             <div className="mt-16 border-t border-border pt-8">
-              <p className="text-sm text-gray-2">Next Project</p>
+              <p className="text-sm text-text-tertiary">Next Project</p>
               <Link
                 href={`/portfolio/${nextProject.slug}`}
-                className="mt-2 inline-flex items-center gap-2 text-xl font-semibold text-white transition-colors hover:text-orange"
+                className="mt-2 inline-flex items-center gap-2 text-xl font-semibold text-text-primary transition-colors hover:text-orange"
               >
                 {nextProject.title} &rarr;
               </Link>

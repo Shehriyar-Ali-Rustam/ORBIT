@@ -32,8 +32,8 @@ export function FreelancerGrid() {
               className={cn(
                 'rounded-full px-5 py-2 text-sm font-medium transition-colors',
                 active === filter
-                  ? 'bg-orange text-white'
-                  : 'bg-surface text-gray-1 hover:text-white'
+                  ? 'bg-orange text-text-primary'
+                  : 'bg-surface text-text-secondary hover:text-text-primary'
               )}
             >
               {filter}

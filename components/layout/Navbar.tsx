@@ -5,15 +5,17 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Sun, Moon } from 'lucide-react'
 import { NAV_LINKS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
+import { useTheme } from '@/components/ThemeProvider'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const pathname = usePathname()
+  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -51,9 +53,9 @@ export function Navbar() {
             alt="Orbit"
             width={32}
             height={32}
-            className="h-8 w-8"
+            className={cn('h-8 w-8', theme === 'light' && 'invert')}
           />
-          <span className="text-lg font-bold tracking-tight text-white">Orbit</span>
+          <span className="text-lg font-bold tracking-tight text-text-primary">Orbit</span>
         </Link>
 
         {/* Desktop Nav */}
@@ -64,7 +66,9 @@ export function Navbar() {
               href={link.href}
               className={cn(
                 'relative text-sm font-medium tracking-wider transition-colors',
-                pathname === link.href ? 'text-orange' : 'text-gray-1 hover:text-white'
+                pathname === link.href
+                  ? 'text-orange'
+                  : 'text-text-secondary hover:text-text-primary'
               )}
             >
               {link.label}
@@ -80,7 +84,30 @@ export function Navbar() {
         </div>
 
         {/* Right side */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {/* Theme toggle */}
+          <button
+            onClick={toggleTheme}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-text-secondary transition-colors hover:border-orange hover:text-orange"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={theme}
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {theme === 'dark' ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </button>
+
           <Link href="/contact" className="hidden md:block">
             <Button variant="primary" size="sm">
               Start a Project
@@ -88,7 +115,7 @@ export function Navbar() {
           </Link>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="text-white md:hidden"
+            className="text-text-primary md:hidden"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
             {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -104,7 +131,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 top-16 z-40 bg-black md:hidden"
+            className="fixed inset-0 top-16 z-40 bg-background md:hidden"
           >
             <div className="flex flex-col items-center gap-6 px-6 pt-12">
               {NAV_LINKS.map((link, i) => (
@@ -118,7 +145,9 @@ export function Navbar() {
                     href={link.href}
                     className={cn(
                       'text-lg font-medium tracking-wider transition-colors',
-                      pathname === link.href ? 'text-orange' : 'text-gray-1 hover:text-white'
+                      pathname === link.href
+                        ? 'text-orange'
+                        : 'text-text-secondary hover:text-text-primary'
                     )}
                   >
                     {link.label}

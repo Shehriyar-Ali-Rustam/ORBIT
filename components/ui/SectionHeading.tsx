@@ -9,7 +9,7 @@ export function SectionHeading({ children, className }: SectionHeadingProps) {
   return (
     <h2
       className={cn(
-        'text-4xl font-bold tracking-tight text-white md:text-5xl',
+        'text-4xl font-bold tracking-tight text-text-primary md:text-5xl',
         className
       )}
     >

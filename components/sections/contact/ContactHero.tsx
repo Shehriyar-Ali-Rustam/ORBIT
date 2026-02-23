@@ -16,11 +16,11 @@ export function ContactHero() {
           transition={{ duration: 0.6, ease }}
         >
           <SectionLabel>Get in Touch</SectionLabel>
-          <h1 className="mt-4 text-5xl font-black tracking-tighter text-white md:text-6xl lg:text-7xl">
+          <h1 className="mt-4 text-5xl font-black tracking-tighter text-text-primary md:text-6xl lg:text-7xl">
             Let&apos;s Build Something{' '}
             <span className="text-gradient">Great Together</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-1">
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary">
             Have a project in mind? We&apos;d love to hear about it. Fill out the form
             below and we&apos;ll get back to you within 24 hours.
           </p>

@@ -17,10 +17,10 @@ export function JoinBanner() {
           viewport={{ once: true, margin: '-50px' }}
           className="rounded-2xl border border-border bg-surface p-12 text-center"
         >
-          <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
             Are You a Skilled Professional?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-gray-1">
+          <p className="mx-auto mt-4 max-w-xl text-text-secondary">
             Join the Orbit network — get access to quality clients worldwide and work on
             exciting projects with a team that values excellence.
           </p>

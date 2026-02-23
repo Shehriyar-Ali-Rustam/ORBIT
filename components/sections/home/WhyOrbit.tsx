@@ -58,8 +58,8 @@ export function WhyOrbit() {
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-orange-dim">
                   <feature.icon className="h-6 w-6 text-orange" />
                 </div>
-                <h3 className="mt-6 text-xl font-semibold text-white">{feature.title}</h3>
-                <p className="mt-3 leading-relaxed text-gray-1">{feature.description}</p>
+                <h3 className="mt-6 text-xl font-semibold text-text-primary">{feature.title}</h3>
+                <p className="mt-3 leading-relaxed text-text-secondary">{feature.description}</p>
               </Card>
             </motion.div>
           ))}

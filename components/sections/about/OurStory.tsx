@@ -22,7 +22,7 @@ export function OurStory() {
               From One Student to a{' '}
               <span className="text-gradient">Growing Company</span>
             </SectionHeading>
-            <div className="mt-6 space-y-4 leading-relaxed text-gray-1">
+            <div className="mt-6 space-y-4 leading-relaxed text-text-secondary">
               <p>
                 Orbit started as a dream of one software engineering student — Shehriyar Ali Rustam —
                 who believed that world-class technology shouldn&apos;t be limited by geography.
@@ -54,7 +54,7 @@ export function OurStory() {
               <div className="absolute inset-16 animate-spin-slow rounded-full border border-dashed border-orange/40" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-brand">
-                  <span className="text-3xl font-black text-white">O</span>
+                  <span className="text-3xl font-black text-text-primary">O</span>
                 </div>
               </div>
             </div>
