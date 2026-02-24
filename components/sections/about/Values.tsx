@@ -20,7 +20,7 @@ const values = [
   {
     icon: Award,
     title: 'Excellence',
-    description: 'We hold ourselves to the highest standards — every line of code, every pixel, every interaction.',
+    description: 'We hold ourselves to the highest standards, every line of code, every pixel, every interaction.',
   },
   {
     icon: Rocket,

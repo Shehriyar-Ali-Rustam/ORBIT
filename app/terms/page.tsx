@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'Orbit terms of service — the rules and guidelines for using our services.',
+  description: 'Orbit terms of service, the rules and guidelines for using our services.',
 }
 
 export default function TermsPage() {
@@ -72,8 +72,8 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold text-text-primary">7. Contact</h2>
             <p className="mt-3 leading-relaxed">
               For any questions about these terms, please contact us at{' '}
-              <a href="mailto:hello@orbittech.io" className="text-orange hover:underline">
-                hello@orbittech.io
+              <a href="mailto:hello.theorbit@gmail.com" className="text-orange hover:underline">
+                hello.theorbit@gmail.com
               </a>
               .
             </p>

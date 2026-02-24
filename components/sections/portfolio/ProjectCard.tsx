@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/Badge'
 import { Project } from '@/types'
@@ -21,11 +22,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
         className="card-hover overflow-hidden rounded-xl border border-border bg-surface"
       >
         <div className="relative aspect-video overflow-hidden bg-surface-2">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-dim">
-              <span className="text-2xl font-bold text-orange">{project.title.charAt(0)}</span>
-            </div>
-          </div>
+          <Image
+            src={project.coverImage}
+            alt={project.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
           <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 transition-opacity group-hover:opacity-100">
             <span className="text-sm font-semibold text-text-primary">View Project &rarr;</span>
           </div>

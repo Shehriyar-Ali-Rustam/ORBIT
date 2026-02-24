@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
 import { projects } from '@/data/portfolio'
@@ -47,12 +48,15 @@ export default function ProjectDetailPage({ params }: Props) {
           </Link>
 
           {/* Hero area */}
-          <div className="mt-8 aspect-video w-full overflow-hidden rounded-2xl border border-border bg-surface">
-            <div className="flex h-full items-center justify-center">
-              <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-orange-dim">
-                <span className="text-4xl font-bold text-orange">{project.title.charAt(0)}</span>
-              </div>
-            </div>
+          <div className="relative mt-8 aspect-video w-full overflow-hidden rounded-2xl border border-border bg-surface">
+            <Image
+              src={project.coverImage}
+              alt={project.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1280px) 100vw, 1280px"
+              priority
+            />
           </div>
 
           {/* Content */}

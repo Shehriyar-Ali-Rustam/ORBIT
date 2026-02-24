@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Star, Github, Linkedin } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
@@ -18,13 +19,24 @@ export function FreelancerCard({ freelancer }: FreelancerCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       viewport={{ once: true, margin: '-50px' }}
-      className="card-hover rounded-xl border border-border bg-surface p-6"
+      className="card-hover flex h-full flex-col rounded-xl border border-border bg-surface p-6"
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand text-xl font-bold text-text-primary">
-            {freelancer.name.charAt(0)}
-          </div>
+          {freelancer.photo ? (
+            <Image
+              src={freelancer.photo}
+              alt={freelancer.name}
+              width={160}
+              height={160}
+              quality={90}
+              className="h-16 w-16 rounded-full object-cover object-top"
+            />
+          ) : (
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-brand text-xl font-bold text-text-primary">
+              {freelancer.name.charAt(0)}
+            </div>
+          )}
           <div>
             <div className="flex items-center gap-2">
               <h3 className="font-semibold text-text-primary">{freelancer.name}</h3>
@@ -52,7 +64,7 @@ export function FreelancerCard({ freelancer }: FreelancerCardProps) {
         </span>
       </div>
 
-      <p className="mt-3 text-sm leading-relaxed text-text-secondary">{freelancer.bio}</p>
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-text-secondary">{freelancer.bio}</p>
 
       <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
         <div>

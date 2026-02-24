@@ -45,7 +45,7 @@ export function AIShowcase() {
             </SectionHeading>
             <p className="mt-6 leading-relaxed text-text-secondary">
               From custom ChatGPT-powered chatbots to fine-tuned language models, Orbit delivers AI
-              solutions built specifically for your business — not off-the-shelf tools, but
+              solutions built specifically for your business, not off-the-shelf tools, but
               intelligence trained on your data.
             </p>
             <ul className="mt-8 space-y-3">

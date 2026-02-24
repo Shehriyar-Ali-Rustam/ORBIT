@@ -47,7 +47,7 @@ export function Hero() {
           className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary md:text-xl"
         >
           Orbit is a full-service technology company specializing in AI chatbots, model training,
-          custom software, and design — built to compete globally.
+          custom software, and design, built to compete globally.
         </motion.p>
 
         {/* Buttons */}

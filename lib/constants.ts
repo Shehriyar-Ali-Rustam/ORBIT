@@ -10,7 +10,7 @@ export const NAV_LINKS = [
 export const SOCIAL_LINKS = {
   github: 'https://github.com/Shehriyar-Ali-Rustam',
   linkedin: 'https://www.linkedin.com/in/shehriyar-ali-rustam-516895246',
-  fiverr: 'https://www.fiverr.com/sellers/shehriyar01se',
+  fiverr: 'https://www.fiverr.com/users/shehriyar01se',
 }
 
 export const COMPANY = {
