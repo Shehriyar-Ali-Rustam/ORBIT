@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
+import { Toaster } from 'react-hot-toast'
 import './globals.css'
-import { Navbar } from '@/components/layout/Navbar'
-import { Footer } from '@/components/layout/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import { ChatWidget } from '@/components/chat/ChatWidget'
+import { AuthProvider } from '@/components/providers/AuthProvider'
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -67,10 +66,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${montserrat.variable} dark`} suppressHydrationWarning>
       <body className="bg-background font-montserrat text-foreground antialiased">
         <ThemeProvider>
-          <Navbar />
-          <main id="main-content">{children}</main>
-          <Footer />
-          <ChatWidget />
+          <AuthProvider>
+            {children}
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                style: {
+                  background: 'var(--color-surface)',
+                  color: 'var(--color-text-primary)',
+                  border: '1px solid var(--color-border)',
+                },
+              }}
+            />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

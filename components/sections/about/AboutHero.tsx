@@ -22,7 +22,7 @@ export function AboutHero() {
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary">
             Orbit is more than a software company. We are a passionate team building AI-powered
-            solutions that compete on a global stage — from Pakistan to the world.
+            solutions that compete on a global stage from Pakistan to the world.
           </p>
         </motion.div>
       </div>

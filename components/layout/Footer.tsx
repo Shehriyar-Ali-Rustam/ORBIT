@@ -24,7 +24,7 @@ export function Footer() {
                 width={160}
                 height={160}
                 quality={100}
-                className={cn('h-12 w-12 object-contain', theme === 'light' && 'invert')}
+                className={cn('h-12 w-12 object-contain', theme === 'light' && 'invert hue-rotate-180')}
               />
               <span className="font-montserrat text-lg font-bold tracking-[0.3em] text-text-primary">ORBIT</span>
             </Link>

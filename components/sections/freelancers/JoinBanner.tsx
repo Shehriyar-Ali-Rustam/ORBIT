@@ -21,13 +21,18 @@ export function JoinBanner() {
             Are You a Skilled Professional?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-text-secondary">
-            Join the Orbit network — get access to quality clients worldwide and work on
-            exciting projects with a team that values excellence.
+            Join the Orbit marketplace — create your seller profile, list your services,
+            and start earning from clients worldwide.
           </p>
-          <div className="mt-8">
-            <Link href="/freelancers/apply">
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <Link href="/register">
               <Button variant="primary" size="lg">
-                Apply to Join &rarr;
+                Become a Seller &rarr;
+              </Button>
+            </Link>
+            <Link href="/freelancers/apply">
+              <Button variant="ghost" size="lg">
+                Apply to Network
               </Button>
             </Link>
           </div>

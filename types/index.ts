@@ -76,3 +76,5 @@ export interface NavLink {
   label: string
   href: string
 }
+
+export type * from './marketplace'

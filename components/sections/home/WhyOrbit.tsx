@@ -10,7 +10,7 @@ const features = [
   {
     icon: Zap,
     title: 'AI-First Approach',
-    description: 'Every solution we build has intelligence at its core — not as an add-on, but as a foundation.',
+    description: 'Every solution we build has intelligence at its core not as an add-on, but as a foundation.',
   },
   {
     icon: Package,
@@ -55,7 +55,7 @@ export function WhyOrbit() {
               viewport={{ once: true, margin: '-50px' }}
             >
               <Card className="h-full text-center">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-orange-dim">
+                <div className="mx-aAIuto flex h-12 w-12 items-center justify-center rounded-lg bg-orange-dim">
                   <feature.icon className="h-6 w-6 text-orange" />
                 </div>
                 <h3 className="mt-6 text-xl font-semibold text-text-primary">{feature.title}</h3>
