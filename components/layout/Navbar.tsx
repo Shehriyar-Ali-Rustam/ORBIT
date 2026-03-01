@@ -177,14 +177,14 @@ export function Navbar() {
                         </div>
                         <div className="pt-2">
                           <Link
-                            href="/dashboard"
+                            href="/freelancers/dashboard"
                             className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-background hover:text-text-primary"
                           >
                             <LayoutDashboard className="h-4 w-4" />
                             Dashboard
                           </Link>
                           <Link
-                            href="/dashboard/settings"
+                            href="/freelancers/dashboard/profile"
                             className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-background hover:text-text-primary"
                           >
                             <User className="h-4 w-4" />
@@ -269,7 +269,7 @@ export function Navbar() {
               >
                 {isAuthenticated ? (
                   <>
-                    <Link href="/dashboard">
+                    <Link href="/freelancers/dashboard">
                       <Button variant="primary" size="lg">
                         Dashboard
                       </Button>

@@ -38,24 +38,6 @@ export interface TeamMember {
   isFounder?: boolean
 }
 
-export interface Freelancer {
-  id: string
-  name: string
-  title: string
-  skills: string[]
-  rating: number
-  reviewCount: number
-  hourlyRate: string
-  photo: string
-  level: string
-  available: boolean
-  github?: string
-  linkedin?: string
-  fiverr?: string
-  portfolioUrl?: string
-  bio: string
-}
-
 export interface Testimonial {
   id: string
   quote: string
@@ -70,11 +52,6 @@ export interface FAQ {
   id: string
   question: string
   answer: string
-}
-
-export interface NavLink {
-  label: string
-  href: string
 }
 
 export type * from './marketplace'

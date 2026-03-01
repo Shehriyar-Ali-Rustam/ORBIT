@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import { useClerk } from '@clerk/nextjs'
+import { useTheme } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'
 
 const sellerLinks = [
@@ -38,6 +39,7 @@ interface DashboardSidebarProps {
 export function DashboardSidebar({ mode, onModeSwitch, userName, userRole }: DashboardSidebarProps) {
   const pathname = usePathname()
   const { signOut } = useClerk()
+  const { theme } = useTheme()
   const [collapsed, setCollapsed] = useState(false)
   const links = mode === 'seller' ? sellerLinks : buyerLinks
 
@@ -51,7 +53,7 @@ export function DashboardSidebar({ mode, onModeSwitch, userName, userRole }: Das
       {/* Logo */}
       <div className="flex h-16 items-center justify-between border-b border-border px-4">
         <Link href="/freelancers" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="ORBIT" width={120} height={120} quality={100} className="h-8 w-8 object-contain" />
+          <Image src="/logo.png" alt="ORBIT" width={160} height={160} quality={100} priority className={cn('h-10 w-10 object-contain', theme === 'light' && 'invert hue-rotate-180')} />
           {!collapsed && (
             <span className="font-montserrat text-sm font-bold tracking-[0.2em] text-text-primary">
               ORBIT

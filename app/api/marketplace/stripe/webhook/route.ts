@@ -6,6 +6,12 @@ import type { OrderStatus, PricingTier } from '@/types/marketplace'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2026-01-28.clover' })
 
 export async function POST(req: NextRequest) {
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+  if (!webhookSecret) {
+    console.error('[Stripe Webhook] STRIPE_WEBHOOK_SECRET is not configured')
+    return NextResponse.json({ error: 'Webhook not configured' }, { status: 500 })
+  }
+
   const body = await req.text()
   const sig = req.headers.get('stripe-signature')
 
@@ -13,21 +19,25 @@ export async function POST(req: NextRequest) {
 
   let event: Stripe.Event
   try {
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
+    event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
   } catch {
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
   }
 
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
-    const meta = session.metadata!
+    const meta = session.metadata
+
+    if (!meta?.gig_id || !meta?.seller_id || !meta?.buyer_id) {
+      return NextResponse.json({ error: 'Missing metadata' }, { status: 400 })
+    }
 
     const deliveryDeadline = new Date()
     deliveryDeadline.setDate(deliveryDeadline.getDate() + Number(meta.delivery_days))
 
     await createOrder({
       gig_id: meta.gig_id,
-      gig_title: meta.gig_title,
+      gig_title: meta.gig_title || '',
       gig_cover_image: meta.gig_cover_image || null,
       seller_id: meta.seller_id,
       buyer_id: meta.buyer_id,

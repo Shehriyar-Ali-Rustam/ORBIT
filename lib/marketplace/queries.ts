@@ -85,7 +85,9 @@ export async function searchGigs(filters: Partial<SearchFilters> & { page?: numb
     .eq('status', 'active')
 
   if (filters.query) {
-    query = query.ilike('title', `%${filters.query}%`)
+    // Escape ILIKE wildcards to prevent pattern injection
+    const escaped = filters.query.replace(/[%_\\]/g, '\\$&')
+    query = query.ilike('title', `%${escaped}%`)
   }
   if (filters.category) {
     query = query.eq('category', filters.category)

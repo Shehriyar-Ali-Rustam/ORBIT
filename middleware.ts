@@ -17,14 +17,6 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
     }
   }
 
-  // Legacy Firebase auth pages (login/register) — keep existing behavior
-  const token = req.cookies.get('firebase-auth-token')?.value
-  if (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/register') {
-    if (token) {
-      return NextResponse.redirect(new URL('/', req.url))
-    }
-  }
-
   return NextResponse.next()
 })
 

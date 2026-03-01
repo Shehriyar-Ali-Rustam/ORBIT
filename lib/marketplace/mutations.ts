@@ -227,12 +227,13 @@ export async function createNotification(notification: { user_id: string; type: 
   if (error) throw new Error(`Notification creation failed: ${error.message}`)
 }
 
-export async function markNotificationRead(notificationId: string) {
+export async function markNotificationRead(notificationId: string, userId: string) {
   const supabase = getSupabase()
   await supabase
     .from('notifications')
     .update({ read: true })
     .eq('id', notificationId)
+    .eq('user_id', userId)
 }
 
 export async function markAllNotificationsRead(userId: string) {

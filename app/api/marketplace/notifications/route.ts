@@ -30,7 +30,7 @@ export async function PUT(req: NextRequest) {
     if (body.mark_all_read) {
       await markAllNotificationsRead(userId)
     } else if (body.notification_id) {
-      await markNotificationRead(body.notification_id)
+      await markNotificationRead(body.notification_id, userId)
     }
 
     return NextResponse.json({ success: true })

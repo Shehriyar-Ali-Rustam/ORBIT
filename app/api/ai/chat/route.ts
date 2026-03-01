@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
     ]
 
     // Route to AI provider with fallback
-    const { stream, provider, model } = await routeToAI({
+    const { stream } = await routeToAI({
       messages: fullMessages,
       maxTokens: tool === 'code' ? 4096 : 2048,
       temperature: tool === 'code' ? 0.3 : 0.7,
@@ -78,8 +78,6 @@ export async function POST(req: NextRequest) {
     return new Response(stream, {
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
-        'X-AI-Provider': provider,
-        'X-AI-Model': model,
         'Cache-Control': 'no-cache',
       },
     })

@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, MessageSquare } from 'lucide-react'
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Button } from '@/components/ui/Button'
+import { useTheme } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'
 
 const MARKETPLACE_LINKS = [
@@ -17,6 +18,7 @@ const MARKETPLACE_LINKS = [
 
 export function MarketplaceNavbar() {
   const pathname = usePathname()
+  const { theme } = useTheme()
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
@@ -24,8 +26,8 @@ export function MarketplaceNavbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <Image src="/logo.png" alt="ORBIT" width={120} height={120} quality={100} className="h-8 w-8 object-contain" />
-          <span className="font-montserrat text-sm font-bold tracking-[0.2em] text-text-primary">
+          <Image src="/logo.png" alt="ORBIT" width={160} height={160} quality={100} priority className={cn('h-12 w-12 object-contain', theme === 'light' && 'invert hue-rotate-180')} />
+          <span className="font-montserrat text-lg font-bold tracking-[0.3em] text-text-primary">
             ORBIT
           </span>
         </Link>
