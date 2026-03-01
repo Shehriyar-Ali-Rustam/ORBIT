@@ -27,7 +27,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https:",
-              "connect-src 'self' https://api.resend.com https://*.googleapis.com https://*.firebaseio.com https://*.firebase.com https://*.firebaseapp.com wss://*.firebaseio.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com",
+              "connect-src 'self' https://api.resend.com https://*.googleapis.com https://*.firebaseio.com https://*.firebase.com https://*.firebaseapp.com wss://*.firebaseio.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.supabase.co wss://*.supabase.co https://*.clerk.accounts.dev https://api.clerk.com",
               "frame-src https://www.google.com https://*.firebaseapp.com",
             ].join('; '),
           },
@@ -36,7 +36,10 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: ['avatars.githubusercontent.com', 'images.unsplash.com', 'lh3.googleusercontent.com', 'firebasestorage.googleapis.com'],
+    domains: ['avatars.githubusercontent.com', 'images.unsplash.com', 'lh3.googleusercontent.com', 'firebasestorage.googleapis.com', 'img.clerk.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: '*.supabase.co', pathname: '/storage/v1/object/public/**' },
+    ],
     formats: ['image/avif', 'image/webp'],
   },
 }

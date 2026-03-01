@@ -8,9 +8,7 @@ import {
   deleteDoc,
   query,
   where,
-  orderBy,
   limit as firestoreLimit,
-  startAfter as firestoreStartAfter,
   serverTimestamp,
   type DocumentData,
   type DocumentSnapshot,
@@ -108,51 +106,63 @@ export async function getGigBySlug(slug: string) {
   return { ...(d.data() as Gig), id: d.id }
 }
 
-/** Get all gigs belonging to a seller, ordered by createdAt descending. */
+/** Get all gigs belonging to a seller, sorted by createdAt descending. */
 export async function getSellerGigs(sellerId: string) {
   const db = requireDb()
   const q = query(
     collection(db, 'gigs'),
     where('sellerId', '==', sellerId),
-    orderBy('createdAt', 'desc'),
   )
   const snapshot = await getDocs(q)
-  return docsToData<Gig>(snapshot.docs)
+  const results = docsToData<Gig>(snapshot.docs)
+  results.sort((a, b) => {
+    const aTime = (a as DocumentData).createdAt?.toMillis?.() ?? 0
+    const bTime = (b as DocumentData).createdAt?.toMillis?.() ?? 0
+    return bTime - aTime
+  })
+  return results
 }
 
 /** Options for the getActiveGigs query. */
 export interface ActiveGigsOptions {
   category?: GigCategory
   limit?: number
-  startAfter?: DocumentSnapshot
 }
 
 /**
- * Query active gigs with optional category filter, pagination limit, and
- * cursor-based pagination via startAfter.
+ * Query active gigs. Filtering (category, price, rating) and sorting are
+ * handled client-side to avoid requiring Firestore composite indexes.
  */
 export async function getActiveGigs(options: ActiveGigsOptions = {}) {
   const db = requireDb()
+  // Single-field equality query – no composite index required
   const constraints: QueryConstraint[] = [
     where('status', '==', 'active'),
-    orderBy('createdAt', 'desc'),
   ]
-
-  if (options.category) {
-    constraints.push(where('category', '==', options.category))
-  }
 
   if (options.limit) {
     constraints.push(firestoreLimit(options.limit))
   }
 
-  if (options.startAfter) {
-    constraints.push(firestoreStartAfter(options.startAfter))
-  }
-
   const q = query(collection(db, 'gigs'), ...constraints)
   const snapshot = await getDocs(q)
-  return docsToData<Gig>(snapshot.docs)
+  let results = docsToData<Gig>(snapshot.docs)
+
+  // Client-side category filter
+  if (options.category) {
+    results = results.filter((g) => g.category === options.category)
+  }
+
+  // Client-side sort by created_at descending
+  results.sort((a, b) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const aTime = (a as any).created_at?.toMillis?.() ?? 0
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const bTime = (b as any).created_at?.toMillis?.() ?? 0
+    return bTime - aTime
+  })
+
+  return results
 }
 
 // ---------------------------------------------------------------------------
@@ -196,10 +206,15 @@ export async function getUserOrders(userId: string, role: 'buyer' | 'seller') {
   const q = query(
     collection(db, 'orders'),
     where(field, '==', userId),
-    orderBy('createdAt', 'desc'),
   )
   const snapshot = await getDocs(q)
-  return docsToData<Order>(snapshot.docs)
+  const results = docsToData<Order>(snapshot.docs)
+  results.sort((a, b) => {
+    const aTime = (a as DocumentData).createdAt?.toMillis?.() ?? 0
+    const bTime = (b as DocumentData).createdAt?.toMillis?.() ?? 0
+    return bTime - aTime
+  })
+  return results
 }
 
 // ---------------------------------------------------------------------------
@@ -216,28 +231,38 @@ export async function createReview(data: Omit<Review, 'id' | 'createdAt'>) {
   return ref.id
 }
 
-/** Get all reviews for a given gig, ordered by createdAt descending. */
+/** Get all reviews for a given gig, sorted by createdAt descending. */
 export async function getGigReviews(gigId: string) {
   const db = requireDb()
   const q = query(
     collection(db, 'reviews'),
     where('gigId', '==', gigId),
-    orderBy('createdAt', 'desc'),
   )
   const snapshot = await getDocs(q)
-  return docsToData<Review>(snapshot.docs)
+  const results = docsToData<Review>(snapshot.docs)
+  results.sort((a, b) => {
+    const aTime = (a as DocumentData).createdAt?.toMillis?.() ?? 0
+    const bTime = (b as DocumentData).createdAt?.toMillis?.() ?? 0
+    return bTime - aTime
+  })
+  return results
 }
 
-/** Get all reviews for a given seller, ordered by createdAt descending. */
+/** Get all reviews for a given seller, sorted by createdAt descending. */
 export async function getSellerReviews(sellerId: string) {
   const db = requireDb()
   const q = query(
     collection(db, 'reviews'),
     where('sellerId', '==', sellerId),
-    orderBy('createdAt', 'desc'),
   )
   const snapshot = await getDocs(q)
-  return docsToData<Review>(snapshot.docs)
+  const results = docsToData<Review>(snapshot.docs)
+  results.sort((a, b) => {
+    const aTime = (a as DocumentData).createdAt?.toMillis?.() ?? 0
+    const bTime = (b as DocumentData).createdAt?.toMillis?.() ?? 0
+    return bTime - aTime
+  })
+  return results
 }
 
 /** Get a review by its associated order ID. Returns the first match or null. */

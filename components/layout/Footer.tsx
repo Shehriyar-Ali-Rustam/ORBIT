@@ -14,7 +14,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-surface">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Col 1: Brand */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3">
@@ -98,7 +98,21 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Contact */}
+          {/* Col 4: Orbit AI */}
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-primary">
+              Orbit AI
+            </h3>
+            <ul className="space-y-3">
+              <li><Link href="/ai/chat" className="text-sm text-text-secondary transition-colors hover:text-orange">Orbit Chat</Link></li>
+              <li><Link href="/ai/code" className="text-sm text-text-secondary transition-colors hover:text-orange">Orbit Code</Link></li>
+              <li><Link href="/ai/write" className="text-sm text-text-secondary transition-colors hover:text-orange">Orbit Write</Link></li>
+              <li><Link href="/ai/image" className="text-sm text-text-secondary transition-colors hover:text-orange">Orbit Image</Link></li>
+              <li><Link href="/ai" className="text-sm font-medium text-orange transition-colors hover:underline">All Tools →</Link></li>
+            </ul>
+          </div>
+
+          {/* Col 5: Contact */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-text-primary">
               Contact

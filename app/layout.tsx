@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
+import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { AuthProvider } from '@/components/providers/AuthProvider'
@@ -63,23 +64,34 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${montserrat.variable} dark`} suppressHydrationWarning>
+    <html lang="en" className={`${montserrat.variable} light`} suppressHydrationWarning>
       <body className="bg-background font-montserrat text-foreground antialiased">
-        <ThemeProvider>
-          <AuthProvider>
-            {children}
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                style: {
-                  background: 'var(--color-surface)',
-                  color: 'var(--color-text-primary)',
-                  border: '1px solid var(--color-border)',
-                },
-              }}
-            />
-          </AuthProvider>
-        </ThemeProvider>
+        <ClerkProvider
+          appearance={{
+            variables: {
+              colorPrimary: '#FF751F',
+              colorBackground: '#0D0D0D',
+              colorInputBackground: '#141414',
+              colorInputText: '#FFFFFF',
+            },
+          }}
+        >
+          <ThemeProvider>
+            <AuthProvider>
+              {children}
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  style: {
+                    background: 'var(--color-surface)',
+                    color: 'var(--color-text-primary)',
+                    border: '1px solid var(--color-border)',
+                  },
+                }}
+              />
+            </AuthProvider>
+          </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   )

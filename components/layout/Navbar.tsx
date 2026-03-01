@@ -5,14 +5,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Sun, Moon, LayoutDashboard, LogOut, User, MessageSquare } from 'lucide-react'
+import { Menu, X, Sun, Moon, LayoutDashboard, LogOut, User } from 'lucide-react'
 import { NAV_LINKS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 import { useTheme } from '@/components/ThemeProvider'
 import { useAuthStore } from '@/lib/stores/auth-store'
 import { signOut } from '@/lib/firebase/auth'
-import { useUnreadMessages } from '@/hooks/useUnreadMessages'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -22,7 +21,6 @@ export function Navbar() {
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
   const { user, isAuthenticated, loading } = useAuthStore()
-  const { unreadCount } = useUnreadMessages(user?.uid ?? null)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -93,12 +91,19 @@ export function Navbar() {
               href={link.href}
               className={cn(
                 'relative text-sm font-medium tracking-wider transition-colors',
-                pathname === link.href
-                  ? 'text-orange'
-                  : 'text-text-secondary hover:text-text-primary'
+                link.href === '/ai'
+                  ? 'text-orange hover:text-orange'
+                  : pathname === link.href
+                    ? 'text-orange'
+                    : 'text-text-secondary hover:text-text-primary'
               )}
             >
               {link.label}
+              {link.href === '/ai' && (
+                <span className="ml-1.5 inline-flex rounded bg-orange/20 px-1 py-0.5 text-[9px] font-bold uppercase leading-none text-orange">
+                  New
+                </span>
+              )}
               {pathname === link.href && (
                 <motion.div
                   layoutId="navbar-indicator"
@@ -177,18 +182,6 @@ export function Navbar() {
                           >
                             <LayoutDashboard className="h-4 w-4" />
                             Dashboard
-                          </Link>
-                          <Link
-                            href="/dashboard/messages"
-                            className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-background hover:text-text-primary"
-                          >
-                            <MessageSquare className="h-4 w-4" />
-                            Messages
-                            {unreadCount > 0 && (
-                              <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-orange px-1.5 text-[10px] font-bold text-white">
-                                {unreadCount > 99 ? '99+' : unreadCount}
-                              </span>
-                            )}
                           </Link>
                           <Link
                             href="/dashboard/settings"

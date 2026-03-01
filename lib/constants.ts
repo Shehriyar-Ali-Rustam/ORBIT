@@ -4,6 +4,7 @@ export const NAV_LINKS = [
   { label: 'Services', href: '/services' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Freelancers', href: '/freelancers' },
+  { label: 'Orbit AI', href: '/ai' },
   { label: 'Contact', href: '/contact' },
 ]
 

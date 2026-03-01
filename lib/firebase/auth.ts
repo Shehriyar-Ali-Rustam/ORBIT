@@ -16,6 +16,9 @@ export async function signInWithGoogle() {
   const auth = requireAuth()
   const db = requireDb()
   const result = await signInWithPopup(auth, googleProvider)
+  // Set auth cookie immediately so middleware allows navigation to /dashboard
+  const token = await result.user.getIdToken()
+  document.cookie = `firebase-auth-token=${token}; path=/; max-age=3600; SameSite=Lax`
   await ensureUserDoc(db, result.user.uid, {
     email: result.user.email!,
     displayName: result.user.displayName || 'User',
@@ -27,6 +30,9 @@ export async function signInWithGoogle() {
 export async function signInWithEmail(email: string, password: string) {
   const auth = requireAuth()
   const result = await signInWithEmailAndPassword(auth, email, password)
+  // Set auth cookie immediately so middleware allows navigation to /dashboard
+  const token = await result.user.getIdToken()
+  document.cookie = `firebase-auth-token=${token}; path=/; max-age=3600; SameSite=Lax`
   return result.user
 }
 
@@ -40,6 +46,9 @@ export async function signUpWithEmail(
   const db = requireDb()
   const result = await createUserWithEmailAndPassword(auth, email, password)
   await updateProfile(result.user, { displayName })
+  // Set auth cookie immediately so middleware allows navigation to /dashboard
+  const token = await result.user.getIdToken()
+  document.cookie = `firebase-auth-token=${token}; path=/; max-age=3600; SameSite=Lax`
   await createUserDoc(db, result.user.uid, {
     email,
     displayName,
