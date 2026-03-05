@@ -1,15 +1,12 @@
 import type { Metadata } from 'next'
 import { Montserrat } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
-import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import { AuthProvider } from '@/components/providers/AuthProvider'
-
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
 
@@ -66,32 +63,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${montserrat.variable} light`} suppressHydrationWarning>
       <body className="bg-background font-montserrat text-foreground antialiased">
-        <ClerkProvider
-          appearance={{
-            variables: {
-              colorPrimary: '#FF751F',
-              colorBackground: '#0D0D0D',
-              colorInputBackground: '#141414',
-              colorInputText: '#FFFFFF',
-            },
-          }}
-        >
-          <ThemeProvider>
-            <AuthProvider>
-              {children}
-              <Toaster
-                position="top-right"
-                toastOptions={{
-                  style: {
-                    background: 'var(--color-surface)',
-                    color: 'var(--color-text-primary)',
-                    border: '1px solid var(--color-border)',
-                  },
-                }}
-              />
-            </AuthProvider>
-          </ThemeProvider>
-        </ClerkProvider>
+        <ThemeProvider>
+          {children}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                background: 'var(--color-surface)',
+                color: 'var(--color-text-primary)',
+                border: '1px solid var(--color-border)',
+              },
+            }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   )
