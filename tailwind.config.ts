@@ -41,6 +41,8 @@ const config: Config = {
         'pulse-dot': 'pulseDot 2s ease-in-out infinite',
         'spin-slow': 'spin 8s linear infinite',
         float: 'float 6s ease-in-out infinite',
+        'float-slow': 'floatSlow 8s ease-in-out infinite',
+        'float-slower': 'floatSlower 12s ease-in-out infinite',
       },
       keyframes: {
         fadeUp: {
@@ -58,6 +60,15 @@ const config: Config = {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-12px)' },
+        },
+        floatSlow: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '33%': { transform: 'translate(10px, -15px)' },
+          '66%': { transform: 'translate(-8px, 8px)' },
+        },
+        floatSlower: {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '50%': { transform: 'translate(-15px, 10px) scale(1.05)' },
         },
       },
       boxShadow: {

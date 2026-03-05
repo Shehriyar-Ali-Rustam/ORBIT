@@ -1,7 +1,7 @@
 'use client'
 
-import { forwardRef } from 'react'
-import { motion, HTMLMotionProps } from 'framer-motion'
+import { forwardRef, useRef, useCallback } from 'react'
+import { motion, useMotionValue, useSpring, HTMLMotionProps } from 'framer-motion'
 import { Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -9,6 +9,7 @@ interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'ref'> {
   variant?: 'primary' | 'ghost' | 'outline' | 'link'
   size?: 'sm' | 'md' | 'lg'
   loading?: boolean
+  magnetic?: boolean
   className?: string
   children: React.ReactNode
 }
@@ -28,14 +29,76 @@ const sizes = {
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'md', loading, className, children, disabled, ...props }, ref) => {
+  (
+    {
+      variant = 'primary',
+      size = 'md',
+      loading,
+      magnetic = false,
+      className,
+      children,
+      disabled,
+      onClick,
+      ...props
+    },
+    forwardedRef
+  ) => {
+    const internalRef = useRef<HTMLButtonElement>(null)
+    const translateX = useMotionValue(0)
+    const translateY = useMotionValue(0)
+    const springX = useSpring(translateX, { stiffness: 200, damping: 20 })
+    const springY = useSpring(translateY, { stiffness: 200, damping: 20 })
+
+    const handleMouseMove = useCallback(
+      (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (!magnetic || !internalRef.current) return
+        const rect = internalRef.current.getBoundingClientRect()
+        const centerX = rect.left + rect.width / 2
+        const centerY = rect.top + rect.height / 2
+        translateX.set((e.clientX - centerX) * 0.2)
+        translateY.set((e.clientY - centerY) * 0.2)
+      },
+      [magnetic, translateX, translateY]
+    )
+
+    const handleMouseLeave = useCallback(() => {
+      translateX.set(0)
+      translateY.set(0)
+    }, [translateX, translateY])
+
+    const handleClick = useCallback(
+      (e: React.MouseEvent<HTMLButtonElement>) => {
+        if (internalRef.current) {
+          const rect = internalRef.current.getBoundingClientRect()
+          const ripple = document.createElement('span')
+          const size = Math.max(rect.width, rect.height)
+          ripple.style.width = ripple.style.height = `${size}px`
+          ripple.style.left = `${e.clientX - rect.left - size / 2}px`
+          ripple.style.top = `${e.clientY - rect.top - size / 2}px`
+          ripple.className = 'ripple'
+          internalRef.current.appendChild(ripple)
+          setTimeout(() => ripple.remove(), 600)
+        }
+        onClick?.(e as Parameters<NonNullable<typeof onClick>>[0])
+      },
+      [onClick]
+    )
+
     return (
       <motion.button
-        ref={ref}
+        ref={(node) => {
+          (internalRef as React.MutableRefObject<HTMLButtonElement | null>).current = node
+          if (typeof forwardedRef === 'function') forwardedRef(node)
+          else if (forwardedRef) (forwardedRef as React.MutableRefObject<HTMLButtonElement | null>).current = node
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
         whileHover={disabled || loading ? undefined : { scale: 1.02 }}
         whileTap={disabled || loading ? undefined : { scale: 0.98 }}
+        style={magnetic ? { x: springX, y: springY } : undefined}
         className={cn(
-          'inline-flex items-center justify-center gap-2 rounded font-bold uppercase tracking-wide transition-colors',
+          'relative inline-flex items-center justify-center gap-2 overflow-hidden rounded font-bold uppercase tracking-wide transition-colors',
           variants[variant],
           sizes[size],
           (disabled || loading) && 'cursor-not-allowed opacity-40',

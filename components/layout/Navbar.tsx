@@ -90,7 +90,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cn(
-                'relative text-sm font-medium tracking-wider transition-colors',
+                'group relative text-sm font-medium tracking-wider transition-colors',
                 link.href === '/ai'
                   ? 'text-orange hover:text-orange'
                   : pathname === link.href
@@ -104,12 +104,14 @@ export function Navbar() {
                   New
                 </span>
               )}
-              {pathname === link.href && (
+              {pathname === link.href ? (
                 <motion.div
                   layoutId="navbar-indicator"
                   className="absolute -bottom-1 left-0 right-0 h-0.5 bg-orange"
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 />
+              ) : (
+                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-orange transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full" />
               )}
             </Link>
           ))}

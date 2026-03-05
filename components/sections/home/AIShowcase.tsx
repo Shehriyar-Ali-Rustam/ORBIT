@@ -7,6 +7,8 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Button } from '@/components/ui/Button'
 import { GlowDot } from '@/components/ui/GlowDot'
+import { LineReveal } from '@/components/ui/LineReveal'
+import { useParallax } from '@/hooks/useParallax'
 
 const features = [
   'Custom ChatGPT-powered chatbots',
@@ -26,96 +28,127 @@ const chatMessages = [
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function AIShowcase() {
+  const { ref: chatRef, y: chatY } = useParallax({ speed: 0.15 })
+
   return (
     <section className="section-padding overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left - Text */}
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease }}
-            viewport={{ once: true, margin: '-50px' }}
-          >
-            <SectionLabel>AI Solutions</SectionLabel>
-            <SectionHeading className="mt-4">
-              We Don&apos;t Just Use AI.
-              <br />
-              We <span className="text-gradient">Build It.</span>
-            </SectionHeading>
-            <p className="mt-6 leading-relaxed text-text-secondary">
+          <div>
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease }}
+              viewport={{ once: true, margin: '-50px' }}
+            >
+              <SectionLabel>AI Solutions</SectionLabel>
+            </motion.div>
+            <LineReveal delay={0.1}>
+              <SectionHeading className="mt-4">
+                We Don&apos;t Just Use AI.
+              </SectionHeading>
+            </LineReveal>
+            <LineReveal delay={0.2}>
+              <SectionHeading>
+                We <span className="text-gradient">Build It.</span>
+              </SectionHeading>
+            </LineReveal>
+            <motion.p
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease }}
+              viewport={{ once: true, margin: '-50px' }}
+              className="mt-6 leading-relaxed text-text-secondary"
+            >
               From custom ChatGPT-powered chatbots to fine-tuned language models, Orbit delivers AI
               solutions built specifically for your business, not off-the-shelf tools, but
               intelligence trained on your data.
-            </p>
+            </motion.p>
             <ul className="mt-8 space-y-3">
-              {features.map((feature) => (
-                <li key={feature} className="flex items-center gap-3">
+              {features.map((feature, i) => (
+                <motion.li
+                  key={feature}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ type: 'spring', stiffness: 100, damping: 20, delay: i * 0.08 }}
+                  viewport={{ once: true }}
+                  className="flex items-center gap-3"
+                >
                   <Check className="h-4 w-4 shrink-0 text-green-500" />
                   <span className="text-sm text-text-secondary">{feature}</span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-            <div className="mt-8">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4, ease }}
+              viewport={{ once: true }}
+              className="mt-8"
+            >
               <Link href="/services">
                 <Button variant="primary">See AI Services &rarr;</Button>
               </Link>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
-          {/* Right - Chat UI */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease }}
-            viewport={{ once: true, margin: '-50px' }}
-          >
-            <div className="overflow-hidden rounded-xl border border-border bg-surface">
-              {/* Chat header */}
-              <div className="flex items-center gap-3 border-b border-border px-4 py-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-brand">
-                  <span className="text-xs font-bold text-text-primary">O</span>
-                </div>
-                <span className="text-sm font-semibold text-text-primary">Orbit AI</span>
-                <GlowDot />
-              </div>
-
-              {/* Messages */}
-              <div className="space-y-4 p-4">
-                {chatMessages.map((msg, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: i * 0.2, ease }}
-                    viewport={{ once: true }}
-                    className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-[80%] rounded-lg px-4 py-2.5 text-sm ${
-                        msg.role === 'user'
-                          ? 'bg-orange text-text-primary'
-                          : 'bg-surface-2 text-text-secondary'
-                      }`}
-                    >
-                      {msg.text}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Input bar */}
-              <div className="border-t border-border p-3">
-                <div className="flex items-center gap-2 rounded-lg bg-surface-2 px-4 py-2.5">
-                  <span className="flex-1 text-sm text-text-tertiary">Ask Orbit AI...</span>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange">
-                    <span className="text-xs text-text-primary">&rarr;</span>
+          {/* Right - Chat UI with parallax */}
+          <div ref={chatRef}>
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease }}
+              viewport={{ once: true, margin: '-50px' }}
+              style={{ y: chatY }}
+            >
+              <div className="overflow-hidden rounded-xl border border-border bg-surface">
+                {/* Chat header */}
+                <div className="flex items-center gap-3 border-b border-border px-4 py-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-brand">
+                    <span className="text-xs font-bold text-text-primary">O</span>
                   </div>
+                  <span className="text-sm font-semibold text-text-primary">Orbit AI</span>
+                  <GlowDot />
                 </div>
-                <p className="mt-2 text-center text-xs text-text-tertiary">Powered by Orbit AI</p>
+
+                {/* Messages */}
+                <div className="space-y-4 p-4">
+                  {chatMessages.map((msg, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, y: 8 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ type: 'spring', stiffness: 100, damping: 20, delay: i * 0.15 }}
+                      viewport={{ once: true }}
+                      className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-[80%] rounded-lg px-4 py-2.5 text-sm ${
+                          msg.role === 'user'
+                            ? 'bg-orange text-text-primary'
+                            : 'bg-surface-2 text-text-secondary'
+                        }`}
+                      >
+                        {msg.text}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Input bar */}
+                <div className="border-t border-border p-3">
+                  <div className="flex items-center gap-2 rounded-lg bg-surface-2 px-4 py-2.5">
+                    <span className="flex-1 text-sm text-text-tertiary">Ask Orbit AI...</span>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange">
+                      <span className="text-xs text-text-primary">&rarr;</span>
+                    </div>
+                  </div>
+                  <p className="mt-2 text-center text-xs text-text-tertiary">Powered by Orbit AI</p>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

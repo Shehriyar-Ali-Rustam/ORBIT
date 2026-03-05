@@ -10,8 +10,6 @@ const stats = [
   { target: 2, suffix: '+', label: 'Years Building' },
 ]
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
-
 export function Stats() {
   return (
     <section className="border-y border-border bg-surface py-12">
@@ -22,16 +20,23 @@ export function Stats() {
               key={stat.label}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease }}
+              transition={{ type: 'spring', stiffness: 100, damping: 20, delay: i * 0.12 }}
               viewport={{ once: true, margin: '-50px' }}
               className="text-center"
             >
-              <AnimatedCounter
-                target={stat.target}
-                suffix={stat.suffix}
-                prefix={stat.prefix}
-                className="text-4xl font-black text-orange md:text-5xl"
-              />
+              <motion.div
+                initial={{ textShadow: '0 0 0px rgba(255,117,31,0)' }}
+                whileInView={{ textShadow: '0 0 20px rgba(255,117,31,0.3)' }}
+                transition={{ duration: 1, delay: 0.5 + i * 0.12 }}
+                viewport={{ once: true }}
+              >
+                <AnimatedCounter
+                  target={stat.target}
+                  suffix={stat.suffix}
+                  prefix={stat.prefix}
+                  className="text-4xl font-black text-orange md:text-5xl"
+                />
+              </motion.div>
               <p className="mt-2 text-sm text-text-secondary">{stat.label}</p>
             </motion.div>
           ))}

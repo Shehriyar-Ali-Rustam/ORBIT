@@ -6,6 +6,7 @@ import { Bot, Brain, Globe, Smartphone, Palette, Users } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Card } from '@/components/ui/Card'
+import { LineReveal } from '@/components/ui/LineReveal'
 
 const iconMap: Record<string, React.ElementType> = {
   Bot, Brain, Globe, Smartphone, Palette, Users,
@@ -20,25 +21,20 @@ const services = [
   { icon: 'Users', title: 'Find a Freelancer', description: 'Browse our curated network of vetted professionals and hire the perfect talent for your project.', href: '/freelancers' },
 ]
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
-
 export function ServicesSnapshot() {
   return (
     <section className="section-padding">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
-            viewport={{ once: true, margin: '-50px' }}
-          >
+          <LineReveal>
             <SectionLabel>What We Do</SectionLabel>
+          </LineReveal>
+          <LineReveal delay={0.1}>
             <SectionHeading className="mt-4">
               Everything You Need.{' '}
               <span className="text-gradient">One Orbit.</span>
             </SectionHeading>
-          </motion.div>
+          </LineReveal>
         </div>
 
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -49,10 +45,10 @@ export function ServicesSnapshot() {
                 key={service.title}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1, ease }}
+                transition={{ type: 'spring', stiffness: 100, damping: 20, delay: i * 0.12 }}
                 viewport={{ once: true, margin: '-50px' }}
               >
-                <Card className="h-full">
+                <Card className="h-full" tilt gradientBorder>
                   <Icon className="h-6 w-6 text-orange" />
                   <h3 className="mt-4 text-lg font-semibold text-text-primary">{service.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-text-secondary">{service.description}</p>
