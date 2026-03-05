@@ -36,27 +36,29 @@ export function useChat() {
       setMessages((prev) => [...prev, userMessage])
       setIsLoading(true)
 
-      const geminiMessages = [...messages.filter((m) => m.id !== 'welcome'), userMessage].map(
-        (m) => ({
-          role: m.role === 'user' ? ('user' as const) : ('model' as const),
-          parts: [{ text: m.content }],
-        })
-      )
+      // Build messages for the new AI chat API
+      const apiMessages = [
+        ...messages.filter((m) => m.id !== 'welcome').slice(-18).map((m) => ({
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+        })),
+        { role: 'user' as const, content: content.trim() },
+      ]
 
       const assistantId = `assistant-${Date.now()}`
 
       try {
         abortControllerRef.current = new AbortController()
 
-        const res = await fetch('/api/chat', {
+        const res = await fetch('/api/ai/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: geminiMessages }),
+          body: JSON.stringify({ messages: apiMessages, tool: 'chat' }),
           signal: abortControllerRef.current.signal,
         })
 
         if (!res.ok) {
-          const data = await res.json()
+          const data = await res.json().catch(() => ({}))
           throw new Error(data.error || 'Something went wrong.')
         }
 
@@ -64,7 +66,6 @@ export function useChat() {
         if (!reader) throw new Error('No response stream.')
 
         const decoder = new TextDecoder()
-        let fullText = ''
 
         setMessages((prev) => [
           ...prev,
@@ -76,10 +77,10 @@ export function useChat() {
           if (done) break
 
           const chunk = decoder.decode(value, { stream: true })
-          fullText += chunk
-
           setMessages((prev) =>
-            prev.map((m) => (m.id === assistantId ? { ...m, content: fullText } : m))
+            prev.map((m) =>
+              m.id === assistantId ? { ...m, content: m.content + chunk } : m
+            )
           )
         }
       } catch (err) {

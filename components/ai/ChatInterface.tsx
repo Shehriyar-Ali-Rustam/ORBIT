@@ -187,9 +187,6 @@ export function ChatInterface({ tool }: ChatInterfaceProps) {
       throw new Error(data.error || 'Failed to get response')
     }
 
-    const provider = (res.headers.get('X-AI-Provider') as AIProvider) || 'groq'
-    setCurrentProvider(provider)
-
     // Stream the response
     const reader = res.body?.getReader()
     if (!reader) throw new Error('No response stream')
@@ -200,7 +197,7 @@ export function ChatInterface({ tool }: ChatInterfaceProps) {
     // Add empty assistant message
     setMessages((prev) => [
       ...prev,
-      { id: assistantId, role: 'assistant', content: '', provider },
+      { id: assistantId, role: 'assistant', content: '' },
     ])
 
     while (true) {

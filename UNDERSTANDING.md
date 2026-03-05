@@ -1,6 +1,6 @@
 # ORBIT — Complete Project Documentation
 
-> A developer's guide to understanding every part of the ORBIT website.
+> A developer's guide to understanding every part of the ORBIT website + freelancer marketplace.
 
 ---
 
@@ -15,28 +15,31 @@
 7. [Theme System (Dark/Light)](#theme-system-darklight)
 8. [Pages & Routes](#pages--routes)
 9. [Components Breakdown](#components-breakdown)
-10. [AI Chatbot](#ai-chatbot)
-11. [Forms & Validation](#forms--validation)
-12. [API Routes](#api-routes)
-13. [Data Files](#data-files)
-14. [Custom Hooks](#custom-hooks)
-15. [Utility Functions](#utility-functions)
-16. [Environment Variables](#environment-variables)
-17. [How to Add/Change Things](#how-to-addchange-things)
+10. [AI Chatbot & Orbit AI](#ai-chatbot--orbit-ai)
+11. [Freelancer Marketplace](#freelancer-marketplace)
+12. [Forms & Validation](#forms--validation)
+13. [API Routes](#api-routes)
+14. [Data Files](#data-files)
+15. [Custom Hooks](#custom-hooks)
+16. [Utility Functions](#utility-functions)
+17. [Environment Variables](#environment-variables)
+18. [How to Add/Change Things](#how-to-addchange-things)
 
 ---
 
 ## What is ORBIT?
 
-ORBIT is a company website for an AI-powered software solutions business. It showcases services, portfolio projects, team members, and a freelancer marketplace. It also has a built-in AI chatbot powered by Google Gemini that can answer questions about the company.
+ORBIT is a company website + freelancer marketplace for an AI-powered software solutions business. It showcases services, portfolio projects, team members, and includes a full freelancer marketplace with Stripe payments. It also has a built-in AI assistant (Orbit AI) with 7 tools.
 
 **Key features:**
-- 8 pages (Home, About, Services, Portfolio, Freelancers, Contact, Privacy, Terms)
-- AI chatbot widget on every page
+- Company website: Home, About, Services, Portfolio, Contact, Privacy, Terms
+- Freelancer marketplace: Browse/hire freelancers, seller dashboard, buyer dashboard, messaging, reviews
+- Orbit AI: 7 free AI tools (chat, code, write, translate, resume, freelance, image)
+- Floating AI chat widget on every public page
 - Dark/Light theme toggle
-- Contact form and freelancer application form
-- Animated UI with smooth transitions
-- Fully responsive (works on mobile, tablet, desktop)
+- Contact form with email notifications
+- Animated UI with Framer Motion
+- Fully responsive (mobile, tablet, desktop)
 - SEO optimized with Open Graph and Twitter cards
 
 ---
@@ -45,16 +48,21 @@ ORBIT is a company website for an AI-powered software solutions business. It sho
 
 | Technology | What it does |
 |---|---|
-| **Next.js 14** | The React framework — handles routing, server rendering, API routes |
-| **TypeScript** | Type-safe JavaScript — catches errors before they happen |
-| **Tailwind CSS v3** | Utility-first CSS — all styling is done with class names |
-| **Framer Motion** | Animation library — handles all the smooth transitions and hover effects |
-| **Zod v4** | Schema validation — validates form inputs on both client and server |
-| **React Hook Form** | Form library — manages form state, submission, and error messages |
-| **Lucide React** | Icon library — provides all the icons used across the site |
-| **Google Generative AI** | Gemini API — powers the AI chatbot |
-| **Resend** | Email service — sends form submissions via email (ready but not active) |
-| **Upstash Redis** | Rate limiting — prevents spam on form submissions (ready but not active) |
+| **Next.js 14** | React framework — App Router, SSR, API routes |
+| **TypeScript** | Type-safe JavaScript |
+| **Tailwind CSS v3** | Utility-first CSS styling |
+| **Framer Motion** | Animations and transitions |
+| **Clerk** | Authentication for the freelancer marketplace (`/freelancers/*`) |
+| **Supabase** | Database (PostgreSQL), realtime messaging, file storage for marketplace |
+| **Stripe** | Payment processing for marketplace orders |
+| **Groq** | Primary AI provider (Llama 3.3 70B — fast, free) |
+| **Google Gemini** | Backup AI provider |
+| **OpenAI** | Optional AI provider (paid, if configured) |
+| **Zod** | Schema validation for forms and API routes |
+| **React Hook Form** | Form state management |
+| **Lucide React** | Icon library |
+| **Firebase** | Legacy auth (main site Navbar sign-in/out only) |
+| **Svix** | Clerk webhook signature verification |
 
 ---
 
@@ -62,101 +70,164 @@ ORBIT is a company website for an AI-powered software solutions business. It sho
 
 ```
 ORBIT/
-├── app/                          # All pages and API routes (Next.js App Router)
-│   ├── layout.tsx                # Root layout — wraps every page
-│   ├── page.tsx                  # Home page
-│   ├── globals.css               # Global styles + theme CSS variables
-│   ├── loading.tsx               # Loading spinner (shown during page transitions)
-│   ├── error.tsx                 # Error page (shown when something crashes)
-│   ├── not-found.tsx             # 404 page
-│   ├── about/page.tsx            # About page
-│   ├── services/page.tsx         # Services page
-│   ├── portfolio/
-│   │   ├── page.tsx              # Portfolio listing page
-│   │   └── [slug]/page.tsx       # Individual project page (dynamic route)
-│   ├── freelancers/
-│   │   ├── page.tsx              # Freelancers listing page
-│   │   └── apply/page.tsx        # Freelancer application page
-│   ├── contact/page.tsx          # Contact page
-│   ├── privacy/page.tsx          # Privacy policy
-│   ├── terms/page.tsx            # Terms of service
-│   └── api/                      # Backend API routes
-│       ├── chat/route.ts         # Gemini AI chatbot endpoint
-│       ├── contact/route.ts      # Contact form endpoint
-│       └── freelancer/route.ts   # Freelancer application endpoint
+├── app/                              # All pages and API routes
+│   ├── layout.tsx                    # Root layout (font, metadata, ThemeProvider)
+│   ├── (public)/                     # Public website pages
+│   │   ├── page.tsx                  # Home page
+│   │   ├── about/page.tsx            # About page
+│   │   ├── services/page.tsx         # Services page
+│   │   ├── portfolio/page.tsx        # Portfolio listing
+│   │   ├── portfolio/[slug]/page.tsx # Individual project page
+│   │   ├── contact/page.tsx          # Contact page
+│   │   ├── privacy/page.tsx          # Privacy policy
+│   │   ├── terms/page.tsx            # Terms of service
+│   │   └── layout.tsx               # Public layout (Navbar, Footer, ChatWidget)
+│   ├── (auth)/                       # Legacy Firebase auth pages
+│   │   ├── login/page.tsx
+│   │   └── register/page.tsx
+│   ├── ai/                           # Orbit AI tools
+│   │   ├── page.tsx                  # AI tools hub
+│   │   ├── chat/page.tsx             # Orbit Chat
+│   │   ├── code/page.tsx             # Orbit Code
+│   │   ├── write/page.tsx            # Orbit Write
+│   │   ├── translate/page.tsx        # Orbit Translate
+│   │   ├── resume/page.tsx           # Orbit Resume
+│   │   ├── freelance/page.tsx        # Orbit Freelance
+│   │   └── image/page.tsx            # Orbit Image
+│   ├── freelancers/                  # Marketplace (Clerk auth scoped here)
+│   │   ├── layout.tsx                # ClerkProvider + theme-aware appearance
+│   │   ├── page.tsx                  # Browse freelancers
+│   │   ├── search/page.tsx           # Search gigs
+│   │   ├── sign-in/page.tsx          # Clerk sign-in
+│   │   ├── sign-up/page.tsx          # Clerk sign-up
+│   │   ├── onboarding/page.tsx       # New seller profile setup
+│   │   ├── gig/[slug]/page.tsx       # Gig detail page
+│   │   ├── seller/[id]/page.tsx      # Seller profile page
+│   │   └── dashboard/                # Seller & buyer dashboards
+│   │       ├── layout.tsx            # Dashboard sidebar + mode switch
+│   │       ├── page.tsx              # Seller dashboard home
+│   │       ├── gigs/                 # Manage gigs (list, create, edit)
+│   │       ├── orders/               # Seller orders
+│   │       ├── messages/             # Real-time messaging
+│   │       ├── earnings/             # Earnings tracking
+│   │       ├── reviews/              # Seller reviews
+│   │       ├── profile/              # Edit profile
+│   │       └── buyer/                # Buyer dashboard (orders, reviews)
+│   └── api/                          # Backend API routes
+│       ├── ai/
+│       │   ├── chat/route.ts         # AI chat (streaming, multi-provider, RAG)
+│       │   └── image/route.ts        # AI image generation
+│       ├── contact/route.ts          # Contact form endpoint
+│       ├── marketplace/              # Marketplace CRUD APIs
+│       │   ├── gigs/route.ts         # Gigs CRUD
+│       │   ├── profiles/[id]/route.ts
+│       │   ├── orders/               # Order management
+│       │   ├── reviews/route.ts
+│       │   ├── conversations/route.ts
+│       │   ├── messages/route.ts
+│       │   ├── notifications/route.ts
+│       │   └── stripe/               # Stripe checkout + webhook
+│       └── webhooks/
+│           └── clerk/route.ts        # Clerk webhook (user sync to Supabase)
 │
 ├── components/
-│   ├── ThemeProvider.tsx          # Dark/Light theme context provider
-│   ├── layout/                   # Shared layout components
-│   │   ├── Navbar.tsx            # Navigation bar (appears on every page)
-│   │   ├── Footer.tsx            # Footer (appears on every page)
-│   │   └── PageWrapper.tsx       # Fade-in animation wrapper for pages
-│   ├── ui/                       # Reusable UI building blocks
-│   │   ├── Button.tsx            # Button (4 variants, 3 sizes, loading state)
-│   │   ├── Card.tsx              # Card container with hover animation
-│   │   ├── Badge.tsx             # Small label/tag component
-│   │   ├── Modal.tsx             # Popup modal with backdrop
-│   │   ├── SectionHeading.tsx    # Large heading for sections
-│   │   ├── SectionLabel.tsx      # Small orange label above headings
-│   │   ├── AnimatedCounter.tsx   # Number that counts up when visible
-│   │   ├── Skeleton.tsx          # Loading placeholder
-│   │   ├── GlowDot.tsx           # Pulsing status indicator dot
-│   │   └── Divider.tsx           # Horizontal line separator
-│   ├── chat/                     # AI Chatbot components
-│   │   ├── ChatWidget.tsx        # Main wrapper (controls open/close)
-│   │   ├── ChatBubble.tsx        # Floating orange button (bottom-right)
-│   │   ├── ChatWindow.tsx        # Chat panel (header, messages, input)
-│   │   └── ChatMessage.tsx       # Individual message bubble
-│   ├── forms/                    # Form components
-│   │   ├── ContactForm.tsx       # Contact page form
-│   │   └── FreelancerApplyForm.tsx # Freelancer application form
-│   └── sections/                 # Page-specific sections
-│       ├── home/                 # 8 sections for the home page
-│       ├── about/                # 5 sections for the about page
-│       ├── services/             # 4 sections for the services page
-│       ├── portfolio/            # 4 components for the portfolio page
-│       ├── freelancers/          # 5 sections for the freelancers page
-│       └── contact/              # 3 sections for the contact page
+│   ├── ThemeProvider.tsx              # Dark/Light theme context
+│   ├── layout/
+│   │   ├── Navbar.tsx                # Main site navigation
+│   │   └── Footer.tsx                # Site footer
+│   ├── ui/                           # Reusable UI components
+│   │   ├── Button.tsx, Card.tsx, Badge.tsx
+│   │   ├── SectionHeading.tsx, SectionLabel.tsx
+│   │   ├── AnimatedCounter.tsx, GlowDot.tsx
+│   │   └── ...
+│   ├── chat/                         # Floating chat widget (public pages)
+│   │   ├── ChatWidget.tsx            # Open/close wrapper
+│   │   ├── ChatBubble.tsx            # Floating orange button
+│   │   ├── ChatWindow.tsx            # Chat panel
+│   │   └── ChatMessage.tsx           # Message bubble
+│   ├── ai/                           # Full AI tools interface
+│   │   ├── ChatInterface.tsx         # Main chat UI with streaming
+│   │   ├── WelcomeScreen.tsx         # Tool-specific welcome
+│   │   ├── MessageBubble.tsx         # Message with markdown rendering
+│   │   ├── InputBar.tsx              # Input with attachments
+│   │   ├── AISidebar.tsx             # Conversation history sidebar
+│   │   ├── CodeBlock.tsx             # Syntax-highlighted code blocks
+│   │   ├── ImageResult.tsx           # AI-generated image display
+│   │   ├── ToolCard.tsx              # Tool selector card
+│   │   ├── ModelBadge.tsx            # AI provider badge
+│   │   ├── TypingIndicator.tsx       # Loading dots animation
+│   │   ├── VoiceInput.tsx            # Voice input support
+│   │   ├── AttachmentPreview.tsx     # File attachment preview
+│   │   └── ConversationList.tsx      # Conversation list
+│   ├── marketplace/                  # Marketplace components
+│   │   ├── MarketplaceNavbar.tsx     # Marketplace navigation
+│   │   ├── GigCard.tsx, GigGrid.tsx  # Gig display
+│   │   ├── SearchBar.tsx             # Search with filters
+│   │   └── dashboard/               # Dashboard components
+│   │       ├── Sidebar.tsx           # Dashboard sidebar nav
+│   │       ├── GigForm.tsx           # Create/edit gig form
+│   │       ├── OrderCard.tsx         # Order display
+│   │       ├── MessageThread.tsx     # Real-time chat thread
+│   │       └── ...
+│   ├── forms/
+│   │   └── ContactForm.tsx           # Contact page form (Firebase)
+│   └── sections/                     # Page-specific sections
+│       ├── home/                     # Home page sections
+│       ├── about/                    # About page sections
+│       ├── services/                 # Services page sections
+│       ├── portfolio/                # Portfolio page sections
+│       └── contact/                  # Contact page sections
 │
-├── data/                         # Static content data (like a mini database)
-│   ├── services.ts               # 5 services
-│   ├── portfolio.ts              # 6 portfolio projects
-│   ├── team.ts                   # 4 team members (1 real + 3 "coming soon")
-│   ├── freelancers.ts            # 6 freelancer profiles
-│   ├── testimonials.ts           # 3 client testimonials
-│   └── faqs.ts                   # 6 FAQ items
-│
-├── hooks/                        # Custom React hooks
-│   ├── useChat.ts                # Chat state management + streaming
-│   ├── useCounter.ts             # Animated counting hook
-│   ├── useInView.ts              # Detects when element is visible
-│   ├── useMediaQuery.ts          # Responsive breakpoint detection
-│   └── useScrollY.ts             # Tracks scroll position
-│
-├── lib/                          # Utility functions and configs
-│   ├── utils.ts                  # cn() helper, formatDate, slugify, truncate
-│   ├── constants.ts              # Nav links, social links, company info
-│   ├── validations.ts            # Zod schemas for forms
-│   ├── chat-context.ts           # AI chatbot system prompt
-│   ├── email.ts                  # Email sending functions (Resend)
-│   └── ratelimit.ts              # Rate limiting setup (Upstash)
+├── lib/
+│   ├── utils.ts                      # cn(), formatDate, slugify, truncate
+│   ├── constants.ts                  # Nav links, social links, company info
+│   ├── validations.ts               # Zod schemas for forms
+│   ├── email.ts                      # Email sending (Gmail SMTP)
+│   ├── ai/                           # AI system
+│   │   ├── router.ts                 # Multi-provider router (Groq → Gemini → OpenAI)
+│   │   ├── prompts.ts               # System prompts for all 7 tools
+│   │   ├── orbit-knowledge.ts       # Knowledge base (27 entries)
+│   │   ├── rag.ts                    # RAG search with synonym expansion
+│   │   ├── groq.ts                   # Groq streaming client
+│   │   ├── gemini.ts                 # Gemini streaming client
+│   │   ├── openai.ts                 # OpenAI streaming client
+│   │   ├── memory.ts                 # Session memory management
+│   │   └── image.ts                  # Pollinations image URL builder
+│   ├── supabase/
+│   │   ├── client.ts                 # Browser Supabase client (anon key)
+│   │   └── server.ts                 # Server Supabase client (service role)
+│   ├── supabase/storage.ts           # File upload with validation (5MB, MIME check)
+│   ├── marketplace/
+│   │   ├── queries.ts                # All SELECT operations
+│   │   ├── mutations.ts             # All INSERT/UPDATE/DELETE operations
+│   │   └── auth.ts                   # requireMarketplaceUser() helper
+│   ├── firebase/
+│   │   └── config.ts                 # Firebase config (legacy, used by Navbar)
+│   └── stripe/
+│       └── config.ts                 # Stripe instance
 │
 ├── types/
-│   └── index.ts                  # TypeScript interfaces for all data types
+│   ├── index.ts                      # Main site TypeScript interfaces
+│   └── marketplace.ts               # Marketplace TypeScript types
 │
-├── public/                       # Static assets
-│   ├── logo.png                  # ORBIT logo
-│   ├── logo1.png                 # Alternative logo
-│   └── images/team/
-│       └── shehriyar.png         # Founder photo
+├── data/                             # Static content data
+│   ├── services.ts                   # 5 services
+│   ├── portfolio.ts                  # 8 portfolio projects
+│   ├── team.ts                       # 4 team members
+│   ├── testimonials.ts              # 3 client testimonials
+│   └── faqs.ts                       # 6 FAQ items
 │
-├── tailwind.config.ts            # Tailwind CSS configuration
-├── next.config.mjs               # Next.js configuration
-├── tsconfig.json                 # TypeScript configuration
-├── package.json                  # Dependencies and scripts
-├── .env.example                  # Environment variable template
-├── .env.local                    # Actual environment variables (not in git)
-└── .gitignore                    # Files excluded from git
+├── hooks/
+│   ├── useChat.ts                    # Floating chat widget hook (calls /api/ai/chat)
+│   ├── useCounter.ts                 # Animated counting
+│   ├── useInView.ts                  # Viewport detection
+│   └── useAIConversations.ts        # AI conversation persistence (localStorage)
+│
+├── middleware.ts                     # Clerk auth middleware (/freelancers/dashboard/*, /freelancers/onboarding/*)
+├── tailwind.config.ts
+├── next.config.mjs                   # CSP headers, image optimization
+├── tsconfig.json
+└── package.json
 ```
 
 ---
@@ -166,40 +237,48 @@ ORBIT/
 ### The Flow
 
 1. **User visits any URL** → Next.js matches it to a page in `app/`
-2. **`layout.tsx` loads first** → Sets up the font, metadata, and wraps everything in:
-   - `ThemeProvider` (provides dark/light theme to all components)
-   - `Navbar` (top navigation bar)
-   - `Footer` (bottom footer)
-   - `ChatWidget` (floating chatbot button)
-3. **The page component renders** → Each page is a composition of section components
-4. **Animations play** → Framer Motion triggers animations as elements enter the viewport
+2. **Root `layout.tsx` loads** → Sets up font, metadata, wraps in `ThemeProvider`
+3. **Route group determines the wrapper:**
+   - `(public)/*` — Navbar, Footer, ChatWidget
+   - `ai/*` — AI tools layout
+   - `freelancers/*` — ClerkProvider + marketplace layout
+4. **Page renders** → Composition of section components with Framer Motion animations
 
-### Client vs Server Components
+### Auth Architecture
 
-- Files with `'use client'` at the top run in the browser (interactive stuff — animations, forms, state)
-- Files without it run on the server (static content, metadata, data fetching)
-- API routes (`app/api/`) always run on the server
+- **Clerk** — Scoped to `/freelancers/*` only (ClerkProvider in `app/freelancers/layout.tsx`)
+  - Middleware protects `/freelancers/dashboard/*` and `/freelancers/onboarding/*`
+  - Theme-aware sign-in/sign-up (dark/light mode)
+  - Webhook syncs users to Supabase `profiles` table
+- **Firebase** — Legacy, used only by main site Navbar for sign-in/out
+
+### Data Flow
+
+- **Main site** → Static data from `data/` files
+- **Marketplace** → Supabase (PostgreSQL) via `lib/marketplace/queries.ts` and `mutations.ts`
+- **AI chatbot** → Groq/Gemini/OpenAI via `lib/ai/router.ts` with RAG context from `lib/ai/orbit-knowledge.ts`
+- **Payments** → Stripe checkout + webhooks
+- **File uploads** → Supabase Storage (4 buckets: gig-images, profile-images, deliverables, message-attachments)
 
 ---
 
 ## Configuration Files
 
 ### `tailwind.config.ts`
-This defines the entire design system:
-- **Colors**: All based on CSS variables so they change with the theme
+- **Colors**: CSS variable-based (auto-switch with theme)
 - **Animations**: fadeUp, fadeIn, pulseDot, float, spin-slow
-- **Shadows**: orange-glow and orange-glow-sm for the signature orange glow effect
-- **Font**: Montserrat via CSS variable `--font-montserrat`
-- **Dark mode**: Uses the `class` strategy (adds `.dark` or `.light` to `<html>`)
+- **Shadows**: orange-glow effects
+- **Font**: Montserrat via CSS variable
+- **Dark mode**: `class` strategy
 
 ### `next.config.mjs`
-- **Security headers**: X-Frame-Options, CSP, HSTS, etc.
-- **Image optimization**: Allows external images from GitHub avatars and Unsplash
-- **Image formats**: Serves AVIF and WebP for better performance
+- **Security headers**: CSP (Clerk, Cloudflare Turnstile, Google, Firebase), X-Frame-Options, HSTS
+- **Image optimization**: External images from GitHub, Unsplash, Supabase, Clerk
+- **Image formats**: AVIF and WebP
 
-### `tsconfig.json`
-- **Strict mode**: Enabled (catches more bugs)
-- **Path alias**: `@/*` maps to the project root — so `@/components/ui/Button` means `./components/ui/Button`
+### `middleware.ts`
+- Clerk `clerkMiddleware()` protecting dashboard and onboarding routes
+- Public routes: all other paths
 
 ---
 
@@ -207,349 +286,288 @@ This defines the entire design system:
 
 ### Colors
 
-The entire color palette uses CSS variables, which means colors automatically change when you switch themes.
-
 | Token | Dark Mode | Light Mode | Used For |
 |---|---|---|---|
-| `bg-background` | #000000 (black) | #ffffff (white) | Page background |
-| `bg-surface` | #0d0d0d | #f5f5f5 | Card/section backgrounds |
+| `bg-background` | #000000 | #ffffff | Page background |
+| `bg-surface` | #0d0d0d | #f5f5f5 | Card backgrounds |
 | `bg-surface-2` | #141414 | #e8e8e8 | Secondary surface |
 | `border-border` | #1a1a1a | #e0e0e0 | Borders |
 | `text-text-primary` | #ffffff | #111111 | Main text |
 | `text-text-secondary` | #a0a0a0 | #555555 | Secondary text |
-| `text-text-tertiary` | #606060 | #888888 | Muted text |
-| `bg-orange` | #FF751F | #FF751F | Primary brand color (same in both themes) |
-
-### Special CSS Classes (in `globals.css`)
-
-| Class | What it does |
-|---|---|
-| `.dot-grid` | Creates a subtle dot pattern background |
-| `.glass` | Glassmorphism effect (blurred transparent background) |
-| `.orange-glow` | Orange shadow/glow effect |
-| `.card-hover` | Hover animation on cards (border glow, slight lift) |
-| `.text-gradient` | Orange gradient text |
-| `.border-gradient` | Orange gradient border |
-| `.section-padding` | Standard section vertical padding (6rem / 8rem on large screens) |
+| `bg-orange` | #FF751F | #FF751F | Brand color (both themes) |
 
 ### Typography
-
-- **Font**: Montserrat (Google Font), loaded in `layout.tsx`
-- **Weights available**: 400 (Regular), 500 (Medium), 600 (Semibold), 700 (Bold), 800 (Extra Bold), 900 (Black)
+- **Font**: Montserrat (Google Font)
+- **Weights**: 400–900
 
 ---
 
 ## Theme System (Dark/Light)
 
-The theme system works through three pieces:
-
-### 1. CSS Variables (`globals.css`)
-Two sets of variables defined under `.dark` and `.light` classes. When the class changes on `<html>`, all colors update instantly.
-
-### 2. ThemeProvider (`components/ThemeProvider.tsx`)
-A React Context that:
-- Reads the saved theme from `localStorage` (key: `orbit-theme`)
-- Provides `theme` (current theme) and `toggleTheme()` (function to switch) to all child components
-- Adds/removes `dark` or `light` class on `<html>` element
-
-### 3. Navbar Theme Toggle
-The Sun/Moon button in the navbar calls `toggleTheme()` from the ThemeProvider. The icon animates with a rotation when switching.
-
-**To use the theme in any component:**
-```tsx
-import { useTheme } from '@/components/ThemeProvider'
-
-function MyComponent() {
-  const { theme, toggleTheme } = useTheme()
-  // theme is 'dark' or 'light'
-}
-```
+Three pieces:
+1. **CSS Variables** (`globals.css`) — `.dark` and `.light` classes with color tokens
+2. **ThemeProvider** (`components/ThemeProvider.tsx`) — React Context with `theme` and `toggleTheme()`
+3. **Navbar Toggle** — Sun/Moon button calls `toggleTheme()`
 
 ---
 
 ## Pages & Routes
 
-### Home (`/`)
-The landing page with 8 sections stacked vertically:
-1. **Hero** — Full-screen intro with headline, tagline, and CTA buttons
-2. **Stats** — 4 animated counters (projects, clients, rating, years)
-3. **ServicesSnapshot** — 6 service cards in a grid
-4. **AIShowcase** — Split layout showing AI capabilities with a chat mockup
-5. **WhyOrbit** — 3 reasons to choose ORBIT
-6. **FeaturedPortfolio** — 3 highlighted projects
-7. **Testimonials** — 3 client review cards
-8. **HomeCTA** — Call-to-action section with "Get in Touch" button
+### Public Site
+| Route | Page |
+|---|---|
+| `/` | Home (8 sections: Hero, Stats, Services, AI Showcase, Why Orbit, Portfolio, Testimonials, CTA) |
+| `/about` | About (Hero, Story, Mission/Vision, Values, Team) |
+| `/services` | Services (Hero, Service Blocks, Process, FAQ) |
+| `/portfolio` | Portfolio listing with category filter |
+| `/portfolio/[slug]` | Individual project page |
+| `/contact` | Contact form + info |
+| `/privacy`, `/terms` | Legal pages |
 
-### About (`/about`)
-5 sections: Hero, Our Story, Mission/Vision, Values, Team + shared CTA
+### AI Tools
+| Route | Tool |
+|---|---|
+| `/ai` | Tool selection hub |
+| `/ai/chat` | General AI assistant |
+| `/ai/code` | Code assistant |
+| `/ai/write` | Content writer |
+| `/ai/translate` | English ↔ Urdu translator |
+| `/ai/resume` | Resume builder |
+| `/ai/freelance` | Freelance profile optimizer |
+| `/ai/image` | AI image generator |
 
-### Services (`/services`)
-4 sections: Hero, Service Blocks (alternating layout for each service), Process (4 steps), FAQ accordion + shared CTA
-
-### Portfolio (`/portfolio`)
-3 sections: Hero, Project Grid (with category filter), shared CTA
-
-### Portfolio Detail (`/portfolio/[slug]`)
-Dynamic route — each project has its own page. Uses `generateStaticParams()` to pre-build all project pages at build time. Shows full description, tech stack, links, and a "Next Project" navigation.
-
-### Freelancers (`/freelancers`)
-4 sections: Hero, Freelancer Grid (with skill filter), How It Works (3 steps), Join Banner
-
-### Freelancer Apply (`/freelancers/apply`)
-Application form page for freelancers wanting to join.
-
-### Contact (`/contact`)
-3 sections: Hero, Contact Form (left side) + Contact Info (right side)
-
-### Privacy & Terms (`/privacy`, `/terms`)
-Static content pages with legal text.
-
-### Error Pages
-- **`not-found.tsx`** — 404 page with "Go Home" and "Contact Us" buttons
-- **`error.tsx`** — Error boundary with "Try Again" button
-- **`loading.tsx`** — Spinner shown during page transitions
-
----
-
-## Components Breakdown
-
-### UI Components (`components/ui/`)
-
-#### Button
-The most-used component. Wraps Framer Motion for micro-interactions.
-- **Variants**: `primary` (orange), `ghost` (orange border), `outline` (border only), `link` (text only)
-- **Sizes**: `sm`, `md`, `lg`
-- **Loading state**: Shows a spinner and disables the button
-
-#### Card
-A container with border, surface background, and optional hover animation (lifts up 4px).
-
-#### Badge
-Small pill-shaped label. Variants: `default` (surface bg), `orange` (orange bg), `outline` (border only).
-
-#### Modal
-Full-screen overlay with a centered content box. Supports Escape key to close, backdrop click to close, and body scroll lock.
-
-#### AnimatedCounter
-Counts from 0 to a target number with an easing animation. Only starts counting when the element scrolls into view.
-
-### Layout Components (`components/layout/`)
-
-#### Navbar
-- Fixed to top of page
-- Glassmorphism effect when scrolled
-- ORBIT logo + text with wide letter spacing
-- Desktop: horizontal nav links with active indicator
-- Mobile: hamburger menu with slide-down drawer
-- Theme toggle button (Sun/Moon)
-- "Start a Project" CTA button
-
-#### Footer
-4-column grid:
-1. Brand (logo, tagline, social links)
-2. Company (nav links)
-3. Services (service list)
-4. Contact (email, phone, location)
-
-Bottom bar has copyright and legal links.
+### Marketplace
+| Route | Page |
+|---|---|
+| `/freelancers` | Browse freelancers |
+| `/freelancers/search` | Search gigs |
+| `/freelancers/sign-in` | Clerk sign-in |
+| `/freelancers/sign-up` | Clerk sign-up |
+| `/freelancers/onboarding` | New seller profile setup |
+| `/freelancers/gig/[slug]` | Gig detail |
+| `/freelancers/seller/[id]` | Seller profile |
+| `/freelancers/dashboard` | Seller dashboard |
+| `/freelancers/dashboard/gigs` | Manage gigs |
+| `/freelancers/dashboard/orders` | Seller orders |
+| `/freelancers/dashboard/messages` | Real-time messaging |
+| `/freelancers/dashboard/earnings` | Earnings tracking |
+| `/freelancers/dashboard/reviews` | Seller reviews |
+| `/freelancers/dashboard/profile` | Edit profile |
+| `/freelancers/dashboard/buyer` | Buyer dashboard |
 
 ---
 
-## AI Chatbot
+## AI Chatbot & Orbit AI
 
-The chatbot is a floating widget available on every page.
+### Floating Chat Widget (Public Pages)
 
-### How it works:
+A floating orange button (bottom-right) that opens a chat panel on every public page.
 
-1. **User clicks the orange bubble** (bottom-right corner) → Chat window opens
-2. **User types a message** → The `useChat` hook sends it to `/api/chat`
-3. **API route** receives the message, sends it to Google Gemini with the ORBIT system prompt
-4. **Gemini streams the response** → Text appears word-by-word in the chat
-5. **The system prompt** (`lib/chat-context.ts`) gives Gemini full knowledge about ORBIT: services, pricing, team, portfolio, contact info
-
-### Architecture:
-
+**Architecture:**
 ```
 User types message
     ↓
 useChat hook (hooks/useChat.ts)
-    ↓ POST request
-/api/chat/route.ts
-    ↓ Sends to Gemini with system prompt
-Google Gemini API (gemini-1.5-flash)
+    ↓ POST /api/ai/chat (tool: 'chat')
+AI route → RAG search → System prompt → AI provider
+    ↓
+Groq (Llama 3.3 70B) → Gemini (backup) → OpenAI (fallback)
     ↓ Streams response
 ReadableStream → useChat reads chunks → Updates UI
 ```
 
-### Components:
+### Full AI Tools (`/ai/*`)
 
-| Component | Role |
+7 specialized tools, each with:
+- Custom system prompt (`lib/ai/prompts.ts`)
+- Tool-specific suggestions and welcome screen
+- Conversation persistence (localStorage)
+- Streaming responses with markdown rendering
+
+### AI System Architecture
+
+| File | Purpose |
 |---|---|
-| `ChatWidget` | Root wrapper — controls open/close state |
-| `ChatBubble` | The floating orange button (MessageCircle / X icon) |
-| `ChatWindow` | The chat panel (header, messages, input area) |
-| `ChatMessage` | Individual message bubble (orange for user, surface for AI) |
+| `lib/ai/router.ts` | Multi-provider router: Groq → Gemini → OpenAI with auto-fallback |
+| `lib/ai/prompts.ts` | Base identity + 7 tool-specific prompts with guardrails |
+| `lib/ai/orbit-knowledge.ts` | Knowledge base (27 entries: services, pricing, portfolio, FAQs, etc.) |
+| `lib/ai/rag.ts` | RAG search with synonym expansion, bigram matching, category boosting |
+| `lib/ai/groq.ts` | Groq streaming (Llama 3.3 70B) |
+| `lib/ai/gemini.ts` | Gemini streaming (gemini-2.0-flash) |
+| `lib/ai/openai.ts` | OpenAI streaming (gpt-4o-mini) |
+| `lib/ai/memory.ts` | Session memory (localStorage) |
+| `lib/ai/image.ts` | Pollinations.ai free image generation |
 
-### Key details:
-- **Model**: Gemini 1.5 Flash (fast and cheap)
-- **Streaming**: Responses appear incrementally (like ChatGPT)
-- **History**: Keeps last 20 messages for context
-- **Mobile**: Chat window goes fullscreen on small screens
-- **Fallback**: If API key is missing, shows a message with the email address
+### Key AI Features
+- **RAG** — Synonym expansion (e.g., "how much" → "price", "cost", "rate"), intent detection, category boosting
+- **Lead conversion** — Detects buying intent, asks qualifying questions, guides to contact
+- **Guardrails** — Never invents info, never reveals system prompts, handles off-topic gracefully
+- **Follow-up suggestions** — Suggests natural next questions after each answer
+- **Prompt injection protection** — Blocks common injection patterns
+- **Streaming** — Token-by-token response display
+
+---
+
+## Freelancer Marketplace
+
+### Database (Supabase)
+
+| Table | Purpose |
+|---|---|
+| `profiles` | Seller profiles (synced from Clerk via webhook) |
+| `gigs` | Service listings with packages |
+| `orders` | Purchase orders (Stripe checkout) |
+| `reviews` | Buyer reviews for sellers |
+| `conversations` | Messaging threads |
+| `messages` | Individual messages (realtime) |
+| `notifications` | User notifications (realtime) |
+
+### Storage Buckets
+
+| Bucket | Access | Purpose |
+|---|---|---|
+| `gig-images` | Public | Gig cover images and gallery |
+| `profile-images` | Public | Seller profile photos |
+| `deliverables` | Private | Order deliverable files |
+| `message-attachments` | Private | Message file attachments |
+
+### Security
+- File uploads: 5MB limit + MIME type validation
+- Search: ILIKE wildcard escaping
+- Notifications: Ownership check on mark-read
+- Clerk webhook: Svix signature verification
+- Stripe webhook: Secret verification + metadata validation
+- Gigs API: Zod validation on POST
 
 ---
 
 ## Forms & Validation
 
-### Contact Form (`components/forms/ContactForm.tsx`)
-
-**Fields**: Name, Email, Phone (optional), Service (dropdown), Budget (dropdown), Message
-
-**Validation** (defined in `lib/validations.ts` using Zod):
-- Name: 2-100 characters
-- Email: Valid email format
-- Service: Must select from list
-- Budget: Must select from list
-- Message: 20-2000 characters
-
-**Flow**: User fills form → Client-side validation → POST to `/api/contact` → Server-side validation → Success/Error message
-
-### Freelancer Application Form (`components/forms/FreelancerApplyForm.tsx`)
-
-**Fields**: Name, Email, Role, Skills, Experience, Portfolio URL, Hourly Rate, GitHub/LinkedIn/Fiverr (optional), Bio
-
-**Flow**: Same pattern as contact form, submits to `/api/freelancer`
-
-Both forms use **React Hook Form** for state management and **Zod** for validation (same schema validates on both client and server).
+### Contact Form
+- **Fields**: Name, Email, Phone (optional), Service, Budget, Message
+- **Validation**: Zod schemas in `lib/validations.ts`
+- **Flow**: Client validation → POST `/api/contact` → Server validation → Email via Gmail SMTP
 
 ---
 
 ## API Routes
 
-All API routes are in `app/api/` and handle POST requests.
+### AI
+| Route | Method | Purpose |
+|---|---|---|
+| `/api/ai/chat` | POST | Streaming AI chat with RAG and multi-provider routing |
+| `/api/ai/image` | POST | AI image prompt enhancement + Pollinations URL |
 
-### `/api/chat` (POST)
-- Receives chat messages, forwards to Gemini AI
-- Returns streaming text response
-- Falls back gracefully if API key is missing
+### Marketplace
+| Route | Method | Purpose |
+|---|---|---|
+| `/api/marketplace/gigs` | GET/POST | List/create gigs (Zod validated) |
+| `/api/marketplace/gigs/[id]` | PATCH/DELETE | Update/delete gig |
+| `/api/marketplace/profiles/[id]` | GET/PATCH | Get/update seller profile |
+| `/api/marketplace/orders/[id]/complete` | POST | Complete an order |
+| `/api/marketplace/orders/[id]/deliver` | POST | Deliver an order |
+| `/api/marketplace/orders/[id]/revision` | POST | Request revision |
+| `/api/marketplace/reviews` | GET/POST | List/create reviews |
+| `/api/marketplace/conversations` | GET/POST | List/create conversations |
+| `/api/marketplace/messages` | GET/POST | List/send messages |
+| `/api/marketplace/notifications` | GET/PATCH | List/mark-read notifications |
+| `/api/marketplace/stripe/checkout` | POST | Create Stripe checkout session |
+| `/api/marketplace/stripe/webhook` | POST | Handle Stripe payment events |
 
-### `/api/contact` (POST)
-- Validates contact form data with Zod
-- Rate limiting ready (Upstash Redis) — currently commented out
-- Email sending ready (Resend) — currently commented out
-- Returns success/error response
+### Webhooks
+| Route | Method | Purpose |
+|---|---|---|
+| `/api/webhooks/clerk` | POST | Sync Clerk users to Supabase (user.created/updated/deleted) |
 
-### `/api/freelancer` (POST)
-- Validates freelancer application with Zod
-- Same rate limiting and email setup as contact route
-- Returns success/error response
-
-**To activate email sending**: Uncomment the rate limit and email code in the route files and add the RESEND_API_KEY and UPSTASH variables to `.env.local`.
+### Other
+| Route | Method | Purpose |
+|---|---|---|
+| `/api/contact` | POST | Contact form submission + email |
 
 ---
 
 ## Data Files
 
-All content data lives in `data/`. These act like a simple database — when you want to change content, you edit these files.
-
-| File | What it contains | Count |
-|---|---|---|
-| `services.ts` | Service offerings (title, description, features) | 5 services |
-| `portfolio.ts` | Portfolio projects (title, description, tech stack, links) | 6 projects |
-| `team.ts` | Team members (name, role, bio, photo, skills) | 4 members |
-| `freelancers.ts` | Freelancer profiles (name, skills, rate, availability) | 6 freelancers |
-| `testimonials.ts` | Client reviews (quote, author, rating) | 3 testimonials |
-| `faqs.ts` | Frequently asked questions | 6 FAQs |
-
-Each file exports a typed array. The TypeScript interfaces are defined in `types/index.ts`.
+| File | Contents |
+|---|---|
+| `data/services.ts` | 5 services (AI chatbots, model training, web, mobile, design) |
+| `data/portfolio.ts` | 8 portfolio projects with tech stacks and links |
+| `data/team.ts` | 4 team members (1 founder + 3 hiring placeholders) |
+| `data/testimonials.ts` | 3 client testimonials |
+| `data/faqs.ts` | 6 FAQ items |
 
 ---
 
 ## Custom Hooks
 
-| Hook | What it does | Used by |
-|---|---|---|
-| `useChat` | Manages chat messages, sends to API, handles streaming | ChatWidget |
-| `useCounter` | Animates a number from 0 to target with easing | AnimatedCounter |
-| `useInView` | Detects when an element is visible on screen | AnimatedCounter |
-| `useMediaQuery` | Returns true/false for a CSS media query | Responsive components |
-| `useScrollY` | Returns the current scroll position (number) | Navbar scroll effect |
-
----
-
-## Utility Functions
-
-All in `lib/utils.ts`:
-
-| Function | What it does | Example |
-|---|---|---|
-| `cn()` | Merges Tailwind classes safely | `cn('text-lg', isActive && 'text-orange')` |
-| `formatDate()` | Formats a date string | `formatDate('2024-01-15')` → "January 15, 2024" |
-| `truncate()` | Shortens text with "..." | `truncate('long text', 50)` |
-| `slugify()` | Converts text to URL slug | `slugify('Hello World')` → "hello-world" |
+| Hook | Purpose |
+|---|---|
+| `useChat` | Floating chat widget — sends messages to `/api/ai/chat`, handles streaming |
+| `useCounter` | Animated number counting with easing |
+| `useInView` | Viewport intersection detection |
+| `useAIConversations` | AI conversation persistence in localStorage |
 
 ---
 
 ## Environment Variables
 
-Create a `.env.local` file (never commit this!) based on `.env.example`:
-
 ```env
-# Email service (for contact/freelancer forms)
-RESEND_API_KEY=your_resend_api_key
+# Gmail SMTP
+EMAIL_USER=hello.theorbit@gmail.com
+EMAIL_PASS=your_app_password
 
-# Rate limiting (for form spam prevention)
-UPSTASH_REDIS_REST_URL=your_upstash_url
-UPSTASH_REDIS_REST_TOKEN=your_upstash_token
+# Firebase (legacy — main site auth)
+NEXT_PUBLIC_FIREBASE_API_KEY=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
 
-# Contact form recipient
-CONTACT_EMAIL=hello.theorbit@gmail.com
+# Stripe
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
 
-# App URL
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+# AI Providers
+GROQ_API_KEY=gsk_...
+GEMINI_API_KEY=AIza...
+AI_PROVIDER=groq  # preferred provider
 
-# AI Chatbot
-GEMINI_API_KEY=your_gemini_api_key
+# Clerk
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+CLERK_SECRET_KEY=sk_test_...
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/freelancers/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/freelancers/sign-up
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/freelancers/dashboard
+NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/freelancers/onboarding
+CLERK_WEBHOOK_SECRET=whsec_...
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+SUPABASE_SERVICE_ROLE_KEY=eyJ...
 ```
-
-**Currently active**: Only GEMINI_API_KEY is needed for the chatbot. The email and rate limiting features are ready but commented out in the API routes.
 
 ---
 
 ## How to Add/Change Things
 
-### Add a new service
-1. Open `data/services.ts`
-2. Add a new object to the array following the `Service` interface
-3. The icon should be a Lucide icon name (check lucide.dev for icons)
-
-### Add a new portfolio project
-1. Open `data/portfolio.ts`
-2. Add a new object following the `Project` interface
-3. Set `featured: true` if you want it on the home page
-4. The slug is used for the URL: `/portfolio/your-slug`
-
-### Add a new team member
-1. Open `data/team.ts`
-2. Add a new object following the `TeamMember` interface
-3. Put the photo in `public/images/team/`
-
-### Change company info
-Edit `lib/constants.ts` — this is where the email, phone, tagline, and social links live.
-
-### Change the chatbot's knowledge
-Edit `lib/chat-context.ts` — this is the system prompt that tells Gemini everything about ORBIT.
-
-### Activate email sending
-1. Sign up at resend.com, get an API key
-2. Add `RESEND_API_KEY=your_key` to `.env.local`
-3. Uncomment the rate limit and email code in `app/api/contact/route.ts` and `app/api/freelancer/route.ts`
-
-### Add a new page
-1. Create `app/your-page/page.tsx`
-2. Export a default function component
-3. Add metadata export for SEO
-4. Add the route to `NAV_LINKS` in `lib/constants.ts` if it should appear in the navbar
+| What | Where |
+|---|---|
+| Change nav links | `lib/constants.ts` → `NAV_LINKS` |
+| Change company info | `lib/constants.ts` → `COMPANY` |
+| Edit services | `data/services.ts` |
+| Edit portfolio | `data/portfolio.ts` |
+| Edit team | `data/team.ts` |
+| Edit testimonials | `data/testimonials.ts` |
+| Edit FAQs | `data/faqs.ts` |
+| Change chatbot knowledge | `lib/ai/orbit-knowledge.ts` (27 knowledge entries) |
+| Change chatbot personality | `lib/ai/prompts.ts` (BASE_IDENTITY + tool prompts) |
+| Change RAG synonyms | `lib/ai/rag.ts` (SYNONYMS map) |
+| Change form validation | `lib/validations.ts` |
+| Change colors/theme | `app/globals.css` (CSS variables) |
+| Change Tailwind config | `tailwind.config.ts` |
+| Change metadata/SEO | `app/layout.tsx` (global) or each `page.tsx` |
+| Add images | `public/` folder |
+| Environment secrets | `.env.local` |
 
 ### Run the project
 ```bash
@@ -558,26 +576,3 @@ npm run build    # Build for production
 npm start        # Start production server
 npm run lint     # Check for code issues
 ```
-
----
-
-## Quick Reference
-
-| What | Where |
-|---|---|
-| Change nav links | `lib/constants.ts` → `NAV_LINKS` |
-| Change company info | `lib/constants.ts` → `COMPANY` |
-| Change social links | `lib/constants.ts` → `SOCIAL_LINKS` |
-| Edit services | `data/services.ts` |
-| Edit portfolio | `data/portfolio.ts` |
-| Edit team | `data/team.ts` |
-| Edit freelancers | `data/freelancers.ts` |
-| Edit testimonials | `data/testimonials.ts` |
-| Edit FAQs | `data/faqs.ts` |
-| Change chatbot behavior | `lib/chat-context.ts` |
-| Change form validation | `lib/validations.ts` |
-| Change colors/theme | `app/globals.css` (CSS variables) |
-| Change Tailwind config | `tailwind.config.ts` |
-| Change metadata/SEO | `app/layout.tsx` (global) or each `page.tsx` |
-| Add images | `public/` folder |
-| Environment secrets | `.env.local` |

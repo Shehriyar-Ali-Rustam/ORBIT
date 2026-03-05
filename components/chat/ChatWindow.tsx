@@ -123,7 +123,7 @@ export function ChatWindow({ messages, isLoading, onSend, onClear, onClose }: Ch
           </button>
         </div>
         <p className="mt-2 text-center text-[10px] text-text-disabled">
-          Powered by Gemini AI &bull; ORBIT
+          Powered by Orbit AI
         </p>
       </div>
     </motion.div>
