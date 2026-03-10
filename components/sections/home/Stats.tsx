@@ -12,9 +12,9 @@ const stats = [
 
 export function Stats() {
   return (
-    <section className="border-y border-border bg-surface py-12">
+    <section className="relative border-y border-border bg-surface py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -22,22 +22,19 @@ export function Stats() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ type: 'spring', stiffness: 100, damping: 20, delay: i * 0.12 }}
               viewport={{ once: true, margin: '-50px' }}
-              className="text-center"
+              className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-6 transition-all duration-300 hover:border-accent/30"
             >
-              <motion.div
-                initial={{ textShadow: '0 0 0px rgba(255,117,31,0)' }}
-                whileInView={{ textShadow: '0 0 20px rgba(255,117,31,0.3)' }}
-                transition={{ duration: 1, delay: 0.5 + i * 0.12 }}
-                viewport={{ once: true }}
-              >
+              {/* Gradient sweep on hover */}
+              <div className="absolute -inset-px rounded-2xl bg-gradient-to-r from-accent/0 via-accent/10 to-accent/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="relative z-10 text-center">
                 <AnimatedCounter
                   target={stat.target}
                   suffix={stat.suffix}
                   prefix={stat.prefix}
-                  className="text-4xl font-black text-orange md:text-5xl"
+                  className="font-mono text-4xl font-bold text-accent md:text-5xl"
                 />
-              </motion.div>
-              <p className="mt-2 text-sm text-text-secondary">{stat.label}</p>
+                <p className="mt-2 text-xs font-medium uppercase tracking-widest text-text-tertiary">{stat.label}</p>
+              </div>
             </motion.div>
           ))}
         </div>

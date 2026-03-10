@@ -44,7 +44,6 @@ export function Navbar() {
     }
   }, [mobileOpen])
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -64,7 +63,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed left-0 right-0 top-0 z-50 transition-all duration-300',
+        'fixed left-0 right-0 top-0 z-50 transition-all duration-500',
         scrolled ? 'glass' : 'bg-transparent'
       )}
     >
@@ -78,40 +77,42 @@ export function Navbar() {
             height={160}
             quality={100}
             priority
-            className={cn('h-12 w-12 object-contain', theme === 'light' && 'invert hue-rotate-180')}
+            className={cn('h-10 w-10 object-contain', theme === 'light' && 'invert hue-rotate-180')}
           />
-          <span className="font-montserrat text-lg font-bold tracking-[0.3em] text-text-primary">ORBIT</span>
+          <span className="text-lg font-bold tracking-[0.2em] text-text-primary">
+            ORBIT
+          </span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               className={cn(
-                'group relative text-sm font-medium tracking-wider transition-colors',
+                'group relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300',
                 link.href === '/ai'
-                  ? 'text-orange hover:text-orange'
+                  ? 'text-accent'
                   : pathname === link.href
-                    ? 'text-orange'
+                    ? 'text-accent'
                     : 'text-text-secondary hover:text-text-primary'
               )}
             >
-              {link.label}
+              <span className="relative z-10">{link.label}</span>
               {link.href === '/ai' && (
-                <span className="ml-1.5 inline-flex rounded bg-orange/20 px-1 py-0.5 text-[9px] font-bold uppercase leading-none text-orange">
+                <span className="relative z-10 ml-1.5 inline-flex rounded-full bg-accent/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-accent">
                   New
                 </span>
               )}
               {pathname === link.href ? (
                 <motion.div
                   layoutId="navbar-indicator"
-                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-orange"
+                  className="absolute inset-0 rounded-full bg-accent/10"
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 />
               ) : (
-                <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-orange transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full" />
+                <span className="absolute inset-0 rounded-full transition-colors duration-300 group-hover:bg-text-primary/5" />
               )}
             </Link>
           ))}
@@ -122,7 +123,7 @@ export function Navbar() {
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-text-secondary transition-colors hover:border-orange hover:text-orange"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-secondary transition-all duration-300 hover:border-accent/50 hover:text-accent"
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -133,11 +134,7 @@ export function Navbar() {
                 exit={{ rotate: 90, opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                {theme === 'dark' ? (
-                  <Sun className="h-4 w-4" />
-                ) : (
-                  <Moon className="h-4 w-4" />
-                )}
+                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </motion.div>
             </AnimatePresence>
           </button>
@@ -149,7 +146,7 @@ export function Navbar() {
                 <div className="relative hidden md:block" ref={dropdownRef}>
                   <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-brand text-sm font-bold text-white transition-shadow hover:shadow-orange-glow"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-brand text-sm font-bold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
                   >
                     {user.photoURL ? (
                       <Image
@@ -171,33 +168,21 @@ export function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.95 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute right-0 top-12 w-56 rounded-xl border border-border bg-surface p-2 shadow-lg"
+                        className="absolute right-0 top-12 w-56 rounded-2xl border border-border bg-surface p-2 shadow-lg"
                       >
                         <div className="border-b border-border px-3 pb-3 pt-1">
                           <p className="text-sm font-medium text-text-primary">{user.displayName}</p>
                           <p className="text-xs text-text-tertiary">{user.email}</p>
                         </div>
                         <div className="pt-2">
-                          <Link
-                            href="/freelancers/dashboard"
-                            className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-background hover:text-text-primary"
-                          >
-                            <LayoutDashboard className="h-4 w-4" />
-                            Dashboard
+                          <Link href="/freelancers/dashboard" className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-accent-dim hover:text-text-primary">
+                            <LayoutDashboard className="h-4 w-4" /> Dashboard
                           </Link>
-                          <Link
-                            href="/freelancers/dashboard/profile"
-                            className="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-background hover:text-text-primary"
-                          >
-                            <User className="h-4 w-4" />
-                            Account
+                          <Link href="/freelancers/dashboard/profile" className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-accent-dim hover:text-text-primary">
+                            <User className="h-4 w-4" /> Account
                           </Link>
-                          <button
-                            onClick={handleSignOut}
-                            className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-background hover:text-red-500"
-                          >
-                            <LogOut className="h-4 w-4" />
-                            Sign Out
+                          <button onClick={handleSignOut} className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-red-500/10 hover:text-red-500">
+                            <LogOut className="h-4 w-4" /> Sign Out
                           </button>
                         </div>
                       </motion.div>
@@ -206,9 +191,7 @@ export function Navbar() {
                 </div>
               ) : (
                 <Link href="/login" className="hidden md:block">
-                  <Button variant="primary" size="sm">
-                    Sign In
-                  </Button>
+                  <Button variant="primary" size="sm">Sign In</Button>
                 </Link>
               )}
             </>
@@ -216,9 +199,7 @@ export function Navbar() {
 
           {!loading && !isAuthenticated && (
             <Link href="/contact" className="hidden md:block">
-              <Button variant="ghost" size="sm">
-                Start a Project
-              </Button>
+              <Button variant="ghost" size="sm">Start a Project</Button>
             </Link>
           )}
 
@@ -240,61 +221,26 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 top-16 z-40 bg-background md:hidden"
+            className="fixed inset-0 top-16 z-40 bg-background/95 backdrop-blur-xl md:hidden"
           >
             <div className="flex flex-col items-center gap-6 px-6 pt-12">
               {NAV_LINKS.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    className={cn(
-                      'text-lg font-medium tracking-wider transition-colors',
-                      pathname === link.href
-                        ? 'text-orange'
-                        : 'text-text-secondary hover:text-text-primary'
-                    )}
-                  >
+                <motion.div key={link.href} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+                  <Link href={link.href} className={cn('text-lg font-medium tracking-wider transition-colors', pathname === link.href ? 'text-accent' : 'text-text-secondary hover:text-text-primary')}>
                     {link.label}
                   </Link>
                 </motion.div>
               ))}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: NAV_LINKS.length * 0.05 }}
-                className="flex flex-col items-center gap-3 pt-4"
-              >
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: NAV_LINKS.length * 0.05 }} className="flex flex-col items-center gap-3 pt-4">
                 {isAuthenticated ? (
                   <>
-                    <Link href="/freelancers/dashboard">
-                      <Button variant="primary" size="lg">
-                        Dashboard
-                      </Button>
-                    </Link>
-                    <button
-                      onClick={handleSignOut}
-                      className="text-sm text-text-secondary hover:text-red-500"
-                    >
-                      Sign Out
-                    </button>
+                    <Link href="/freelancers/dashboard"><Button variant="primary" size="lg">Dashboard</Button></Link>
+                    <button onClick={handleSignOut} className="text-sm text-text-secondary hover:text-red-500">Sign Out</button>
                   </>
                 ) : (
                   <>
-                    <Link href="/login">
-                      <Button variant="primary" size="lg">
-                        Sign In
-                      </Button>
-                    </Link>
-                    <Link href="/contact">
-                      <Button variant="ghost" size="lg">
-                        Start a Project
-                      </Button>
-                    </Link>
+                    <Link href="/login"><Button variant="primary" size="lg">Sign In</Button></Link>
+                    <Link href="/contact"><Button variant="ghost" size="lg">Start a Project</Button></Link>
                   </>
                 )}
               </motion.div>

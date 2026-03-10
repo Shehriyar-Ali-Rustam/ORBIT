@@ -30,7 +30,12 @@ export function CursorGlow() {
     return () => window.removeEventListener('mousemove', handler)
   }, [cursorX, cursorY, visible])
 
-  if (theme !== 'dark' || !visible) return null
+  if (!visible) return null
+
+  const glow =
+    theme === 'dark'
+      ? 'radial-gradient(circle, rgba(255,117,31,0.07) 0%, transparent 70%)'
+      : 'radial-gradient(circle, rgba(255,117,31,0.05) 0%, transparent 70%)'
 
   return (
     <motion.div
@@ -40,8 +45,7 @@ export function CursorGlow() {
         y: springY,
         translateX: '-50%',
         translateY: '-50%',
-        background:
-          'radial-gradient(circle, rgba(255,117,31,0.06) 0%, transparent 70%)',
+        background: glow,
       }}
     />
   )

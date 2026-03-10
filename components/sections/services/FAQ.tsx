@@ -35,7 +35,7 @@ export function FAQ() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, ease }}
               viewport={{ once: true }}
-              className="rounded-xl border border-border bg-surface"
+              className="group rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
             >
               <button
                 onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
@@ -47,7 +47,7 @@ export function FAQ() {
                   animate={{ rotate: openId === faq.id ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <ChevronDown className="h-5 w-5 shrink-0 text-orange" />
+                  <ChevronDown className="h-5 w-5 shrink-0 text-accent" />
                 </motion.div>
               </button>
               <AnimatePresence>

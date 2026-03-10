@@ -87,7 +87,7 @@ export function InputBar({
         <button
           onClick={openFilePicker}
           disabled={isLoading || disabled}
-          className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-secondary transition-colors hover:text-text-primary hover:border-orange disabled:opacity-40"
+          className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-secondary transition-colors hover:text-text-primary hover:border-accent disabled:opacity-40"
           title="Attach file"
         >
           <Paperclip className="h-5 w-5" />
@@ -131,7 +131,7 @@ export function InputBar({
             disabled={!canSend}
             whileHover={canSend ? { scale: 1.05 } : undefined}
             whileTap={canSend ? { scale: 0.95 } : undefined}
-            className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl bg-orange text-white transition-opacity disabled:opacity-40"
+            className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl bg-accent text-white transition-opacity disabled:opacity-40"
           >
             <ArrowUp className="h-5 w-5" />
           </motion.button>

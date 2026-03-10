@@ -27,7 +27,7 @@ const TOOL_TITLES: Record<AITool, string> = {
 }
 
 const TOOL_DESCRIPTIONS: Record<AITool, string> = {
-  chat: 'Your general AI assistant — ask me anything about tech, business, or Orbit.',
+  chat: 'Your general AI assistant. Ask me anything about tech, business, or Orbit.',
   code: 'Write, debug, and explain code in any language. Production-ready output.',
   write: 'Create marketing copy, blog posts, emails, and professional content.',
   translate: 'Professional English ↔ Urdu translation with cultural context.',

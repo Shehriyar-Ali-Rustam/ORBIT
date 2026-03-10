@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useScroll, useTransform } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Badge } from '@/components/ui/Badge'
@@ -29,24 +30,26 @@ function PortfolioCard({ project, index }: { project: Project; index: number }) 
       viewport={{ once: true, margin: '-50px' }}
     >
       <Link href={`/portfolio/${project.slug}`} className="group block">
-        <div className="card-hover gradient-border-animated overflow-hidden rounded-xl border border-border bg-surface">
+        <div className="overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] backdrop-blur-sm transition-all duration-300 hover:border-accent/30 hover:shadow-card-hover">
           <div className="relative aspect-video overflow-hidden bg-surface-2">
             <motion.div style={{ y: imageY }} className="absolute inset-[-15%]">
               <Image
                 src={project.coverImage}
                 alt={project.title}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               />
             </motion.div>
-            <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 transition-opacity group-hover:opacity-100">
-              <span className="text-sm font-semibold text-text-primary">View Project &rarr;</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 transition-all duration-300 group-hover:opacity-100">
+              <span className="flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-[#0a0a0a]">
+                View Project <ArrowRight className="h-4 w-4" />
+              </span>
             </div>
           </div>
           <div className="p-6">
-            <Badge variant="orange">{project.category.toUpperCase()}</Badge>
-            <h3 className="mt-3 text-lg font-semibold text-text-primary">{project.title}</h3>
+            <Badge variant="accent">{project.category.toUpperCase()}</Badge>
+            <h3 className="mt-3 text-lg font-bold text-text-primary">{project.title}</h3>
             <p className="mt-2 text-sm text-text-secondary">{project.shortDescription}</p>
             <div className="mt-4 flex flex-wrap gap-2">
               {project.techStack.slice(0, 3).map((tech) => (
@@ -83,7 +86,10 @@ export function FeaturedPortfolio() {
 
         <div className="mt-12 text-center">
           <Link href="/portfolio">
-            <Button variant="ghost">See All Work &rarr;</Button>
+            <Button variant="ghost">
+              See All Work
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </Link>
         </div>
       </div>

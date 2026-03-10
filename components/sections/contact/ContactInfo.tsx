@@ -25,20 +25,20 @@ export function ContactInfo() {
 
       <div className="space-y-4">
         <div className="flex items-center gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-dim">
-            <Mail className="h-5 w-5 text-orange" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10">
+            <Mail className="h-5 w-5 text-accent" />
           </div>
           <div>
             <p className="text-xs text-text-tertiary">Email</p>
-            <a href={`mailto:${COMPANY.email}`} className="text-sm text-text-primary transition-colors hover:text-orange">
+            <a href={`mailto:${COMPANY.email}`} className="text-sm text-text-primary transition-colors hover:text-accent">
               {COMPANY.email}
             </a>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-dim">
-            <Phone className="h-5 w-5 text-orange" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10">
+            <Phone className="h-5 w-5 text-accent" />
           </div>
           <div>
             <p className="text-xs text-text-tertiary">Phone</p>
@@ -47,8 +47,8 @@ export function ContactInfo() {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-dim">
-            <MapPin className="h-5 w-5 text-orange" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent/10">
+            <MapPin className="h-5 w-5 text-accent" />
           </div>
           <div>
             <p className="text-xs text-text-tertiary">Location</p>
@@ -65,13 +65,13 @@ export function ContactInfo() {
       </div>
 
       <div className="flex items-center gap-4">
-        <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-orange" aria-label="GitHub">
+        <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-accent" aria-label="GitHub">
           <Github className="h-5 w-5" />
         </a>
-        <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-orange" aria-label="LinkedIn">
+        <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-accent" aria-label="LinkedIn">
           <Linkedin className="h-5 w-5" />
         </a>
-        <a href={SOCIAL_LINKS.fiverr} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-text-tertiary transition-colors hover:text-orange" aria-label="Fiverr">
+        <a href={SOCIAL_LINKS.fiverr} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-text-tertiary transition-colors hover:text-accent" aria-label="Fiverr">
           Fiverr
         </a>
       </div>

@@ -15,16 +15,19 @@ export function MissionVision() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease }}
             viewport={{ once: true, margin: '-50px' }}
-            className="border-gradient rounded-xl p-8"
+            className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-8 backdrop-blur-sm"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-dim">
-              <Target className="h-6 w-6 text-orange" />
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
+            <div className="relative z-10">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
+                <Target className="h-6 w-6 text-accent" />
+              </div>
+              <h3 className="mt-6 text-2xl font-bold text-text-primary">Our Mission</h3>
+              <p className="mt-4 leading-relaxed text-text-secondary">
+                To deliver world-class AI-powered software solutions that empower businesses to grow,
+                innovate, and compete globally, regardless of their size or location.
+              </p>
             </div>
-            <h3 className="mt-6 text-2xl font-bold text-text-primary">Our Mission</h3>
-            <p className="mt-4 leading-relaxed text-text-secondary">
-              To deliver world-class AI-powered software solutions that empower businesses to grow,
-              innovate, and compete globally — regardless of their size or location.
-            </p>
           </motion.div>
 
           <motion.div
@@ -32,16 +35,19 @@ export function MissionVision() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease }}
             viewport={{ once: true, margin: '-50px' }}
-            className="border-gradient rounded-xl p-8"
+            className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-8 backdrop-blur-sm"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-orange-dim">
-              <Eye className="h-6 w-6 text-orange" />
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
+            <div className="relative z-10">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
+                <Eye className="h-6 w-6 text-accent" />
+              </div>
+              <h3 className="mt-6 text-2xl font-bold text-text-primary">Our Vision</h3>
+              <p className="mt-4 leading-relaxed text-text-secondary">
+                To become a globally recognized technology company from Pakistan, proving that
+                innovation knows no borders and that the best solutions can come from anywhere.
+              </p>
             </div>
-            <h3 className="mt-6 text-2xl font-bold text-text-primary">Our Vision</h3>
-            <p className="mt-4 leading-relaxed text-text-secondary">
-              To become a globally recognized technology company from Pakistan — proving that
-              innovation knows no borders and that the best solutions can come from anywhere.
-            </p>
           </motion.div>
         </div>
       </div>

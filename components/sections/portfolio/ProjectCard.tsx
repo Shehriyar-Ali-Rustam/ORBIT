@@ -19,7 +19,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="card-hover overflow-hidden rounded-xl border border-border bg-surface"
+        className="card-hover overflow-hidden rounded-2xl border border-border bg-surface"
       >
         <div className="relative aspect-video overflow-hidden bg-surface-2">
           <Image
@@ -34,7 +34,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
         </div>
         <div className="p-6">
-          <Badge variant="orange">{project.category.toUpperCase()}</Badge>
+          <Badge variant="accent">{project.category.toUpperCase()}</Badge>
           <h3 className="mt-3 text-lg font-semibold text-text-primary">{project.title}</h3>
           <p className="mt-2 text-sm text-text-secondary">{project.shortDescription}</p>
           <div className="mt-4 flex flex-wrap gap-2">

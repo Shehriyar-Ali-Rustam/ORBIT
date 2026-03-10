@@ -10,6 +10,7 @@ interface CardProps extends Omit<HTMLMotionProps<'div'>, 'ref'> {
   hover?: boolean
   tilt?: boolean
   gradientBorder?: boolean
+  glass?: boolean
 }
 
 export function Card({
@@ -18,6 +19,7 @@ export function Card({
   hover = true,
   tilt = false,
   gradientBorder = false,
+  glass = false,
   ...props
 }: CardProps) {
   const ref = useRef<HTMLDivElement>(null)
@@ -53,14 +55,22 @@ export function Card({
       whileHover={hover ? { y: -4, transition: { duration: 0.2 } } : undefined}
       style={tilt ? { rotateX, rotateY, perspective: 800 } : undefined}
       className={cn(
-        'rounded-xl border border-border bg-surface p-6',
+        'rounded-2xl border p-6 transition-all duration-300',
+        glass
+          ? 'glass-card backdrop-blur-sm'
+          : 'border-[var(--color-card-border)] bg-[var(--color-card-bg)]',
         hover && 'card-hover',
         gradientBorder && 'gradient-border-animated',
+        'group relative overflow-hidden',
         className
       )}
       {...props}
     >
-      {children}
+      {/* Hover gradient overlay */}
+      {hover && (
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
+      )}
+      <div className="relative z-10">{children}</div>
     </motion.div>
   )
 }

@@ -33,7 +33,7 @@ export default function AIDashboardPage() {
         </p>
         <h1 className="mt-3 text-4xl font-black tracking-tight text-text-primary md:text-5xl">
           What can I help you{' '}
-          <span className="bg-gradient-to-r from-[#FF751F] to-[#FF9A5C] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#FF751F] to-[#FF9A56] bg-clip-text text-transparent">
             build today?
           </span>
         </h1>

@@ -1,8 +1,23 @@
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
+import { Inter, JetBrains_Mono, Montserrat } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import './globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  weight: ['400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains',
+  weight: ['400', '500', '700'],
+  display: 'swap',
+})
+
 const montserrat = Montserrat({
   subsets: ['latin'],
   variable: '--font-montserrat',
@@ -61,8 +76,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${montserrat.variable} light`} suppressHydrationWarning>
-      <body className="bg-background font-montserrat text-foreground antialiased">
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${montserrat.variable} dark`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('dark');document.documentElement.classList.remove('light');localStorage.removeItem('orbit-theme');localStorage.removeItem('orbit-theme-v2');` }} />
+      </head>
+      <body className="bg-background font-inter text-foreground antialiased">
         <ThemeProvider>
           {children}
           <Toaster

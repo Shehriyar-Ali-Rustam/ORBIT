@@ -25,7 +25,7 @@ const budgetOptions = [
   { value: 'not-sure', label: 'Not sure yet' },
 ]
 
-const inputClass = 'w-full rounded-lg border border-border bg-surface px-4 py-3 text-sm text-text-primary placeholder:text-text-tertiary transition-all focus:border-orange focus:outline-none focus:ring-2 focus:ring-orange/20'
+const inputClass = 'w-full rounded-lg border border-border bg-surface px-4 py-3 text-sm text-text-primary placeholder:text-text-tertiary transition-all focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20'
 
 export function ContactForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -76,7 +76,7 @@ export function ContactForm() {
         </p>
         <button
           onClick={() => setStatus('idle')}
-          className="mt-4 text-sm text-orange transition-colors hover:underline"
+          className="mt-4 text-sm text-accent transition-colors hover:underline"
         >
           Send another message
         </button>

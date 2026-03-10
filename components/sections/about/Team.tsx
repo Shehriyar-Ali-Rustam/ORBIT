@@ -37,56 +37,59 @@ export function Team() {
               viewport={{ once: true, margin: '-50px' }}
             >
               {member.isFounder ? (
-                <div className="card-hover rounded-xl border border-border bg-background p-6 text-center">
-                  {member.photo ? (
-                    <Image
-                      src={member.photo}
-                      alt={member.name}
-                      width={200}
-                      height={200}
-                      quality={90}
-                      className="mx-auto h-20 w-20 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-brand text-2xl font-black text-text-primary">
-                      {member.name.charAt(0)}
+                <div className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-6 text-center backdrop-blur-sm">
+                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
+                  <div className="relative z-10">
+                    {member.photo ? (
+                      <Image
+                        src={member.photo}
+                        alt={member.name}
+                        width={200}
+                        height={200}
+                        quality={90}
+                        className="mx-auto h-20 w-20 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-brand text-2xl font-black text-text-primary">
+                        {member.name.charAt(0)}
+                      </div>
+                    )}
+                    <h3 className="mt-4 text-lg font-semibold text-text-primary">{member.name}</h3>
+                    <p className="text-sm text-accent">{member.role}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-text-secondary">{member.bio}</p>
+                    <div className="mt-4 flex flex-wrap justify-center gap-2">
+                      {member.skills.slice(0, 4).map((skill) => (
+                        <Badge key={skill} variant="default">{skill}</Badge>
+                      ))}
                     </div>
-                  )}
-                  <h3 className="mt-4 text-lg font-semibold text-text-primary">{member.name}</h3>
-                  <p className="text-sm text-orange">{member.role}</p>
-                  <p className="mt-3 text-sm leading-relaxed text-text-secondary">{member.bio}</p>
-                  <div className="mt-4 flex flex-wrap justify-center gap-2">
-                    {member.skills.slice(0, 4).map((skill) => (
-                      <Badge key={skill} variant="default">{skill}</Badge>
-                    ))}
-                  </div>
-                  <div className="mt-4 flex items-center justify-center gap-3">
-                    {member.github && (
-                      <a href={member.github} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-orange" aria-label="GitHub">
-                        <Github className="h-4 w-4" />
-                      </a>
-                    )}
-                    {member.linkedin && (
-                      <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-orange" aria-label="LinkedIn">
-                        <Linkedin className="h-4 w-4" />
-                      </a>
-                    )}
-                    {member.fiverr && (
-                      <a href={member.fiverr} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-text-tertiary transition-colors hover:text-orange" aria-label="Fiverr">
-                        Fiverr
-                      </a>
-                    )}
+                    <div className="mt-4 flex items-center justify-center gap-3">
+                      {member.github && (
+                        <a href={member.github} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-accent" aria-label="GitHub">
+                          <Github className="h-4 w-4" />
+                        </a>
+                      )}
+                      {member.linkedin && (
+                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-accent" aria-label="LinkedIn">
+                          <Linkedin className="h-4 w-4" />
+                        </a>
+                      )}
+                      {member.fiverr && (
+                        <a href={member.fiverr} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-text-tertiary transition-colors hover:text-accent" aria-label="Fiverr">
+                          Fiverr
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
               ) : (
                 <Link href="/freelancers/apply" className="block">
-                  <div className="flex h-full flex-col items-center justify-center rounded-xl border border-dashed border-border p-6 text-center transition-colors hover:border-orange/40">
+                  <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-dashed border-border p-6 text-center transition-colors hover:border-accent/40">
                     <div className="flex h-20 w-20 items-center justify-center rounded-full bg-surface-2 text-2xl text-text-tertiary">
                       ?
                     </div>
                     <h3 className="mt-4 text-lg font-semibold text-text-tertiary">{member.role}</h3>
                     <p className="mt-2 text-sm text-text-tertiary">{member.bio}</p>
-                    <span className="mt-4 text-sm font-medium text-orange">Join the Team &rarr;</span>
+                    <span className="mt-4 text-sm font-medium text-accent">Join the Team &rarr;</span>
                   </div>
                 </Link>
               )}

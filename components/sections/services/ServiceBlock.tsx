@@ -32,8 +32,8 @@ export function ServiceBlock() {
                 }`}
               >
                 <div className={isReversed ? 'lg:order-2' : ''}>
-                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-orange-dim">
-                    {Icon && <Icon className="h-7 w-7 text-orange" />}
+                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10">
+                    {Icon && <Icon className="h-7 w-7 text-accent" />}
                   </div>
                   <h2 className="mt-6 text-3xl font-bold tracking-tight text-text-primary">
                     {service.title}
@@ -51,8 +51,8 @@ export function ServiceBlock() {
 
                 <div className={isReversed ? 'lg:order-1' : ''}>
                   <div className="flex aspect-square items-center justify-center rounded-2xl border border-border bg-surface">
-                    <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-orange-dim">
-                      {Icon && <Icon className="h-12 w-12 text-orange" />}
+                    <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-accent/10">
+                      {Icon && <Icon className="h-12 w-12 text-accent" />}
                     </div>
                   </div>
                 </div>

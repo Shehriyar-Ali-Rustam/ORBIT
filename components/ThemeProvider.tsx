@@ -10,7 +10,7 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'light',
+  theme: 'dark',
   toggleTheme: () => {},
 })
 
@@ -19,15 +19,15 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light')
+  const [theme, setTheme] = useState<Theme>('dark')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
-    const stored = localStorage.getItem('orbit-theme') as Theme | null
-    if (stored) {
-      setTheme(stored)
-    }
+    // Force dark mode — clear any stale localStorage values
+    localStorage.removeItem('orbit-theme')
+    localStorage.removeItem('orbit-theme-v2')
+    setTheme('dark')
   }, [])
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       root.classList.add('light')
       root.classList.remove('dark')
     }
-    localStorage.setItem('orbit-theme', theme)
+    localStorage.setItem('orbit-theme-v2', theme)
   }, [theme, mounted])
 
   const toggleTheme = () => {

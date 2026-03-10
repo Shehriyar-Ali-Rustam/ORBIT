@@ -37,9 +37,10 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: ['avatars.githubusercontent.com', 'images.unsplash.com', 'lh3.googleusercontent.com', 'firebasestorage.googleapis.com', 'img.clerk.com'],
+    domains: ['avatars.githubusercontent.com', 'images.unsplash.com', 'lh3.googleusercontent.com', 'firebasestorage.googleapis.com', 'img.clerk.com', 'img.freepik.com'],
     remotePatterns: [
       { protocol: 'https', hostname: '*.supabase.co', pathname: '/storage/v1/object/public/**' },
+      { protocol: 'https', hostname: 'img.freepik.com' },
     ],
     formats: ['image/avif', 'image/webp'],
   },

@@ -33,7 +33,7 @@ export function FilterBar({ active, onChange }: FilterBarProps) {
           {active === filter.value && (
             <motion.div
               layoutId="filter-pill"
-              className="absolute inset-0 rounded-full bg-orange"
+              className="absolute inset-0 rounded-full bg-accent"
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             />
           )}

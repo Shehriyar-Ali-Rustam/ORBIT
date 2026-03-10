@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Star } from 'lucide-react'
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { LineReveal } from '@/components/ui/LineReveal'
@@ -29,22 +29,28 @@ const carouselVariants = {
 
 function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[0] }) {
   return (
-    <div className="rounded-xl border border-border bg-background p-6">
-      <span className="text-4xl font-bold text-orange">&ldquo;</span>
-      <p className="mt-2 leading-relaxed text-text-secondary">{testimonial.quote}</p>
-      <div className="mt-6 h-px w-full bg-orange/20" />
-      <div className="mt-4 flex items-center gap-1">
+    <div className="relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-8 backdrop-blur-sm">
+      {/* Large quote mark */}
+      <span className="absolute -top-2 left-6 text-6xl font-bold text-accent/10">&ldquo;</span>
+
+      {/* Star rating */}
+      <div className="flex items-center gap-1">
         {Array.from({ length: testimonial.rating }).map((_, j) => (
-          <Star key={j} className="h-4 w-4 fill-orange text-orange" />
+          <Star key={j} className="h-4 w-4 fill-primary text-primary" />
         ))}
       </div>
-      <div className="mt-3 flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-2 text-sm font-bold text-orange">
+
+      <p className="mt-4 text-lg leading-relaxed text-text-secondary italic">{testimonial.quote}</p>
+
+      <div className="mt-6 h-px w-full bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+
+      <div className="mt-4 flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-brand text-sm font-bold text-[#0a0a0a]">
           {testimonial.author.charAt(0)}
         </div>
         <div>
           <p className="text-sm font-semibold text-text-primary">{testimonial.author}</p>
-          <p className="text-xs text-text-tertiary">
+          <p className="font-mono text-xs uppercase tracking-widest text-accent">
             {testimonial.role}, {testimonial.company}
           </p>
         </div>
@@ -62,14 +68,24 @@ export function Testimonials() {
     setActive((prev) => (prev + 1) % testimonials.length)
   }, [])
 
+  const prev = useCallback(() => {
+    setDirection(-1)
+    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  }, [])
+
   useEffect(() => {
     const timer = setInterval(next, 5000)
     return () => clearInterval(timer)
   }, [next])
 
   return (
-    <section className="section-padding bg-surface">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="section-padding relative overflow-hidden">
+      {/* Background glow */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute right-0 top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-primary opacity-[0.04] blur-[120px]" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center">
           <LineReveal>
             <SectionLabel>Client Reviews</SectionLabel>
@@ -79,9 +95,9 @@ export function Testimonials() {
           </LineReveal>
         </div>
 
-        {/* Mobile: auto-rotating carousel */}
+        {/* Mobile: carousel with nav arrows */}
         <div className="mt-16 md:hidden">
-          <div className="relative h-[320px] overflow-hidden">
+          <div className="relative h-[340px] overflow-hidden">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={active}
@@ -97,25 +113,33 @@ export function Testimonials() {
               </motion.div>
             </AnimatePresence>
           </div>
-          {/* Dot indicators */}
-          <div className="mt-6 flex justify-center gap-2">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => {
-                  setDirection(i > active ? 1 : -1)
-                  setActive(i)
-                }}
-                className={cn(
-                  'h-2 rounded-full transition-all duration-300',
-                  i === active ? 'w-6 bg-orange' : 'w-2 bg-border'
-                )}
-              />
-            ))}
+          {/* Navigation */}
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <button onClick={prev} className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-secondary transition-all hover:border-accent/50 hover:text-accent">
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <div className="flex gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setDirection(i > active ? 1 : -1)
+                    setActive(i)
+                  }}
+                  className={cn(
+                    'h-1 rounded-full transition-all duration-300',
+                    i === active ? 'w-8 bg-accent' : 'w-2 bg-border hover:bg-text-tertiary'
+                  )}
+                />
+              ))}
+            </div>
+            <button onClick={next} className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-secondary transition-all hover:border-accent/50 hover:text-accent">
+              <ChevronRight className="h-5 w-5" />
+            </button>
           </div>
         </div>
 
-        {/* Desktop: 3-column grid with spring animations */}
+        {/* Desktop: 3-column grid */}
         <div className="mt-16 hidden gap-8 md:grid md:grid-cols-3">
           {testimonials.map((testimonial, i) => (
             <motion.div

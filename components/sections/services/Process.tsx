@@ -40,9 +40,9 @@ export function Process() {
               className="relative text-center"
             >
               {i < steps.length - 1 && (
-                <div className="absolute left-1/2 top-6 hidden h-0.5 w-full bg-orange/20 md:block" />
+                <div className="absolute left-1/2 top-6 hidden h-0.5 w-full bg-accent/20 md:block" />
               )}
-              <div className="relative mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-orange text-sm font-bold text-text-primary">
+              <div className="relative mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent text-sm font-bold text-text-primary">
                 {step.number}
               </div>
               <h3 className="mt-4 text-lg font-semibold text-text-primary">{step.title}</h3>

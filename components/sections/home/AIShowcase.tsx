@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Check } from 'lucide-react'
+import { Check, ArrowRight } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Button } from '@/components/ui/Button'
@@ -62,7 +62,7 @@ export function AIShowcase() {
               className="mt-6 leading-relaxed text-text-secondary"
             >
               From custom ChatGPT-powered chatbots to fine-tuned language models, Orbit delivers AI
-              solutions built specifically for your business, not off-the-shelf tools, but
+              solutions built specifically for your business. Not off-the-shelf tools, but
               intelligence trained on your data.
             </motion.p>
             <ul className="mt-8 space-y-3">
@@ -75,7 +75,9 @@ export function AIShowcase() {
                   viewport={{ once: true }}
                   className="flex items-center gap-3"
                 >
-                  <Check className="h-4 w-4 shrink-0 text-green-500" />
+                  <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/20">
+                    <Check className="h-3 w-3 text-primary" />
+                  </div>
                   <span className="text-sm text-text-secondary">{feature}</span>
                 </motion.li>
               ))}
@@ -88,7 +90,10 @@ export function AIShowcase() {
               className="mt-8"
             >
               <Link href="/services">
-                <Button variant="primary">See AI Services &rarr;</Button>
+                <Button variant="primary">
+                  See AI Services
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
               </Link>
             </motion.div>
           </div>
@@ -102,18 +107,18 @@ export function AIShowcase() {
               viewport={{ once: true, margin: '-50px' }}
               style={{ y: chatY }}
             >
-              <div className="overflow-hidden rounded-xl border border-border bg-surface">
+              <div className="overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] backdrop-blur-sm">
                 {/* Chat header */}
-                <div className="flex items-center gap-3 border-b border-border px-4 py-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-brand">
-                    <span className="text-xs font-bold text-text-primary">O</span>
+                <div className="flex items-center gap-3 border-b border-[var(--color-card-border)] px-5 py-4">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-brand">
+                    <span className="text-sm font-bold text-[#0a0a0a]">O</span>
                   </div>
                   <span className="text-sm font-semibold text-text-primary">Orbit AI</span>
                   <GlowDot />
                 </div>
 
                 {/* Messages */}
-                <div className="space-y-4 p-4">
+                <div className="space-y-4 p-5">
                   {chatMessages.map((msg, i) => (
                     <motion.div
                       key={i}
@@ -124,9 +129,9 @@ export function AIShowcase() {
                       className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[80%] rounded-lg px-4 py-2.5 text-sm ${
+                        className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm ${
                           msg.role === 'user'
-                            ? 'bg-orange text-text-primary'
+                            ? 'bg-accent text-[#0a0a0a]'
                             : 'bg-surface-2 text-text-secondary'
                         }`}
                       >
@@ -137,14 +142,14 @@ export function AIShowcase() {
                 </div>
 
                 {/* Input bar */}
-                <div className="border-t border-border p-3">
-                  <div className="flex items-center gap-2 rounded-lg bg-surface-2 px-4 py-2.5">
+                <div className="border-t border-[var(--color-card-border)] p-4">
+                  <div className="flex items-center gap-2 rounded-xl bg-surface-2 px-4 py-3">
                     <span className="flex-1 text-sm text-text-tertiary">Ask Orbit AI...</span>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange">
-                      <span className="text-xs text-text-primary">&rarr;</span>
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-brand">
+                      <ArrowRight className="h-4 w-4 text-[#0a0a0a]" />
                     </div>
                   </div>
-                  <p className="mt-2 text-center text-xs text-text-tertiary">Powered by Orbit AI</p>
+                  <p className="mt-2 text-center font-mono text-xs text-text-tertiary">Powered by Orbit AI</p>
                 </div>
               </div>
             </motion.div>

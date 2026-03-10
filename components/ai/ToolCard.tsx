@@ -32,7 +32,7 @@ export function ToolCard({ tool, name, description, href }: ToolCardProps) {
       <motion.div
         whileHover={{ y: -4 }}
         transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="group cursor-pointer rounded-xl border border-border bg-surface p-6 transition-all hover:border-[#FF751F]/30 hover:shadow-[0_0_30px_-10px_rgba(255,117,31,0.15)]"
+        className="group cursor-pointer rounded-xl border border-border bg-surface p-6 transition-all hover:border-[#FF751F]/30 hover:shadow-[0_0_30px_-10px_rgba(112,230,237,0.15)]"
       >
         {/* Icon */}
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#FF751F]/10">

@@ -65,7 +65,7 @@ export function AISidebar({
           </Link>
           <button
             onClick={toggleTheme}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-text-secondary transition-colors hover:border-orange hover:text-orange"
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-border text-text-secondary transition-colors hover:border-accent hover:text-accent"
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -84,7 +84,7 @@ export function AISidebar({
 
         <Link
           href="/"
-          className="mt-3 flex items-center gap-2 text-xs text-text-secondary transition-colors hover:text-orange"
+          className="mt-3 flex items-center gap-2 text-xs text-text-secondary transition-colors hover:text-accent"
         >
           <ChevronLeft className="h-3.5 w-3.5" />
           Back to Orbit
@@ -96,7 +96,7 @@ export function AISidebar({
               onNewChat()
               setMobileOpen(false)
             }}
-            className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-orange px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
             <Plus className="h-4 w-4" />
             New Chat

@@ -8,7 +8,7 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 export function AboutHero() {
   return (
     <section className="dot-grid relative flex min-h-[60vh] items-center justify-center pt-16">
-      <div className="pointer-events-none absolute left-0 top-1/3 h-[400px] w-[400px] rounded-full bg-orange opacity-[0.05] blur-[100px]" />
+      <div className="pointer-events-none absolute left-0 top-1/3 h-[400px] w-[400px] rounded-full bg-accent opacity-[0.05] blur-[100px]" />
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
