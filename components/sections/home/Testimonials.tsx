@@ -1,49 +1,23 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Star, ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Star } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { LineReveal } from '@/components/ui/LineReveal'
 import { testimonials } from '@/data/testimonials'
-import { cn } from '@/lib/utils'
-
-const carouselVariants = {
-  enter: (dir: number) => ({
-    x: dir > 0 ? 200 : -200,
-    opacity: 0,
-    scale: 0.95,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-    scale: 1,
-  },
-  exit: (dir: number) => ({
-    x: dir > 0 ? -200 : 200,
-    opacity: 0,
-    scale: 0.95,
-  }),
-}
 
 function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[0] }) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-8 backdrop-blur-sm">
-      {/* Large quote mark */}
+    <div className="relative w-[360px] flex-shrink-0 overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-7 backdrop-blur-sm transition-all duration-300 hover:border-accent/30 hover:shadow-card-hover sm:w-[400px]">
       <span className="absolute -top-2 left-6 text-6xl font-bold text-accent/10">&ldquo;</span>
-
-      {/* Star rating */}
       <div className="flex items-center gap-1">
         {Array.from({ length: testimonial.rating }).map((_, j) => (
           <Star key={j} className="h-4 w-4 fill-primary text-primary" />
         ))}
       </div>
-
-      <p className="mt-4 text-lg leading-relaxed text-text-secondary italic">{testimonial.quote}</p>
-
-      <div className="mt-6 h-px w-full bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
-
+      <p className="mt-4 text-sm leading-relaxed text-text-secondary italic">{testimonial.quote}</p>
+      <div className="mt-5 h-px w-full bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
       <div className="mt-4 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-brand text-sm font-bold text-[#0a0a0a]">
           {testimonial.author.charAt(0)}
@@ -60,23 +34,8 @@ function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[0
 }
 
 export function Testimonials() {
-  const [active, setActive] = useState(0)
-  const [direction, setDirection] = useState(1)
-
-  const next = useCallback(() => {
-    setDirection(1)
-    setActive((prev) => (prev + 1) % testimonials.length)
-  }, [])
-
-  const prev = useCallback(() => {
-    setDirection(-1)
-    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }, [])
-
-  useEffect(() => {
-    const timer = setInterval(next, 5000)
-    return () => clearInterval(timer)
-  }, [next])
+  // Triplicate for seamless infinite loop
+  const looped = [...testimonials, ...testimonials, ...testimonials]
 
   return (
     <section className="section-padding relative overflow-hidden">
@@ -94,66 +53,31 @@ export function Testimonials() {
             <SectionHeading className="mt-4">Trusted Worldwide</SectionHeading>
           </LineReveal>
         </div>
-
-        {/* Mobile: carousel with nav arrows */}
-        <div className="mt-16 md:hidden">
-          <div className="relative h-[340px] overflow-hidden">
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.div
-                key={active}
-                custom={direction}
-                variants={carouselVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                className="absolute inset-0"
-              >
-                <TestimonialCard testimonial={testimonials[active]} />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-          {/* Navigation */}
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <button onClick={prev} className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-secondary transition-all hover:border-accent/50 hover:text-accent">
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => {
-                    setDirection(i > active ? 1 : -1)
-                    setActive(i)
-                  }}
-                  className={cn(
-                    'h-1 rounded-full transition-all duration-300',
-                    i === active ? 'w-8 bg-accent' : 'w-2 bg-border hover:bg-text-tertiary'
-                  )}
-                />
-              ))}
-            </div>
-            <button onClick={next} className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-text-secondary transition-all hover:border-accent/50 hover:text-accent">
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Desktop: 3-column grid */}
-        <div className="mt-16 hidden gap-8 md:grid md:grid-cols-3">
-          {testimonials.map((testimonial, i) => (
-            <motion.div
-              key={testimonial.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ type: 'spring', stiffness: 100, damping: 20, delay: i * 0.12 }}
-              viewport={{ once: true, margin: '-50px' }}
-            >
-              <TestimonialCard testimonial={testimonial} />
-            </motion.div>
-          ))}
-        </div>
       </div>
+
+      {/* Single-row marquee — full width */}
+      <motion.div
+        className="mt-16"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <div className="relative overflow-hidden">
+          {/* Fade edges */}
+          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-[var(--color-bg)] to-transparent sm:w-24" />
+          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-[var(--color-bg)] to-transparent sm:w-24" />
+
+          <div
+            className="flex gap-6 hover:[animation-play-state:paused]"
+            style={{ animation: 'marquee-left 45s linear infinite' }}
+          >
+            {looped.map((t, i) => (
+              <TestimonialCard key={`${t.id}-${i}`} testimonial={t} />
+            ))}
+          </div>
+        </div>
+      </motion.div>
     </section>
   )
 }

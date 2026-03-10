@@ -11,9 +11,9 @@ import { TextReveal } from '@/components/ui/TextReveal'
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const heroImages = [
-  'https://img.freepik.com/free-photo/ai-technology-microchip-background-digital-transformation-concept_53876-124669.jpg',
-  'https://img.freepik.com/free-photo/ai-nuclear-energy-background-future-innovation-disruptive-technology_53876-129783.jpg',
-  'https://img.freepik.com/free-photo/ai-cloud-concept-with-robot-arm_23-2149739748.jpg',
+  'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1920&q=90',
+  'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1920&q=90',
+  'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1920&q=90',
 ]
 
 function DynamicBackground() {
@@ -50,29 +50,7 @@ function DynamicBackground() {
 }
 
 function AnimatedBeams() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {[...Array(5)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute h-[1px]"
-          initial={{ opacity: 0, x: '-100%' }}
-          animate={{ opacity: [0, 0.3, 0], x: '200%' }}
-          transition={{
-            duration: 4 + i * 0.8,
-            delay: i * 1.2,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          style={{
-            top: `${15 + i * 16}%`,
-            background: `linear-gradient(90deg, transparent, ${i % 2 === 0 ? '#FF751F' : '#FF9A56'}, transparent)`,
-            width: `${100 + i * 30}px`,
-          }}
-        />
-      ))}
-    </div>
-  )
+  return null
 }
 
 function FloatingOrbs() {
@@ -127,11 +105,11 @@ export function Hero() {
       {/* Dynamic background — cycles through tech images */}
       <motion.div className="absolute inset-0" style={{ y: bgY, scale: bgScale }}>
         <DynamicBackground />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-[#0a0a0a]/65" />
+        {/* Dark overlay — lighter so image shows through */}
+        <div className="absolute inset-0 bg-[#0a0a0a]/50" />
         {/* Edge vignette */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/90 via-transparent to-[#0a0a0a]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/30 via-transparent to-[#0a0a0a]/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-transparent to-[#0a0a0a]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/20 via-transparent to-[#0a0a0a]/20" />
       </motion.div>
 
       <AnimatedBeams />
@@ -142,7 +120,7 @@ export function Hero() {
         className="relative z-10 mx-auto max-w-5xl px-6 py-32 lg:px-8"
         style={{ opacity: contentOpacity, y: contentY }}
       >
-        <div className="rounded-3xl border border-white/[0.08] bg-black/30 p-8 shadow-[0_8px_64px_rgba(0,0,0,0.4)] backdrop-blur-xl sm:p-12 md:p-16">
+        <div className="rounded-3xl border border-white/[0.10] bg-black/20 p-8 shadow-[0_8px_64px_rgba(0,0,0,0.5)] backdrop-blur-2xl sm:p-12 md:p-16">
           {/* Subtle orange glow on edges */}
           <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-[#FF751F]/[0.06] via-transparent to-[#FF751F]/[0.03]" />
 

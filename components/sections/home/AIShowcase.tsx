@@ -1,8 +1,9 @@
 'use client'
 
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Check, ArrowRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Check, ArrowRight, Send } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Button } from '@/components/ui/Button'
@@ -18,12 +19,197 @@ const features = [
   'AI integration into existing products',
 ]
 
-const chatMessages = [
-  { role: 'user', text: 'Can you help me train a custom AI model?' },
-  { role: 'ai', text: 'Absolutely! We specialize in fine-tuning language models on your custom dataset. What industry are you in?' },
-  { role: 'user', text: 'E-commerce' },
-  { role: 'ai', text: 'Perfect. We can train a model on your product catalog and customer data to power intelligent recommendations and support.' },
-]
+// Each step: delay from previous step in ms
+const SCRIPT = [
+  { role: 'user',  text: 'Can you help me train a custom AI model?', typingMs: 900 },
+  { role: 'ai',    text: 'Absolutely! We specialize in fine-tuning language models on your custom dataset. What industry are you in?', typingMs: 1600 },
+  { role: 'user',  text: 'E-commerce', typingMs: 700 },
+  { role: 'ai',    text: 'Perfect. We can train a model on your product catalog and customer data to power intelligent recommendations and support.', typingMs: 1800 },
+] as const
+
+type Message = { role: 'user' | 'ai'; text: string }
+
+function TypingDots() {
+  return (
+    <div className="flex items-center gap-1.5 rounded-2xl bg-surface-2 px-4 py-3">
+      {[0, 1, 2].map((i) => (
+        <motion.span
+          key={i}
+          className="h-2 w-2 rounded-full bg-text-tertiary"
+          animate={{ y: [0, -5, 0], opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.18, ease: 'easeInOut' }}
+        />
+      ))}
+    </div>
+  )
+}
+
+function LiveChat() {
+  const [messages, setMessages] = useState<Message[]>([])
+  const [showTyping, setShowTyping] = useState(false)
+  const [inputText, setInputText] = useState('')
+  const [phase, setPhase] = useState<'idle' | 'running'>('idle')
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  // Auto-scroll to bottom when messages update
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
+  }, [messages, showTyping])
+
+  useEffect(() => {
+    let cancelled = false
+    const timers: ReturnType<typeof setTimeout>[] = []
+
+    function delay(ms: number) {
+      return new Promise<void>((resolve) => {
+        const t = setTimeout(() => { if (!cancelled) resolve() }, ms)
+        timers.push(t)
+      })
+    }
+
+    async function run() {
+      setMessages([])
+      setShowTyping(false)
+      setInputText('')
+      setPhase('running')
+
+      await delay(600)
+
+      for (const step of SCRIPT) {
+        if (cancelled) return
+
+        if (step.role === 'user') {
+          // Simulate typing in the input bar
+          const fullText = step.text
+          for (let i = 1; i <= fullText.length; i++) {
+            if (cancelled) return
+            setInputText(fullText.slice(0, i))
+            await delay(40)
+          }
+          await delay(200)
+          setInputText('')
+          setMessages((prev) => [...prev, { role: 'user', text: step.text }])
+          await delay(400)
+        } else {
+          // AI typing indicator
+          setShowTyping(true)
+          await delay(step.typingMs)
+          if (cancelled) return
+          setShowTyping(false)
+          setMessages((prev) => [...prev, { role: 'ai', text: step.text }])
+          await delay(600)
+        }
+      }
+
+      // Pause at end, then restart
+      await delay(3000)
+      if (!cancelled) {
+        setMessages([])
+        setPhase('idle')
+        const restart = setTimeout(() => { if (!cancelled) run() }, 400)
+        timers.push(restart)
+      }
+    }
+
+    run()
+
+    return () => {
+      cancelled = true
+      timers.forEach(clearTimeout)
+    }
+  }, [])
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] backdrop-blur-sm">
+      {/* Header */}
+      <div className="flex items-center gap-3 border-b border-[var(--color-card-border)] px-5 py-4">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-brand">
+          <span className="text-sm font-bold text-[#0a0a0a]">O</span>
+        </div>
+        <span className="text-sm font-semibold text-text-primary">Orbit AI</span>
+        <GlowDot />
+        <span className="ml-auto font-mono text-xs text-text-tertiary">live demo</span>
+      </div>
+
+      {/* Messages */}
+      <div
+        ref={scrollRef}
+        className="h-[260px] overflow-y-auto scroll-smooth p-5"
+        style={{ scrollbarWidth: 'none' }}
+      >
+        <AnimatePresence initial={false}>
+          {messages.length === 0 && phase === 'idle' && (
+            <motion.p
+              key="placeholder"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-center text-sm text-text-tertiary"
+            >
+              Starting conversation...
+            </motion.p>
+          )}
+          {messages.map((msg, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 10, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 22 }}
+              className={`mb-3 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div
+                className={`max-w-[82%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                  msg.role === 'user'
+                    ? 'bg-accent text-[#0a0a0a] font-medium'
+                    : 'bg-surface-2 text-text-secondary'
+                }`}
+              >
+                {msg.text}
+              </div>
+            </motion.div>
+          ))}
+          {showTyping && (
+            <motion.div
+              key="typing"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 4 }}
+              className="mb-3 flex justify-start"
+            >
+              <TypingDots />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Input bar */}
+      <div className="border-t border-[var(--color-card-border)] p-4">
+        <div className="flex items-center gap-2 rounded-xl bg-surface-2 px-4 py-2.5">
+          <span className="flex-1 text-sm text-text-primary">
+            {inputText || <span className="text-text-tertiary">Ask Orbit AI...</span>}
+            {inputText && (
+              <motion.span
+                animate={{ opacity: [1, 0] }}
+                transition={{ duration: 0.5, repeat: Infinity }}
+                className="ml-0.5 inline-block h-4 w-0.5 bg-accent align-middle"
+              />
+            )}
+          </span>
+          <motion.div
+            animate={inputText ? { scale: [1, 1.12, 1] } : {}}
+            transition={{ duration: 0.2 }}
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-brand"
+          >
+            <Send className="h-3.5 w-3.5 text-[#0a0a0a]" />
+          </motion.div>
+        </div>
+        <p className="mt-2 text-center font-mono text-xs text-text-tertiary">Powered by Orbit AI</p>
+      </div>
+    </div>
+  )
+}
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
@@ -98,7 +284,7 @@ export function AIShowcase() {
             </motion.div>
           </div>
 
-          {/* Right - Chat UI with parallax */}
+          {/* Right - Live chat demo */}
           <div ref={chatRef}>
             <motion.div
               initial={{ opacity: 0, x: 24 }}
@@ -107,51 +293,7 @@ export function AIShowcase() {
               viewport={{ once: true, margin: '-50px' }}
               style={{ y: chatY }}
             >
-              <div className="overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] backdrop-blur-sm">
-                {/* Chat header */}
-                <div className="flex items-center gap-3 border-b border-[var(--color-card-border)] px-5 py-4">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-brand">
-                    <span className="text-sm font-bold text-[#0a0a0a]">O</span>
-                  </div>
-                  <span className="text-sm font-semibold text-text-primary">Orbit AI</span>
-                  <GlowDot />
-                </div>
-
-                {/* Messages */}
-                <div className="space-y-4 p-5">
-                  {chatMessages.map((msg, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 8 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ type: 'spring', stiffness: 100, damping: 20, delay: i * 0.15 }}
-                      viewport={{ once: true }}
-                      className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div
-                        className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm ${
-                          msg.role === 'user'
-                            ? 'bg-accent text-[#0a0a0a]'
-                            : 'bg-surface-2 text-text-secondary'
-                        }`}
-                      >
-                        {msg.text}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* Input bar */}
-                <div className="border-t border-[var(--color-card-border)] p-4">
-                  <div className="flex items-center gap-2 rounded-xl bg-surface-2 px-4 py-3">
-                    <span className="flex-1 text-sm text-text-tertiary">Ask Orbit AI...</span>
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-brand">
-                      <ArrowRight className="h-4 w-4 text-[#0a0a0a]" />
-                    </div>
-                  </div>
-                  <p className="mt-2 text-center font-mono text-xs text-text-tertiary">Powered by Orbit AI</p>
-                </div>
-              </div>
+              <LiveChat />
             </motion.div>
           </div>
         </div>

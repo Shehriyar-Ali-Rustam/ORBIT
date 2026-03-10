@@ -27,7 +27,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Orbit — AI-Powered Software Solutions',
+    default: 'Orbit',
     template: '%s | Orbit',
   },
   description:
