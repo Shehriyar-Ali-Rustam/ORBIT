@@ -4,7 +4,7 @@
 
 ---
 
-## Table of Contents
+## Table of Contents,
 
 1. [What is ORBIT?](#what-is-orbit)
 2. [Tech Stack](#tech-stack)
