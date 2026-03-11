@@ -11,9 +11,11 @@ import { TextReveal } from '@/components/ui/TextReveal'
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const heroImages = [
-  'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1920&q=90',
-  'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1920&q=90',
-  'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1920&q=90',
+  '/fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg',
+  '/kier-in-sight-archives-3Nwt6w-KU3E-unsplash.jpg',
+  '/markus-spiske-iar-afB0QQw-unsplash.jpg',
+  '/minh-pham-HI6gy-p-WBI-unsplash.jpg',
+  '/onur-binay-_yC2htzMYnI-unsplash.jpg',
 ]
 
 function DynamicBackground() {
@@ -101,15 +103,15 @@ export function Hero() {
   const contentY = useTransform(scrollYProgress, [0, 0.4], [0, -80])
 
   return (
-    <section ref={sectionRef} className="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <section ref={sectionRef} className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0a0a0a]">
       {/* Dynamic background — cycles through tech images */}
       <motion.div className="absolute inset-0" style={{ y: bgY, scale: bgScale }}>
         <DynamicBackground />
-        {/* Dark overlay — lighter so image shows through */}
-        <div className="absolute inset-0 bg-[#0a0a0a]/50" />
+        {/* Dark overlay — always dark regardless of theme */}
+        <div className="absolute inset-0" style={{ backgroundColor: 'rgba(10,10,10,0.55)' }} />
         {/* Edge vignette */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-transparent to-[#0a0a0a]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/20 via-transparent to-[#0a0a0a]/20" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(10,10,10,0.65) 0%, transparent 40%, rgba(10,10,10,1) 100%)' }} />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,10,10,0.25) 0%, transparent 50%, rgba(10,10,10,0.25) 100%)' }} />
       </motion.div>
 
       <AnimatedBeams />
@@ -120,7 +122,7 @@ export function Hero() {
         className="relative z-10 mx-auto max-w-5xl px-6 py-32 lg:px-8"
         style={{ opacity: contentOpacity, y: contentY }}
       >
-        <div className="rounded-3xl border border-white/[0.10] bg-black/20 p-8 shadow-[0_8px_64px_rgba(0,0,0,0.5)] backdrop-blur-2xl sm:p-12 md:p-16">
+        <div className="rounded-3xl border border-white/[0.12] p-8 shadow-[0_8px_64px_rgba(0,0,0,0.7)] backdrop-blur-2xl sm:p-12 md:p-16" style={{ backgroundColor: 'rgba(0,0,0,0.45)' }}>
           {/* Subtle orange glow on edges */}
           <div className="pointer-events-none absolute -inset-px rounded-3xl bg-gradient-to-br from-[#FF751F]/[0.06] via-transparent to-[#FF751F]/[0.03]" />
 
