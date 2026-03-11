@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { requireMarketplaceUser } from '@/lib/marketplace/auth'
 import { sendMessage } from '@/lib/marketplace/mutations'
+import { getSupabase } from '@/lib/supabase/client'
 import type { MessageType } from '@/types/marketplace'
 
 export async function POST(req: NextRequest) {
@@ -12,6 +13,18 @@ export async function POST(req: NextRequest) {
 
     if (!conversation_id || !content) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
+
+    // Verify sender is a participant in this conversation (IDOR prevention)
+    const supabase = getSupabase()
+    const { data: convo } = await supabase
+      .from('conversations')
+      .select('participants')
+      .eq('id', conversation_id)
+      .single()
+
+    if (!convo || !Array.isArray(convo.participants) || !convo.participants.includes(userId)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
     const message = await sendMessage({

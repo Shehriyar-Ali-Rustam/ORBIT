@@ -6,42 +6,32 @@ export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.CLERK_WEBHOOK_SECRET
 
   if (!SIGNING_SECRET) {
-    // In development without webhook secret, skip verification but log warning
-    console.warn('[Clerk Webhook] CLERK_WEBHOOK_SECRET not set — skipping signature verification')
+    console.error('[Clerk Webhook] CLERK_WEBHOOK_SECRET not set — refusing to process unverified payload')
+    return new Response('Webhook secret not configured', { status: 500 })
   }
 
   const body = await req.text()
   const headersList = await headers()
 
-  // Verify webhook signature if secret is configured
+  const svixId = headersList.get('svix-id')
+  const svixTimestamp = headersList.get('svix-timestamp')
+  const svixSignature = headersList.get('svix-signature')
+
+  if (!svixId || !svixTimestamp || !svixSignature) {
+    return new Response('Missing svix headers', { status: 400 })
+  }
+
   let evt: { type: string; data: Record<string, unknown> }
-
-  if (SIGNING_SECRET) {
-    const svixId = headersList.get('svix-id')
-    const svixTimestamp = headersList.get('svix-timestamp')
-    const svixSignature = headersList.get('svix-signature')
-
-    if (!svixId || !svixTimestamp || !svixSignature) {
-      return new Response('Missing svix headers', { status: 400 })
-    }
-
-    const wh = new Webhook(SIGNING_SECRET)
-    try {
-      evt = wh.verify(body, {
-        'svix-id': svixId,
-        'svix-timestamp': svixTimestamp,
-        'svix-signature': svixSignature,
-      }) as { type: string; data: Record<string, unknown> }
-    } catch (err) {
-      console.error('[Clerk Webhook] Signature verification failed:', err)
-      return new Response('Invalid signature', { status: 400 })
-    }
-  } else {
-    try {
-      evt = JSON.parse(body)
-    } catch {
-      return new Response('Invalid JSON', { status: 400 })
-    }
+  const wh = new Webhook(SIGNING_SECRET)
+  try {
+    evt = wh.verify(body, {
+      'svix-id': svixId,
+      'svix-timestamp': svixTimestamp,
+      'svix-signature': svixSignature,
+    }) as { type: string; data: Record<string, unknown> }
+  } catch (err) {
+    console.error('[Clerk Webhook] Signature verification failed:', err)
+    return new Response('Invalid signature', { status: 400 })
   }
 
   const { type, data } = evt

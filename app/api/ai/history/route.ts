@@ -1,24 +1,33 @@
 import { NextRequest } from 'next/server'
 
 // Simple in-memory conversation storage (persists per server lifecycle).
-// For production, replace with Supabase or another database.
+// Scoped by sessionId header to prevent cross-user data access.
+const MAX_CONVERSATIONS = 200
 const conversations = new Map<
   string,
-  { id: string; title: string; tool: string; createdAt: string; messages: { role: string; content: string }[] }
+  { id: string; sessionId: string; title: string; tool: string; createdAt: string; messages: { role: string; content: string }[] }
 >()
 
+function getSessionId(req: NextRequest): string {
+  return req.headers.get('x-session-id') || 'anonymous'
+}
+
 export async function GET(req: NextRequest) {
+  const sessionId = getSessionId(req)
   const { searchParams } = new URL(req.url)
   const conversationId = searchParams.get('conversationId')
 
   if (conversationId) {
     const convo = conversations.get(conversationId)
-    if (!convo) return Response.json({ error: 'Not found' }, { status: 404 })
+    if (!convo || convo.sessionId !== sessionId) {
+      return Response.json({ error: 'Not found' }, { status: 404 })
+    }
     return Response.json(convo)
   }
 
-  // Return all conversations (most recent first)
+  // Return only this session's conversations (most recent first)
   const all = Array.from(conversations.values())
+    .filter((c) => c.sessionId === sessionId)
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
     .slice(0, 50)
 
@@ -27,22 +36,36 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    const sessionId = getSessionId(req)
     const body = await req.json()
     const { id, title, tool, messages } = body
 
-    if (!id) return Response.json({ error: 'Missing id' }, { status: 400 })
+    if (!id || typeof id !== 'string') {
+      return Response.json({ error: 'Missing or invalid id' }, { status: 400 })
+    }
 
     const existing = conversations.get(id)
     if (existing) {
-      if (title) existing.title = title
-      if (messages) existing.messages = messages
+      if (existing.sessionId !== sessionId) {
+        return Response.json({ error: 'Forbidden' }, { status: 403 })
+      }
+      if (title) existing.title = String(title).slice(0, 200)
+      if (Array.isArray(messages)) existing.messages = messages.slice(-100)
     } else {
+      // Enforce size cap — evict oldest when full
+      if (conversations.size >= MAX_CONVERSATIONS) {
+        const oldest = Array.from(conversations.entries())
+          .sort(([, a], [, b]) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())[0]
+        if (oldest) conversations.delete(oldest[0])
+      }
+
       conversations.set(id, {
         id,
-        title: title || 'New Conversation',
-        tool: tool || 'chat',
+        sessionId,
+        title: String(title || 'New Conversation').slice(0, 200),
+        tool: String(tool || 'chat').slice(0, 50),
         createdAt: new Date().toISOString(),
-        messages: messages || [],
+        messages: Array.isArray(messages) ? messages.slice(-100) : [],
       })
     }
 
@@ -53,10 +76,16 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const sessionId = getSessionId(req)
   const { searchParams } = new URL(req.url)
   const conversationId = searchParams.get('conversationId')
 
   if (!conversationId) return Response.json({ error: 'Missing conversationId' }, { status: 400 })
+
+  const convo = conversations.get(conversationId)
+  if (convo && convo.sessionId !== sessionId) {
+    return Response.json({ error: 'Forbidden' }, { status: 403 })
+  }
 
   conversations.delete(conversationId)
   return Response.json({ success: true })

@@ -15,6 +15,11 @@ export async function POST(req: NextRequest) {
     const gig = await getGigById(gig_id)
     if (!gig) return NextResponse.json({ error: 'Gig not found' }, { status: 404 })
 
+    // H1: Prevent sellers from purchasing their own gigs
+    if (gig.seller_id === userId) {
+      return NextResponse.json({ error: 'You cannot purchase your own gig' }, { status: 400 })
+    }
+
     const pricing = gig.pricing[tier]
     if (!pricing) return NextResponse.json({ error: 'Invalid tier' }, { status: 400 })
 

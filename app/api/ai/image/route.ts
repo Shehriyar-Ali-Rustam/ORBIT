@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     ]
 
     // Get enhanced prompt from AI (non-streaming, collect full response)
-    const { stream, provider } = await routeToAI({
+    const { stream } = await routeToAI({
       messages,
       maxTokens: 300,
       temperature: 0.8,
@@ -55,7 +55,6 @@ export async function POST(req: NextRequest) {
       enhancedPrompt,
       originalPrompt: prompt,
       seed,
-      provider,
     })
   } catch (error) {
     console.error('Image API error:', error)
