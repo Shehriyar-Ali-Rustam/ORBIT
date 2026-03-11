@@ -10,10 +10,8 @@ const iconMap: Record<string, React.ElementType> = {
 }
 
 const serviceImages: Record<string, string> = {
-  'ai-chatbot':
-    'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1200&q=85',
-  'model-training':
-    'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&q=85',
+  'ai-chatbot': '/chatbot-examples.webp',
+  'model-training': '/ai-model-training.png',
   'web-development':
     'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=85',
   'mobile-development':
