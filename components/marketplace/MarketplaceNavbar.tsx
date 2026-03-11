@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, MessageSquare } from 'lucide-react'
+import { Menu, X, MessageSquare, ArrowLeft } from 'lucide-react'
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Button } from '@/components/ui/Button'
 import { useTheme } from '@/components/ThemeProvider'
@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils'
 
 const MARKETPLACE_LINKS = [
   { label: 'Browse', href: '/freelancers' },
+  { label: 'Search', href: '/freelancers/search' },
   { label: 'Dashboard', href: '/freelancers/dashboard' },
 ]
 
@@ -24,13 +25,23 @@ export function MarketplaceNavbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-3">
-          <Image src="/logo.png" alt="ORBIT" width={160} height={160} quality={100} priority className={cn('h-12 w-12 object-contain', theme === 'light' && 'invert hue-rotate-180')} />
-          <span className="font-montserrat text-lg font-bold tracking-[0.3em] text-text-primary">
-            ORBIT
-          </span>
-        </Link>
+        {/* Logo + back link */}
+        <div className="flex items-center gap-4">
+          <Link
+            href="/"
+            className="flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium text-text-tertiary transition-colors hover:bg-surface hover:text-text-primary"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Main Site</span>
+          </Link>
+          <div className="h-4 w-px bg-border" />
+          <Link href="/freelancers" className="flex items-center gap-3">
+            <Image src="/logo.png" alt="ORBIT" width={160} height={160} quality={100} priority className={cn('h-8 w-8 object-contain', theme === 'light' && 'invert hue-rotate-180')} />
+            <span className="font-montserrat text-base font-bold tracking-[0.3em] text-text-primary">
+              ORBIT <span className="text-[10px] font-normal tracking-widest text-text-tertiary">MARKETPLACE</span>
+            </span>
+          </Link>
+        </div>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 md:flex">
@@ -120,6 +131,15 @@ export function MarketplaceNavbar() {
                   {link.label}
                 </Link>
               ))}
+              <div className="my-2 border-t border-border" />
+              <Link
+                href="/"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-text-tertiary transition-colors hover:bg-surface hover:text-text-primary"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to Main Site
+              </Link>
             </nav>
           </motion.div>
         )}
