@@ -64,7 +64,9 @@ export function Navbar() {
     <header
       className={cn(
         'fixed left-0 right-0 top-0 z-50 transition-all duration-500',
-        scrolled ? 'glass' : 'bg-transparent'
+        scrolled
+          ? 'glass'
+          : 'bg-gradient-to-b from-black/60 via-black/20 to-transparent'
       )}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
@@ -77,9 +79,15 @@ export function Navbar() {
             height={160}
             quality={100}
             priority
-            className={cn('h-10 w-10 object-contain', theme === 'light' && 'invert hue-rotate-180')}
+            className={cn(
+              'h-10 w-10 object-contain',
+              scrolled && theme === 'light' ? 'invert hue-rotate-180' : ''
+            )}
           />
-          <span className="text-lg font-bold tracking-[0.2em] text-text-primary">
+          <span className={cn(
+            'text-lg font-bold tracking-[0.2em] transition-colors duration-300',
+            scrolled ? 'text-text-primary' : 'text-white'
+          )}>
             ORBIT
           </span>
         </Link>
@@ -96,7 +104,9 @@ export function Navbar() {
                   ? 'text-accent'
                   : pathname === link.href
                     ? 'text-accent'
-                    : 'text-text-secondary hover:text-text-primary'
+                    : scrolled
+                      ? 'text-text-secondary hover:text-text-primary'
+                      : 'text-white/80 hover:text-white'
               )}
             >
               <span className="relative z-10">{link.label}</span>
@@ -123,7 +133,10 @@ export function Navbar() {
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-text-secondary transition-all duration-300 hover:border-accent/50 hover:text-accent"
+            className={cn(
+              'flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-300 hover:border-accent/50 hover:text-accent',
+              scrolled ? 'border-border text-text-secondary' : 'border-white/30 text-white/80'
+            )}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -205,7 +218,7 @@ export function Navbar() {
 
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="text-text-primary md:hidden"
+            className={cn('md:hidden', scrolled ? 'text-text-primary' : 'text-white')}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
             {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
