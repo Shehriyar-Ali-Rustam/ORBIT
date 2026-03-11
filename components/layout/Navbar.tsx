@@ -66,10 +66,13 @@ export function Navbar() {
         'fixed left-0 right-0 top-0 z-50 transition-all duration-500',
         scrolled
           ? 'glass'
-          : 'bg-gradient-to-b from-black/60 via-black/20 to-transparent'
+          : 'bg-gradient-to-b from-black/80 via-black/50 to-transparent'
       )}
     >
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
+      <nav
+        className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8"
+        style={!scrolled ? { textShadow: '0 1px 4px rgba(0,0,0,0.6)' } : undefined}
+      >
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
           <Image
@@ -81,7 +84,7 @@ export function Navbar() {
             priority
             className={cn(
               'h-10 w-10 object-contain',
-              scrolled && theme === 'light' ? 'invert hue-rotate-180' : ''
+              !scrolled ? 'brightness-0 invert' : theme === 'light' ? 'invert hue-rotate-180' : ''
             )}
           />
           <span className={cn(
