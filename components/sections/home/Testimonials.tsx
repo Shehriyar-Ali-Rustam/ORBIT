@@ -1,11 +1,16 @@
 'use client'
 
+import { useRef, useState, useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Star } from 'lucide-react'
+import { Star, ChevronLeft, ChevronRight } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { LineReveal } from '@/components/ui/LineReveal'
 import { testimonials } from '@/data/testimonials'
+
+const CARD_WIDTH = 400
+const CARD_GAP = 24
+const SCROLL_JUMP = (CARD_WIDTH + CARD_GAP) * 3 // jump 3 cards per click
 
 function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[0] }) {
   return (
@@ -23,9 +28,9 @@ function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[0
           {testimonial.author.charAt(0)}
         </div>
         <div>
-          <p className="text-sm font-semibold text-text-primary">{testimonial.author}</p>
+          <p className="text-sm font-semibold text-text-primary">@{testimonial.author}</p>
           <p className="font-mono text-xs uppercase tracking-widest text-accent">
-            {testimonial.role}, {testimonial.company}
+            {testimonial.country}
           </p>
         </div>
       </div>
@@ -34,8 +39,64 @@ function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[0
 }
 
 export function Testimonials() {
-  // Triplicate for seamless infinite loop
-  const looped = [...testimonials, ...testimonials, ...testimonials]
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [progress, setProgress] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  const offsetRef = useRef(0) // manual offset in px (from arrow clicks)
+  const totalCards = testimonials.length
+
+  // Doubled for seamless infinite loop
+  const doubled = [...testimonials, ...testimonials]
+
+  // Total width of one full set
+  const setWidth = totalCards * (CARD_WIDTH + CARD_GAP)
+
+  // Duration for one full set to scroll past (controls speed)
+  const duration = 35 // seconds — same as Work section
+
+  // Track progress via animation frame
+  useEffect(() => {
+    let raf: number
+    const track = trackRef.current
+    if (!track) return
+
+    const tick = () => {
+      const style = getComputedStyle(track)
+      const matrix = new DOMMatrix(style.transform)
+      // translateX is negative as it moves left
+      const currentX = -matrix.m41 + offsetRef.current
+      // How far through one set (0 to 1)
+      const p = (currentX % setWidth) / setWidth
+      setProgress(Math.max(0, Math.min(p, 1)))
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [setWidth])
+
+  // Arrow click: shift the container by adjusting margin
+  const handleArrow = useCallback(
+    (direction: 'left' | 'right') => {
+      const track = trackRef.current
+      if (!track) return
+
+      // Pause briefly so user can see the jump
+      setIsPaused(true)
+
+      const delta = direction === 'left' ? SCROLL_JUMP : -SCROLL_JUMP
+      offsetRef.current += delta
+
+      // Clamp so we don't go past boundaries
+      if (offsetRef.current > 0) offsetRef.current = 0
+      if (offsetRef.current < -setWidth) offsetRef.current = -setWidth
+
+      track.style.marginLeft = `${offsetRef.current}px`
+
+      // Resume after 4s
+      setTimeout(() => setIsPaused(false), 4000)
+    },
+    [setWidth],
+  )
 
   return (
     <section className="section-padding relative overflow-hidden">
@@ -55,7 +116,7 @@ export function Testimonials() {
         </div>
       </div>
 
-      {/* Single-row marquee — full width */}
+      {/* Continuous marquee with controls */}
       <motion.div
         className="mt-16"
         initial={{ opacity: 0 }}
@@ -64,17 +125,52 @@ export function Testimonials() {
         viewport={{ once: true }}
       >
         <div className="relative overflow-hidden">
-          {/* Fade edges */}
-          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-gradient-to-r from-[var(--color-bg)] to-transparent sm:w-24" />
-          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-gradient-to-l from-[var(--color-bg)] to-transparent sm:w-24" />
-
-          <div
-            className="flex gap-6 hover:[animation-play-state:paused]"
-            style={{ animation: 'marquee-left 45s linear infinite' }}
+          {/* Left arrow */}
+          <button
+            onClick={() => handleArrow('left')}
+            className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-2.5 text-text-secondary shadow-lg backdrop-blur-sm transition-all duration-200 hover:border-primary/50 hover:text-primary sm:left-4 sm:p-3"
+            aria-label="Previous reviews"
           >
-            {looped.map((t, i) => (
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          {/* Right arrow */}
+          <button
+            onClick={() => handleArrow('right')}
+            className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-2.5 text-text-secondary shadow-lg backdrop-blur-sm transition-all duration-200 hover:border-primary/50 hover:text-primary sm:right-4 sm:p-3"
+            aria-label="Next reviews"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+
+          {/* Fade edges */}
+          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-12 bg-gradient-to-r from-[var(--color-bg)] to-transparent sm:w-20" />
+          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-12 bg-gradient-to-l from-[var(--color-bg)] to-transparent sm:w-20" />
+
+          {/* Marquee track */}
+          <div
+            ref={trackRef}
+            className="flex gap-6 transition-[margin] duration-500 ease-out"
+            style={{
+              animation: `marquee-left ${duration}s linear infinite`,
+              animationPlayState: isPaused ? 'paused' : 'running',
+            }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            {doubled.map((t, i) => (
               <TestimonialCard key={`${t.id}-${i}`} testimonial={t} />
             ))}
+          </div>
+        </div>
+
+        {/* Progress bar */}
+        <div className="mx-auto mt-8 max-w-xs px-6">
+          <div className="relative h-1 w-full overflow-hidden rounded-full bg-text-secondary/15">
+            <div
+              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary via-accent to-primary shadow-[0_0_8px_var(--color-primary)] transition-[width] duration-150 ease-linear"
+              style={{ width: `${progress * 100}%` }}
+            />
           </div>
         </div>
       </motion.div>

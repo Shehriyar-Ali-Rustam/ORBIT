@@ -195,8 +195,8 @@ export function Hero() {
               className="mt-12 flex justify-center gap-8 border-t border-white/[0.08] pt-8 sm:gap-12"
             >
               {[
-                { value: '30+', label: 'Projects' },
-                { value: '15+', label: 'Clients' },
+                { value: '101+', label: 'Projects' },
+                { value: '100+', label: 'Clients' },
                 { value: '5.0', label: 'Rating' },
               ].map((stat, i) => (
                 <motion.div

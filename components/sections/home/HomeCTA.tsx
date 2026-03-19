@@ -70,9 +70,9 @@ export function HomeCTA() {
         >
           {[
             { value: '24h', label: 'Response Time' },
-            { value: '30+', label: 'Projects' },
+            { value: '101+', label: 'Projects' },
             { value: '5.0', label: 'Rating' },
-            { value: '2+', label: 'Years' },
+            { value: '4+', label: 'Years' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <p className="font-mono text-2xl font-bold text-text-primary">{stat.value}</p>

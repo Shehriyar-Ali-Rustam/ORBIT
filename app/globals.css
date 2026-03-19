@@ -16,6 +16,7 @@
     --color-text-tertiary: #7a7a7a;
     --color-text-disabled: #bcbcbc;
     --color-accent: #FF751F;
+    --color-accent-rgb: 255, 117, 31;
     --color-accent-dim: rgba(255, 117, 31, 0.06);
     --color-primary: #FF751F;
     --color-primary-dim: rgba(255, 117, 31, 0.06);
@@ -46,6 +47,7 @@
     --color-text-tertiary: #606060;
     --color-text-disabled: #2a2a2a;
     --color-accent: #FF751F;
+    --color-accent-rgb: 255, 117, 31;
     --color-accent-dim: rgba(255, 117, 31, 0.06);
     --color-primary: #FF751F;
     --color-primary-dim: rgba(255, 117, 31, 0.06);
