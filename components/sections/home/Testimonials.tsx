@@ -12,12 +12,15 @@ const STACK = 4
 const DRAG_THRESHOLD = 80
 const TOTAL = testimonials.length
 
+const CARD_HEIGHT = 340 // fixed height for all cards — keeps stack clean
+
 // Visual config per depth (0 = top card, 3 = furthest back)
+// Tiny y-offsets so only a sliver of the card edge shows behind the top card
 const DEPTH_CFG = [
-  { rotate: 1,  y: 0,  scale: 1,    zIndex: 40, opacity: 1 },
-  { rotate: -6, y: 18, scale: 0.96, zIndex: 30, opacity: 1 },
-  { rotate: 4,  y: 36, scale: 0.92, zIndex: 20, opacity: 1 },
-  { rotate: -3, y: 54, scale: 0.88, zIndex: 10, opacity: 1 },
+  { rotate: 1,  y: 0,  scale: 1,    zIndex: 40 },
+  { rotate: -5, y: 10, scale: 0.97, zIndex: 30 },
+  { rotate: 4,  y: 20, scale: 0.94, zIndex: 20 },
+  { rotate: -3, y: 30, scale: 0.91, zIndex: 10 },
 ]
 
 type Testimonial = (typeof testimonials)[0]
@@ -71,7 +74,6 @@ function FlipCard({
       animate={{
         y: cfg.y,
         scale: cfg.scale,
-        opacity: cfg.opacity,
         rotate: isTop ? 0 : cfg.rotate,
       }}
       transition={{ type: 'spring', stiffness: 200, damping: 24 }}
@@ -81,10 +83,10 @@ function FlipCard({
       onDragEnd={isTop ? handleDragEnd : undefined}
       whileDrag={{ cursor: 'grabbing' }}
     >
-      {/* Card */}
+      {/* Card — fixed height so all cards are the same size */}
       <div
-        className="relative select-none overflow-hidden rounded-3xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-7 shadow-[0_16px_48px_rgba(0,0,0,0.18)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-sm transition-shadow duration-300"
-        style={{ cursor: isTop ? 'grab' : 'default' }}
+        className="relative flex select-none flex-col overflow-hidden rounded-3xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-7 shadow-[0_16px_48px_rgba(0,0,0,0.18)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-sm"
+        style={{ height: CARD_HEIGHT, cursor: isTop ? 'grab' : 'default' }}
       >
         {/* Decorative quote mark */}
         <span className="pointer-events-none absolute right-5 top-2 font-serif text-9xl font-bold leading-none text-accent/[0.07] dark:text-accent/[0.1] select-none">
@@ -101,16 +103,17 @@ function FlipCard({
           ))}
         </div>
 
-        {/* Review text */}
-        <p className="relative mt-4 text-sm leading-relaxed text-text-secondary italic line-clamp-6">
+        {/* Review text — grows to fill space, clamps overflow */}
+        <p className="relative mt-4 flex-1 overflow-hidden text-sm leading-relaxed text-text-secondary italic line-clamp-[7]">
           &ldquo;{testimonial.quote}&rdquo;
         </p>
 
-        {/* Divider */}
-        <div className="my-5 h-px w-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+        {/* Divider — pinned above author */}
+        <div className="mt-auto pt-5">
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
 
         {/* Author */}
-        <div className="flex items-center gap-3">
+        <div className="mt-4 flex items-center gap-3">
           <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-white shadow-[0_0_16px_rgba(255,117,31,0.4)]">
             {testimonial.author.charAt(0).toUpperCase()}
           </div>
@@ -128,7 +131,8 @@ function FlipCard({
             </span>
           )}
         </div>
-      </div>
+        </div>{/* end mt-auto wrapper */}
+      </div>{/* end card */}
     </motion.div>
   )
 }
@@ -181,7 +185,7 @@ export function Testimonials() {
         </div>
 
         {/* ── Stacked card deck ── */}
-        <div className="relative mx-auto mt-14" style={{ height: 440 }}>
+        <div className="relative mx-auto mt-14" style={{ height: CARD_HEIGHT + 60 }}>
           {/* Render bottom → top so top card gets pointer events */}
           {[...deck].reverse().map((tIdx, reversedDepth) => {
             const depth = STACK - 1 - reversedDepth
