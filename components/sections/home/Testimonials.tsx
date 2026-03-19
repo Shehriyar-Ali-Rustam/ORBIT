@@ -11,11 +11,18 @@ import { testimonials } from '@/data/testimonials'
 const STACK = 4
 const DRAG_THRESHOLD = 80
 const TOTAL = testimonials.length
+const CARD_HEIGHT = 320
 
-const CARD_HEIGHT = 340 // fixed height for all cards — keeps stack clean
+// Each card cycles through a distinct color theme
+const THEMES = [
+  { a: '#FF751F', b: '#FF4D00', mid: '#FF9A5C' }, // orange  (brand)
+  { a: '#8B5CF6', b: '#6D28D9', mid: '#A78BFA' }, // purple
+  { a: '#06B6D4', b: '#0EA5E9', mid: '#67E8F9' }, // cyan
+  { a: '#10B981', b: '#059669', mid: '#6EE7B7' }, // emerald
+  { a: '#F59E0B', b: '#D97706', mid: '#FCD34D' }, // amber
+  { a: '#EC4899', b: '#BE185D', mid: '#F9A8D4' }, // pink
+]
 
-// Visual config per depth (0 = top card, 3 = furthest back)
-// Tiny y-offsets so only a sliver of the card edge shows behind the top card
 const DEPTH_CFG = [
   { rotate: 1,  y: 0,  scale: 1,    zIndex: 40 },
   { rotate: -5, y: 10, scale: 0.97, zIndex: 30 },
@@ -27,35 +34,34 @@ type Testimonial = (typeof testimonials)[0]
 
 function FlipCard({
   testimonial,
+  themeIdx,
   depth,
   isTop,
   onDismiss,
 }: {
   testimonial: Testimonial
+  themeIdx: number
   depth: number
   isTop: boolean
   onDismiss: (dir: number) => void
 }) {
   const cfg = DEPTH_CFG[Math.min(depth, DEPTH_CFG.length - 1)]
+  const theme = THEMES[themeIdx % THEMES.length]
   const x = useMotionValue(0)
   const dragRotate = useTransform(x, [-300, 300], [-20, 20])
 
-  // When this card becomes the top card again (e.g. cycling back), reset x
   useEffect(() => {
-    if (isTop) {
-      animate(x, 0, { type: 'spring', stiffness: 300, damping: 28 })
-    }
+    if (isTop) animate(x, 0, { type: 'spring', stiffness: 300, damping: 28 })
   }, [isTop, x])
 
   function handleDragEnd(_: unknown, info: { offset: { x: number }; velocity: { x: number } }) {
-    const ox = info.offset.x
-    const vx = info.velocity.x
-    // Dismiss if dragged far enough OR flicked fast enough
+    const { x: ox } = info.offset
+    const { x: vx } = info.velocity
     if (ox > DRAG_THRESHOLD || vx > 500) {
-      animate(x, 900, { duration: 0.3, ease: [0.32, 0, 0.67, 0] })
+      animate(x, 900, { duration: 0.28, ease: [0.32, 0, 0.67, 0] })
       setTimeout(() => onDismiss(1), 220)
     } else if (ox < -DRAG_THRESHOLD || vx < -500) {
-      animate(x, -900, { duration: 0.3, ease: [0.32, 0, 0.67, 0] })
+      animate(x, -900, { duration: 0.28, ease: [0.32, 0, 0.67, 0] })
       setTimeout(() => onDismiss(-1), 220)
     } else {
       animate(x, 0, { type: 'spring', stiffness: 500, damping: 30 })
@@ -71,11 +77,7 @@ function FlipCard({
         zIndex: cfg.zIndex,
         translateX: '-50%',
       }}
-      animate={{
-        y: cfg.y,
-        scale: cfg.scale,
-        rotate: isTop ? 0 : cfg.rotate,
-      }}
+      animate={{ y: cfg.y, scale: cfg.scale, rotate: isTop ? 0 : cfg.rotate }}
       transition={{ type: 'spring', stiffness: 200, damping: 24 }}
       drag={isTop ? 'x' : false}
       dragConstraints={{ left: 0, right: 0 }}
@@ -83,56 +85,114 @@ function FlipCard({
       onDragEnd={isTop ? handleDragEnd : undefined}
       whileDrag={{ cursor: 'grabbing' }}
     >
-      {/* Card — fixed height so all cards are the same size */}
+      {/* ── Card shell ── */}
       <div
-        className="relative flex select-none flex-col overflow-hidden rounded-3xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-7 shadow-[0_16px_48px_rgba(0,0,0,0.18)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-sm"
-        style={{ height: CARD_HEIGHT, cursor: isTop ? 'grab' : 'default' }}
+        className="relative flex select-none flex-col overflow-hidden rounded-3xl"
+        style={{
+          height: CARD_HEIGHT,
+          cursor: isTop ? 'grab' : 'default',
+          background: '#0d0d0d',
+          border: `1px solid ${theme.a}30`,
+          boxShadow: `0 0 0 1px ${theme.a}18, 0 24px 64px rgba(0,0,0,0.55), 0 0 80px ${theme.a}12`,
+        }}
       >
-        {/* Decorative quote mark */}
-        <span className="pointer-events-none absolute right-5 top-2 font-serif text-9xl font-bold leading-none text-accent/[0.07] dark:text-accent/[0.1] select-none">
-          &rdquo;
-        </span>
+        {/* ── Animated gradient orbs (background) ── */}
+        <motion.div
+          className="pointer-events-none absolute rounded-full blur-[70px]"
+          style={{
+            width: 200, height: 200,
+            top: -60, right: -40,
+            background: `radial-gradient(circle, ${theme.a}55, transparent 70%)`,
+          }}
+          animate={isTop ? { scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] } : {}}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="pointer-events-none absolute rounded-full blur-[80px]"
+          style={{
+            width: 180, height: 180,
+            bottom: -50, left: -40,
+            background: `radial-gradient(circle, ${theme.b}40, transparent 70%)`,
+          }}
+          animate={isTop ? { scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] } : {}}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        />
 
-        {/* Orange accent line at top */}
-        <div className="absolute inset-x-0 top-0 h-[2px] rounded-t-3xl bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
+        {/* ── Animated top gradient bar ── */}
+        <motion.div
+          className="absolute inset-x-0 top-0 h-[2px]"
+          style={{ background: `linear-gradient(90deg, transparent, ${theme.a}, ${theme.mid}, ${theme.b}, transparent)` }}
+          animate={isTop ? { opacity: [0.6, 1, 0.6] } : { opacity: 0.4 }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+        />
 
-        {/* Stars */}
-        <div className="flex gap-1">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} className="h-4 w-4 fill-accent text-accent" />
-          ))}
-        </div>
+        {/* ── Subtle mesh overlay ── */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `radial-gradient(ellipse at 85% 15%, ${theme.a}12 0%, transparent 55%),
+                         radial-gradient(ellipse at 15% 85%, ${theme.b}0a 0%, transparent 50%)`,
+          }}
+        />
 
-        {/* Review text — grows to fill space, clamps overflow */}
-        <p className="relative mt-4 flex-1 overflow-hidden text-sm leading-relaxed text-text-secondary italic line-clamp-[7]">
-          &ldquo;{testimonial.quote}&rdquo;
-        </p>
-
-        {/* Divider — pinned above author */}
-        <div className="mt-auto pt-5">
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
-
-        {/* Author */}
-        <div className="mt-4 flex items-center gap-3">
-          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-white shadow-[0_0_16px_rgba(255,117,31,0.4)]">
-            {testimonial.author.charAt(0).toUpperCase()}
+        {/* ── Content ── */}
+        <div className="relative z-10 flex flex-1 flex-col p-7">
+          {/* Stars */}
+          <div className="flex gap-1">
+            {[...Array(5)].map((_, i) => (
+              <Star key={i} className="h-4 w-4" style={{ fill: theme.a, color: theme.a }} />
+            ))}
           </div>
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-semibold text-text-primary">
-              @{testimonial.author}
-            </p>
-            <p className="font-mono text-xs uppercase tracking-widest text-accent">
-              {testimonial.country}
-            </p>
+
+          {/* Big decorative quote */}
+          <span
+            className="pointer-events-none absolute right-6 top-3 select-none font-serif text-8xl font-bold leading-none"
+            style={{ color: `${theme.a}15` }}
+          >
+            &rdquo;
+          </span>
+
+          {/* Review text */}
+          <p className="mt-4 flex-1 overflow-hidden text-sm leading-relaxed text-white/75 italic line-clamp-[6]">
+            &ldquo;{testimonial.quote}&rdquo;
+          </p>
+
+          {/* Divider */}
+          <div
+            className="mt-auto mb-4 h-px w-full"
+            style={{ background: `linear-gradient(90deg, transparent, ${theme.a}35, transparent)` }}
+          />
+
+          {/* Author row */}
+          <div className="flex items-center gap-3">
+            <div
+              className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+              style={{
+                background: `linear-gradient(135deg, ${theme.a}, ${theme.b})`,
+                boxShadow: `0 0 20px ${theme.a}50`,
+              }}
+            >
+              {testimonial.author.charAt(0).toUpperCase()}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-semibold text-white/90">
+                @{testimonial.author}
+              </p>
+              <p
+                className="font-mono text-xs uppercase tracking-widest"
+                style={{ color: theme.a }}
+              >
+                {testimonial.country}
+              </p>
+            </div>
+            {isTop && (
+              <span className="flex-shrink-0 text-[11px] text-white/30 select-none">
+                swipe →
+              </span>
+            )}
           </div>
-          {isTop && (
-            <span className="flex-shrink-0 text-[11px] text-text-tertiary/50 select-none">
-              swipe →
-            </span>
-          )}
         </div>
-        </div>{/* end mt-auto wrapper */}
-      </div>{/* end card */}
+      </div>
     </motion.div>
   )
 }
@@ -141,7 +201,6 @@ export function Testimonials() {
   const [topIdx, setTopIdx] = useState(0)
   const [busy, setBusy] = useState(false)
 
-  // Always show STACK cards from topIdx onward
   const deck = Array.from({ length: STACK }, (_, i) => (topIdx + i) % TOTAL)
 
   const shift = useCallback(
@@ -154,17 +213,21 @@ export function Testimonials() {
     [busy],
   )
 
+  const currentTheme = THEMES[topIdx % THEMES.length]
+
   return (
     <section className="section-padding relative overflow-hidden">
-      {/* Ambient background */}
+      {/* Section background */}
       <div className="pointer-events-none absolute inset-0">
         <motion.div
-          className="absolute right-0 top-1/3 h-[450px] w-[450px] rounded-full bg-accent/[0.05] blur-[130px]"
+          className="absolute right-0 top-1/3 h-[500px] w-[500px] rounded-full blur-[140px]"
+          style={{ background: `radial-gradient(circle, ${currentTheme.a}08, transparent 70%)` }}
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
-          className="absolute -left-20 bottom-1/4 h-[350px] w-[350px] rounded-full bg-accent/[0.04] blur-[110px]"
+          className="absolute -left-20 bottom-1/4 h-[400px] w-[400px] rounded-full blur-[120px]"
+          style={{ background: `radial-gradient(circle, ${currentTheme.b}06, transparent 70%)` }}
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
         />
@@ -180,19 +243,21 @@ export function Testimonials() {
             <SectionHeading className="mt-4">Trusted Worldwide</SectionHeading>
           </LineReveal>
           <p className="mt-2 text-sm text-text-tertiary">
-            {topIdx + 1} <span className="text-text-tertiary/50">of</span> {TOTAL} reviews
+            {topIdx + 1}{' '}
+            <span className="text-text-tertiary/40">of</span>{' '}
+            {TOTAL} reviews
           </p>
         </div>
 
-        {/* ── Stacked card deck ── */}
+        {/* Card stack */}
         <div className="relative mx-auto mt-14" style={{ height: CARD_HEIGHT + 60 }}>
-          {/* Render bottom → top so top card gets pointer events */}
           {[...deck].reverse().map((tIdx, reversedDepth) => {
             const depth = STACK - 1 - reversedDepth
             return (
               <FlipCard
                 key={tIdx}
                 testimonial={testimonials[tIdx]}
+                themeIdx={tIdx}
                 depth={depth}
                 isTop={depth === 0}
                 onDismiss={shift}
@@ -201,12 +266,16 @@ export function Testimonials() {
           })}
         </div>
 
-        {/* ── Controls ── */}
+        {/* Controls */}
         <div className="mt-10 flex flex-col items-center gap-5">
           {/* Progress bar */}
-          <div className="relative h-1 w-full max-w-xs overflow-hidden rounded-full bg-text-tertiary/[0.12]">
+          <div className="relative h-1 w-full max-w-xs overflow-hidden rounded-full bg-white/[0.06]">
             <motion.div
-              className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-accent/80 via-accent to-accent/80 shadow-[0_0_8px_rgba(255,117,31,0.6)]"
+              className="absolute inset-y-0 left-0 rounded-full"
+              style={{
+                background: `linear-gradient(90deg, ${currentTheme.b}, ${currentTheme.a}, ${currentTheme.mid})`,
+                boxShadow: `0 0 10px ${currentTheme.a}80`,
+              }}
               animate={{ width: `${((topIdx + 1) / TOTAL) * 100}%` }}
               transition={{ type: 'spring', stiffness: 80, damping: 18 }}
             />
@@ -217,24 +286,25 @@ export function Testimonials() {
             <motion.button
               onClick={() => shift(-1)}
               disabled={busy}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.94 }}
-              className="rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-3 text-text-secondary shadow-md transition-colors hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.92 }}
+              className="rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-3 text-text-secondary shadow-md transition-colors hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
+              style={{ '--hover-border': currentTheme.a } as React.CSSProperties}
               aria-label="Previous review"
             >
               <ChevronLeft className="h-5 w-5" />
             </motion.button>
 
-            <span className="font-mono text-xs text-text-tertiary/60 tabular-nums">
+            <span className="font-mono text-xs tabular-nums text-text-tertiary/60">
               {String(topIdx + 1).padStart(2, '0')} / {String(TOTAL).padStart(2, '0')}
             </span>
 
             <motion.button
               onClick={() => shift(1)}
               disabled={busy}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.94 }}
-              className="rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-3 text-text-secondary shadow-md transition-colors hover:border-accent/50 hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.92 }}
+              className="rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-3 text-text-secondary shadow-md transition-colors hover:text-accent disabled:cursor-not-allowed disabled:opacity-40"
               aria-label="Next review"
             >
               <ChevronRight className="h-5 w-5" />
