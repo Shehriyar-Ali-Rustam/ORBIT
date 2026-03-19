@@ -1,10 +1,9 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowUp, Square, Paperclip } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowUp, Paperclip, Loader2 } from 'lucide-react'
 import { useDropzone } from 'react-dropzone'
-import { VoiceInput } from './VoiceInput'
 import { AttachmentPreview, type AttachmentFile } from './AttachmentPreview'
 
 interface InputBarProps {
@@ -25,7 +24,7 @@ export function InputBar({
   onChange,
   onSubmit,
   onStop,
-  placeholder = 'Message Orbit AI...',
+  placeholder = 'Type a command or ask a question',
   isLoading,
   disabled,
   attachments = [],
@@ -36,18 +35,16 @@ export function InputBar({
 
   // Auto-resize textarea
   useEffect(() => {
-    const textarea = textareaRef.current
-    if (!textarea) return
-    textarea.style.height = 'auto'
-    textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`
+    const el = textareaRef.current
+    if (!el) return
+    el.style.height = 'auto'
+    el.style.height = `${Math.min(el.scrollHeight, 180)}px`
   }, [value])
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      if (value.trim() && !isLoading && !disabled) {
-        onSubmit()
-      }
+      if (value.trim() && !isLoading && !disabled) onSubmit()
     }
   }
 
@@ -74,80 +71,109 @@ export function InputBar({
   const canSend = (value.trim().length > 0 || attachments.length > 0) && !isLoading && !disabled
 
   return (
-    <div className="border-t border-border bg-background">
+    <div className="border-t border-[var(--color-card-border)] bg-[var(--color-bg)] px-4 pb-5 pt-3">
+      <input {...getInputProps()} />
+
       {/* Attachment previews */}
       {attachments.length > 0 && onRemoveAttachment && (
-        <AttachmentPreview files={attachments} onRemove={onRemoveAttachment} />
+        <div className="mx-auto mb-2 max-w-2xl">
+          <AttachmentPreview files={attachments} onRemove={onRemoveAttachment} />
+        </div>
       )}
 
-      <div className="px-4 py-3">
-      <input {...getInputProps()} />
-      <div className="mx-auto flex max-w-3xl items-end gap-2">
-        {/* Attach button */}
-        <button
-          onClick={openFilePicker}
-          disabled={isLoading || disabled}
-          className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl border border-border bg-surface-2 text-text-secondary transition-colors hover:text-text-primary hover:border-accent disabled:opacity-40"
-          title="Attach file"
-        >
-          <Paperclip className="h-5 w-5" />
-        </button>
-
+      {/* ── Main input box ── */}
+      <div
+        className="mx-auto max-w-2xl overflow-hidden rounded-2xl border transition-all duration-200"
+        style={{
+          borderColor: value.length > 0
+            ? 'rgba(255,117,31,0.35)'
+            : 'var(--color-card-border)',
+          background: 'var(--color-card-bg)',
+          boxShadow: value.length > 0
+            ? '0 0 0 3px rgba(255,117,31,0.08), 0 4px 24px rgba(0,0,0,0.12)'
+            : '0 2px 12px rgba(0,0,0,0.08)',
+        }}
+      >
         {/* Textarea */}
-        <div className="relative flex-1">
-          <textarea
-            ref={textareaRef}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={placeholder}
-            rows={1}
-            disabled={disabled}
-            maxLength={10000}
-            className="w-full resize-none rounded-xl border border-border bg-surface-2 px-4 py-3 text-sm leading-relaxed text-text-primary placeholder-text-tertiary transition-colors focus:border-[#FF751F]/50 focus:outline-none focus:ring-1 focus:ring-[#FF751F]/20 disabled:opacity-50"
-          />
-        </div>
-
-        {/* Voice input */}
-        <VoiceInput
-          onTranscript={(text) => onChange(value ? value + ' ' + text : text)}
-          disabled={disabled || isLoading}
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          rows={2}
+          disabled={disabled}
+          maxLength={10000}
+          className="w-full resize-none bg-transparent px-5 pt-4 pb-2 text-sm leading-relaxed text-text-primary placeholder-text-tertiary focus:outline-none disabled:opacity-50"
         />
 
-        {/* Send / Stop button */}
-        {isLoading ? (
-          <motion.button
-            onClick={onStop}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl bg-red-500 text-white transition-opacity hover:bg-red-600"
-            title="Stop generating"
-          >
-            <Square className="h-4 w-4 fill-current" />
-          </motion.button>
-        ) : (
-          <motion.button
-            onClick={onSubmit}
-            disabled={!canSend}
-            whileHover={canSend ? { scale: 1.05 } : undefined}
-            whileTap={canSend ? { scale: 0.95 } : undefined}
-            className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl bg-accent text-white transition-opacity disabled:opacity-40"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </motion.button>
-        )}
+        {/* ── Bottom toolbar inside the box ── */}
+        <div className="flex items-center justify-between px-3 pb-3 pt-1">
+          {/* Left icons */}
+          <div className="flex items-center gap-1.5">
+            {/* Attach */}
+            <button
+              onClick={openFilePicker}
+              disabled={isLoading || disabled}
+              title="Attach file"
+              className="flex h-8 w-8 items-center justify-center rounded-xl text-text-tertiary transition-colors hover:bg-[var(--color-surface-2,rgba(255,255,255,0.05))] hover:text-text-primary disabled:opacity-40"
+            >
+              <Paperclip className="h-4 w-4" />
+            </button>
+
+            {/* Keyboard shortcut badge */}
+            <div className="flex h-8 items-center gap-1 rounded-xl px-2 text-[10px] text-text-tertiary/60">
+              <span className="rounded border border-current px-1 py-0.5 font-mono leading-none">⌘</span>
+              <span className="rounded border border-current px-1 py-0.5 font-mono leading-none">↵</span>
+            </div>
+          </div>
+
+          {/* Right: Send / Stop */}
+          <AnimatePresence mode="wait">
+            {isLoading ? (
+              <motion.button
+                key="stop"
+                onClick={onStop}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="flex h-9 items-center gap-2 rounded-xl bg-[var(--color-card-border)] px-4 text-sm font-medium text-text-secondary transition-colors hover:bg-red-500/10 hover:text-red-400"
+                title="Stop generating"
+              >
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-accent" />
+                <span>Stop</span>
+              </motion.button>
+            ) : (
+              <motion.button
+                key="send"
+                onClick={onSubmit}
+                disabled={!canSend}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                whileHover={canSend ? { scale: 1.04 } : undefined}
+                whileTap={canSend ? { scale: 0.96 } : undefined}
+                className="flex h-9 items-center gap-2 rounded-xl px-4 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-30"
+                style={{
+                  background: canSend ? '#FF751F' : 'var(--color-card-border)',
+                  color: canSend ? '#fff' : 'var(--color-text-tertiary)',
+                  boxShadow: canSend ? '0 0 16px rgba(255,117,31,0.35)' : 'none',
+                }}
+              >
+                <ArrowUp className="h-3.5 w-3.5" />
+                <span>Send</span>
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
-      {/* Footer hints */}
-      <div className="mx-auto mt-1.5 flex max-w-3xl items-center justify-between px-1">
-        <span className="text-[10px] text-text-disabled">
-          ⏎ Send &middot; ⇧⏎ New line
-        </span>
-        <span className="text-[10px] text-text-disabled">
-          {value.length}/10000
-        </span>
-      </div>
-      </div>
+      {/* Footer hint */}
+      <p className="mx-auto mt-2 max-w-2xl text-center text-[10px] text-text-tertiary/40">
+        ↵ to send · ⇧↵ new line · {value.length > 0 && `${value.length}/10000`}
+      </p>
     </div>
   )
 }

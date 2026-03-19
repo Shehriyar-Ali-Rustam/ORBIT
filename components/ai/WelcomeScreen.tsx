@@ -1,40 +1,21 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import {
-  Bot, Code2, PenTool, Languages, FileText, Briefcase, ImageIcon,
-} from 'lucide-react'
+import { Sparkles, Zap, MessageSquare, Globe } from 'lucide-react'
 import type { AITool } from '@/lib/ai/prompts'
 
-const TOOL_ICONS: Record<AITool, typeof Bot> = {
-  chat: Bot,
-  code: Code2,
-  write: PenTool,
-  translate: Languages,
-  resume: FileText,
-  freelance: Briefcase,
-  image: ImageIcon,
+const TOOL_SUBTITLES: Record<AITool, string> = {
+  chat:      'Type a command or ask a question',
+  code:      'Describe what you want to build',
+  write:     'Tell me what you want to create',
+  translate: 'Paste text to translate',
+  resume:    'Describe your experience and goals',
+  freelance: 'Ask about Fiverr, proposals, or pricing',
+  image:     'Describe the image you want to generate',
 }
 
-const TOOL_TITLES: Record<AITool, string> = {
-  chat: 'Orbit Chat',
-  code: 'Orbit Code',
-  write: 'Orbit Write',
-  translate: 'Orbit Translate',
-  resume: 'Orbit Resume',
-  freelance: 'Orbit Freelance',
-  image: 'Orbit Image',
-}
-
-const TOOL_DESCRIPTIONS: Record<AITool, string> = {
-  chat: 'Your general AI assistant. Ask me anything about tech, business, or Orbit.',
-  code: 'Write, debug, and explain code in any language. Production-ready output.',
-  write: 'Create marketing copy, blog posts, emails, and professional content.',
-  translate: 'Professional English ↔ Urdu translation with cultural context.',
-  resume: 'Build ATS-optimized resumes and cover letters that get interviews.',
-  freelance: 'Win more clients on Fiverr and Upwork with optimized profiles and proposals.',
-  image: 'Generate AI images for free. Describe what you want and I\'ll create it.',
-}
+// Suggestion chip icons
+const CHIP_ICONS = [Sparkles, Zap, MessageSquare, Globe]
 
 interface WelcomeScreenProps {
   tool: AITool
@@ -42,54 +23,73 @@ interface WelcomeScreenProps {
   onSuggestionClick: (text: string) => void
 }
 
-export function WelcomeScreen({
-  tool,
-  suggestions,
-  onSuggestionClick,
-}: WelcomeScreenProps) {
-  const Icon = TOOL_ICONS[tool]
-
+export function WelcomeScreen({ tool, suggestions, onSuggestionClick }: WelcomeScreenProps) {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="text-center"
-      >
-        {/* Icon */}
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#FF751F]/10">
-          <Icon className="h-8 w-8 text-[#FF751F]" />
-        </div>
+    <div className="flex min-h-full flex-col items-center justify-center px-6 py-16">
 
-        {/* Title */}
-        <h2 className="mt-5 text-2xl font-bold text-text-primary">
-          Hi, I&apos;m {TOOL_TITLES[tool]}
-        </h2>
+      {/* ── Animated background orbs ── */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <motion.div
+          className="absolute left-1/4 top-1/4 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.06] blur-[100px]"
+          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute right-1/4 bottom-1/3 h-[300px] w-[300px] translate-x-1/2 rounded-full bg-accent/[0.04] blur-[80px]"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        />
+      </div>
 
-        {/* Description */}
-        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-text-secondary">
-          {TOOL_DESCRIPTIONS[tool]}
-        </p>
-      </motion.div>
+      <div className="relative w-full max-w-2xl text-center">
 
-      {/* Suggestion cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-        className="mt-8 grid w-full max-w-lg grid-cols-1 gap-3 sm:grid-cols-2"
-      >
-        {suggestions.map((suggestion) => (
-          <button
-            key={suggestion}
-            onClick={() => onSuggestionClick(suggestion)}
-            className="rounded-xl border border-border bg-surface px-4 py-3 text-left text-sm text-text-secondary transition-all hover:border-[#FF751F]/50 hover:text-text-primary"
-          >
-            {suggestion}
-          </button>
-        ))}
-      </motion.div>
+        {/* ── Heading — mixed weight like reference ── */}
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-4xl font-light tracking-tight text-text-primary sm:text-5xl"
+        >
+          How can{' '}
+          <span className="font-semibold italic text-accent">I</span>{' '}
+          help{' '}
+          <span className="font-semibold italic text-text-primary">today?</span>
+        </motion.h1>
+
+        {/* ── Subtitle ── */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-3 text-sm text-text-tertiary"
+        >
+          {TOOL_SUBTITLES[tool]}
+        </motion.p>
+
+        {/* ── Suggestion chips ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-10 flex flex-wrap justify-center gap-2"
+        >
+          {suggestions.slice(0, 4).map((s, i) => {
+            const ChipIcon = CHIP_ICONS[i % CHIP_ICONS.length]
+            return (
+              <motion.button
+                key={s}
+                onClick={() => onSuggestionClick(s)}
+                whileHover={{ scale: 1.04, y: -1 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-2 rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] px-4 py-2 text-sm text-text-secondary shadow-sm transition-all duration-200 hover:border-accent/40 hover:text-accent"
+              >
+                <ChipIcon className="h-3.5 w-3.5 flex-shrink-0 text-accent/70" />
+                <span className="truncate max-w-[180px]">{s}</span>
+              </motion.button>
+            )
+          })}
+        </motion.div>
+      </div>
     </div>
   )
 }
