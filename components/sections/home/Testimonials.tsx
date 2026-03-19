@@ -14,10 +14,10 @@ const TOTAL = testimonials.length
 
 // Visual config per depth (0 = top card, 3 = furthest back)
 const DEPTH_CFG = [
-  { rotate: 1,  y: 0,  scale: 1,    zIndex: 40, opacity: 1    },
-  { rotate: -6, y: 16, scale: 0.95, zIndex: 30, opacity: 1    },
-  { rotate: 4,  y: 32, scale: 0.90, zIndex: 20, opacity: 0.85 },
-  { rotate: -3, y: 48, scale: 0.85, zIndex: 10, opacity: 0.7  },
+  { rotate: 1,  y: 0,  scale: 1,    zIndex: 40, opacity: 1 },
+  { rotate: -6, y: 18, scale: 0.96, zIndex: 30, opacity: 1 },
+  { rotate: 4,  y: 36, scale: 0.92, zIndex: 20, opacity: 1 },
+  { rotate: -3, y: 54, scale: 0.88, zIndex: 10, opacity: 1 },
 ]
 
 type Testimonial = (typeof testimonials)[0]
@@ -61,7 +61,7 @@ function FlipCard({
 
   return (
     <motion.div
-      className="absolute left-1/2 w-full max-w-[420px] touch-none"
+      className="absolute left-1/2 w-full max-w-[560px] touch-none"
       style={{
         x: isTop ? x : undefined,
         rotate: isTop ? dragRotate : undefined,
@@ -102,7 +102,7 @@ function FlipCard({
         </div>
 
         {/* Review text */}
-        <p className="relative mt-4 min-h-[90px] text-sm leading-relaxed text-text-secondary italic line-clamp-5">
+        <p className="relative mt-4 text-sm leading-relaxed text-text-secondary italic line-clamp-6">
           &ldquo;{testimonial.quote}&rdquo;
         </p>
 
@@ -181,7 +181,7 @@ export function Testimonials() {
         </div>
 
         {/* ── Stacked card deck ── */}
-        <div className="relative mx-auto mt-14" style={{ height: 380 }}>
+        <div className="relative mx-auto mt-14" style={{ height: 440 }}>
           {/* Render bottom → top so top card gets pointer events */}
           {[...deck].reverse().map((tIdx, reversedDepth) => {
             const depth = STACK - 1 - reversedDepth
