@@ -80,10 +80,19 @@
     background-color: var(--color-bg);
     color: var(--color-fg);
     font-family: var(--font-inter), sans-serif;
+    font-feature-settings: 'cv11', 'ss01', 'cv01', 'cv04';
+    font-size: 16px;
+    line-height: 1.6;
     overflow-x: hidden;
     transition:
       background-color 0.3s ease,
       color 0.3s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-feature-settings: 'cv11', 'ss01', 'cv01', 'cv04';
+    letter-spacing: -0.035em;
+    line-height: 1.1;
   }
 
   ::selection {

@@ -15,6 +15,15 @@ const config: Config = {
         mono: ['var(--font-jetbrains)', 'monospace'],
         montserrat: ['var(--font-montserrat)', 'sans-serif'],
       },
+      letterSpacing: {
+        tightest: '-0.05em',
+        tighter: '-0.04em',
+        tight: '-0.025em',
+        normal: '0em',
+        wide: '0.025em',
+        wider: '0.05em',
+        widest: '0.1em',
+      },
       colors: {
         background: 'var(--color-bg)',
         foreground: 'var(--color-fg)',

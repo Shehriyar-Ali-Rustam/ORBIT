@@ -64,7 +64,7 @@ export function HomeCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease, delay: 0.05 }}
           viewport={{ once: true }}
-          className="text-5xl font-extrabold tracking-tight text-white md:text-6xl lg:text-7xl"
+          className="text-5xl font-black tracking-tighter text-white md:text-6xl lg:text-7xl"
         >
           Ready to Build{' '}
           <span
@@ -131,7 +131,7 @@ export function HomeCTA() {
             style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)' }}
           />
 
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8">
             {stats.map(({ value, label, icon: Icon }) => (
               <div key={label} className="flex flex-col items-center gap-2">
                 <div

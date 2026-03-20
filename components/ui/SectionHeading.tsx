@@ -9,9 +9,10 @@ export function SectionHeading({ children, className }: SectionHeadingProps) {
   return (
     <h2
       className={cn(
-        'text-4xl font-extrabold tracking-tight text-text-primary md:text-5xl lg:text-6xl',
+        'text-4xl font-black text-text-primary md:text-5xl lg:text-6xl',
         className
       )}
+      style={{ letterSpacing: '-0.04em', lineHeight: '1.08' }}
     >
       {children}
     </h2>

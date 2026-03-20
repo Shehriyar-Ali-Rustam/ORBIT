@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Lightbulb, Heart, Award, Rocket, Users } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -72,6 +72,15 @@ const SLOT: Record<number, SlotPos> = {
   [ 2]: { x:  520, rotateY: -54, scale: 0.56, opacity: 0.58, zIndex: 1  },
 }
 
+// Mobile: single-card view with directional fade
+const MOBILE_SLOT: Record<number, SlotPos> = {
+  [-2]: { x: -24, rotateY: 0, scale: 0.9,  opacity: 0, zIndex: 1  },
+  [-1]: { x: -12, rotateY: 0, scale: 0.95, opacity: 0, zIndex: 4  },
+  [ 0]: { x:   0, rotateY: 0, scale: 1.00, opacity: 1, zIndex: 10 },
+  [ 1]: { x:  12, rotateY: 0, scale: 0.95, opacity: 0, zIndex: 4  },
+  [ 2]: { x:  24, rotateY: 0, scale: 0.9,  opacity: 0, zIndex: 1  },
+}
+
 function getDist(cardIdx: number, centerIdx: number): number {
   let d = ((cardIdx - centerIdx) % N + N) % N
   if (d > Math.floor(N / 2)) d -= N
@@ -84,6 +93,14 @@ export function Values() {
   const [idx,      setIdx]      = useState(0)
   const [cardKeys, setCardKeys] = useState<number[]>(Array.from({ length: N }, () => 0))
   const [initials, setInitials] = useState<(Partial<SlotPos> | null)[]>(Array.from({ length: N }, () => null))
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   function navigate(newIdx: number) {
     const diff      = ((newIdx - idx) % N + N) % N
@@ -163,11 +180,11 @@ export function Values() {
         <div className="mt-20 flex flex-col items-center">
           <div
             className="relative"
-            style={{ height: CARD_H + 60, width: '100%', maxWidth: 1160 }}
+            style={{ height: CARD_H + 60, width: '100%', maxWidth: isMobile ? CARD_W + 48 : 1160 }}
           >
             {values.map((v, i) => {
               const dist     = getDist(i, idx)
-              const slot     = SLOT[dist]
+              const slot     = (isMobile ? MOBILE_SLOT : SLOT)[dist]
               const initial  = initials[i]
               const isCenter = dist === 0
               const Icon     = v.icon
@@ -192,8 +209,9 @@ export function Values() {
                     cursor:     isCenter ? 'default' : 'pointer',
                   }}
                   transition={SPRING}
-                  whileHover={!isCenter ? { scale: slot.scale * 1.04, opacity: Math.min(slot.opacity + 0.12, 1) } : undefined}
+                  whileHover={!isCenter && !isMobile ? { scale: slot.scale * 1.04, opacity: Math.min(slot.opacity + 0.12, 1) } : undefined}
                   onClick={() => {
+                    if (isMobile) return
                     if (dist > 0) goNext()
                     if (dist < 0) goPrev()
                   }}

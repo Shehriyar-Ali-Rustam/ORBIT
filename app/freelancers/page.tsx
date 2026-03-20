@@ -297,7 +297,7 @@ export default function MarketplaceHome() {
                   <Link
                     href={`/freelancers/search?category=${cat.value}`}
                     className="group relative block overflow-hidden rounded-2xl shadow-xl transition-all duration-300 hover:-translate-y-1"
-                    style={{ height: 200 }}
+                    style={{ height: 'clamp(160px, 25vw, 220px)' }}
                   >
                     <Image
                       src={cat.image}
@@ -628,7 +628,7 @@ export default function MarketplaceHome() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <Link
                     href="/freelancers/onboarding"
                     className="inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-4 text-sm font-bold text-white transition-all hover:opacity-90 hover:-translate-y-0.5"

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Zap, Package, Shield } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -67,39 +67,30 @@ const CARD_H = 490
 
 // Fan layout: left card tilts right ~48°, right card tilts left ~48°
 const SLOT = {
-  left: {
-    x: -CARD_W * 1.08,
-    rotateY: 48,
-    scale: 0.74,
-    zIndex: 2,
-    opacity: 0.82,
-  },
-  center: {
-    x: 0,
-    rotateY: 0,
-    scale: 1.0,
-    zIndex: 10,
-    opacity: 1,
-  },
-  right: {
-    x: CARD_W * 1.08,
-    rotateY: -48,
-    scale: 0.74,
-    zIndex: 2,
-    opacity: 0.82,
-  },
+  left:   { x: -CARD_W * 1.08, rotateY:  48, scale: 0.74, zIndex: 2,  opacity: 0.82 },
+  center: { x: 0,              rotateY:   0, scale: 1.00, zIndex: 10, opacity: 1    },
+  right:  { x:  CARD_W * 1.08, rotateY: -48, scale: 0.74, zIndex: 2,  opacity: 0.82 },
+}
+
+// Mobile: single-card view with directional fade
+const MOBILE_SLOT = {
+  left:   { x: -16, rotateY: 0, scale: 0.95, zIndex: 2,  opacity: 0 },
+  center: { x:   0, rotateY: 0, scale: 1.00, zIndex: 10, opacity: 1 },
+  right:  { x:  16, rotateY: 0, scale: 0.95, zIndex: 2,  opacity: 0 },
 }
 
 function Card({
   feature,
   slot,
   onClick,
+  isMobile,
 }: {
   feature: (typeof features)[0]
   slot: 'left' | 'center' | 'right'
   onClick?: () => void
+  isMobile: boolean
 }) {
-  const pos = SLOT[slot]
+  const pos = (isMobile ? MOBILE_SLOT : SLOT)[slot]
   const isCenter = slot === 'center'
   const Icon = feature.icon
 
@@ -233,7 +224,15 @@ function Card({
 
 export function WhyOrbit() {
   const [idx, setIdx] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const n = features.length
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const prev = useCallback(() => setIdx((i) => (i - 1 + n) % n), [n])
   const next = useCallback(() => setIdx((i) => (i + 1) % n), [n])
@@ -300,13 +299,13 @@ export function WhyOrbit() {
           {/* Cards stage */}
           <div
             className="relative flex items-center justify-center"
-            style={{ height: CARD_H + 60, width: '100%', maxWidth: CARD_W * 3.2 }}
+            style={{ height: CARD_H + 60, width: '100%', maxWidth: isMobile ? CARD_W + 48 : CARD_W * 3.2 }}
           >
             {/* Render back-to-front: sides first, center on top */}
             <div className="relative" style={{ width: CARD_W, height: CARD_H }}>
-              <Card feature={features[leftIdx]}   slot="left"   onClick={prev} />
-              <Card feature={features[rightIdx]}  slot="right"  onClick={next} />
-              <Card feature={features[centerIdx]} slot="center" />
+              <Card feature={features[leftIdx]}   slot="left"   onClick={isMobile ? undefined : prev} isMobile={isMobile} />
+              <Card feature={features[rightIdx]}  slot="right"  onClick={isMobile ? undefined : next} isMobile={isMobile} />
+              <Card feature={features[centerIdx]} slot="center" isMobile={isMobile} />
             </div>
           </div>
 

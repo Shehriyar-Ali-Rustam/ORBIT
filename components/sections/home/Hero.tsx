@@ -192,7 +192,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.8, ease }}
-              className="mt-12 flex justify-center gap-8 border-t border-white/[0.08] pt-8 sm:gap-12"
+              className="mt-12 flex justify-center gap-6 border-t border-white/[0.08] pt-8 sm:gap-12"
             >
               {[
                 { value: '101+', label: 'Projects' },

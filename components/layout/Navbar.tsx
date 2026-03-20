@@ -237,9 +237,9 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 top-16 z-40 bg-background/95 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 top-16 z-40 overflow-y-auto bg-background/95 backdrop-blur-xl md:hidden"
           >
-            <div className="flex flex-col items-center gap-6 px-6 pt-12">
+            <div className="flex flex-col items-center gap-4 px-6 pt-8 pb-8">
               {NAV_LINKS.map((link, i) => (
                 <motion.div key={link.href} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
                   <Link href={link.href} className={cn('text-lg font-medium tracking-wider transition-colors', pathname === link.href ? 'text-accent' : 'text-text-secondary hover:text-text-primary')}>

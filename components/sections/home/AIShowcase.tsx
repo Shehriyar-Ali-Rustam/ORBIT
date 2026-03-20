@@ -136,7 +136,7 @@ function LiveChat() {
       {/* Messages */}
       <div
         ref={scrollRef}
-        className="h-[260px] overflow-y-auto scroll-smooth p-5"
+        className="h-[220px] overflow-y-auto scroll-smooth p-4 sm:h-[260px] sm:p-5"
         style={{ scrollbarWidth: 'none' }}
       >
         <AnimatePresence initial={false}>
@@ -219,7 +219,7 @@ export function AIShowcase() {
   return (
     <section className="section-padding overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
           {/* Left - Text */}
           <div>
             <motion.div
