@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Lightbulb, Heart, Award, Rocket, Users } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -13,16 +13,8 @@ const values = [
     subtitle: 'Push Boundaries',
     description: 'We embrace new technologies and bold ideas to solve problems in ways nobody has tried before.',
     stat: '#1',
-    gradient: [
-      'radial-gradient(ellipse at 25% 15%, #8B5CF6 0%, transparent 52%)',
-      'radial-gradient(ellipse at 80% 10%, #C4B5FD 0%, transparent 45%)',
-      'radial-gradient(ellipse at 10% 70%, #6D28D9 0%, transparent 50%)',
-      'radial-gradient(ellipse at 75% 75%, #4338CA 0%, transparent 48%)',
-      'linear-gradient(155deg, #7C3AED 0%, #4338CA 50%, #1E1B4B 100%)',
-    ].join(', '),
-    orb1: '#8B5CF6',
-    orb2: '#6D28D9',
-    glow: 'rgba(139,92,246,0.5)',
+    gradient: 'linear-gradient(160deg, #7C3AED 0%, #4338CA 55%, #1E1B4B 100%)',
+    orb: '#A78BFA',
   },
   {
     icon: Heart,
@@ -30,16 +22,8 @@ const values = [
     subtitle: 'Client First',
     description: "We are honest, transparent, and always put our clients' interests first — no shortcuts, ever.",
     stat: '100%',
-    gradient: [
-      'radial-gradient(ellipse at 20% 20%, #F43F5E 0%, transparent 50%)',
-      'radial-gradient(ellipse at 80% 15%, #FDA4AF 0%, transparent 44%)',
-      'radial-gradient(ellipse at 15% 75%, #E11D48 0%, transparent 50%)',
-      'radial-gradient(ellipse at 70% 80%, #9F1239 0%, transparent 46%)',
-      'linear-gradient(155deg, #F43F5E 0%, #BE123C 50%, #4C0519 100%)',
-    ].join(', '),
-    orb1: '#F43F5E',
-    orb2: '#BE123C',
-    glow: 'rgba(244,63,94,0.5)',
+    gradient: 'linear-gradient(160deg, #E11D48 0%, #9F1239 55%, #4C0519 100%)',
+    orb: '#FDA4AF',
   },
   {
     icon: Award,
@@ -47,16 +31,8 @@ const values = [
     subtitle: 'Highest Standards',
     description: 'Every line of code, every pixel, every interaction — we hold ourselves to the highest standards.',
     stat: '5.0★',
-    gradient: [
-      'radial-gradient(ellipse at 20% 15%, #F59E0B 0%, transparent 52%)',
-      'radial-gradient(ellipse at 80% 20%, #FDE68A 0%, transparent 44%)',
-      'radial-gradient(ellipse at 10% 70%, #D97706 0%, transparent 50%)',
-      'radial-gradient(ellipse at 75% 80%, #92400E 0%, transparent 48%)',
-      'linear-gradient(155deg, #F59E0B 0%, #B45309 50%, #451A03 100%)',
-    ].join(', '),
-    orb1: '#FBBF24',
-    orb2: '#D97706',
-    glow: 'rgba(245,158,11,0.5)',
+    gradient: 'linear-gradient(160deg, #D97706 0%, #92400E 55%, #451A03 100%)',
+    orb: '#FDE68A',
   },
   {
     icon: Rocket,
@@ -64,87 +40,68 @@ const values = [
     subtitle: 'Real Results',
     description: 'We build solutions that create measurable, lasting value for our clients and their users.',
     stat: '10×',
-    gradient: [
-      'radial-gradient(ellipse at 20% 20%, #06B6D4 0%, transparent 52%)',
-      'radial-gradient(ellipse at 80% 15%, #67E8F9 0%, transparent 44%)',
-      'radial-gradient(ellipse at 10% 72%, #0284C7 0%, transparent 50%)',
-      'radial-gradient(ellipse at 75% 78%, #0C4A6E 0%, transparent 48%)',
-      'linear-gradient(155deg, #06B6D4 0%, #0284C7 50%, #0C4A6E 100%)',
-    ].join(', '),
-    orb1: '#22D3EE',
-    orb2: '#0891B2',
-    glow: 'rgba(6,182,212,0.5)',
+    gradient: 'linear-gradient(160deg, #0891B2 0%, #0C4A6E 55%, #082F49 100%)',
+    orb: '#67E8F9',
   },
   {
     icon: Users,
     title: 'Collaboration',
     subtitle: 'Better Together',
-    description: 'We work as true partners with our clients — sharing context, feedback, and ownership at every step.',
+    description: 'We work as true partners — sharing context, feedback, and ownership at every step of the journey.',
     stat: '∞',
-    gradient: [
-      'radial-gradient(ellipse at 20% 20%, #10B981 0%, transparent 52%)',
-      'radial-gradient(ellipse at 80% 15%, #6EE7B7 0%, transparent 44%)',
-      'radial-gradient(ellipse at 10% 72%, #059669 0%, transparent 50%)',
-      'radial-gradient(ellipse at 75% 78%, #064E3B 0%, transparent 48%)',
-      'linear-gradient(155deg, #10B981 0%, #047857 50%, #022C22 100%)',
-    ].join(', '),
-    orb1: '#34D399',
-    orb2: '#059669',
-    glow: 'rgba(16,185,129,0.5)',
+    gradient: 'linear-gradient(160deg, #059669 0%, #064E3B 55%, #022C22 100%)',
+    orb: '#6EE7B7',
   },
 ]
 
-const N = values.length // 5
-const CARD_W = 280
-const CARD_H = 460
+const N        = values.length
+const CARD_W   = 242
+const CARD_H   = 440
 
-// For n=4, dist is in {-1, 0, 1, 2}
-// -1=left, 0=center, 1=right, 2=far-right (barely visible)
-function getDist(cardIdx: number, centerIdx: number): number {
-  let d = ((cardIdx - centerIdx) % N + N) % N
-  if (d > N / 2) d -= N
-  return d
-}
-
+// ── Slot positions: symmetric fan for all 5 cards ──
+// dist -2/+2 = far cards (tilted, visible but receded)
+// dist -1/+1 = near side cards
+// dist 0     = center (hero card)
 interface SlotPos { x: number; rotateY: number; scale: number; opacity: number; zIndex: number }
 
-// For N=5, dist ∈ {-2, -1, 0, 1, 2} — all 5 cards visible simultaneously
 const SLOT: Record<number, SlotPos> = {
-  [-2]: { x: -520, rotateY: 60,  scale: 0.50, opacity: 0.18, zIndex: 1 },
-  [-1]: { x: -305, rotateY: 44,  scale: 0.74, opacity: 0.78, zIndex: 3 },
-  [0]:  { x: 0,    rotateY: 0,   scale: 1.00, opacity: 1.00, zIndex: 10 },
-  [1]:  { x: 305,  rotateY: -44, scale: 0.74, opacity: 0.78, zIndex: 3 },
-  [2]:  { x: 520,  rotateY: -60, scale: 0.50, opacity: 0.18, zIndex: 1 },
+  [-2]: { x: -520, rotateY:  54, scale: 0.56, opacity: 0.58, zIndex: 1  },
+  [-1]: { x: -278, rotateY:  30, scale: 0.79, opacity: 0.85, zIndex: 4  },
+  [ 0]: { x:    0, rotateY:   0, scale: 1.00, opacity: 1.00, zIndex: 10 },
+  [ 1]: { x:  278, rotateY: -30, scale: 0.79, opacity: 0.85, zIndex: 4  },
+  [ 2]: { x:  520, rotateY: -54, scale: 0.56, opacity: 0.58, zIndex: 1  },
 }
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
+function getDist(cardIdx: number, centerIdx: number): number {
+  let d = ((cardIdx - centerIdx) % N + N) % N
+  if (d > Math.floor(N / 2)) d -= N
+  return d // -2, -1, 0, 1, 2
+}
+
+const SPRING = { type: 'spring', stiffness: 280, damping: 32 } as const
 
 export function Values() {
-  const [idx, setIdx]           = useState(0)
-  // Each card's key — bumped when that card needs to wrap (remounts with new initial)
-  const [cardKeys, setCardKeys] = useState<number[]>([0, 0, 0, 0, 0])
-  // Off-screen starting position for wrapping card (null = don't use initial)
-  const [initials, setInitials] = useState<(Partial<SlotPos> | null)[]>([null, null, null, null, null])
+  const [idx,      setIdx]      = useState(0)
+  const [cardKeys, setCardKeys] = useState<number[]>(Array.from({ length: N }, () => 0))
+  const [initials, setInitials] = useState<(Partial<SlotPos> | null)[]>(Array.from({ length: N }, () => null))
 
   function navigate(newIdx: number) {
-    // direction: 1=next (cards shift left), -1=prev (cards shift right)
-    const diff = ((newIdx - idx) % N + N) % N
-    const direction = diff <= N / 2 ? 1 : -1
+    const diff      = ((newIdx - idx) % N + N) % N
+    const direction = diff <= Math.floor(N / 2) ? 1 : -1
 
     const newKeys     = [...cardKeys]
-    const newInitials: (Partial<SlotPos> | null)[] = values.map(() => null)
+    const newInitials = Array.from({ length: N }, () => null) as (Partial<SlotPos> | null)[]
 
     values.forEach((_, i) => {
       const oldDist = getDist(i, idx)
       const newDist = getDist(i, newIdx)
-      // A jump > 1 slot means this card is wrapping around
+      // wrap = jump of more than 1 slot (only possible when a card cycles around)
       if (Math.abs(newDist - oldDist) > 2) {
         newKeys[i]++
         const target = SLOT[newDist]
-        // Appear from off-screen on the correct side, then spring to target
         newInitials[i] = {
           ...target,
-          x:       direction === 1 ? 700 : -540,
+          x:       direction === 1 ? 720 : -580,
           opacity: 0,
         }
       }
@@ -155,36 +112,32 @@ export function Values() {
     setIdx(newIdx)
   }
 
-  // Clear initials after one frame — they only matter at mount time
+  // Clear initials after mount (only used once per remount)
   useEffect(() => {
-    const raf = requestAnimationFrame(() => setInitials([null, null, null, null, null]))
+    const raf = requestAnimationFrame(() =>
+      setInitials(Array.from({ length: N }, () => null))
+    )
     return () => cancelAnimationFrame(raf)
   }, [cardKeys])
 
-  const goNext = useCallback(() => navigate((idx + 1) % N), [idx, cardKeys])
-  const goPrev = useCallback(() => navigate((idx - 1 + N) % N), [idx, cardKeys])
+  const goNext = () => navigate((idx + 1) % N)
+  const goPrev = () => navigate((idx - 1 + N) % N)
+
+  const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
   return (
     <section className="section-padding relative overflow-hidden">
-      {/* Atmospheric background */}
+      {/* ── Clean background: single centered radial, no color shifts ── */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[var(--color-surface)]" />
-        <motion.div
-          key={idx}
-          className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[160px]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.9 }}
-          style={{ background: values[idx].glow.replace('0.5', '0.07') }}
-        />
-        <motion.div
-          className="absolute left-[-5%] top-[20%] h-[500px] w-[500px] rounded-full blur-[130px]"
-          style={{ background: `${values[idx].orb2}0D` }}
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        {/* Subtle center radial — always white/neutral */}
         <div
-          className="absolute inset-0 opacity-[0.03]"
+          className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 65%)' }}
+        />
+        {/* Dot grid */}
+        <div
+          className="absolute inset-0 opacity-[0.025]"
           style={{
             backgroundImage: 'radial-gradient(circle, var(--color-text-primary) 1px, transparent 1px)',
             backgroundSize: '32px 32px',
@@ -206,124 +159,113 @@ export function Values() {
           </motion.div>
         </div>
 
-        {/* ── 3D Fan Carousel ── */}
+        {/* ── Cards stage ── */}
         <div className="mt-20 flex flex-col items-center">
-          {/* Cards stage */}
           <div
-            className="relative flex items-start justify-center"
-            style={{ height: CARD_H + 80, width: '100%', maxWidth: 1120 }}
+            className="relative"
+            style={{ height: CARD_H + 60, width: '100%', maxWidth: 1160 }}
           >
             {values.map((v, i) => {
-              const dist    = getDist(i, idx)
-              const slot    = SLOT[dist]
-              const initial = initials[i]
-              const Icon    = v.icon
+              const dist     = getDist(i, idx)
+              const slot     = SLOT[dist]
+              const initial  = initials[i]
               const isCenter = dist === 0
+              const Icon     = v.icon
 
               return (
                 <motion.div
                   key={cardKeys[i]}
                   initial={initial ?? false}
                   animate={{
-                    x:        slot.x,
-                    rotateY:  slot.rotateY,
-                    scale:    slot.scale,
-                    opacity:  slot.opacity,
-                    zIndex:   slot.zIndex,
+                    x:       slot.x,
+                    rotateY: slot.rotateY,
+                    scale:   slot.scale,
+                    opacity: slot.opacity,
+                    zIndex:  slot.zIndex,
                   }}
                   style={{
-                    transformPerspective: 1100,
+                    transformPerspective: 1200,
                     position:   'absolute',
                     top:        0,
                     left:       '50%',
                     marginLeft: -CARD_W / 2,
+                    cursor:     isCenter ? 'default' : 'pointer',
                   }}
-                  transition={{ type: 'spring', stiffness: 260, damping: 30 }}
-                  whileHover={!isCenter ? { scale: slot.scale * 1.05 } : undefined}
+                  transition={SPRING}
+                  whileHover={!isCenter ? { scale: slot.scale * 1.04, opacity: Math.min(slot.opacity + 0.12, 1) } : undefined}
                   onClick={() => {
-                    if (dist === 1 || dist === 2) goNext()
-                    if (dist === -1 || dist === -2) goPrev()
+                    if (dist > 0) goNext()
+                    if (dist < 0) goPrev()
                   }}
                 >
-                  {/* Glow beneath center card */}
+                  {/* Soft drop-shadow for center card only */}
                   {isCenter && (
                     <div
-                      className="pointer-events-none absolute -inset-6 rounded-[44px] blur-[55px]"
-                      style={{ background: v.glow, opacity: 0.55 }}
+                      className="pointer-events-none absolute inset-x-0 -bottom-6 mx-auto h-8 rounded-full blur-xl"
+                      style={{ width: '70%', background: `${v.orb}55` }}
                     />
                   )}
 
                   <div
-                    className="relative overflow-hidden rounded-[28px]"
+                    className="relative overflow-hidden rounded-[24px]"
                     style={{
-                      width:  CARD_W,
-                      height: CARD_H,
+                      width:     CARD_W,
+                      height:    CARD_H,
                       background: v.gradient,
-                      cursor: isCenter ? 'default' : 'pointer',
                       boxShadow: isCenter
-                        ? '0 40px 100px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.10)'
-                        : '0 20px 50px rgba(0,0,0,0.26)',
+                        ? '0 32px 80px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08)'
+                        : '0 12px 40px rgba(0,0,0,0.22)',
                     }}
                   >
-                    {/* Animated orbs — only on center card */}
-                    <motion.div
-                      className="absolute rounded-full blur-[50px]"
-                      style={{ width: 170, height: 170, top: '-5%', left: '-5%', background: v.orb1, opacity: 0.55 }}
-                      animate={isCenter ? { x: [0, 22, -12, 0], y: [0, -16, 20, 0] } : {}}
-                      transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-                    <motion.div
+                    {/* Single orb — only animated on center card */}
+                    <div
                       className="absolute rounded-full blur-[60px]"
-                      style={{ width: 190, height: 190, bottom: '22%', right: '-10%', background: v.orb2, opacity: 0.45 }}
-                      animate={isCenter ? { x: [0, -22, 16, 0], y: [0, 20, -12, 0] } : {}}
-                      transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-                    />
-                    <motion.div
-                      className="absolute rounded-full blur-[38px]"
-                      style={{ width: 110, height: 110, bottom: '8%', left: '10%', background: v.orb1, opacity: 0.28 }}
-                      animate={isCenter ? { scale: [1, 1.35, 1] } : {}}
-                      transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                      style={{
+                        width: 180, height: 180,
+                        top: '-10%', right: '-10%',
+                        background: v.orb,
+                        opacity: isCenter ? 0.35 : 0.20,
+                      }}
                     />
 
-                    {/* Stat badge */}
+                    {/* Stat badge — top left */}
                     <div
-                      className="absolute right-4 top-4 rounded-full px-4 py-1.5 font-mono text-sm font-bold text-white"
+                      className="absolute left-4 top-4 rounded-full px-3 py-1 font-mono text-xs font-bold text-white"
                       style={{
-                        background:     'rgba(0,0,0,0.30)',
-                        border:         '1px solid rgba(255,255,255,0.20)',
-                        backdropFilter: 'blur(8px)',
+                        background:     'rgba(0,0,0,0.28)',
+                        border:         '1px solid rgba(255,255,255,0.18)',
+                        backdropFilter: 'blur(6px)',
                       }}
                     >
                       {v.stat}
                     </div>
 
-                    {/* Icon */}
-                    <div className="absolute left-0 right-0 top-[26%] flex justify-center">
+                    {/* Icon — upper center */}
+                    <div className="absolute left-0 right-0 top-[24%] flex justify-center">
                       <div
-                        className="flex h-20 w-20 items-center justify-center rounded-3xl"
+                        className="flex h-[68px] w-[68px] items-center justify-center rounded-2xl"
                         style={{
-                          background:     'rgba(255,255,255,0.16)',
-                          border:         '1px solid rgba(255,255,255,0.28)',
-                          backdropFilter: 'blur(10px)',
-                          boxShadow:      '0 8px 32px rgba(0,0,0,0.18)',
+                          background:     'rgba(255,255,255,0.14)',
+                          border:         '1px solid rgba(255,255,255,0.24)',
+                          backdropFilter: 'blur(8px)',
                         }}
                       >
-                        <Icon className="h-10 w-10 text-white drop-shadow-lg" />
+                        <Icon className="h-9 w-9 text-white" strokeWidth={1.5} />
                       </div>
                     </div>
 
-                    {/* Content panel */}
+                    {/* Content panel — bottom fade */}
                     <div
-                      className="absolute inset-x-0 bottom-0 px-6 pb-7 pt-5"
+                      className="absolute inset-x-0 bottom-0 px-5 pb-6 pt-12"
                       style={{
-                        background: 'linear-gradient(to top, rgba(0,0,0,0.78) 60%, rgba(0,0,0,0) 100%)',
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.82) 55%, transparent 100%)',
                       }}
                     >
-                      <p className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-white/55">
+                      <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white/50">
                         {v.subtitle}
                       </p>
-                      <h3 className="text-xl font-bold leading-snug text-white">{v.title}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-white/68 line-clamp-3">
+                      <h3 className="text-[1.15rem] font-bold text-white">{v.title}</h3>
+                      <p className="mt-1.5 text-[0.78rem] leading-relaxed text-white/60 line-clamp-3">
                         {v.description}
                       </p>
                     </div>
@@ -333,26 +275,26 @@ export function Values() {
             })}
           </div>
 
-          {/* ── Controls: [←] [● ● ● ●] [→] ── */}
-          <div className="mt-10 flex items-center gap-4">
+          {/* ── Controls: [←] [● ● ● ● ●] [→] ── */}
+          <div className="mt-8 flex items-center gap-4">
             <button
               onClick={goPrev}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-lg transition-all hover:scale-110 hover:border-accent/50 hover:text-accent"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-md transition-all hover:scale-110 hover:border-accent/50 hover:text-accent"
               aria-label="Previous"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-4 w-4" />
             </button>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               {values.map((v, i) => (
                 <button
                   key={i}
                   onClick={() => navigate(i)}
-                  className="h-2 rounded-full transition-all duration-300"
+                  className="h-1.5 rounded-full transition-all duration-300"
                   style={{
-                    width:     i === idx ? 32 : 8,
-                    background: i === idx ? v.orb1 : 'var(--color-card-border)',
-                    boxShadow:  i === idx ? `0 0 12px ${v.orb1}90` : 'none',
+                    width:      i === idx ? 28 : 6,
+                    background: i === idx ? v.orb : 'var(--color-card-border)',
+                    boxShadow:  i === idx ? `0 0 10px ${v.orb}80` : 'none',
                   }}
                   aria-label={`Go to ${values[i].title}`}
                 />
@@ -361,10 +303,10 @@ export function Values() {
 
             <button
               onClick={goNext}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-lg transition-all hover:scale-110 hover:border-accent/50 hover:text-accent"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-md transition-all hover:scale-110 hover:border-accent/50 hover:text-accent"
               aria-label="Next"
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-4 w-4" />
             </button>
           </div>
         </div>
