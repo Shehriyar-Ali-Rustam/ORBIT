@@ -1,7 +1,8 @@
 'use client'
 
+import { useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Lightbulb, Heart, Award, Rocket } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Lightbulb, Heart, Award, Rocket } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
@@ -9,64 +10,317 @@ const values = [
   {
     icon: Lightbulb,
     title: 'Innovation',
-    description: 'We push boundaries and embrace new technologies to solve problems in smarter ways.',
+    subtitle: 'Push Boundaries',
+    description: 'We embrace new technologies and bold ideas to solve problems in ways nobody has tried before.',
+    stat: '#1',
+    gradient: [
+      'radial-gradient(ellipse at 25% 15%, #8B5CF6 0%, transparent 52%)',
+      'radial-gradient(ellipse at 80% 10%, #C4B5FD 0%, transparent 45%)',
+      'radial-gradient(ellipse at 10% 70%, #6D28D9 0%, transparent 50%)',
+      'radial-gradient(ellipse at 75% 75%, #4338CA 0%, transparent 48%)',
+      'linear-gradient(155deg, #7C3AED 0%, #4338CA 50%, #1E1B4B 100%)',
+    ].join(', '),
+    orb1: '#8B5CF6',
+    orb2: '#6D28D9',
+    glow: 'rgba(139,92,246,0.45)',
   },
   {
     icon: Heart,
     title: 'Integrity',
-    description: 'We are honest, transparent, and always put our clients\' interests first.',
+    subtitle: 'Client First',
+    description: 'We are honest, transparent, and always put our clients\' interests first — no shortcuts, ever.',
+    stat: '100%',
+    gradient: [
+      'radial-gradient(ellipse at 20% 20%, #F43F5E 0%, transparent 50%)',
+      'radial-gradient(ellipse at 80% 15%, #FDA4AF 0%, transparent 44%)',
+      'radial-gradient(ellipse at 15% 75%, #E11D48 0%, transparent 50%)',
+      'radial-gradient(ellipse at 70% 80%, #9F1239 0%, transparent 46%)',
+      'linear-gradient(155deg, #F43F5E 0%, #BE123C 50%, #4C0519 100%)',
+    ].join(', '),
+    orb1: '#F43F5E',
+    orb2: '#BE123C',
+    glow: 'rgba(244,63,94,0.45)',
   },
   {
     icon: Award,
     title: 'Excellence',
-    description: 'We hold ourselves to the highest standards, every line of code, every pixel, every interaction.',
+    subtitle: 'Highest Standards',
+    description: 'Every line of code, every pixel, every interaction — we hold ourselves to the highest standards.',
+    stat: '5.0★',
+    gradient: [
+      'radial-gradient(ellipse at 20% 15%, #F59E0B 0%, transparent 52%)',
+      'radial-gradient(ellipse at 80% 20%, #FDE68A 0%, transparent 44%)',
+      'radial-gradient(ellipse at 10% 70%, #D97706 0%, transparent 50%)',
+      'radial-gradient(ellipse at 75% 80%, #92400E 0%, transparent 48%)',
+      'linear-gradient(155deg, #F59E0B 0%, #B45309 50%, #451A03 100%)',
+    ].join(', '),
+    orb1: '#FBBF24',
+    orb2: '#D97706',
+    glow: 'rgba(245,158,11,0.45)',
   },
   {
     icon: Rocket,
     title: 'Impact',
-    description: 'We build solutions that create real, measurable value for our clients and their users.',
+    subtitle: 'Real Results',
+    description: 'We build solutions that create measurable, lasting value for our clients and their users.',
+    stat: '10×',
+    gradient: [
+      'radial-gradient(ellipse at 20% 20%, #06B6D4 0%, transparent 52%)',
+      'radial-gradient(ellipse at 80% 15%, #67E8F9 0%, transparent 44%)',
+      'radial-gradient(ellipse at 10% 72%, #0284C7 0%, transparent 50%)',
+      'radial-gradient(ellipse at 75% 78%, #0C4A6E 0%, transparent 48%)',
+      'linear-gradient(155deg, #06B6D4 0%, #0284C7 50%, #0C4A6E 100%)',
+    ].join(', '),
+    orb1: '#22D3EE',
+    orb2: '#0891B2',
+    glow: 'rgba(6,182,212,0.45)',
   },
 ]
+
+const CARD_W = 290
+const CARD_H = 460
+
+const SLOT = {
+  left: {
+    x: -CARD_W * 1.06,
+    rotateY: 48,
+    scale: 0.74,
+    zIndex: 2,
+    opacity: 0.80,
+  },
+  center: {
+    x: 0,
+    rotateY: 0,
+    scale: 1.0,
+    zIndex: 10,
+    opacity: 1,
+  },
+  right: {
+    x: CARD_W * 1.06,
+    rotateY: -48,
+    scale: 0.74,
+    zIndex: 2,
+    opacity: 0.80,
+  },
+}
+
+function Card({
+  value,
+  slot,
+  onClick,
+}: {
+  value: (typeof values)[0]
+  slot: 'left' | 'center' | 'right'
+  onClick?: () => void
+}) {
+  const pos = SLOT[slot]
+  const isCenter = slot === 'center'
+  const Icon = value.icon
+
+  return (
+    <motion.div
+      onClick={onClick}
+      animate={{
+        x: pos.x,
+        scale: pos.scale,
+        opacity: pos.opacity,
+        zIndex: pos.zIndex,
+      }}
+      style={{ rotateY: pos.rotateY, transformPerspective: 1100 }}
+      transition={{ type: 'spring', stiffness: 240, damping: 30 }}
+      className="absolute top-0"
+      whileHover={!isCenter ? { scale: pos.scale * 1.05 } : undefined}
+      aria-hidden={!isCenter}
+    >
+      {/* Center card glow */}
+      {isCenter && (
+        <div
+          className="pointer-events-none absolute -inset-4 rounded-[40px] blur-[50px]"
+          style={{ background: value.glow, opacity: 0.55 }}
+        />
+      )}
+
+      <div
+        className="relative overflow-hidden rounded-[28px]"
+        style={{
+          width: CARD_W,
+          height: CARD_H,
+          background: value.gradient,
+          cursor: isCenter ? 'default' : 'pointer',
+          boxShadow: isCenter
+            ? '0 40px 100px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.10)'
+            : '0 20px 50px rgba(0,0,0,0.26)',
+        }}
+      >
+        {/* Animated orbs */}
+        <motion.div
+          className="absolute rounded-full blur-[50px]"
+          style={{ width: 170, height: 170, top: '-5%', left: '-5%', background: value.orb1, opacity: 0.55 }}
+          animate={isCenter ? { x: [0, 22, -12, 0], y: [0, -16, 20, 0] } : {}}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute rounded-full blur-[60px]"
+          style={{ width: 190, height: 190, bottom: '22%', right: '-10%', background: value.orb2, opacity: 0.45 }}
+          animate={isCenter ? { x: [0, -22, 16, 0], y: [0, 20, -12, 0] } : {}}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        />
+        <motion.div
+          className="absolute rounded-full blur-[38px]"
+          style={{ width: 110, height: 110, bottom: '8%', left: '10%', background: value.orb1, opacity: 0.28 }}
+          animate={isCenter ? { scale: [1, 1.35, 1] } : {}}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+        />
+
+        {/* Stat badge */}
+        <div
+          className="absolute right-4 top-4 rounded-full px-4 py-1.5 font-mono text-sm font-bold text-white"
+          style={{
+            background: 'rgba(0,0,0,0.30)',
+            border: '1px solid rgba(255,255,255,0.20)',
+            backdropFilter: 'blur(8px)',
+          }}
+        >
+          {value.stat}
+        </div>
+
+        {/* Icon */}
+        <div className="absolute left-0 right-0 top-[26%] flex justify-center">
+          <div
+            className="flex h-20 w-20 items-center justify-center rounded-3xl"
+            style={{
+              background: 'rgba(255,255,255,0.16)',
+              border: '1px solid rgba(255,255,255,0.28)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
+            }}
+          >
+            <Icon className="h-10 w-10 text-white drop-shadow-lg" />
+          </div>
+        </div>
+
+        {/* Dark fade content panel */}
+        <div
+          className="absolute inset-x-0 bottom-0 px-6 pb-7 pt-5"
+          style={{
+            background: 'linear-gradient(to top, rgba(0,0,0,0.75) 60%, rgba(0,0,0,0.0) 100%)',
+          }}
+        >
+          <p className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-white/55">
+            {value.subtitle}
+          </p>
+          <h3 className="text-xl font-bold leading-snug text-white">{value.title}</h3>
+          <p className="mt-2 text-sm leading-relaxed text-white/68 line-clamp-3">
+            {value.description}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  )
+}
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function Values() {
+  const [idx, setIdx] = useState(0)
+  const n = values.length
+
+  const prev = useCallback(() => setIdx((i) => (i - 1 + n) % n), [n])
+  const next = useCallback(() => setIdx((i) => (i + 1) % n), [n])
+
+  const leftIdx   = (idx - 1 + n) % n
+  const centerIdx = idx
+  const rightIdx  = (idx + 1) % n
+
   return (
-    <section className="section-padding">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className="section-padding relative overflow-hidden">
+      {/* Atmospheric background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[var(--color-surface)]" />
+        <motion.div
+          key={idx}
+          className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[160px]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          style={{ background: values[centerIdx].glow.replace('0.45', '0.07') }}
+        />
+        <motion.div
+          className="absolute left-[-5%] top-[20%] h-[500px] w-[500px] rounded-full blur-[130px]"
+          style={{ background: `${values[centerIdx].orb2}10` }}
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: 'radial-gradient(circle, var(--color-text-primary) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Heading */}
         <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease }}
-            viewport={{ once: true, margin: '-50px' }}
+            viewport={{ once: true }}
           >
             <SectionLabel>Our Values</SectionLabel>
             <SectionHeading className="mt-4">What Drives Us</SectionHeading>
           </motion.div>
         </div>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {values.map((value, i) => (
-            <motion.div
-              key={value.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease }}
-              viewport={{ once: true, margin: '-50px' }}
+        {/* 3D Fan Carousel */}
+        <div className="mt-20 flex flex-col items-center">
+          <div
+            className="relative flex items-center justify-center"
+            style={{ height: CARD_H + 60, width: '100%', maxWidth: CARD_W * 3.2 }}
+          >
+            <div className="relative" style={{ width: CARD_W, height: CARD_H }}>
+              <Card value={values[leftIdx]}   slot="left"   onClick={prev} />
+              <Card value={values[rightIdx]}  slot="right"  onClick={next} />
+              <Card value={values[centerIdx]} slot="center" />
+            </div>
+          </div>
+
+          {/* Controls: [←] [dots] [→] */}
+          <div className="mt-10 flex items-center gap-4">
+            <button
+              onClick={prev}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-lg transition-all hover:scale-110 hover:border-accent/50 hover:text-accent"
+              aria-label="Previous"
             >
-              <div className="group relative h-full overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-6 text-center backdrop-blur-sm">
-                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
-                <div className="relative z-10">
-                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
-                    <value.icon className="h-6 w-6 text-accent" />
-                  </div>
-                  <h3 className="mt-4 text-lg font-semibold text-text-primary">{value.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-text-secondary">{value.description}</p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            <div className="flex items-center gap-2.5">
+              {values.map((v, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIdx(i)}
+                  className="h-2 rounded-full transition-all duration-300"
+                  style={{
+                    width: i === idx ? 32 : 8,
+                    background: i === idx ? v.orb1 : 'var(--color-card-border)',
+                    boxShadow: i === idx ? `0 0 12px ${v.orb1}90` : 'none',
+                  }}
+                  aria-label={`Go to ${values[i].title}`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={next}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-lg transition-all hover:scale-110 hover:border-accent/50 hover:text-accent"
+              aria-label="Next"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
     </section>
