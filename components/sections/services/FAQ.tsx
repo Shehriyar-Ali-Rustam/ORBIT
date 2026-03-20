@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { faqs } from '@/data/faqs'
@@ -10,61 +9,95 @@ import { faqs } from '@/data/faqs'
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function FAQ() {
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(faqs[0]?.id ?? null)
 
   return (
     <section className="section-padding">
-      <div className="mx-auto max-w-3xl px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl px-6 lg:px-8">
+        {/* Heading */}
         <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease }}
-            viewport={{ once: true, margin: '-50px' }}
+            viewport={{ once: true }}
           >
             <SectionLabel>FAQ</SectionLabel>
             <SectionHeading className="mt-4">Common Questions</SectionHeading>
           </motion.div>
         </div>
 
-        <div className="mt-12 space-y-4">
-          {faqs.map((faq) => (
-            <motion.div
-              key={faq.id}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease }}
-              viewport={{ once: true }}
-              className="group rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
-            >
-              <button
-                onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
-                className="flex w-full items-center justify-between px-6 py-4 text-left"
-                aria-expanded={openId === faq.id}
+        {/* ── Single outer card, all items inside ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease, delay: 0.1 }}
+          viewport={{ once: true }}
+          className="mt-12 overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)]"
+        >
+          {faqs.map((faq, i) => {
+            const isOpen = openId === faq.id
+            const isLast = i === faqs.length - 1
+
+            return (
+              <div
+                key={faq.id}
+                className={!isLast ? 'border-b border-[var(--color-card-border)]' : ''}
               >
-                <span className="pr-4 font-semibold text-text-primary">{faq.question}</span>
-                <motion.div
-                  animate={{ rotate: openId === faq.id ? 180 : 0 }}
-                  transition={{ duration: 0.2 }}
+                {/* Question row */}
+                <button
+                  onClick={() => setOpenId(isOpen ? null : faq.id)}
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-[var(--color-surface)]"
+                  aria-expanded={isOpen}
                 >
-                  <ChevronDown className="h-5 w-5 shrink-0 text-accent" />
-                </motion.div>
-              </button>
-              <AnimatePresence>
-                {openId === faq.id && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease }}
+                  <span
+                    className="text-[0.95rem] font-semibold leading-snug text-text-primary"
                   >
-                    <div className="px-6 pb-4 leading-relaxed text-text-secondary">{faq.answer}</div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
-        </div>
+                    {faq.question}
+                  </span>
+
+                  {/* +/− icon */}
+                  <span
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-colors duration-200"
+                    style={{
+                      borderColor: isOpen ? 'var(--color-accent)' : 'var(--color-card-border)',
+                      background:  isOpen ? 'rgba(255,117,31,0.10)' : 'var(--color-surface)',
+                      color:       isOpen ? 'var(--color-accent)' : 'var(--color-text-tertiary)',
+                    }}
+                  >
+                    <motion.svg
+                      width="12" height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      animate={{ rotate: isOpen ? 45 : 0 }}
+                      transition={{ duration: 0.22, ease }}
+                    >
+                      <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                    </motion.svg>
+                  </span>
+                </button>
+
+                {/* Answer */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      key="answer"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.28, ease }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <p className="px-6 pb-5 text-sm leading-relaxed text-text-secondary">
+                        {faq.answer}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )
+          })}
+        </motion.div>
       </div>
     </section>
   )
