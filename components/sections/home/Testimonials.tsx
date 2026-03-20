@@ -91,9 +91,9 @@ function FlipCard({
         style={{
           height: CARD_HEIGHT,
           cursor: isTop ? 'grab' : 'default',
-          background: '#0d0d0d',
-          border: `1px solid ${theme.a}30`,
-          boxShadow: `0 0 0 1px ${theme.a}18, 0 24px 64px rgba(0,0,0,0.55), 0 0 80px ${theme.a}12`,
+          background: '#111111',
+          border: `1px solid ${theme.a}35`,
+          boxShadow: `0 0 0 1px ${theme.a}20, 0 24px 64px rgba(0,0,0,0.50), 0 0 80px ${theme.a}18`,
         }}
       >
         {/* ── Animated gradient orbs (background) ── */}
@@ -216,18 +216,20 @@ export function Testimonials() {
   const currentTheme = THEMES[topIdx % THEMES.length]
 
   return (
-    <section className="section-padding relative overflow-hidden">
+    <section className="section-padding relative overflow-hidden bg-[var(--color-surface)]">
       {/* Section background */}
       <div className="pointer-events-none absolute inset-0">
+        {/* In light mode: add a gentle inward vignette so dark cards feel intentional */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-bg)] via-[var(--color-surface)] to-[var(--color-bg)]" />
         <motion.div
           className="absolute right-0 top-1/3 h-[500px] w-[500px] rounded-full blur-[140px]"
-          style={{ background: `radial-gradient(circle, ${currentTheme.a}08, transparent 70%)` }}
+          style={{ background: `radial-gradient(circle, ${currentTheme.a}18, transparent 70%)` }}
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
         />
         <motion.div
           className="absolute -left-20 bottom-1/4 h-[400px] w-[400px] rounded-full blur-[120px]"
-          style={{ background: `radial-gradient(circle, ${currentTheme.b}06, transparent 70%)` }}
+          style={{ background: `radial-gradient(circle, ${currentTheme.b}14, transparent 70%)` }}
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ duration: 11, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
         />
@@ -269,7 +271,7 @@ export function Testimonials() {
         {/* Controls */}
         <div className="mt-10 flex flex-col items-center gap-5">
           {/* Progress bar */}
-          <div className="relative h-1 w-full max-w-xs overflow-hidden rounded-full bg-white/[0.06]">
+          <div className="relative h-1 w-full max-w-xs overflow-hidden rounded-full bg-[var(--color-card-border)]">
             <motion.div
               className="absolute inset-y-0 left-0 rounded-full"
               style={{
@@ -295,7 +297,7 @@ export function Testimonials() {
               <ChevronLeft className="h-5 w-5" />
             </motion.button>
 
-            <span className="font-mono text-xs tabular-nums text-text-tertiary/60">
+            <span className="font-mono text-xs tabular-nums text-text-tertiary">
               {String(topIdx + 1).padStart(2, '0')} / {String(TOTAL).padStart(2, '0')}
             </span>
 
