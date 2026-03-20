@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Lightbulb, Heart, Award, Rocket } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Lightbulb, Heart, Award, Rocket, Users } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 
@@ -75,9 +75,26 @@ const values = [
     orb2: '#0891B2',
     glow: 'rgba(6,182,212,0.5)',
   },
+  {
+    icon: Users,
+    title: 'Collaboration',
+    subtitle: 'Better Together',
+    description: 'We work as true partners with our clients — sharing context, feedback, and ownership at every step.',
+    stat: '∞',
+    gradient: [
+      'radial-gradient(ellipse at 20% 20%, #10B981 0%, transparent 52%)',
+      'radial-gradient(ellipse at 80% 15%, #6EE7B7 0%, transparent 44%)',
+      'radial-gradient(ellipse at 10% 72%, #059669 0%, transparent 50%)',
+      'radial-gradient(ellipse at 75% 78%, #064E3B 0%, transparent 48%)',
+      'linear-gradient(155deg, #10B981 0%, #047857 50%, #022C22 100%)',
+    ].join(', '),
+    orb1: '#34D399',
+    orb2: '#059669',
+    glow: 'rgba(16,185,129,0.5)',
+  },
 ]
 
-const N = values.length // 4
+const N = values.length // 5
 const CARD_W = 280
 const CARD_H = 460
 
@@ -91,11 +108,13 @@ function getDist(cardIdx: number, centerIdx: number): number {
 
 interface SlotPos { x: number; rotateY: number; scale: number; opacity: number; zIndex: number }
 
+// For N=5, dist ∈ {-2, -1, 0, 1, 2} — all 5 cards visible simultaneously
 const SLOT: Record<number, SlotPos> = {
-  [-1]: { x: -310, rotateY: 46,  scale: 0.73, opacity: 0.78, zIndex: 3 },
+  [-2]: { x: -520, rotateY: 60,  scale: 0.50, opacity: 0.18, zIndex: 1 },
+  [-1]: { x: -305, rotateY: 44,  scale: 0.74, opacity: 0.78, zIndex: 3 },
   [0]:  { x: 0,    rotateY: 0,   scale: 1.00, opacity: 1.00, zIndex: 10 },
-  [1]:  { x: 310,  rotateY: -46, scale: 0.73, opacity: 0.78, zIndex: 3 },
-  [2]:  { x: 515,  rotateY: -60, scale: 0.50, opacity: 0.18, zIndex: 1 },
+  [1]:  { x: 305,  rotateY: -44, scale: 0.74, opacity: 0.78, zIndex: 3 },
+  [2]:  { x: 520,  rotateY: -60, scale: 0.50, opacity: 0.18, zIndex: 1 },
 }
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
@@ -103,9 +122,9 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 export function Values() {
   const [idx, setIdx]           = useState(0)
   // Each card's key — bumped when that card needs to wrap (remounts with new initial)
-  const [cardKeys, setCardKeys] = useState<number[]>([0, 0, 0, 0])
+  const [cardKeys, setCardKeys] = useState<number[]>([0, 0, 0, 0, 0])
   // Off-screen starting position for wrapping card (null = don't use initial)
-  const [initials, setInitials] = useState<(Partial<SlotPos> | null)[]>([null, null, null, null])
+  const [initials, setInitials] = useState<(Partial<SlotPos> | null)[]>([null, null, null, null, null])
 
   function navigate(newIdx: number) {
     // direction: 1=next (cards shift left), -1=prev (cards shift right)
@@ -113,13 +132,13 @@ export function Values() {
     const direction = diff <= N / 2 ? 1 : -1
 
     const newKeys     = [...cardKeys]
-    const newInitials = initials.map(() => null) as (Partial<SlotPos> | null)[]
+    const newInitials: (Partial<SlotPos> | null)[] = values.map(() => null)
 
     values.forEach((_, i) => {
       const oldDist = getDist(i, idx)
       const newDist = getDist(i, newIdx)
       // A jump > 1 slot means this card is wrapping around
-      if (Math.abs(newDist - oldDist) > 1) {
+      if (Math.abs(newDist - oldDist) > 2) {
         newKeys[i]++
         const target = SLOT[newDist]
         // Appear from off-screen on the correct side, then spring to target
@@ -138,7 +157,7 @@ export function Values() {
 
   // Clear initials after one frame — they only matter at mount time
   useEffect(() => {
-    const raf = requestAnimationFrame(() => setInitials([null, null, null, null]))
+    const raf = requestAnimationFrame(() => setInitials([null, null, null, null, null]))
     return () => cancelAnimationFrame(raf)
   }, [cardKeys])
 
@@ -192,7 +211,7 @@ export function Values() {
           {/* Cards stage */}
           <div
             className="relative flex items-start justify-center"
-            style={{ height: CARD_H + 80, width: '100%', maxWidth: 920 }}
+            style={{ height: CARD_H + 80, width: '100%', maxWidth: 1120 }}
           >
             {values.map((v, i) => {
               const dist    = getDist(i, idx)
@@ -223,7 +242,7 @@ export function Values() {
                   whileHover={!isCenter ? { scale: slot.scale * 1.05 } : undefined}
                   onClick={() => {
                     if (dist === 1 || dist === 2) goNext()
-                    if (dist === -1) goPrev()
+                    if (dist === -1 || dist === -2) goPrev()
                   }}
                 >
                   {/* Glow beneath center card */}
