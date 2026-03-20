@@ -12,67 +12,85 @@ const features = [
     icon: Zap,
     title: 'AI-First Approach',
     subtitle: 'Faster Delivery',
-    description: 'Every solution we build has intelligence at its core — not as an add-on, but as the foundation.',
+    description: 'Every solution we build has intelligence at its core — not as an add-on, but as the foundation that powers real business outcomes.',
     stat: '10×',
-    // Vibrant red-pink-purple mesh gradient (like reference center card)
     gradient: [
-      'radial-gradient(ellipse at 30% 20%, #FF6B6B 0%, transparent 55%)',
-      'radial-gradient(ellipse at 80% 10%, #FFD6E8 0%, transparent 45%)',
-      'radial-gradient(ellipse at 10% 70%, #C850C0 0%, transparent 50%)',
-      'radial-gradient(ellipse at 75% 65%, #4158D0 0%, transparent 50%)',
-      'radial-gradient(ellipse at 50% 50%, #FF9A9E 0%, transparent 40%)',
-      'linear-gradient(135deg, #FF6B6B 0%, #C850C0 50%, #4158D0 100%)',
+      'radial-gradient(ellipse at 25% 15%, #FF6B6B 0%, transparent 50%)',
+      'radial-gradient(ellipse at 75% 10%, #FFD6E8 0%, transparent 40%)',
+      'radial-gradient(ellipse at 10% 65%, #C850C0 0%, transparent 48%)',
+      'radial-gradient(ellipse at 80% 70%, #4158D0 0%, transparent 48%)',
+      'radial-gradient(ellipse at 50% 50%, #FF9A9E 0%, transparent 38%)',
+      'linear-gradient(155deg, #FF6B6B 0%, #C850C0 45%, #4158D0 100%)',
     ].join(', '),
     orb1: '#FF6B6B',
     orb2: '#C850C0',
+    glow: 'rgba(255,107,107,0.4)',
   },
   {
     icon: Package,
     title: 'End-to-End Delivery',
     subtitle: '100% Ownership',
-    description: 'From wireframe to launch, we manage the entire product lifecycle so you can focus on your business.',
+    description: 'From wireframe to launch, we own the entire product lifecycle — strategy, design, engineering, and post-launch support.',
     stat: '100%',
-    // Green-teal mesh gradient (like reference left card)
     gradient: [
-      'radial-gradient(ellipse at 20% 30%, #11998E 0%, transparent 55%)',
-      'radial-gradient(ellipse at 80% 20%, #38EF7D 0%, transparent 45%)',
-      'radial-gradient(ellipse at 60% 80%, #7B8CDE 0%, transparent 50%)',
-      'radial-gradient(ellipse at 10% 80%, #43E97B 0%, transparent 45%)',
-      'linear-gradient(135deg, #11998E 0%, #38EF7D 50%, #7B8CDE 100%)',
+      'radial-gradient(ellipse at 20% 25%, #11998E 0%, transparent 52%)',
+      'radial-gradient(ellipse at 80% 15%, #38EF7D 0%, transparent 45%)',
+      'radial-gradient(ellipse at 65% 80%, #7B8CDE 0%, transparent 48%)',
+      'radial-gradient(ellipse at 10% 80%, #43E97B 0%, transparent 44%)',
+      'linear-gradient(155deg, #11998E 0%, #38EF7D 50%, #7B8CDE 100%)',
     ].join(', '),
     orb1: '#38EF7D',
     orb2: '#11998E',
+    glow: 'rgba(56,239,125,0.4)',
   },
   {
     icon: Shield,
     title: 'Security by Default',
     subtitle: '99.9% Uptime SLA',
-    description: 'Enterprise-grade security practices from day one. Your data and your clients\' data are always protected.',
+    description: 'Enterprise-grade security practices from day one. Your data and your clients\' data are always fully protected.',
     stat: '99.9%',
-    // Blue-slate-sand mesh gradient (like reference right card)
     gradient: [
-      'radial-gradient(ellipse at 70% 20%, #A8BFFF 0%, transparent 50%)',
-      'radial-gradient(ellipse at 20% 40%, #C9A2E8 0%, transparent 50%)',
-      'radial-gradient(ellipse at 60% 80%, #E8C4A2 0%, transparent 45%)',
-      'radial-gradient(ellipse at 10% 80%, #7FB3F5 0%, transparent 50%)',
-      'linear-gradient(135deg, #A8BFFF 0%, #C9A2E8 50%, #E8C4A2 100%)',
+      'radial-gradient(ellipse at 70% 15%, #A8BFFF 0%, transparent 48%)',
+      'radial-gradient(ellipse at 20% 35%, #C9A2E8 0%, transparent 48%)',
+      'radial-gradient(ellipse at 60% 80%, #E8C4A2 0%, transparent 44%)',
+      'radial-gradient(ellipse at 10% 80%, #7FB3F5 0%, transparent 48%)',
+      'linear-gradient(155deg, #A8BFFF 0%, #C9A2E8 50%, #E8C4A2 100%)',
     ].join(', '),
     orb1: '#A8BFFF',
     orb2: '#C9A2E8',
+    glow: 'rgba(168,191,255,0.4)',
   },
 ]
 
-const CARD_W = 300
-const CARD_H = 420
+const CARD_W = 290
+const CARD_H = 490
 
-// 3D positions for each slot
+// Fan layout: left card tilts right ~48°, right card tilts left ~48°
 const SLOT = {
-  left:   { x: -CARD_W * 0.92, rotateY: 38,  scale: 0.80, zIndex: 1,  opacity: 0.88 },
-  center: { x: 0,              rotateY: 0,   scale: 1.0,  zIndex: 10, opacity: 1    },
-  right:  { x: CARD_W * 0.92,  rotateY: -38, scale: 0.80, zIndex: 1,  opacity: 0.88 },
+  left: {
+    x: -CARD_W * 1.08,
+    rotateY: 48,
+    scale: 0.74,
+    zIndex: 2,
+    opacity: 0.82,
+  },
+  center: {
+    x: 0,
+    rotateY: 0,
+    scale: 1.0,
+    zIndex: 10,
+    opacity: 1,
+  },
+  right: {
+    x: CARD_W * 1.08,
+    rotateY: -48,
+    scale: 0.74,
+    zIndex: 2,
+    opacity: 0.82,
+  },
 }
 
-function MeshCard({
+function Card({
   feature,
   slot,
   onClick,
@@ -94,77 +112,117 @@ function MeshCard({
         opacity: pos.opacity,
         zIndex: pos.zIndex,
       }}
-      style={{ rotateY: pos.rotateY, transformPerspective: 1200 }}
-      transition={{ type: 'spring', stiffness: 220, damping: 28 }}
+      style={{ rotateY: pos.rotateY, transformPerspective: 1100 }}
+      transition={{ type: 'spring', stiffness: 240, damping: 30 }}
       className="absolute top-0"
-      whileHover={!isCenter ? { scale: pos.scale * 1.04 } : undefined}
+      whileHover={!isCenter ? { scale: pos.scale * 1.05 } : undefined}
       aria-hidden={!isCenter}
     >
+      {/* Glow beneath center card */}
+      {isCenter && (
+        <div
+          className="pointer-events-none absolute -inset-4 rounded-[40px] blur-[50px]"
+          style={{ background: feature.glow, opacity: 0.5 }}
+        />
+      )}
+
       <div
-        className="overflow-hidden rounded-3xl shadow-2xl"
+        className="relative overflow-hidden rounded-[28px]"
         style={{
           width: CARD_W,
+          height: CARD_H,
+          background: feature.gradient,
           cursor: isCenter ? 'default' : 'pointer',
           boxShadow: isCenter
-            ? '0 32px 80px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.08)'
-            : '0 16px 40px rgba(0,0,0,0.18)',
+            ? '0 40px 100px rgba(0,0,0,0.40), 0 0 0 1px rgba(255,255,255,0.10)'
+            : '0 20px 50px rgba(0,0,0,0.25)',
         }}
       >
-        {/* ── Mesh gradient image section ── */}
+        {/* ── Animated floating orbs ── */}
+        <motion.div
+          className="absolute rounded-full blur-[50px]"
+          style={{
+            width: 180,
+            height: 180,
+            top: '-5%',
+            left: '-5%',
+            background: feature.orb1,
+            opacity: 0.5,
+          }}
+          animate={isCenter ? { x: [0, 25, -12, 0], y: [0, -18, 22, 0] } : {}}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute rounded-full blur-[60px]"
+          style={{
+            width: 200,
+            height: 200,
+            bottom: '25%',
+            right: '-10%',
+            background: feature.orb2,
+            opacity: 0.4,
+          }}
+          animate={isCenter ? { x: [0, -25, 18, 0], y: [0, 22, -12, 0] } : {}}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        />
+        <motion.div
+          className="absolute rounded-full blur-[40px]"
+          style={{
+            width: 120,
+            height: 120,
+            bottom: '10%',
+            left: '15%',
+            background: feature.orb1,
+            opacity: 0.3,
+          }}
+          animate={isCenter ? { scale: [1, 1.3, 1] } : {}}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+        />
+
+        {/* ── Stat badge — top right ── */}
         <div
-          className="relative overflow-hidden"
-          style={{ height: Math.round(CARD_H * 0.58), background: feature.gradient }}
+          className="absolute right-4 top-4 rounded-full px-4 py-1.5 font-mono text-sm font-bold text-white"
+          style={{
+            background: 'rgba(0,0,0,0.32)',
+            border: '1px solid rgba(255,255,255,0.20)',
+            backdropFilter: 'blur(8px)',
+          }}
         >
-          {/* Animated floating orbs inside the gradient */}
-          <motion.div
-            className="absolute rounded-full blur-[40px]"
-            style={{ width: 140, height: 140, top: '10%', left: '5%', background: feature.orb1, opacity: 0.45 }}
-            animate={isCenter ? { x: [0, 20, -10, 0], y: [0, -15, 20, 0] } : {}}
-            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-          />
-          <motion.div
-            className="absolute rounded-full blur-[50px]"
-            style={{ width: 160, height: 160, bottom: '-10%', right: '-5%', background: feature.orb2, opacity: 0.35 }}
-            animate={isCenter ? { x: [0, -20, 15, 0], y: [0, 20, -10, 0] } : {}}
-            transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          />
-          {/* Icon overlay on gradient */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div
-              className="flex h-16 w-16 items-center justify-center rounded-2xl backdrop-blur-sm"
-              style={{ background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.3)' }}
-            >
-              <Icon className="h-8 w-8 text-white drop-shadow-lg" />
-            </div>
-          </div>
-          {/* Stat badge */}
+          {feature.stat}
+        </div>
+
+        {/* ── Icon — centered upper area ── */}
+        <div className="absolute left-0 right-0 top-[28%] flex justify-center">
           <div
-            className="absolute bottom-3 right-3 rounded-full px-3 py-1 text-sm font-bold text-white backdrop-blur-sm"
-            style={{ background: 'rgba(0,0,0,0.28)', border: '1px solid rgba(255,255,255,0.2)' }}
+            className="flex h-20 w-20 items-center justify-center rounded-3xl"
+            style={{
+              background: 'rgba(255,255,255,0.16)',
+              border: '1px solid rgba(255,255,255,0.28)',
+              backdropFilter: 'blur(10px)',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.18)',
+            }}
           >
-            {feature.stat}
+            <Icon className="h-10 w-10 text-white drop-shadow-lg" />
           </div>
         </div>
 
-        {/* ── Text section ── */}
+        {/* ── Glassmorphism content panel at bottom ── */}
         <div
-          className="px-6 py-5"
+          className="absolute inset-x-0 bottom-0 px-6 pb-7 pt-5"
           style={{
-            height: Math.round(CARD_H * 0.42),
-            background: 'var(--color-card-bg)',
-            borderTop: '1px solid var(--color-card-border)',
+            background: 'linear-gradient(to top, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.0) 100%)',
+            backdropFilter: 'blur(2px)',
           }}
         >
           <p
-            className="text-xs font-semibold uppercase tracking-widest"
-            style={{ color: feature.orb1 }}
+            className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-white/60"
           >
             {feature.subtitle}
           </p>
-          <h3 className="mt-1.5 text-lg font-bold text-text-primary leading-snug">
+          <h3 className="text-xl font-bold leading-snug text-white">
             {feature.title}
           </h3>
-          <p className="mt-2 text-sm leading-relaxed text-text-secondary line-clamp-3">
+          <p className="mt-2 text-sm leading-relaxed text-white/70 line-clamp-3">
             {feature.description}
           </p>
         </div>
@@ -186,13 +244,40 @@ export function WhyOrbit() {
 
   return (
     <section className="section-padding relative overflow-hidden">
-      {/* Background glow */}
+      {/* ── Section background: rich atmospheric gradient ── */}
       <div className="pointer-events-none absolute inset-0">
+        {/* Base */}
+        <div className="absolute inset-0 bg-[var(--color-bg)]" />
+        {/* Ambient color shifted by active card */}
         <motion.div
-          className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[140px]"
-          style={{ background: features[idx].orb1, opacity: 0.05 }}
-          animate={{ scale: [1, 1.15, 1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute inset-0"
+          animate={{ opacity: 1 }}
+          key={idx}
+          style={{
+            background: `radial-gradient(ellipse at 50% 60%, ${features[centerIdx].glow.replace('0.4', '0.07')} 0%, transparent 70%)`,
+          }}
+        />
+        {/* Left atmospheric bloom */}
+        <motion.div
+          className="absolute left-[-5%] top-[20%] h-[600px] w-[600px] rounded-full blur-[140px]"
+          style={{ background: `${features[centerIdx].orb2}12` }}
+          animate={{ scale: [1, 1.12, 1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        {/* Right atmospheric bloom */}
+        <motion.div
+          className="absolute right-[-5%] top-[30%] h-[500px] w-[500px] rounded-full blur-[120px]"
+          style={{ background: `${features[centerIdx].orb1}10` }}
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
+        />
+        {/* Subtle dot grid */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: 'radial-gradient(circle, var(--color-text-primary) 1px, transparent 1px)',
+            backgroundSize: '32px 32px',
+          }}
         />
       </div>
 
@@ -210,54 +295,57 @@ export function WhyOrbit() {
           </LineReveal>
         </div>
 
-        {/* ── 3D Carousel ── */}
+        {/* ── 3D Fan Carousel ── */}
         <div className="mt-20 flex flex-col items-center">
           {/* Cards stage */}
           <div
             className="relative flex items-center justify-center"
-            style={{ height: CARD_H + 40, width: '100%', maxWidth: CARD_W * 3 }}
+            style={{ height: CARD_H + 60, width: '100%', maxWidth: CARD_W * 3.2 }}
           >
-            {/* Left arrow */}
+            {/* Render back-to-front: sides first, center on top */}
+            <div className="relative" style={{ width: CARD_W, height: CARD_H }}>
+              <Card feature={features[leftIdx]}   slot="left"   onClick={prev} />
+              <Card feature={features[rightIdx]}  slot="right"  onClick={next} />
+              <Card feature={features[centerIdx]} slot="center" />
+            </div>
+          </div>
+
+          {/* ── Controls: [←] [• • •] [→] ── */}
+          <div className="mt-10 flex items-center gap-4">
+            {/* Prev arrow */}
             <button
               onClick={prev}
-              className="absolute left-0 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-md transition-all hover:border-accent/50 hover:text-accent hover:scale-110"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-lg transition-all hover:scale-110 hover:border-accent/50 hover:text-accent"
               aria-label="Previous"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
 
-            {/* 3 cards */}
-            <div className="relative" style={{ width: CARD_W, height: CARD_H }}>
-              <MeshCard feature={features[leftIdx]}   slot="left"   onClick={prev} />
-              <MeshCard feature={features[rightIdx]}  slot="right"  onClick={next} />
-              <MeshCard feature={features[centerIdx]} slot="center" />
+            {/* Dot indicators */}
+            <div className="flex items-center gap-2.5">
+              {features.map((f, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIdx(i)}
+                  className="h-2 rounded-full transition-all duration-300"
+                  style={{
+                    width: i === idx ? 32 : 8,
+                    background: i === idx ? f.orb1 : 'var(--color-card-border)',
+                    boxShadow: i === idx ? `0 0 12px ${f.orb1}90` : 'none',
+                  }}
+                  aria-label={`Go to ${features[i].title}`}
+                />
+              ))}
             </div>
 
-            {/* Right arrow */}
+            {/* Next arrow */}
             <button
               onClick={next}
-              className="absolute right-0 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-md transition-all hover:border-accent/50 hover:text-accent hover:scale-110"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-text-secondary shadow-lg transition-all hover:scale-110 hover:border-accent/50 hover:text-accent"
               aria-label="Next"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
-          </div>
-
-          {/* Dot indicators */}
-          <div className="mt-8 flex gap-2.5">
-            {features.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIdx(i)}
-                className="h-2 rounded-full transition-all duration-300"
-                style={{
-                  width: i === idx ? 28 : 8,
-                  background: i === idx ? features[idx].orb1 : 'var(--color-card-border)',
-                  boxShadow: i === idx ? `0 0 10px ${features[idx].orb1}80` : 'none',
-                }}
-                aria-label={`Go to ${features[i].title}`}
-              />
-            ))}
           </div>
         </div>
       </div>
