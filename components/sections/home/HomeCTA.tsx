@@ -7,10 +7,9 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function HomeCTA() {
   return (
-    <section className="relative overflow-hidden bg-[#04040e] dark:bg-[#04040e]">
+    <section className="relative overflow-hidden bg-[#04040e]">
       {/* ── Ambient glow behind the glowing element ── */}
       <div className="pointer-events-none absolute inset-0">
-        {/* Bottom-center radial glow (accent-orange) */}
         <div
           className="absolute bottom-0 left-1/2 h-[600px] w-[900px] -translate-x-1/2 translate-y-[30%] rounded-full"
           style={{
@@ -18,8 +17,6 @@ export function HomeCTA() {
               'radial-gradient(ellipse, rgba(255,117,31,0.18) 0%, rgba(255,117,31,0.06) 40%, transparent 70%)',
           }}
         />
-        {/* Very subtle top-edge fade for section blending */}
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--color-bg)] to-transparent" />
       </div>
 
       {/* ── Content ── */}
@@ -43,7 +40,7 @@ export function HomeCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease, delay: 0.1 }}
           viewport={{ once: true }}
-          className="mx-auto mt-5 max-w-md text-base leading-relaxed text-white/45"
+          className="mx-auto mt-5 max-w-md text-base leading-relaxed text-[#8a8a9a]"
         >
           Tell us about your project, get expert guidance,
           <br className="hidden sm:block" />
@@ -119,9 +116,6 @@ export function HomeCTA() {
           />
         </motion.div>
       </div>
-
-      {/* Bottom-edge fade into next section */}
-      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--color-bg)] to-transparent" />
     </section>
   )
 }
