@@ -2,6 +2,22 @@
   "name": "orbit",
   "version": "0.1.0",
   "private": true,
+  "description": "AI-powered freelancer marketplace with 7 built-in AI tools, real-time messaging, and Stripe payments",
+  "author": "Shehriyar Ali",
+  "license": "MIT",
+  "keywords": [
+    "nextjs",
+    "freelancer-marketplace",
+    "ai-chatbot",
+    "supabase",
+    "stripe",
+    "typescript",
+    "tailwindcss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shehriyar-Ali-Rustam/ORBIT.git"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
