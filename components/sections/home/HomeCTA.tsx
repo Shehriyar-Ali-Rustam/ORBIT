@@ -7,11 +7,20 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function HomeCTA() {
   return (
-    <section className="relative overflow-hidden bg-[#04040e]">
+    <section className="relative overflow-hidden bg-white dark:bg-[#04040e]">
       {/* ── Ambient glow behind the glowing element ── */}
       <div className="pointer-events-none absolute inset-0">
+        {/* Light mode: soft warm glow */}
         <div
-          className="absolute bottom-0 left-1/2 h-[600px] w-[900px] -translate-x-1/2 translate-y-[30%] rounded-full"
+          className="absolute bottom-0 left-1/2 h-[600px] w-[900px] -translate-x-1/2 translate-y-[30%] rounded-full dark:hidden"
+          style={{
+            background:
+              'radial-gradient(ellipse, rgba(255,117,31,0.10) 0%, rgba(255,117,31,0.03) 40%, transparent 70%)',
+          }}
+        />
+        {/* Dark mode: stronger glow */}
+        <div
+          className="absolute bottom-0 left-1/2 hidden h-[600px] w-[900px] -translate-x-1/2 translate-y-[30%] rounded-full dark:block"
           style={{
             background:
               'radial-gradient(ellipse, rgba(255,117,31,0.18) 0%, rgba(255,117,31,0.06) 40%, transparent 70%)',
@@ -27,7 +36,7 @@ export function HomeCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease }}
           viewport={{ once: true }}
-          className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl"
+          className="text-4xl font-bold tracking-tight text-[#0a0a0a] dark:text-white sm:text-5xl md:text-6xl"
         >
           Start Building with
           <br />
@@ -40,7 +49,7 @@ export function HomeCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease, delay: 0.1 }}
           viewport={{ once: true }}
-          className="mx-auto mt-5 max-w-md text-base leading-relaxed text-[#8a8a9a]"
+          className="mx-auto mt-5 max-w-md text-base leading-relaxed text-[#6b6b7b] dark:text-[#8a8a9a]"
         >
           Tell us about your project, get expert guidance,
           <br className="hidden sm:block" />
@@ -57,7 +66,7 @@ export function HomeCTA() {
         >
           <Link
             href="/contact"
-            className="inline-flex items-center rounded-full border border-white/15 bg-white px-7 py-2.5 text-sm font-semibold text-[#0a0a0a] transition-all hover:-translate-y-0.5 hover:shadow-lg"
+            className="inline-flex items-center rounded-full border border-[#e5e5e5] bg-[#0a0a0a] px-7 py-2.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-white/15 dark:bg-white dark:text-[#0a0a0a]"
           >
             Learn More
           </Link>
@@ -102,7 +111,6 @@ export function HomeCTA() {
             }}
             transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
           >
-            {/* Subtle inner highlight */}
             <div className="absolute inset-[1px] rounded-[15px] bg-gradient-to-b from-white/10 to-transparent" />
             <span className="relative text-2xl font-bold tracking-wide text-white sm:text-3xl">
               Launch
