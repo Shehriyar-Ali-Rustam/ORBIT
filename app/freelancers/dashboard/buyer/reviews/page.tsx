@@ -9,25 +9,26 @@ import type { Review } from '@/types/marketplace'
 
 export default function BuyerReviewsPage() {
   const { user } = useUser()
+  const userId = user?.id
   const [reviews, setReviews] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!user?.id) return
+    if (!userId) return
 
     async function load() {
       const supabase = getSupabase()
       const { data } = await supabase
         .from('reviews')
         .select('*')
-        .eq('buyer_id', user!.id)
+        .eq('buyer_id', userId)
         .order('created_at', { ascending: false })
 
       setReviews((data || []) as Review[])
       setLoading(false)
     }
     load()
-  }, [user?.id])
+  }, [userId])
 
   if (loading) {
     return (

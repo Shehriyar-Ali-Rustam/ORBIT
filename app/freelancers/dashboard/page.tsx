@@ -12,28 +12,32 @@ import type { Profile, Order, Gig } from '@/types/marketplace'
 
 export default function SellerDashboardPage() {
   const { user } = useUser()
+  const userId = user?.id
   const [profile, setProfile] = useState<Profile | null>(null)
   const [orders, setOrders] = useState<Order[]>([])
   const [gigs, setGigs] = useState<Gig[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (!user?.id) return
+    if (!userId) return
+    const id = userId
     async function load() {
       try {
         const [p, o, g] = await Promise.all([
-          getProfile(user!.id),
-          getUserOrders(user!.id, 'seller'),
-          getSellerGigs(user!.id, true),
+          getProfile(id),
+          getUserOrders(id, 'seller'),
+          getSellerGigs(id, true),
         ])
         setProfile(p)
         setOrders(o)
         setGigs(g)
-      } catch {}
+      } catch (err) {
+        console.error('Failed to load dashboard:', err)
+      }
       setLoading(false)
     }
     load()
-  }, [user?.id])
+  }, [userId])
 
   if (loading) {
     return (

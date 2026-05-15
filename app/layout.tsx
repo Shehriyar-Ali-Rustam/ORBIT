@@ -43,13 +43,13 @@ export const metadata: Metadata = {
     'AI solutions',
     'Next.js development',
   ],
-  authors: [{ name: 'Shehriyar Ali Rustam', url: 'https://orbittech.io' }],
+  authors: [{ name: 'Shehriyar Ali Rustam', url: 'https://orbitpk.com' }],
   creator: 'Orbit',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://orbittech.io'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://orbitpk.com'),
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://orbittech.io',
+    url: 'https://orbitpk.com',
     title: 'Orbit — AI-Powered Software Solutions',
     description:
       'Full-service AI software company — chatbots, model training, web & mobile development.',

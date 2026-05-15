@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus, X } from 'lucide-react'
@@ -100,7 +101,7 @@ export function SellerProfileForm({ profile, onSaved }: SellerProfileFormProps) 
         <label className="mb-2 block text-sm font-medium text-text-primary">Profile Photo</label>
         <div className="flex items-center gap-4">
           {photoUrl ? (
-            <img src={photoUrl} alt="" className="h-16 w-16 rounded-full object-cover" />
+            <Image src={photoUrl} alt="" width={64} height={64} className="h-16 w-16 rounded-full object-cover" unoptimized />
           ) : (
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-orange-dim text-lg font-bold text-orange">
               {profile.display_name.charAt(0)}

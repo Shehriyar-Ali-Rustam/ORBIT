@@ -5,10 +5,15 @@ import { getGigById } from '@/lib/marketplace/queries'
 import { SERVICE_FEE_RATE } from '@/lib/marketplace/constants'
 import type { PricingTier } from '@/types/marketplace'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2026-01-28.clover' })
-
 export async function POST(req: NextRequest) {
   try {
+    const stripeKey = process.env.STRIPE_SECRET_KEY
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL
+    if (!stripeKey || !appUrl) {
+      return NextResponse.json({ error: 'Payment service not configured' }, { status: 503 })
+    }
+    const stripe = new Stripe(stripeKey, { apiVersion: '2026-01-28.clover' })
+
     const { userId } = await requireMarketplaceUser()
     const { gig_id, tier } = await req.json() as { gig_id: string; tier: PricingTier }
 
@@ -55,8 +60,8 @@ export async function POST(req: NextRequest) {
         delivery_days: pricing.delivery_days.toString(),
         max_revisions: pricing.revisions.toString(),
       },
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/freelancers/dashboard/buyer/orders?success=true`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/freelancers/gig/${gig.slug}`,
+      success_url: `${appUrl}/freelancers/dashboard/buyer/orders?success=true`,
+      cancel_url: `${appUrl}/freelancers/gig/${gig.slug}`,
     })
 
     return NextResponse.json({ url: session.url })

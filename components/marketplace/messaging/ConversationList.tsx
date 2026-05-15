@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { formatDistanceToNow } from 'date-fns'
 import { cn } from '@/lib/utils'
 import type { Conversation } from '@/types/marketplace'
@@ -33,7 +34,7 @@ export function ConversationList({ conversations, activeId, userId, onSelect }: 
             )}
           >
             {otherPhoto ? (
-              <img src={otherPhoto} alt="" className="h-10 w-10 shrink-0 rounded-full object-cover" />
+              <Image src={otherPhoto} alt="" width={40} height={40} className="h-10 w-10 shrink-0 rounded-full object-cover" unoptimized />
             ) : (
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-dim text-sm font-bold text-orange">
                 {otherName.charAt(0)}

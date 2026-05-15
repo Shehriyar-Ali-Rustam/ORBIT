@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Lightbulb, Heart, Award, Rocket, Users } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
