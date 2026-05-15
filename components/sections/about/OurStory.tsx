@@ -19,7 +19,7 @@ export function OurStory() {
           >
             <SectionLabel>Our Story</SectionLabel>
             <SectionHeading className="mt-4 text-3xl md:text-4xl lg:text-5xl">
-              From One Student to a{' '}
+              From Students to a{' '}
               <span className="text-gradient">Growing Company</span>
             </SectionHeading>
             <div className="mt-5 space-y-4 text-sm leading-relaxed text-text-secondary sm:text-base">
