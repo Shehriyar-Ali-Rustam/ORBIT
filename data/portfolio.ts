@@ -45,7 +45,7 @@ export const projects: Project[] = [
     coverImage: '/images/portfolio/ai-resume-matcher.webp',
     images: ['/images/portfolio/ai-resume-matcher.webp'],
     techStack: ['Python', 'Streamlit', 'FastAPI', 'Sentence Transformers', 'NLTK', 'spaCy'],
-    liveUrl: 'https://ai-resume-job-matcher-shehriyar.streamlit.app/',
+    liveUrl: 'https://resume-job-matcher-ai-shehriyar.streamlit.app/',
     featured: true,
     completedAt: '2025-01-10',
   },
