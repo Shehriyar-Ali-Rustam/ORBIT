@@ -6,12 +6,11 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Sun, Moon, LayoutDashboard, LogOut, User } from 'lucide-react'
+import { useUser, useClerk } from '@clerk/nextjs'
 import { NAV_LINKS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 import { useTheme } from '@/components/ThemeProvider'
-import { useAuthStore } from '@/lib/stores/auth-store'
-import { signOut } from '@/lib/firebase/auth'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -20,7 +19,12 @@ export function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
-  const { user, isAuthenticated, loading } = useAuthStore()
+  const { user, isLoaded, isSignedIn } = useUser()
+  const { signOut } = useClerk()
+  const loading = !isLoaded
+  const isAuthenticated = isSignedIn && !!user
+  const displayName = user?.fullName || user?.firstName || user?.username || user?.primaryEmailAddress?.emailAddress || 'User'
+  const photoUrl = user?.imageUrl
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -55,9 +59,8 @@ export function Navbar() {
   }, [])
 
   const handleSignOut = async () => {
-    await signOut()
     setDropdownOpen(false)
-    window.location.href = '/'
+    await signOut({ redirectUrl: '/' })
   }
 
   return (
@@ -164,16 +167,16 @@ export function Navbar() {
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-brand text-sm font-bold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
                   >
-                    {user.photoURL ? (
+                    {photoUrl ? (
                       <Image
-                        src={user.photoURL}
-                        alt={user.displayName}
+                        src={photoUrl}
+                        alt={displayName}
                         width={36}
                         height={36}
                         className="h-9 w-9 rounded-full object-cover"
                       />
                     ) : (
-                      user.displayName?.charAt(0) || 'U'
+                      displayName.charAt(0) || 'U'
                     )}
                   </button>
 
@@ -187,8 +190,8 @@ export function Navbar() {
                         className="absolute right-0 top-12 w-56 rounded-2xl border border-border bg-surface p-2 shadow-lg"
                       >
                         <div className="border-b border-border px-3 pb-3 pt-1">
-                          <p className="text-sm font-medium text-text-primary">{user.displayName}</p>
-                          <p className="text-xs text-text-tertiary">{user.email}</p>
+                          <p className="text-sm font-medium text-text-primary">{displayName}</p>
+                          <p className="text-xs text-text-tertiary">{user?.primaryEmailAddress?.emailAddress}</p>
                         </div>
                         <div className="pt-2">
                           <Link href="/freelancers/dashboard" className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-text-secondary transition-colors hover:bg-accent-dim hover:text-text-primary">
@@ -206,7 +209,7 @@ export function Navbar() {
                   </AnimatePresence>
                 </div>
               ) : (
-                <Link href="/login" className="hidden md:block">
+                <Link href="/freelancers/sign-in" className="hidden md:block">
                   <Button variant="primary" size="sm">Sign In</Button>
                 </Link>
               )}
@@ -255,7 +258,7 @@ export function Navbar() {
                   </>
                 ) : (
                   <>
-                    <Link href="/login"><Button variant="primary" size="lg">Sign In</Button></Link>
+                    <Link href="/freelancers/sign-in"><Button variant="primary" size="lg">Sign In</Button></Link>
                     <Link href="/contact"><Button variant="ghost" size="lg">Start a Project</Button></Link>
                   </>
                 )}

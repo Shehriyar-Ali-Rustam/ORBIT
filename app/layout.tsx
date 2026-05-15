@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Montserrat } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import './globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { AppClerkProvider } from '@/components/providers/AppClerkProvider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -82,17 +83,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-background font-inter text-foreground antialiased">
         <ThemeProvider>
-          {children}
-          <Toaster
-            position="top-right"
-            toastOptions={{
-              style: {
-                background: 'var(--color-surface)',
-                color: 'var(--color-text-primary)',
-                border: '1px solid var(--color-border)',
-              },
-            }}
-          />
+          <AppClerkProvider>
+            {children}
+            <Toaster
+              position="top-right"
+              toastOptions={{
+                style: {
+                  background: 'var(--color-surface)',
+                  color: 'var(--color-text-primary)',
+                  border: '1px solid var(--color-border)',
+                },
+              }}
+            />
+          </AppClerkProvider>
         </ThemeProvider>
       </body>
     </html>
