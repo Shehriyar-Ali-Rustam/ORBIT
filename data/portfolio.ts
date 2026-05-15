@@ -110,6 +110,38 @@ export const projects: Project[] = [
     completedAt: '2025-02-01',
   },
   {
+    id: 'campalpha',
+    slug: 'campalpha',
+    title: 'CampAlpha — Adventure Sports Marketplace',
+    category: 'web',
+    shortDescription:
+      'A marketplace connecting adventure sports enthusiasts with trips, gear, and experiences.',
+    fullDescription:
+      'CampAlpha is a community-focused marketplace built for the adventure sports world. Users can browse and book trips, discover gear, and connect with other enthusiasts. Designed for fast performance on mobile and a clean, photo-forward UI that puts the outdoors first.',
+    coverImage: '/images/portfolio/campalpha.webp',
+    images: ['/images/portfolio/campalpha.webp'],
+    techStack: ['React', 'Firebase', 'JavaScript', 'CSS3'],
+    liveUrl: 'https://campalpha.web.app',
+    featured: true,
+    completedAt: '2025-09-01',
+  },
+  {
+    id: 'cheezy-heaven',
+    slug: 'cheezy-heaven',
+    title: 'Cheezy Heaven — Pizza Delivery',
+    category: 'web',
+    shortDescription:
+      'Premium pizza ordering and delivery experience for customers in Rawalpindi.',
+    fullDescription:
+      'Cheezy Heaven is an online ordering and home delivery platform for a premium pizza brand in Rawalpindi. Customers can browse the menu, customize their order, and place delivery requests with a smooth, mobile-friendly checkout flow.',
+    coverImage: '/images/portfolio/cheezy-heaven.webp',
+    images: ['/images/portfolio/cheezy-heaven.webp'],
+    techStack: ['React', 'Firebase', 'JavaScript', 'CSS3'],
+    liveUrl: 'https://cheezy-heaven.web.app',
+    featured: true,
+    completedAt: '2025-11-01',
+  },
+  {
     id: 'personal-portfolio',
     slug: 'personal-portfolio',
     title: 'Personal Portfolio Website',
