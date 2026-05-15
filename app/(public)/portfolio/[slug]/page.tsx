@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, ExternalLink, Github } from 'lucide-react'
+import { ArrowLeft, ExternalLink } from 'lucide-react'
 import { projects } from '@/data/portfolio'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
@@ -100,15 +100,7 @@ export default function ProjectDetailPage({ params }: Props) {
                   <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="block">
                     <Button variant="primary" className="w-full">
                       <ExternalLink className="h-4 w-4" />
-                      View Live
-                    </Button>
-                  </a>
-                )}
-                {project.githubUrl && (
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="block">
-                    <Button variant="outline" className="w-full">
-                      <Github className="h-4 w-4" />
-                      View Source
+                      See Live
                     </Button>
                   </a>
                 )}
