@@ -26,8 +26,8 @@ export function OurStory() {
               <p>
                 I&apos;m Shehriyar Ali Rustam, a software engineering student from Pakistan. I started
                 freelancing on Fiverr, building websites and AI chatbots for clients around the world.
-                That&apos;s how ORBIT was born &mdash; later joined by my co-founders Saqib Nawaz Khan
-                and Abdul Ahad.
+                That&apos;s how ORBIT was born &mdash; built together with Saqib Nawaz Khan and
+                Abdul Ahad.
               </p>
               <p>
                 ORBIT isn&apos;t some big corporate thing. It&apos;s a small, hungry team that takes real
