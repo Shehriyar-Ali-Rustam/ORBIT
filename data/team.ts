@@ -4,8 +4,8 @@ export const team: TeamMember[] = [
   {
     id: 'shehriyar',
     name: 'Shehriyar Ali Rustam',
-    role: 'Founder & Software Engineer',
-    bio: "Software engineer, AI & ML enthusiast, and Fiverr Level 1 seller with expertise in frontend development, graphic design, and AI integration. Building Orbit to compete with the world's best technology companies.",
+    role: 'Founder, Software Engineer & Graphic Designer',
+    bio: "Software engineer and graphic designer, AI & ML enthusiast, and Fiverr Level 1 seller with expertise in frontend development, brand and visual design, and AI integration. Building Orbit to compete with the world's best technology companies.",
     photo: '/images/team/shehriyar.webp',
     skills: ['Next.js', 'React', 'Python', 'AI/ML', 'OpenAI API', 'Graphic Design', 'TypeScript'],
     github: 'https://github.com/Shehriyar-Ali-Rustam',
