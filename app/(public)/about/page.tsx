@@ -3,6 +3,7 @@ import { AboutHero } from '@/components/sections/about/AboutHero'
 import { OurStory } from '@/components/sections/about/OurStory'
 import { MissionVision } from '@/components/sections/about/MissionVision'
 import { Values } from '@/components/sections/about/Values'
+import { PeopleBehindOrbit } from '@/components/sections/about/PeopleBehindOrbit'
 import { Team } from '@/components/sections/about/Team'
 import { HomeCTA } from '@/components/sections/home/HomeCTA'
 
@@ -18,6 +19,7 @@ export default function AboutPage() {
       <OurStory />
       <MissionVision />
       <Values />
+      <PeopleBehindOrbit />
       <Team />
       <HomeCTA />
     </>
