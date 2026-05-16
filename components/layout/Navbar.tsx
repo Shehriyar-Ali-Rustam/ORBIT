@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Sun, Moon, LayoutDashboard, LogOut, User } from 'lucide-react'
+import { Menu, X, Sun, Moon, LayoutDashboard, LogOut, User, ChevronDown } from 'lucide-react'
 import { useUser, useClerk } from '@clerk/nextjs'
 import { NAV_LINKS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
@@ -16,6 +16,8 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [activeNavDropdown, setActiveNavDropdown] = useState<string | null>(null)
+  const [mobileExpandedNav, setMobileExpandedNav] = useState<string | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
@@ -100,38 +102,83 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden items-center gap-1 md:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                'group relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300',
-                link.href === '/ai'
-                  ? 'text-accent'
-                  : pathname === link.href
-                    ? 'text-accent'
-                    : scrolled
-                      ? 'text-text-secondary hover:text-text-primary'
-                      : 'text-white/80 hover:text-white'
-              )}
-            >
-              <span className="relative z-10">{link.label}</span>
-              {link.href === '/ai' && (
-                <span className="relative z-10 ml-1.5 inline-flex rounded-full bg-accent/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-accent">
-                  New
-                </span>
-              )}
-              {pathname === link.href ? (
-                <motion.div
-                  layoutId="navbar-indicator"
-                  className="absolute inset-0 rounded-full bg-accent/10"
-                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                />
-              ) : (
-                <span className="absolute inset-0 rounded-full transition-colors duration-300 group-hover:bg-text-primary/5" />
-              )}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const hasChildren = !!link.children?.length
+            const isOpen = activeNavDropdown === link.label
+            const isActive = pathname === link.href || (hasChildren && pathname?.startsWith(link.href) && link.href !== '/')
+
+            return (
+              <div
+                key={link.label}
+                className="relative"
+                onMouseEnter={() => hasChildren && setActiveNavDropdown(link.label)}
+                onMouseLeave={() => hasChildren && setActiveNavDropdown(null)}
+              >
+                <Link
+                  href={link.href}
+                  className={cn(
+                    'group relative flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300',
+                    link.href === '/ai'
+                      ? 'text-accent'
+                      : isActive
+                        ? 'text-accent'
+                        : scrolled
+                          ? 'text-text-secondary hover:text-text-primary'
+                          : 'text-white/80 hover:text-white'
+                  )}
+                >
+                  <span className="relative z-10">{link.label}</span>
+                  {link.href === '/ai' && (
+                    <span className="relative z-10 ml-1.5 inline-flex rounded-full bg-accent/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-accent">
+                      New
+                    </span>
+                  )}
+                  {hasChildren && (
+                    <ChevronDown
+                      className={cn(
+                        'relative z-10 h-3.5 w-3.5 transition-transform duration-200',
+                        isOpen && 'rotate-180'
+                      )}
+                    />
+                  )}
+                  {isActive ? (
+                    <motion.div
+                      layoutId="navbar-indicator"
+                      className="absolute inset-0 rounded-full bg-accent/10"
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                  ) : (
+                    <span className="absolute inset-0 rounded-full transition-colors duration-300 group-hover:bg-text-primary/5" />
+                  )}
+                </Link>
+
+                <AnimatePresence>
+                  {hasChildren && isOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute left-1/2 top-full z-50 mt-2 w-72 -translate-x-1/2 rounded-2xl border border-border bg-surface p-2 shadow-xl"
+                    >
+                      {link.children!.map((child) => (
+                        <Link
+                          key={child.label}
+                          href={child.href}
+                          className="block rounded-xl px-3 py-2.5 transition-colors hover:bg-accent-dim"
+                        >
+                          <div className="text-sm font-medium text-text-primary">{child.label}</div>
+                          {child.description && (
+                            <div className="mt-0.5 text-xs text-text-tertiary">{child.description}</div>
+                          )}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )
+          })}
         </div>
 
         {/* Right side */}
@@ -242,14 +289,64 @@ export function Navbar() {
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 top-16 z-40 overflow-y-auto bg-background/95 backdrop-blur-xl md:hidden"
           >
-            <div className="flex flex-col items-center gap-4 px-6 pt-8 pb-8">
-              {NAV_LINKS.map((link, i) => (
-                <motion.div key={link.href} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                  <Link href={link.href} className={cn('text-lg font-medium tracking-wider transition-colors', pathname === link.href ? 'text-accent' : 'text-text-secondary hover:text-text-primary')}>
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+            <div className="flex flex-col items-center gap-3 px-6 pt-8 pb-8">
+              {NAV_LINKS.map((link, i) => {
+                const hasChildren = !!link.children?.length
+                const isExpanded = mobileExpandedNav === link.label
+                return (
+                  <motion.div
+                    key={link.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    className="w-full max-w-xs"
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          'text-lg font-medium tracking-wider transition-colors',
+                          pathname === link.href ? 'text-accent' : 'text-text-secondary hover:text-text-primary'
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                      {hasChildren && (
+                        <button
+                          onClick={() => setMobileExpandedNav(isExpanded ? null : link.label)}
+                          className="rounded-full p-1 text-text-tertiary hover:text-accent"
+                          aria-label={`Toggle ${link.label} submenu`}
+                        >
+                          <ChevronDown className={cn('h-4 w-4 transition-transform', isExpanded && 'rotate-180')} />
+                        </button>
+                      )}
+                    </div>
+                    <AnimatePresence>
+                      {hasChildren && isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="mt-2 overflow-hidden"
+                        >
+                          <div className="flex flex-col items-center gap-2 pt-1">
+                            {link.children!.map((child) => (
+                              <Link
+                                key={child.label}
+                                href={child.href}
+                                className="text-sm text-text-tertiary hover:text-text-primary"
+                              >
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                )
+              })}
               <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: NAV_LINKS.length * 0.05 }} className="flex flex-col items-center gap-3 pt-4">
                 {isAuthenticated ? (
                   <>
