@@ -19,6 +19,7 @@ export function Navbar() {
   const [activeNavDropdown, setActiveNavDropdown] = useState<string | null>(null)
   const [mobileExpandedNav, setMobileExpandedNav] = useState<string | null>(null)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const navRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
   const { user, isLoaded, isSignedIn } = useUser()
@@ -54,6 +55,9 @@ export function Navbar() {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setDropdownOpen(false)
+      }
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setActiveNavDropdown(null)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -101,11 +105,19 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden items-center gap-1 md:flex">
+        <div ref={navRef} className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((link) => {
             const hasChildren = !!link.children?.length
             const isOpen = activeNavDropdown === link.label
             const isActive = pathname === link.href || (hasChildren && pathname?.startsWith(link.href) && link.href !== '/')
+
+            const textColor = link.href === '/ai'
+              ? 'text-accent'
+              : isActive
+                ? 'text-accent'
+                : scrolled
+                  ? 'text-text-secondary hover:text-text-primary'
+                  : 'text-white/80 hover:text-white'
 
             return (
               <div
@@ -114,32 +126,42 @@ export function Navbar() {
                 onMouseEnter={() => hasChildren && setActiveNavDropdown(link.label)}
                 onMouseLeave={() => hasChildren && setActiveNavDropdown(null)}
               >
-                <Link
-                  href={link.href}
+                <div
                   className={cn(
-                    'group relative flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium transition-all duration-300',
-                    link.href === '/ai'
-                      ? 'text-accent'
-                      : isActive
-                        ? 'text-accent'
-                        : scrolled
-                          ? 'text-text-secondary hover:text-text-primary'
-                          : 'text-white/80 hover:text-white'
+                    'group relative flex items-center rounded-full text-sm font-medium transition-all duration-300',
+                    textColor
                   )}
                 >
-                  <span className="relative z-10">{link.label}</span>
-                  {link.href === '/ai' && (
-                    <span className="relative z-10 ml-1.5 inline-flex rounded-full bg-accent/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-accent">
-                      New
-                    </span>
-                  )}
+                  <Link
+                    href={link.href}
+                    onClick={() => setActiveNavDropdown(null)}
+                    className={cn(
+                      'relative z-10 flex items-center py-2',
+                      hasChildren ? 'pl-4 pr-1.5' : 'px-4'
+                    )}
+                  >
+                    {link.label}
+                    {link.href === '/ai' && (
+                      <span className="ml-1.5 inline-flex rounded-full bg-accent/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-accent">
+                        New
+                      </span>
+                    )}
+                  </Link>
                   {hasChildren && (
-                    <ChevronDown
-                      className={cn(
-                        'relative z-10 h-3.5 w-3.5 transition-transform duration-200',
-                        isOpen && 'rotate-180'
-                      )}
-                    />
+                    <button
+                      type="button"
+                      onClick={() => setActiveNavDropdown(isOpen ? null : link.label)}
+                      aria-expanded={isOpen}
+                      aria-label={`Toggle ${link.label} menu`}
+                      className="relative z-10 flex items-center py-2 pl-1 pr-3.5"
+                    >
+                      <ChevronDown
+                        className={cn(
+                          'h-3.5 w-3.5 transition-transform duration-200',
+                          isOpen && 'rotate-180'
+                        )}
+                      />
+                    </button>
                   )}
                   {isActive ? (
                     <motion.div
@@ -150,7 +172,7 @@ export function Navbar() {
                   ) : (
                     <span className="absolute inset-0 rounded-full transition-colors duration-300 group-hover:bg-text-primary/5" />
                   )}
-                </Link>
+                </div>
 
                 <AnimatePresence>
                   {hasChildren && isOpen && (
@@ -165,6 +187,7 @@ export function Navbar() {
                         <Link
                           key={child.label}
                           href={child.href}
+                          onClick={() => setActiveNavDropdown(null)}
                           className="block rounded-xl px-3 py-2.5 transition-colors hover:bg-accent-dim"
                         >
                           <div className="text-sm font-medium text-text-primary">{child.label}</div>
@@ -335,6 +358,10 @@ export function Navbar() {
                               <Link
                                 key={child.label}
                                 href={child.href}
+                                onClick={() => {
+                                  setMobileExpandedNav(null)
+                                  setMobileOpen(false)
+                                }}
                                 className="text-sm text-text-tertiary hover:text-text-primary"
                               >
                                 {child.label}
