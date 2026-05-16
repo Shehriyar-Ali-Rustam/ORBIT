@@ -13,7 +13,7 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function Team() {
   return (
-    <section className="section-padding bg-surface">
+    <section id="hiring" className="section-padding bg-surface scroll-mt-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center">
           <motion.div

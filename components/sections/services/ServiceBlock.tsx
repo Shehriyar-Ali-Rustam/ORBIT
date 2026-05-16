@@ -35,11 +35,12 @@ export function ServiceBlock() {
             return (
               <motion.div
                 key={service.id}
+                id={service.id}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease }}
                 viewport={{ once: true, margin: '-50px' }}
-                className={`grid items-center gap-12 lg:grid-cols-2 lg:gap-16`}
+                className={`grid scroll-mt-24 items-center gap-12 lg:grid-cols-2 lg:gap-16`}
               >
                 <div className={isReversed ? 'lg:order-2' : ''}>
                   <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10">

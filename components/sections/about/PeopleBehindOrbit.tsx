@@ -1,8 +1,9 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Github, Linkedin } from 'lucide-react'
+import { Github, Linkedin, ArrowUpRight } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Badge } from '@/components/ui/Badge'
@@ -12,7 +13,7 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function PeopleBehindOrbit() {
   return (
-    <section className="section-padding">
+    <section id="founders" className="section-padding scroll-mt-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center">
           <motion.div
@@ -85,6 +86,13 @@ export function PeopleBehindOrbit() {
                       )}
                     </div>
                   )}
+                  <Link
+                    href={`/team/${member.id}`}
+                    className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-medium text-text-secondary transition-all hover:border-accent hover:text-accent"
+                  >
+                    View Full Profile
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
                 </div>
               </div>
             </motion.div>

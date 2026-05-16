@@ -143,7 +143,7 @@ export function Values() {
   const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
   return (
-    <section className="section-padding relative overflow-hidden">
+    <section id="values" className="section-padding relative overflow-hidden scroll-mt-24">
       {/* ── Clean background: single centered radial, no color shifts ── */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[var(--color-surface)]" />

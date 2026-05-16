@@ -8,7 +8,7 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function OurStory() {
   return (
-    <section className="section-padding">
+    <section id="story" className="section-padding scroll-mt-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <motion.div
