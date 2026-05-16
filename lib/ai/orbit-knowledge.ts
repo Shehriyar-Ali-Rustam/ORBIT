@@ -116,7 +116,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'founder',
     category: 'team',
     content:
-      'Orbit was built by Shehriyar Ali Rustam together with Saqib Nawaz Khan and Abdul Ahad. All three are software engineers. Shehriyar (Founder) is a web developer and graphic designer, an AI/ML enthusiast, and a Fiverr Level 1 Seller with expertise in Next.js, React, TypeScript, Python (AI/ML), and brand/visual design. Saqib (Co-Founder) is an Android developer who also handles project management and a range of other responsibilities. Abdul Ahad (Co-Founder) is a web developer who also handles project management and a range of other responsibilities. Shehriyar started ORBIT as freelance projects on Fiverr and grew it into a full technology company with Saqib and Abdul. GitHub: github.com/Shehriyar-Ali-Rustam. LinkedIn: linkedin.com/in/shehriyar-ali-rustam-516895246. Fiverr: fiverr.com/sellers/shehriyar01se.',
+      'ORBIT was built by three software engineering students from Pakistan — Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. What started as freelance projects on Fiverr grew into a full technology company. Shehriyar is also an AI/ML enthusiast and a Fiverr Level 1 Seller. GitHub: github.com/Shehriyar-Ali-Rustam. LinkedIn: linkedin.com/in/shehriyar-ali-rustam-516895246. Fiverr: fiverr.com/sellers/shehriyar01se.',
     keywords: [
       'founder', 'shehriyar', 'saqib', 'abdul', 'ahad', 'who', 'ceo', 'owner', 'leader', 'started',
       'created', 'built', 'behind', 'android', 'web developer', 'project management',
@@ -126,7 +126,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'team',
     category: 'team',
     content:
-      'The Orbit team: Team members at Orbit are called "Orbiters". The founding team are all software engineers: Shehriyar Ali Rustam (Founder), Saqib Nawaz Khan (Co-Founder, Android Developer), and Abdul Ahad (Co-Founder, Web Developer). All three take on project management and other responsibilities as needed. Orbit is actively hiring: AI Engineers (Python, TensorFlow, PyTorch, NLP), UI/UX Designers (Figma, Adobe XD, prototyping), and Backend Developers (Node.js, PostgreSQL, AWS, Docker). Interested in joining? Visit the freelancer marketplace at /freelancers or email hello.theorbit@gmail.com.',
+      'The Orbit team: Team members at Orbit are called "Orbiters". ORBIT was built by three software engineering students — Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. Orbit is actively hiring: AI Engineers (Python, TensorFlow, PyTorch, NLP), UI/UX Designers (Figma, Adobe XD, prototyping), and Backend Developers (Node.js, PostgreSQL, AWS, Docker). Interested in joining? Visit the freelancer marketplace at /freelancers or email hello.theorbit@gmail.com.',
     keywords: [
       'team', 'orbiter', 'hiring', 'join', 'career', 'job', 'employee',
       'developer', 'engineer', 'designer', 'work at', 'positions',

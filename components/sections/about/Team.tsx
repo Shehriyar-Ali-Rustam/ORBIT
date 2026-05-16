@@ -22,8 +22,8 @@ export function Team() {
             transition={{ duration: 0.6, ease }}
             viewport={{ once: true, margin: '-50px' }}
           >
-            <SectionLabel>Our Team</SectionLabel>
-            <SectionHeading className="mt-4">Meet the People Behind Orbit</SectionHeading>
+            <SectionLabel>Join the Team</SectionLabel>
+            <SectionHeading className="mt-4">We&apos;re Hiring</SectionHeading>
           </motion.div>
         </div>
 

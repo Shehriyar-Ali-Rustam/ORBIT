@@ -24,19 +24,20 @@ export function OurStory() {
             </SectionHeading>
             <div className="mt-5 space-y-4 text-sm leading-relaxed text-text-secondary sm:text-base">
               <p>
-                I&apos;m Shehriyar Ali Rustam, a software engineering student from Pakistan. I started
-                freelancing on Fiverr, building websites and AI chatbots for clients around the world.
-                That&apos;s how ORBIT was born &mdash; built together with Saqib Nawaz Khan and
-                Abdul Ahad.
+                ORBIT was built by three software engineering students from Pakistan
+                &mdash; Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. What
+                started as freelance projects on Fiverr grew into the company you see
+                today.
               </p>
               <p>
-                ORBIT isn&apos;t some big corporate thing. It&apos;s a small, hungry team that takes real
-                projects seriously. From AI tools to full websites to complete brand identities, we
-                ship fast, communicate clearly, and actually care about the work.
+                We&apos;re not a big corporate thing. We&apos;re a small, hungry team that
+                takes real projects seriously. From AI tools to full websites to complete
+                brand identities, we ship fast, communicate clearly, and actually care about
+                the work.
               </p>
               <p>
-                We&apos;re still growing, still learning, and still building. If you need something built
-                right, we&apos;re the team for it.
+                We&apos;re still growing, still learning, and still building. If you need
+                something built right, we&apos;re the team for it.
               </p>
             </div>
           </motion.div>
