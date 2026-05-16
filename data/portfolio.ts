@@ -93,7 +93,7 @@ export const projects: Project[] = [
     coverImage: '/images/portfolio/e-voting-console.webp',
     images: ['/images/portfolio/e-voting-console.webp'],
     techStack: ['React.js', 'Vite', 'Firebase', 'JavaScript', 'CSS3'],
-    liveUrl: '#',
+    liveUrl: 'https://e-voting-console-for-students.vercel.app/',
     featured: false,
     completedAt: '2024-06-15',
   },
