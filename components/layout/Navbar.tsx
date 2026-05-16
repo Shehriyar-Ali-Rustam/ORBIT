@@ -278,11 +278,7 @@ export function Navbar() {
                     )}
                   </AnimatePresence>
                 </div>
-              ) : (
-                <Link href="/freelancers/sign-in" className="hidden md:block">
-                  <Button variant="primary" size="sm">Sign In</Button>
-                </Link>
-              )}
+              ) : null}
             </>
           )}
 
@@ -381,10 +377,7 @@ export function Navbar() {
                     <button onClick={handleSignOut} className="text-sm text-text-secondary hover:text-red-500">Sign Out</button>
                   </>
                 ) : (
-                  <>
-                    <Link href="/freelancers/sign-in"><Button variant="primary" size="lg">Sign In</Button></Link>
-                    <Link href="/contact"><Button variant="ghost" size="lg">Start a Project</Button></Link>
-                  </>
+                  <Link href="/contact"><Button variant="ghost" size="lg">Start a Project</Button></Link>
                 )}
               </motion.div>
             </div>
