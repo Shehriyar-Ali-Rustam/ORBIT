@@ -109,7 +109,7 @@ export const projects: Project[] = [
     coverImage: '/images/portfolio/wearblend.webp',
     images: ['/images/portfolio/wearblend.webp'],
     techStack: ['Python', 'Streamlit', 'OpenAI DALL-E 3', 'Google Gemini', 'Pillow', 'rembg'],
-    liveUrl: '#',
+    liveUrl: 'https://wearblend.streamlit.app/',
     featured: false,
     completedAt: '2025-02-01',
   },
