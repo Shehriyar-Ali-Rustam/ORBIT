@@ -96,7 +96,7 @@ export function HomeCTA() {
 
           {/* The glowing button element */}
           <motion.div
-            className="relative flex h-[88px] w-[220px] cursor-default items-center justify-center rounded-2xl sm:h-[100px] sm:w-[260px]"
+            className="relative flex h-[80px] w-[180px] max-w-[80vw] cursor-default items-center justify-center rounded-2xl sm:h-[100px] sm:w-[260px]"
             style={{
               background: 'linear-gradient(135deg, #FF8C42 0%, #FF751F 40%, #FF5500 100%)',
               boxShadow:

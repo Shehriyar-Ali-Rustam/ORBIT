@@ -42,6 +42,7 @@ const nextConfig = {
       { protocol: 'https', hostname: '*.supabase.co', pathname: '/storage/v1/object/public/**' },
       { protocol: 'https', hostname: 'img.freepik.com' },
       { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'image.pollinations.ai' },
     ],
     formats: ['image/avif', 'image/webp'],
   },

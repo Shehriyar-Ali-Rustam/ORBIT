@@ -69,9 +69,10 @@ export function Navbar() {
   }
 
   return (
+    <>
     <header
       className={cn(
-        'fixed left-0 right-0 top-0 z-50 transition-all duration-500',
+        'fixed left-0 right-0 top-0 z-[70] transition-all duration-500',
         scrolled
           ? 'glass'
           : 'bg-gradient-to-b from-black/80 via-black/50 to-transparent'
@@ -296,93 +297,96 @@ export function Navbar() {
           </button>
         </div>
       </nav>
-
-      {/* Mobile Drawer */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 top-16 z-40 overflow-y-auto bg-background/95 backdrop-blur-xl md:hidden"
-          >
-            <div className="flex flex-col items-center gap-3 px-6 pt-8 pb-8">
-              {NAV_LINKS.map((link, i) => {
-                const hasChildren = !!link.children?.length
-                const isExpanded = mobileExpandedNav === link.label
-                return (
-                  <motion.div
-                    key={link.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="w-full max-w-xs"
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                      <Link
-                        href={link.href}
-                        className={cn(
-                          'text-lg font-medium tracking-wider transition-colors',
-                          pathname === link.href ? 'text-accent' : 'text-text-secondary hover:text-text-primary'
-                        )}
-                      >
-                        {link.label}
-                      </Link>
-                      {hasChildren && (
-                        <button
-                          onClick={() => setMobileExpandedNav(isExpanded ? null : link.label)}
-                          className="rounded-full p-1 text-text-tertiary hover:text-accent"
-                          aria-label={`Toggle ${link.label} submenu`}
-                        >
-                          <ChevronDown className={cn('h-4 w-4 transition-transform', isExpanded && 'rotate-180')} />
-                        </button>
-                      )}
-                    </div>
-                    <AnimatePresence>
-                      {hasChildren && isExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="mt-2 overflow-hidden"
-                        >
-                          <div className="flex flex-col items-center gap-2 pt-1">
-                            {link.children!.map((child) => (
-                              <Link
-                                key={child.label}
-                                href={child.href}
-                                onClick={() => {
-                                  setMobileExpandedNav(null)
-                                  setMobileOpen(false)
-                                }}
-                                className="text-sm text-text-tertiary hover:text-text-primary"
-                              >
-                                {child.label}
-                              </Link>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
-                )
-              })}
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: NAV_LINKS.length * 0.05 }} className="flex flex-col items-center gap-3 pt-4">
-                {isAuthenticated ? (
-                  <>
-                    <Link href="/freelancers/dashboard"><Button variant="primary" size="lg">Dashboard</Button></Link>
-                    <button onClick={handleSignOut} className="text-sm text-text-secondary hover:text-red-500">Sign Out</button>
-                  </>
-                ) : (
-                  <Link href="/contact"><Button variant="ghost" size="lg">Start a Project</Button></Link>
-                )}
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
+
+    {/* Mobile Drawer — rendered outside the header so its z-index is not boxed in */}
+    <AnimatePresence>
+      {mobileOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed inset-0 top-16 z-[65] overflow-y-auto md:hidden"
+          style={{ backgroundColor: 'var(--color-bg)' }}
+        >
+          <div className="flex flex-col items-center gap-3 px-6 pt-8 pb-12">
+            {NAV_LINKS.map((link, i) => {
+              const hasChildren = !!link.children?.length
+              const isExpanded = mobileExpandedNav === link.label
+              return (
+                <motion.div
+                  key={link.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="w-full max-w-xs"
+                >
+                  <div className="relative flex items-center justify-center">
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={cn(
+                        'py-1 text-lg font-medium tracking-wider transition-colors',
+                        pathname === link.href ? 'text-accent' : 'text-text-secondary hover:text-text-primary'
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                    {hasChildren && (
+                      <button
+                        onClick={() => setMobileExpandedNav(isExpanded ? null : link.label)}
+                        className="absolute right-0 flex h-7 w-7 items-center justify-center rounded-full text-text-tertiary hover:bg-accent/10 hover:text-accent"
+                        aria-label={`Toggle ${link.label} submenu`}
+                      >
+                        <ChevronDown className={cn('h-4 w-4 transition-transform', isExpanded && 'rotate-180')} />
+                      </button>
+                    )}
+                  </div>
+                  <AnimatePresence>
+                    {hasChildren && isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="mt-2 overflow-hidden"
+                      >
+                        <div className="flex flex-col items-center gap-2 pt-1">
+                          {link.children!.map((child) => (
+                            <Link
+                              key={child.label}
+                              href={child.href}
+                              onClick={() => {
+                                setMobileExpandedNav(null)
+                                setMobileOpen(false)
+                              }}
+                              className="text-sm text-text-tertiary hover:text-text-primary"
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              )
+            })}
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: NAV_LINKS.length * 0.05 }} className="flex flex-col items-center gap-3 pt-4">
+              {isAuthenticated ? (
+                <>
+                  <Link href="/freelancers/dashboard" onClick={() => setMobileOpen(false)}><Button variant="primary" size="lg">Dashboard</Button></Link>
+                  <button onClick={handleSignOut} className="text-sm text-text-secondary hover:text-red-500">Sign Out</button>
+                </>
+              ) : (
+                <Link href="/contact" onClick={() => setMobileOpen(false)}><Button variant="ghost" size="lg">Start a Project</Button></Link>
+              )}
+            </motion.div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   )
 }

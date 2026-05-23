@@ -16,7 +16,7 @@ function MarqueeCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/portfolio/${project.slug}`}
-      className="group block w-[340px] flex-shrink-0 sm:w-[380px]"
+      className="group block w-[85vw] max-w-[340px] flex-shrink-0 sm:w-[340px] sm:max-w-none lg:w-[380px]"
     >
       <div className="overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] backdrop-blur-sm transition-all duration-300 hover:border-accent/30 hover:shadow-card-hover">
         <div className="relative aspect-video overflow-hidden bg-surface-2">

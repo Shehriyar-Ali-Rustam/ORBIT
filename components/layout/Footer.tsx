@@ -101,7 +101,7 @@ export function Footer() {
             <h3 className="mb-4 font-mono text-xs font-bold uppercase tracking-widest text-text-primary">Contact</h3>
             <ul className="space-y-3">
               <li><a href={`mailto:${COMPANY.email}`} className="text-sm text-text-secondary transition-colors hover:text-accent">{COMPANY.email}</a></li>
-              <li className="text-sm text-text-secondary">{COMPANY.phone}</li>
+              <li><a href={`tel:${COMPANY.phone.replace(/\s/g, '')}`} className="text-sm text-text-secondary transition-colors hover:text-accent">{COMPANY.phone}</a></li>
               <li className="text-sm text-text-secondary">{COMPANY.location}</li>
             </ul>
           </div>

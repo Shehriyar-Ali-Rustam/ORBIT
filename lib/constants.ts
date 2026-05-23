@@ -38,7 +38,6 @@ export const NAV_LINKS: NavLink[] = [
       { label: 'Mobile Projects', href: '/portfolio', description: 'Apps and prototypes' },
     ],
   },
-  { label: 'Freelancers', href: '/freelancers' },
   {
     label: 'Orbit AI',
     href: '/ai',
@@ -52,6 +51,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: 'Freelance Helper', href: '/ai/freelance', description: 'Pitch and proposal AI' },
     ],
   },
+  { label: 'Freelancers', href: '/freelancers' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -66,5 +66,5 @@ export const COMPANY = {
   tagline: 'Engineered for the Future. Built for Today.',
   email: 'hello.theorbit@gmail.com',
   location: 'Pakistan — Remote First',
-  phone: '+92 XXX XXXXXXX',
+  phone: '+92 327 5362412',
 }
