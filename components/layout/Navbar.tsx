@@ -6,11 +6,11 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Sun, Moon, LayoutDashboard, LogOut, User, ChevronDown } from 'lucide-react'
-import { useUser, useClerk } from '@clerk/nextjs'
 import { NAV_LINKS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 import { useTheme } from '@/components/ThemeProvider'
+import { useNavbarAuth } from '@/hooks/useNavbarAuth'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -22,8 +22,7 @@ export function Navbar() {
   const navRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
-  const { user, isLoaded, isSignedIn } = useUser()
-  const { signOut } = useClerk()
+  const { user, isLoaded, isSignedIn, signOut } = useNavbarAuth()
   const loading = !isLoaded
   const isAuthenticated = isSignedIn && !!user
   const displayName = user?.fullName || user?.firstName || user?.username || user?.primaryEmailAddress?.emailAddress || 'User'

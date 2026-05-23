@@ -2,6 +2,7 @@
 
 import { ClerkProvider } from '@clerk/nextjs'
 import { useTheme } from '@/components/ThemeProvider'
+import { CLERK_ENABLED } from '@/lib/clerk-flag'
 
 const darkAppearance = {
   variables: {
@@ -35,5 +36,6 @@ export function AppClerkProvider({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme()
   const appearance = theme === 'dark' ? darkAppearance : lightAppearance
 
+  if (!CLERK_ENABLED) return <>{children}</>
   return <ClerkProvider appearance={appearance}>{children}</ClerkProvider>
 }

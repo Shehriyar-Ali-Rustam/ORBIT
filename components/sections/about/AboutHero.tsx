@@ -8,7 +8,7 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function AboutHero() {
   return (
-    <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-[#0a0a0a] pt-16">
+    <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-background pt-16">
       {/* Background image — always dark regardless of theme */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
