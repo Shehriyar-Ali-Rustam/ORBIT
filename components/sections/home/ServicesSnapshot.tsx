@@ -108,7 +108,7 @@ export function ServicesSnapshot() {
             >
               <Link href={service.href} className="group block h-full">
                 {/* Card: image fills entire card, content overlaid at bottom */}
-                <div className="relative overflow-hidden rounded-3xl shadow-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]" style={{ minHeight: '420px' }}>
+                <div className="relative min-h-[320px] overflow-hidden rounded-3xl shadow-xl transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)] sm:min-h-[380px] lg:min-h-[420px]">
 
                   {/* Full-card background image */}
                   <Image

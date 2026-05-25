@@ -14,7 +14,7 @@ export default function ContactPage() {
       <ContactHero />
       <section className="section-padding">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-16 lg:grid-cols-5">
+          <div className="grid gap-10 md:gap-12 lg:grid-cols-5 lg:gap-16">
             <div className="lg:col-span-3">
               <ContactForm />
             </div>

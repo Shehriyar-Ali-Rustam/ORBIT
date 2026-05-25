@@ -42,7 +42,9 @@ export function ContactInfo() {
           </div>
           <div>
             <p className="text-xs text-text-tertiary">Phone</p>
-            <p className="text-sm text-text-primary">{COMPANY.phone}</p>
+            <a href={`tel:${COMPANY.phone.replace(/\s/g, '')}`} className="text-sm text-text-primary transition-colors hover:text-accent">
+              {COMPANY.phone}
+            </a>
           </div>
         </div>
 

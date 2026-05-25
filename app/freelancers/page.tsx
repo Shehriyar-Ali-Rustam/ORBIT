@@ -166,7 +166,7 @@ export default function MarketplaceHome() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease, delay: 0.05 }}
-              className="text-5xl font-bold tracking-tight text-text-primary md:text-6xl lg:text-7xl"
+              className="text-4xl font-bold tracking-tight text-text-primary sm:text-5xl md:text-6xl lg:text-7xl"
             >
               Hire World-Class
               <br />

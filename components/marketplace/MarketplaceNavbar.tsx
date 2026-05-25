@@ -10,6 +10,7 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Button } from '@/components/ui/Button'
 import { useTheme } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'
+import { CLERK_ENABLED } from '@/lib/clerk-flag'
 
 const MARKETPLACE_LINKS = [
   { label: 'Browse', href: '/freelancers' },
@@ -71,31 +72,39 @@ export function MarketplaceNavbar() {
 
         {/* Right actions */}
         <div className="flex items-center gap-3">
-          <SignedIn>
-            <Link
-              href="/freelancers/dashboard/messages"
-              className="flex h-9 w-9 items-center justify-center rounded-lg text-text-tertiary transition-colors hover:bg-surface hover:text-text-primary"
-            >
-              <MessageSquare className="h-4 w-4" />
-            </Link>
-            <UserButton
-              afterSignOutUrl="/freelancers"
-              appearance={{
-                elements: {
-                  avatarBox: 'h-8 w-8',
-                },
-              }}
-            />
-          </SignedIn>
+          {CLERK_ENABLED ? (
+            <>
+              <SignedIn>
+                <Link
+                  href="/freelancers/dashboard/messages"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-text-tertiary transition-colors hover:bg-surface hover:text-text-primary"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                </Link>
+                <UserButton
+                  afterSignOutUrl="/freelancers"
+                  appearance={{
+                    elements: {
+                      avatarBox: 'h-8 w-8',
+                    },
+                  }}
+                />
+              </SignedIn>
 
-          <SignedOut>
+              <SignedOut>
+                <Link href="/freelancers/sign-in">
+                  <Button variant="ghost" size="sm">Sign In</Button>
+                </Link>
+                <Link href="/freelancers/sign-up">
+                  <Button variant="primary" size="sm">Join</Button>
+                </Link>
+              </SignedOut>
+            </>
+          ) : (
             <Link href="/freelancers/sign-in">
               <Button variant="ghost" size="sm">Sign In</Button>
             </Link>
-            <Link href="/freelancers/sign-up">
-              <Button variant="primary" size="sm">Join</Button>
-            </Link>
-          </SignedOut>
+          )}
 
           {/* Mobile menu toggle */}
           <button

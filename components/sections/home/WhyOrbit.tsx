@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Zap, Package, Shield } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
@@ -10,6 +11,7 @@ import { LineReveal } from '@/components/ui/LineReveal'
 const features = [
   {
     icon: Zap,
+    image: '/whyorbit/ai.jpg',
     title: 'AI-First Approach',
     subtitle: 'Faster Delivery',
     description: 'Every solution we build has intelligence at its core — not as an add-on, but as the foundation that powers real business outcomes.',
@@ -28,6 +30,7 @@ const features = [
   },
   {
     icon: Package,
+    image: '/whyorbit/delivery.jpg',
     title: 'End-to-End Delivery',
     subtitle: '100% Ownership',
     description: 'From wireframe to launch, we own the entire product lifecycle — strategy, design, engineering, and post-launch support.',
@@ -45,6 +48,7 @@ const features = [
   },
   {
     icon: Shield,
+    image: '/whyorbit/security.jpg',
     title: 'Security by Default',
     subtitle: '99.9% Uptime SLA',
     description: 'Enterprise-grade security practices from day one. Your data and your clients\' data are always fully protected.',
@@ -120,7 +124,7 @@ function Card({
       <div
         className="relative overflow-hidden rounded-[28px]"
         style={{
-          width: CARD_W,
+          width: `min(${CARD_W}px, calc(100vw - 48px))`,
           height: CARD_H,
           background: feature.gradient,
           cursor: isCenter ? 'default' : 'pointer',
@@ -129,7 +133,20 @@ function Card({
             : '0 20px 50px rgba(0,0,0,0.25)',
         }}
       >
-        {/* ── Animated floating orbs ── */}
+        {/* ── AI-generated themed image (background) ── */}
+        <div className="pointer-events-none absolute inset-0">
+          <Image
+            src={feature.image}
+            alt=""
+            fill
+            sizes="290px"
+            className="object-cover"
+          />
+          {/* Color-tint overlay — preserves the per-card theme, subtle */}
+          <div className="absolute inset-0 mix-blend-overlay" style={{ background: feature.gradient, opacity: 0.4 }} />
+        </div>
+
+        {/* ── Animated floating orbs (subtle, on top of image) ── */}
         <motion.div
           className="absolute rounded-full blur-[50px]"
           style={{
@@ -302,7 +319,7 @@ export function WhyOrbit() {
             style={{ height: CARD_H + 60, width: '100%', maxWidth: isMobile ? CARD_W + 48 : CARD_W * 3.2 }}
           >
             {/* Render back-to-front: sides first, center on top */}
-            <div className="relative" style={{ width: CARD_W, height: CARD_H }}>
+            <div className="relative" style={{ width: `min(${CARD_W}px, calc(100vw - 48px))`, height: CARD_H }}>
               <Card feature={features[leftIdx]}   slot="left"   onClick={isMobile ? undefined : prev} isMobile={isMobile} />
               <Card feature={features[rightIdx]}  slot="right"  onClick={isMobile ? undefined : next} isMobile={isMobile} />
               <Card feature={features[centerIdx]} slot="center" isMobile={isMobile} />
