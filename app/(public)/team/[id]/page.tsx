@@ -28,8 +28,29 @@ export default function TeamMemberPage({ params }: Props) {
   const member = founders.find((m) => m.id === params.id)
   if (!member) notFound()
 
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: member.name,
+    jobTitle: member.role,
+    description: member.bio,
+    image: member.photo ? `https://orbitpk.com${member.photo}` : undefined,
+    url: `https://orbitpk.com/team/${member.id}`,
+    worksFor: {
+      '@type': 'Organization',
+      '@id': 'https://orbitpk.com/#organization',
+      name: 'Orbit',
+    },
+    knowsAbout: member.skills,
+    sameAs: [member.linkedin, member.github, member.fiverr].filter(Boolean),
+  }
+
   return (
     <section className="section-padding pt-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
         <Link
           href="/about#founders"

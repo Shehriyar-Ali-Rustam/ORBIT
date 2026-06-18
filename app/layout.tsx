@@ -75,6 +75,63 @@ export const metadata: Metadata = {
   },
 }
 
+const SITE_URL = 'https://orbitpk.com'
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
+  name: 'Orbit',
+  alternateName: 'ORBIT',
+  url: SITE_URL,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/logo.png`,
+    width: 512,
+    height: 512,
+  },
+  image: `${SITE_URL}/og-image.png`,
+  description:
+    'Orbit is a Pakistan-based AI-powered technology company specializing in AI chatbots, model training, web development, mobile apps, and graphic design.',
+  email: 'hello.theorbit@gmail.com',
+  foundingDate: '2024',
+  founders: [
+    { '@type': 'Person', name: 'Shehriyar Ali Rustam' },
+    { '@type': 'Person', name: 'Saqib Nawaz Khan' },
+    { '@type': 'Person', name: 'Abdul Ahad' },
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'PK',
+  },
+  knowsAbout: [
+    'AI Development',
+    'Machine Learning',
+    'Chatbot Development',
+    'Web Development',
+    'Mobile App Development',
+    'Graphic Design',
+    'Brand Identity',
+  ],
+  sameAs: [
+    'https://github.com/Shehriyar-Ali-Rustam',
+    'https://www.linkedin.com/in/shehriyar-ali-rustam-516895246',
+    'https://www.fiverr.com/sellers/shehriyar01se',
+  ],
+}
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: 'Orbit',
+  description:
+    'AI-Powered Software Solutions — chatbots, model training, web & mobile development.',
+  publisher: { '@id': `${SITE_URL}/#organization` },
+  inLanguage: 'en-US',
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable} ${montserrat.variable}`} suppressHydrationWarning>
@@ -83,6 +140,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('orbit-theme-v2');if(t!=='light'&&t!=='dark'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}var r=document.documentElement;r.classList.add(t);r.classList.remove(t==='dark'?'light':'dark');r.style.colorScheme=t;}catch(e){document.documentElement.classList.add('dark');}})();`,
           }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
       <body className="bg-background font-inter text-foreground antialiased">
