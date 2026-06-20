@@ -3,6 +3,7 @@
 import type { AIProvider } from '@/lib/ai/router'
 
 const PROVIDER_CONFIG: Record<AIProvider, { label: string; color: string }> = {
+  anthropic: { label: 'Sonnet 4.6 \u00b7 Claude', color: 'bg-orange-500' },
   groq: { label: 'Llama 3.3 \u00b7 Groq', color: 'bg-green-500' },
   gemini: { label: 'Flash \u00b7 Gemini', color: 'bg-blue-500' },
   openai: { label: 'GPT-4o mini \u00b7 OpenAI', color: 'bg-purple-500' },
