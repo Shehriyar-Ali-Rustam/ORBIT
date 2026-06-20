@@ -1,8 +1,9 @@
 import { streamGroq } from './groq'
 import { streamGemini } from './gemini'
 import { streamOpenAI, isOpenAIConfigured } from './openai'
+import { streamAnthropic, isAnthropicConfigured, ANTHROPIC_MODEL } from './anthropic'
 
-export type AIProvider = 'groq' | 'gemini' | 'openai'
+export type AIProvider = 'anthropic' | 'groq' | 'gemini' | 'openai'
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant'
@@ -27,21 +28,26 @@ interface RouteOptions {
  */
 export async function routeToAI(options: RouteOptions): Promise<RouterResponse> {
   const { messages, maxTokens = 2048, temperature = 0.7 } = options
-  const preferred = (process.env.AI_PROVIDER || 'groq') as AIProvider
+  const preferred = (process.env.AI_PROVIDER || 'anthropic') as AIProvider
 
-  // Build ordered provider list (preferred first)
-  const providers: AIProvider[] =
-    preferred === 'groq'
-      ? ['groq', 'gemini', 'openai']
-      : preferred === 'gemini'
-        ? ['gemini', 'groq', 'openai']
-        : ['openai', 'groq', 'gemini']
+  const order: Record<AIProvider, AIProvider[]> = {
+    anthropic: ['anthropic', 'groq', 'gemini', 'openai'],
+    groq: ['groq', 'anthropic', 'gemini', 'openai'],
+    gemini: ['gemini', 'anthropic', 'groq', 'openai'],
+    openai: ['openai', 'anthropic', 'groq', 'gemini'],
+  }
+  const providers = order[preferred] ?? order.anthropic
 
   let lastError: Error | null = null
 
   for (const provider of providers) {
     try {
       switch (provider) {
+        case 'anthropic': {
+          if (!isAnthropicConfigured()) continue
+          const stream = await streamAnthropic(messages, maxTokens)
+          return { stream, provider: 'anthropic', model: ANTHROPIC_MODEL }
+        }
         case 'groq': {
           if (!process.env.GROQ_API_KEY) continue
           const stream = await streamGroq(messages, maxTokens, temperature)
@@ -69,5 +75,5 @@ export async function routeToAI(options: RouteOptions): Promise<RouterResponse> 
     }
   }
 
-  throw lastError || new Error('No AI provider is configured. Add GROQ_API_KEY or GEMINI_API_KEY to .env.local')
+  throw lastError || new Error('No AI provider is configured. Add ANTHROPIC_API_KEY, GROQ_API_KEY, or GEMINI_API_KEY to .env.local')
 }
