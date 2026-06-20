@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
-import { Star, ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion'
+import { Star, ChevronLeft, ChevronRight, PencilLine, X } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { LineReveal } from '@/components/ui/LineReveal'
 import { testimonials } from '@/data/testimonials'
+import { PublicReviewForm } from '@/components/forms/PublicReviewForm'
 
 const STACK = 4
 const DRAG_THRESHOLD = 80
@@ -200,6 +201,7 @@ function FlipCard({
 export function Testimonials() {
   const [topIdx, setTopIdx] = useState(0)
   const [busy, setBusy] = useState(false)
+  const [showForm, setShowForm] = useState(false)
 
   const deck = Array.from({ length: STACK }, (_, i) => (topIdx + i) % TOTAL)
 
@@ -312,7 +314,41 @@ export function Testimonials() {
               <ChevronRight className="h-5 w-5" />
             </motion.button>
           </div>
+
+          {/* Submit-your-own CTA */}
+          <button
+            type="button"
+            onClick={() => setShowForm((v) => !v)}
+            aria-expanded={showForm}
+            className="group mt-4 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-5 py-2.5 text-sm font-medium text-accent transition-all hover:bg-accent/10 hover:shadow-accent-glow"
+          >
+            {showForm ? <X className="h-4 w-4" /> : <PencilLine className="h-4 w-4" />}
+            {showForm ? 'Close' : 'Worked with us? Share your experience'}
+          </button>
         </div>
+
+        {/* Inline review form — opens below the carousel */}
+        <AnimatePresence initial={false}>
+          {showForm && (
+            <motion.div
+              key="review-form"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="mx-auto mt-12 max-w-2xl">
+                <div className="rounded-3xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-6 shadow-sm sm:p-10">
+                  <PublicReviewForm />
+                </div>
+                <p className="mx-auto mt-4 max-w-md text-center text-xs text-text-tertiary">
+                  Reviews are moderated before going live. We may reach out to verify details before publishing.
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   )
