@@ -115,9 +115,6 @@ export function PublicReviewForm() {
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-text-secondary">
               Your review just made our day. Means a lot that you took the time to share it.
             </p>
-            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-text-secondary">
-              Stars, words, and good vibes — received with love 💛
-            </p>
           </motion.div>
         ) : (
           <motion.form
