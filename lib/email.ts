@@ -18,6 +18,60 @@ function escapeHtml(str: string): string {
     .replace(/'/g, '&#039;')
 }
 
+export async function sendTestimonialEmail(data: {
+  name: string
+  email?: string
+  role?: string
+  projectType: string | null
+  rating: number
+  comment: string
+}) {
+  const name = escapeHtml(data.name)
+  const email = escapeHtml(data.email || 'Not provided')
+  const role = escapeHtml(data.role || 'Not provided')
+  const projectType = escapeHtml(data.projectType || 'Not specified')
+  const rating = Math.max(1, Math.min(5, Math.round(data.rating)))
+  const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating)
+  const comment = escapeHtml(data.comment)
+
+  return await transporter.sendMail({
+    from: `"ORBIT Reviews" <${process.env.EMAIL_USER}>`,
+    to: process.env.EMAIL_USER,
+    replyTo: data.email || process.env.EMAIL_USER,
+    subject: `New Review: ${rating}★ from ${name}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #FF751F; margin-bottom: 8px;">New Client Review</h2>
+        <p style="font-size: 24px; margin: 0 0 20px; color: #FF751F;">${stars} (${rating}/5)</p>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 12px 8px; font-weight: bold; width: 120px;">Name</td>
+            <td style="padding: 12px 8px;">${name}</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 12px 8px; font-weight: bold;">Email</td>
+            <td style="padding: 12px 8px;">${data.email ? `<a href="mailto:${email}">${email}</a>` : email}</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 12px 8px; font-weight: bold;">Role / Title</td>
+            <td style="padding: 12px 8px;">${role}</td>
+          </tr>
+          <tr style="border-bottom: 1px solid #eee;">
+            <td style="padding: 12px 8px; font-weight: bold;">Project Type</td>
+            <td style="padding: 12px 8px;">${projectType}</td>
+          </tr>
+          <tr>
+            <td style="padding: 12px 8px; font-weight: bold; vertical-align: top;">Review</td>
+            <td style="padding: 12px 8px; white-space: pre-wrap;">${comment}</td>
+          </tr>
+        </table>
+        <hr style="margin-top: 20px; border: none; border-top: 1px solid #eee;" />
+        <p style="font-size: 12px; color: #999; margin-top: 12px;">Submitted from the orbitpk.com homepage review form. Approve and publish via the dashboard once it ships.</p>
+      </div>
+    `,
+  })
+}
+
 export async function sendContactEmail(data: {
   name: string
   email: string

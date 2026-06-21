@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { sendTestimonialEmail } from '@/lib/email'
 
 const PROJECT_TYPES = ['ai-chatbot', 'model-training', 'web', 'mobile', 'design', 'other'] as const
 type ProjectType = (typeof PROJECT_TYPES)[number]
@@ -46,6 +47,16 @@ export async function POST(req: NextRequest) {
   //     project_type: projectType, rating, comment, status: 'pending',
   //   })
   console.log('[testimonial submission]', { name, email, role, projectType, rating, commentLength: comment.length })
+
+  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+    try {
+      await sendTestimonialEmail({ name, email, role, projectType, rating, comment })
+    } catch (err) {
+      console.error('[testimonial submission] email failed:', err)
+    }
+  } else {
+    console.warn('[testimonial submission] EMAIL_USER or EMAIL_PASS not set — no notification sent')
+  }
 
   return NextResponse.json({ ok: true }, { status: 201 })
 }
