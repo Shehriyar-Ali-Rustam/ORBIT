@@ -6,13 +6,32 @@ import { Star, ChevronLeft, ChevronRight, PencilLine, X } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { LineReveal } from '@/components/ui/LineReveal'
-import { testimonials } from '@/data/testimonials'
+import { testimonials as staticTestimonials } from '@/data/testimonials'
 import { PublicReviewForm } from '@/components/forms/PublicReviewForm'
+import type { Testimonial } from '@/types'
 
 const STACK = 4
 const DRAG_THRESHOLD = 80
-const TOTAL = testimonials.length
 const CARD_HEIGHT = 320
+
+type ApprovedTestimonial = {
+  id: string
+  name: string
+  role: string | null
+  project_type: string | null
+  rating: number
+  comment: string
+}
+
+function mapApprovedToTestimonial(t: ApprovedTestimonial): Testimonial {
+  return {
+    id: `client-${t.id}`,
+    quote: t.comment,
+    author: t.name,
+    country: t.role || 'Verified Client',
+    rating: t.rating,
+  }
+}
 
 // Each card cycles through a distinct color theme
 const THEMES = [
@@ -30,8 +49,6 @@ const DEPTH_CFG = [
   { rotate: 4,  y: 20, scale: 0.94, zIndex: 20 },
   { rotate: -3, y: 30, scale: 0.91, zIndex: 10 },
 ]
-
-type Testimonial = (typeof testimonials)[0]
 
 function FlipCard({
   testimonial,
@@ -202,6 +219,27 @@ export function Testimonials() {
   const [topIdx, setTopIdx] = useState(0)
   const [busy, setBusy] = useState(false)
   const [showForm, setShowForm] = useState(false)
+  const [approved, setApproved] = useState<Testimonial[]>([])
+
+  useEffect(() => {
+    let cancelled = false
+    fetch('/api/testimonials/approved')
+      .then((r) => (r.ok ? r.json() : { testimonials: [] }))
+      .then((json) => {
+        if (cancelled) return
+        const rows = (json.testimonials || []) as ApprovedTestimonial[]
+        setApproved(rows.map(mapApprovedToTestimonial))
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const testimonials: Testimonial[] = approved.length > 0
+    ? [...approved, ...staticTestimonials]
+    : staticTestimonials
+  const TOTAL = testimonials.length
 
   const deck = Array.from({ length: STACK }, (_, i) => (topIdx + i) % TOTAL)
 
@@ -212,7 +250,7 @@ export function Testimonials() {
       setTopIdx((prev) => (prev + dir + TOTAL) % TOTAL)
       setTimeout(() => setBusy(false), 420)
     },
-    [busy],
+    [busy, TOTAL],
   )
 
   const currentTheme = THEMES[topIdx % THEMES.length]

@@ -25,6 +25,8 @@ export async function sendTestimonialEmail(data: {
   projectType: string | null
   rating: number
   comment: string
+  approveUrl?: string
+  declineUrl?: string
 }) {
   const name = escapeHtml(data.name)
   const email = escapeHtml(data.email || 'Not provided')
@@ -65,8 +67,15 @@ export async function sendTestimonialEmail(data: {
             <td style="padding: 12px 8px; white-space: pre-wrap;">${comment}</td>
           </tr>
         </table>
+        ${data.approveUrl && data.declineUrl ? `
+          <div style="margin-top: 28px; text-align: center;">
+            <a href="${data.approveUrl}" style="display: inline-block; margin: 6px; padding: 14px 28px; background-color: #16a34a; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px; border-radius: 8px;">✓ Approve &amp; Publish</a>
+            <a href="${data.declineUrl}" style="display: inline-block; margin: 6px; padding: 14px 28px; background-color: #dc2626; color: #ffffff; text-decoration: none; font-weight: 600; font-size: 14px; border-radius: 8px;">✗ Decline</a>
+          </div>
+          <p style="text-align: center; font-size: 12px; color: #999; margin-top: 12px;">Approving will publish this review on orbitpk.com instantly.</p>
+        ` : ''}
         <hr style="margin-top: 20px; border: none; border-top: 1px solid #eee;" />
-        <p style="font-size: 12px; color: #999; margin-top: 12px;">Submitted from the orbitpk.com homepage review form. Approve and publish via the dashboard once it ships.</p>
+        <p style="font-size: 12px; color: #999; margin-top: 12px;">Submitted from the orbitpk.com homepage review form.</p>
       </div>
     `,
   })

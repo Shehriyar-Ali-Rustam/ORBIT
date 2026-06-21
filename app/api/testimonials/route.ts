@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { sendTestimonialEmail } from '@/lib/email'
+import { getSupabaseAdmin } from '@/lib/supabase/server'
+import { signTestimonialToken } from '@/lib/testimonial-token'
 
 const PROJECT_TYPES = ['ai-chatbot', 'model-training', 'web', 'mobile', 'design', 'other'] as const
 type ProjectType = (typeof PROJECT_TYPES)[number]
@@ -41,16 +43,48 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Review must be 20–2000 characters' }, { status: 400 })
   }
 
-  // TODO(supabase): insert into `client_testimonials` once table is created.
-  //   await getSupabase().from('client_testimonials').insert({
-  //     name, email: email || null, role: role || null,
-  //     project_type: projectType, rating, comment, status: 'pending',
-  //   })
-  console.log('[testimonial submission]', { name, email, role, projectType, rating, commentLength: comment.length })
+  let testimonialId: string | null = null
+  try {
+    const supabase = getSupabaseAdmin()
+    const { data, error } = await supabase
+      .from('client_testimonials')
+      .insert({
+        name,
+        email: email || null,
+        role: role || null,
+        project_type: projectType,
+        rating,
+        comment,
+        status: 'pending',
+      })
+      .select('id')
+      .single()
+    if (error) {
+      console.error('[testimonial submission] supabase insert failed:', error)
+    } else {
+      testimonialId = data.id as string
+    }
+  } catch (err) {
+    console.error('[testimonial submission] supabase error:', err)
+  }
+
+  console.log('[testimonial submission]', { id: testimonialId, name, email, role, projectType, rating, commentLength: comment.length })
 
   if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
     try {
-      await sendTestimonialEmail({ name, email, role, projectType, rating, comment })
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://orbitpk.com'
+      let approveUrl: string | undefined
+      let declineUrl: string | undefined
+      if (testimonialId && process.env.TESTIMONIAL_SIGN_SECRET) {
+        const approveToken = signTestimonialToken(testimonialId, 'approve')
+        const declineToken = signTestimonialToken(testimonialId, 'decline')
+        approveUrl = `${appUrl}/api/testimonials/${testimonialId}/approve?token=${approveToken}`
+        declineUrl = `${appUrl}/api/testimonials/${testimonialId}/decline?token=${declineToken}`
+      }
+      await sendTestimonialEmail({
+        name, email, role, projectType, rating, comment,
+        approveUrl, declineUrl,
+      })
     } catch (err) {
       console.error('[testimonial submission] email failed:', err)
     }
