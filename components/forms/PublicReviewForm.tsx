@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2, Loader2, Star, Send } from 'lucide-react'
+import { Sparkles, Loader2, Star, Send } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const PROJECT_OPTIONS = [
@@ -101,13 +101,22 @@ export function PublicReviewForm() {
             exit={{ opacity: 0, y: -16 }}
             className="rounded-2xl border border-accent/20 bg-accent/5 p-10 text-center"
           >
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-accent/15">
-              <CheckCircle2 className="h-7 w-7 text-accent" />
-            </div>
-            <h3 className="text-xl font-bold text-text-primary">Thank you, {name.split(' ')[0]}!</h3>
+            <motion.div
+              initial={{ scale: 0.6, rotate: -15 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: 'spring', stiffness: 220, damping: 14 }}
+              className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-accent/30 to-accent/10"
+            >
+              <Sparkles className="h-8 w-8 text-accent" />
+            </motion.div>
+            <h3 className="text-2xl font-bold text-text-primary">
+              Thank you, {name.split(' ')[0]}! ✨
+            </h3>
             <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-text-secondary">
-              Your review has been submitted and is pending review by our team.
-              We may reach out to confirm a few details before featuring it on the site.
+              Your review just made our day. Means a lot that you took the time to share it.
+            </p>
+            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-text-secondary">
+              Stars, words, and good vibes — received with love 💛
             </p>
           </motion.div>
         ) : (

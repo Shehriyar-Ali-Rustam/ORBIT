@@ -342,9 +342,6 @@ export function Testimonials() {
                 <div className="rounded-3xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-6 shadow-sm sm:p-10">
                   <PublicReviewForm />
                 </div>
-                <p className="mx-auto mt-4 max-w-md text-center text-xs text-text-tertiary">
-                  Reviews are moderated before going live. We may reach out to verify details before publishing.
-                </p>
               </div>
             </motion.div>
           )}
