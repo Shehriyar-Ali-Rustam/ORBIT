@@ -67,10 +67,6 @@ export const metadata: Metadata = {
       'Full-service AI software company — chatbots, model training, web & mobile development.',
     images: ['/og-image.png'],
   },
-  icons: {
-    icon: '/icon.png',
-    apple: '/apple-icon.png',
-  },
   robots: {
     index: true,
     follow: true,

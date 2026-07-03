@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(ffmpeg -y -i app/icon.png -vf scale=512:512 -pix_fmt rgba app/icon-new.png)",
+      "Bash(ffmpeg -y -i app/icon.png -vf scale=180:180 -pix_fmt rgba app/apple-icon.png)"
     ]
   }
 }
