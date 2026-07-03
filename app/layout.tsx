@@ -105,8 +105,16 @@ const organizationSchema = {
   ],
   address: {
     '@type': 'PostalAddress',
+    addressLocality: 'Islamabad',
+    addressRegion: 'Islamabad Capital Territory',
     addressCountry: 'PK',
   },
+  areaServed: [
+    { '@type': 'City', name: 'Islamabad' },
+    { '@type': 'City', name: 'Rawalpindi' },
+    { '@type': 'Country', name: 'Pakistan' },
+    { '@type': 'Place', name: 'Worldwide (Remote)' },
+  ],
   knowsAbout: [
     'AI Development',
     'Machine Learning',
