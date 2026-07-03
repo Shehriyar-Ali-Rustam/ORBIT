@@ -199,9 +199,9 @@ export function Hero() {
             <span className="inline-flex flex-wrap items-baseline justify-center gap-x-3">
               <TextReveal text="That Orbits" delay={0.3} />
               <motion.span
-                initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.8, delay: 0.55, ease }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.25, ease }}
                 className="text-gradient inline-block"
               >
                 the Future
