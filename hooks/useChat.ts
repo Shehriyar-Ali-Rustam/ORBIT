@@ -95,7 +95,7 @@ export function useChat() {
             id: assistantId,
             role: 'assistant',
             content:
-              "I'm having trouble responding right now. Please try again or contact us at hello.theorbit@gmail.com.",
+              "I'm having trouble responding right now. Please try again or contact us at info@orbitpk.com.",
           },
         ])
       } finally {

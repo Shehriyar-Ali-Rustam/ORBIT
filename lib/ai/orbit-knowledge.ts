@@ -126,7 +126,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'team',
     category: 'team',
     content:
-      'The Orbit team: Team members at Orbit are called "Orbiters". ORBIT was built by three software engineering students — Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. Orbit is actively hiring: AI Engineers (Python, TensorFlow, PyTorch, NLP), UI/UX Designers (Figma, Adobe XD, prototyping), and Backend Developers (Node.js, PostgreSQL, AWS, Docker). Interested in joining? Visit the freelancer marketplace at /freelancers or email hello.theorbit@gmail.com.',
+      'The Orbit team: Team members at Orbit are called "Orbiters". ORBIT was built by three software engineering students — Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. Orbit is actively hiring: AI Engineers (Python, TensorFlow, PyTorch, NLP), UI/UX Designers (Figma, Adobe XD, prototyping), and Backend Developers (Node.js, PostgreSQL, AWS, Docker). Interested in joining? Visit the freelancer marketplace at /freelancers or email info@orbitpk.com.',
     keywords: [
       'team', 'orbiter', 'hiring', 'join', 'career', 'job', 'employee',
       'developer', 'engineer', 'designer', 'work at', 'positions',
@@ -182,7 +182,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'contact',
     category: 'contact',
     content:
-      'Contact Orbit: Email: hello.theorbit@gmail.com. Based in Pakistan, serving clients globally. We respond within 24 hours. Currently accepting new projects. Visit /contact to send a message directly. For freelancer inquiries, visit /freelancers. Free initial consultation — no obligations. We\'re available on email and scheduled video calls.',
+      'Contact Orbit: Email: info@orbitpk.com. Based in Pakistan, serving clients globally. We respond within 24 hours. Currently accepting new projects. Visit /contact to send a message directly. For freelancer inquiries, visit /freelancers. Free initial consultation — no obligations. We\'re available on email and scheduled video calls.',
     keywords: [
       'contact', 'email', 'reach', 'talk', 'call', 'message', 'connect',
       'get in touch', 'consultation', 'meeting',
@@ -192,7 +192,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'get-started',
     category: 'contact',
     content:
-      'How to get started with Orbit: 1) Reach out — Email us at hello.theorbit@gmail.com or visit /contact with a brief description of your project. 2) Free consultation — We\'ll schedule a call to understand your needs, goals, and budget. No obligations. 3) Proposal — We\'ll send a detailed proposal with scope, timeline, and pricing. 4) Kick off — Once approved, we start with 50% upfront and begin development immediately. You can also hire individual freelancers from our marketplace at /freelancers.',
+      'How to get started with Orbit: 1) Reach out — Email us at info@orbitpk.com or visit /contact with a brief description of your project. 2) Free consultation — We\'ll schedule a call to understand your needs, goals, and budget. No obligations. 3) Proposal — We\'ll send a detailed proposal with scope, timeline, and pricing. 4) Kick off — Once approved, we start with 50% upfront and begin development immediately. You can also hire individual freelancers from our marketplace at /freelancers.',
     keywords: [
       'start', 'begin', 'get started', 'hire', 'project', 'quote',
       'proposal', 'consultation', 'onboard', 'kick off', 'work with',

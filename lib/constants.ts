@@ -64,7 +64,7 @@ export const SOCIAL_LINKS = {
 export const COMPANY = {
   name: 'Orbit',
   tagline: 'Engineered for the Future. Built for Today.',
-  email: 'hello.theorbit@gmail.com',
+  email: 'info@orbitpk.com',
   location: 'Pakistan — Remote First',
   phone: '+92 327 5362412',
 }

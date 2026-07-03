@@ -96,7 +96,7 @@ const organizationSchema = {
   image: `${SITE_URL}/og-image.png`,
   description:
     'Orbit is a Pakistan-based AI-powered technology company specializing in AI chatbots, model training, web development, mobile apps, and graphic design.',
-  email: 'hello.theorbit@gmail.com',
+  email: 'info@orbitpk.com',
   foundingDate: '2024',
   founders: [
     { '@type': 'Person', name: 'Shehriyar Ali Rustam' },

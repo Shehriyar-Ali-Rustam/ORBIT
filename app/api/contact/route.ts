@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
       console.error('Missing EMAIL_USER or EMAIL_PASS environment variables')
       return NextResponse.json(
-        { error: 'Email service is not configured. Please email us directly at hello.theorbit@gmail.com' },
+        { error: 'Email service is not configured. Please email us directly at info@orbitpk.com' },
         { status: 503 }
       )
     }
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Contact form error:', error)
     return NextResponse.json(
-      { error: 'Something went wrong. Please try again or email us directly at hello.theorbit@gmail.com' },
+      { error: 'Something went wrong. Please try again or email us directly at info@orbitpk.com' },
       { status: 500 }
     )
   }

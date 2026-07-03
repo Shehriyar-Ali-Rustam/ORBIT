@@ -72,8 +72,8 @@ export default function TermsPage() {
             <h2 className="text-xl font-semibold text-text-primary">7. Contact</h2>
             <p className="mt-3 leading-relaxed">
               For any questions about these terms, please contact us at{' '}
-              <a href="mailto:hello.theorbit@gmail.com" className="text-orange hover:underline">
-                hello.theorbit@gmail.com
+              <a href="mailto:info@orbitpk.com" className="text-orange hover:underline">
+                info@orbitpk.com
               </a>
               .
             </p>

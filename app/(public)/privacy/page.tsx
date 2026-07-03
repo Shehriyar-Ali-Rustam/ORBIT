@@ -54,7 +54,7 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-semibold text-text-primary">5. Your Rights</h2>
             <p className="mt-3 leading-relaxed">
               You have the right to access, correct, or delete your personal data at any time. To
-              exercise these rights, please contact us at hello.theorbit@gmail.com.
+              exercise these rights, please contact us at info@orbitpk.com.
             </p>
           </div>
 
@@ -62,8 +62,8 @@ export default function PrivacyPage() {
             <h2 className="text-xl font-semibold text-text-primary">6. Contact</h2>
             <p className="mt-3 leading-relaxed">
               For any privacy-related questions or concerns, please reach out to us at{' '}
-              <a href="mailto:hello.theorbit@gmail.com" className="text-orange hover:underline">
-                hello.theorbit@gmail.com
+              <a href="mailto:info@orbitpk.com" className="text-orange hover:underline">
+                info@orbitpk.com
               </a>
               .
             </p>
