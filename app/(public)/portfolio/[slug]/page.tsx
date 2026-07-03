@@ -20,8 +20,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = projects.find((p) => p.slug === params.slug)
   if (!project) return {}
   return {
-    title: project.title,
-    description: project.shortDescription,
+    title: `${project.title} — ORBIT Portfolio`,
+    description: project.fullDescription,
+    keywords: [
+      project.title,
+      ...project.techStack,
+      `${project.category} project`,
+      'ORBIT case study',
+    ],
+    alternates: { canonical: `/portfolio/${project.slug}` },
+    openGraph: {
+      title: `${project.title} — ORBIT Portfolio`,
+      description: project.shortDescription,
+      images: [{ url: project.coverImage, width: 1280, height: 720 }],
+    },
   }
 }
 
@@ -35,8 +47,38 @@ export default function ProjectDetailPage({ params }: Props) {
   const currentIndex = projects.findIndex((p) => p.slug === params.slug)
   const nextProject = projects[(currentIndex + 1) % projects.length]
 
+  const projectSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: project.fullDescription,
+    image: `https://orbitpk.com${project.coverImage}`,
+    url: `https://orbitpk.com/portfolio/${project.slug}`,
+    dateCreated: project.completedAt,
+    creator: { '@id': 'https://orbitpk.com/#organization' },
+    keywords: project.techStack.join(', '),
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://orbitpk.com' },
+      { '@type': 'ListItem', position: 2, name: 'Portfolio', item: 'https://orbitpk.com/portfolio' },
+      { '@type': 'ListItem', position: 3, name: project.title, item: `https://orbitpk.com/portfolio/${project.slug}` },
+    ],
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <section className="pt-24 section-padding">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <Link
