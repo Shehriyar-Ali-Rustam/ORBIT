@@ -53,7 +53,7 @@ export function DashboardSidebar({ mode, onModeSwitch, userName, userRole }: Das
       {/* Logo */}
       <div className="flex h-16 items-center justify-between border-b border-border px-4">
         <Link href="/freelancers" className="flex items-center gap-2">
-          <Image src="/logo.png" alt="ORBIT" width={160} height={160} quality={100} priority className={cn('h-10 w-10 object-contain', theme === 'light' && 'invert hue-rotate-180')} />
+          <Image src="/logo.png" alt="" width={160} height={160} quality={100} priority className={cn('h-10 w-10 object-contain', theme === 'light' && 'invert hue-rotate-180')} />
           {!collapsed && (
             <span className="font-montserrat text-sm font-bold tracking-[0.2em] text-text-primary">
               ORBIT

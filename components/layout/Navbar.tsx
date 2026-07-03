@@ -86,7 +86,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo.png"
-            alt="ORBIT"
+            alt=""
             width={160}
             height={160}
             quality={100}

@@ -209,11 +209,11 @@ export function Hero() {
             </span>
           </h1>
 
-          {/* Subheadline */}
+          {/* Subheadline — LCP element, minimal animation for fastest paint */}
           <motion.p
-            initial={{ opacity: 0, y: 30, filter: 'blur(6px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            transition={{ duration: 0.8, delay: 0.65, ease }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.15, ease }}
             className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-neutral-300 sm:text-lg"
           >
             Full-service technology company specializing in AI chatbots, model training,

@@ -66,9 +66,10 @@ export function HomeCTA() {
         >
           <Link
             href="/contact"
-            className="inline-flex items-center rounded-full border border-[#e5e5e5] bg-[#0a0a0a] px-7 py-2.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-white/15 dark:bg-white dark:text-[#0a0a0a]"
+            aria-label="Contact ORBIT to start your project"
+            className="inline-flex items-center rounded-full border border-[#e5e5e5] bg-[#0a0a0a] px-7 py-3 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-white/15 dark:bg-white dark:text-[#0a0a0a]"
           >
-            Learn More
+            Start Your Project
           </Link>
         </motion.div>
 
