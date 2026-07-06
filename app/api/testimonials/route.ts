@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { sendTestimonialEmail } from '@/lib/email'
 import { getSupabaseAdmin } from '@/lib/supabase/server'
 import { signTestimonialToken } from '@/lib/testimonial-token'
+import { testimonialRatelimit, enforceRateLimit, getClientIp } from '@/lib/ratelimit'
 
 const PROJECT_TYPES = ['ai-chatbot', 'model-training', 'web', 'mobile', 'design', 'other'] as const
 type ProjectType = (typeof PROJECT_TYPES)[number]
@@ -16,6 +17,9 @@ interface SubmitPayload {
 }
 
 export async function POST(req: NextRequest) {
+  const limited = await enforceRateLimit(testimonialRatelimit, getClientIp(req))
+  if (limited) return limited
+
   let body: SubmitPayload
   try {
     body = (await req.json()) as SubmitPayload

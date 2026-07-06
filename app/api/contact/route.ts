@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { contactSchema } from '@/lib/validations'
 import { sendContactEmail } from '@/lib/email'
+import { contactRatelimit, enforceRateLimit, getClientIp } from '@/lib/ratelimit'
 
 export async function POST(req: NextRequest) {
   try {
+    const limited = await enforceRateLimit(contactRatelimit, getClientIp(req))
+    if (limited) return limited
+
     const body = await req.json()
     const result = contactSchema.safeParse(body)
 

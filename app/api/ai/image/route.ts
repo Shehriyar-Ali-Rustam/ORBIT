@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server'
 import { z } from 'zod'
 import { routeToAI, type ChatMessage } from '@/lib/ai/router'
 import { buildImageUrl } from '@/lib/ai/image'
+import { aiImageRatelimit, enforceRateLimit, getClientIp } from '@/lib/ratelimit'
 
 const imageSchema = z.object({
   prompt: z.string().min(1).max(2000),
@@ -9,6 +10,9 @@ const imageSchema = z.object({
 
 export async function POST(req: NextRequest) {
   try {
+    const limited = await enforceRateLimit(aiImageRatelimit, getClientIp(req))
+    if (limited) return limited
+
     const body = await req.json()
     const parsed = imageSchema.safeParse(body)
 

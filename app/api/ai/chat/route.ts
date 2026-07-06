@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { routeToAI, type ChatMessage } from '@/lib/ai/router'
 import { buildSystemPrompt, type AITool } from '@/lib/ai/prompts'
 import { searchKnowledge } from '@/lib/ai/rag'
+import { aiChatRatelimit, enforceRateLimit, getClientIp } from '@/lib/ratelimit'
 
 const chatSchema = z.object({
   messages: z
@@ -32,6 +33,9 @@ const INJECTION_PATTERNS = [
 
 export async function POST(req: NextRequest) {
   try {
+    const limited = await enforceRateLimit(aiChatRatelimit, getClientIp(req))
+    if (limited) return limited
+
     const body = await req.json()
     const parsed = chatSchema.safeParse(body)
 
