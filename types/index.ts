@@ -50,7 +50,10 @@ export interface Testimonial {
 export interface FAQ {
   id: string
   question: string
-  answer: string
+  /** Rendered on the page — can include JSX (e.g. inline <Price />) */
+  answer: React.ReactNode
+  /** Plain-text version used for FAQPage schema.org JSON-LD (SEO) */
+  answerText: string
 }
 
 export type * from './marketplace'

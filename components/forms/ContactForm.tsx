@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { CheckCircle2, Loader2, Send } from 'lucide-react'
 import { contactSchema, ContactFormData } from '@/lib/validations'
 import { cn } from '@/lib/utils'
+import { useCurrency } from '@/components/providers/CurrencyProvider'
 
 const serviceOptions = [
   { value: 'ai-chatbot',         label: 'AI Chatbot' },
@@ -18,13 +19,25 @@ const serviceOptions = [
   { value: 'other',              label: 'Something Else' },
 ]
 
-const budgetOptions = [
-  { value: 'under-500',   label: 'Under $500' },
-  { value: '500-2000',    label: '$500 – $2k' },
-  { value: '2000-10000',  label: '$2k – $10k' },
-  { value: '10000-plus',  label: '$10k+' },
-  { value: 'not-sure',    label: 'Not sure yet' },
+// Budget option values are stable tokens (submitted to backend); labels
+// are derived from the visitor's currency at render time.
+const budgetTiers = [
+  { value: 'under-500',  usd: 500,   kind: 'under'  as const },
+  { value: '500-2000',   usd: 500,   usdEnd: 2000,   kind: 'range' as const },
+  { value: '2000-10000', usd: 2000,  usdEnd: 10000,  kind: 'range' as const },
+  { value: '10000-plus', usd: 10000, kind: 'plus'   as const },
+  { value: 'not-sure',   kind: 'text' as const, label: 'Not sure yet' },
 ]
+
+function useBudgetOptions() {
+  const { format } = useCurrency()
+  return budgetTiers.map((t) => {
+    if (t.kind === 'text') return { value: t.value, label: t.label }
+    if (t.kind === 'under') return { value: t.value, label: `Under ${format(t.usd)}` }
+    if (t.kind === 'plus') return { value: t.value, label: `${format(t.usd)}+` }
+    return { value: t.value, label: `${format(t.usd)} – ${format(t.usdEnd!)}` }
+  })
+}
 
 // ── Shared field styles ──────────────────────────────────────────────────
 const inputBase =
@@ -96,6 +109,7 @@ export function ContactForm() {
   const [errorMessage, setErrorMessage] = useState('')
   const [service,      setService]      = useState('')
   const [budget,       setBudget]       = useState('')
+  const budgetOptions = useBudgetOptions()
 
   const {
     register,
@@ -239,6 +253,9 @@ export function ContactForm() {
             cols={3}
             error={errors.budget?.message}
           />
+          <p className="mt-2 text-[0.72rem] text-text-tertiary">
+            Prices auto-convert to your local currency — change it from the navbar.
+          </p>
         </div>
 
         {/* ── Message ── */}

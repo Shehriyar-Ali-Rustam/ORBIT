@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { CurrencySwitcher } from '@/components/CurrencySwitcher'
 import { faqs } from '@/data/faqs'
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
@@ -24,6 +25,11 @@ export function FAQ() {
           >
             <SectionLabel>FAQ</SectionLabel>
             <SectionHeading className="mt-4">Common Questions</SectionHeading>
+            <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-border bg-surface/60 px-4 py-2 text-xs text-text-secondary">
+              <span>Prices shown in</span>
+              <CurrencySwitcher variant="compact" />
+              <span className="hidden text-text-tertiary sm:inline">· auto-detected · rates refreshed daily</span>
+            </div>
           </motion.div>
         </div>
 
@@ -88,9 +94,9 @@ export function FAQ() {
                       transition={{ duration: 0.28, ease }}
                       style={{ overflow: 'hidden' }}
                     >
-                      <p className="px-6 pb-5 text-sm leading-relaxed text-text-secondary">
+                      <div className="px-6 pb-5 text-sm leading-relaxed text-text-secondary">
                         {faq.answer}
-                      </p>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
