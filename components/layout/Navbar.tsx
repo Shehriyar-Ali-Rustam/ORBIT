@@ -11,7 +11,6 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 import { useTheme } from '@/components/ThemeProvider'
 import { useNavbarAuth } from '@/hooks/useNavbarAuth'
-import { CurrencySwitcher } from '@/components/CurrencySwitcher'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -207,11 +206,6 @@ export function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
-          {/* Currency switcher */}
-          <div className="hidden sm:block">
-            <CurrencySwitcher scrolledOverlay={!scrolled} />
-          </div>
-
           {/* Theme toggle */}
           <button
             onClick={toggleTheme}

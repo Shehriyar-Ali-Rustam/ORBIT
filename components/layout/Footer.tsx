@@ -7,6 +7,7 @@ import { NAV_LINKS, SOCIAL_LINKS, COMPANY } from '@/lib/constants'
 import { services } from '@/data/services'
 import { useTheme } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'
+import { CurrencySwitcher } from '@/components/CurrencySwitcher'
 
 export function Footer() {
   const { theme } = useTheme()
@@ -108,11 +109,20 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
+        <div className="mt-12 flex flex-col gap-6 border-t border-border pt-8 md:flex-row md:items-center md:justify-between">
           <p className="font-mono text-xs text-text-tertiary">&copy; {new Date().getFullYear()} Orbit. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="text-xs text-text-tertiary transition-colors hover:text-accent">Privacy Policy</Link>
-            <Link href="/terms" className="text-xs text-text-tertiary transition-colors hover:text-accent">Terms of Service</Link>
+
+          <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-8">
+            <div className="flex items-center gap-2.5">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-text-tertiary">
+                Prices in
+              </span>
+              <CurrencySwitcher variant="compact" />
+            </div>
+            <div className="flex gap-6">
+              <Link href="/privacy" className="text-xs text-text-tertiary transition-colors hover:text-accent">Privacy Policy</Link>
+              <Link href="/terms" className="text-xs text-text-tertiary transition-colors hover:text-accent">Terms of Service</Link>
+            </div>
           </div>
         </div>
       </div>
