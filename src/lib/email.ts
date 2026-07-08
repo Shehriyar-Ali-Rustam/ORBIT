@@ -8,6 +8,13 @@ const transporter = nodemailer.createTransport({
   },
 })
 
+// Where internal notifications (contact form, reviews) are delivered.
+// Sending still authenticates as EMAIL_USER (the Gmail SMTP account);
+// this only controls the recipient inbox. Set NOTIFICATIONS_EMAIL to
+// info@orbitpk.com to route notifications to the branded inbox, or leave
+// it unset to fall back to the Gmail account.
+const NOTIFY_TO = process.env.NOTIFICATIONS_EMAIL || process.env.EMAIL_USER
+
 /** Escape HTML special characters to prevent injection in email templates */
 function escapeHtml(str: string): string {
   return str
@@ -38,7 +45,7 @@ export async function sendTestimonialEmail(data: {
 
   return await transporter.sendMail({
     from: `"ORBIT Reviews" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER,
+    to: NOTIFY_TO,
     replyTo: data.email || process.env.EMAIL_USER,
     subject: `New Review: ${rating}★ from ${name}`,
     html: `
@@ -98,7 +105,7 @@ export async function sendContactEmail(data: {
 
   return await transporter.sendMail({
     from: `"ORBIT Contact" <${process.env.EMAIL_USER}>`,
-    to: process.env.EMAIL_USER,
+    to: NOTIFY_TO,
     replyTo: data.email,
     subject: `New Contact: ${name} — ${service}`,
     html: `
