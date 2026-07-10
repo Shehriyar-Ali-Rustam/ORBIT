@@ -155,9 +155,18 @@ create table if not exists notifications (
 );
 create index if not exists notifications_user_id_idx on notifications(user_id);
 
--- ---------- enable Row Level Security ----------
--- Server uses the service-role key which bypasses RLS. Enabling RLS with
--- no policies locks these tables to server-only access (no public reads).
+-- ---------- Row Level Security + access policies ----------
+-- NOTE ON ARCHITECTURE: the marketplace UI currently writes to these
+-- tables directly from the browser using the public anon key
+-- (src/lib/marketplace/mutations.ts -> getSupabase()). For that to work,
+-- the anon role needs access. We keep RLS ON but add permissive
+-- allow-all policies so the existing client-side code functions.
+--
+-- ⚠️ TECH DEBT (flagged in the security audit, Pillar 5 / IDOR): these
+-- writes should eventually be routed through server API routes that use
+-- the service-role key, and these permissive policies tightened to
+-- per-user ownership checks. Until then, treat the anon key as able to
+-- read/write marketplace rows.
 alter table profiles       enable row level security;
 alter table gigs           enable row level security;
 alter table orders         enable row level security;
@@ -165,6 +174,25 @@ alter table conversations  enable row level security;
 alter table messages       enable row level security;
 alter table reviews        enable row level security;
 alter table notifications  enable row level security;
+
+do $$
+declare t text;
+begin
+  foreach t in array array['profiles','gigs','orders','conversations','messages','reviews','notifications']
+  loop
+    if not exists (select 1 from pg_policies where tablename = t and policyname = 'orbit_allow_all') then
+      execute format(
+        'create policy "orbit_allow_all" on %I for all to anon, authenticated using (true) with check (true)',
+        t
+      );
+    end if;
+  end loop;
+end $$;
+
+-- Tell PostgREST to refresh its schema cache so the new tables are
+-- immediately visible to the API (avoids the "could not find the table
+-- in the schema cache" error right after creation).
+notify pgrst, 'reload schema';
 
 -- ---------- realtime ----------
 -- The dashboard subscribes to live updates on these three.
