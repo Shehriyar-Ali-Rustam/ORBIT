@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       {
         role: 'system',
         content:
-          'You are an image prompt enhancer. Take the user\'s simple description and enhance it into a professional image generation prompt. Add style, lighting, quality, and composition details. Return ONLY the enhanced prompt text — nothing else. No explanations, no markdown, no quotes. Just the pure enhanced prompt.',
+          'You are an image prompt enhancer. Take the user\'s simple description and enhance it into a professional image generation prompt. Add style, lighting, quality, and composition details. Return ONLY the enhanced prompt text - nothing else. No explanations, no markdown, no quotes. Just the pure enhanced prompt.',
       },
       { role: 'user', content: prompt },
     ]

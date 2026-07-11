@@ -33,7 +33,7 @@ export function ComingSoon() {
         </h1>
 
         <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-text-secondary sm:text-base">
-          We&apos;re building a curated marketplace to hire vetted Orbiters —
+          We&apos;re building a curated marketplace to hire vetted Orbiters -
           designers, developers, and AI specialists. It&apos;s almost ready.
           Check back shortly.
         </p>

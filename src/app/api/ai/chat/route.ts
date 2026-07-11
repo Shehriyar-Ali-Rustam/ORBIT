@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     const lastMessage = messages[messages.length - 1].content.toLowerCase()
     if (INJECTION_PATTERNS.some((p) => lastMessage.includes(p))) {
       return new Response(
-        "I'm Orbit AI — here to help you with real tasks! What can I do for you?",
+        "I'm Orbit AI - here to help you with real tasks! What can I do for you?",
         { headers: { 'Content-Type': 'text/plain' } }
       )
     }

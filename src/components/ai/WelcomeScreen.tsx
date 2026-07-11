@@ -43,7 +43,7 @@ export function WelcomeScreen({ tool, suggestions, onSuggestionClick }: WelcomeS
 
       <div className="relative w-full max-w-2xl text-center">
 
-        {/* ── Heading — mixed weight like reference ── */}
+        {/* ── Heading - mixed weight like reference ── */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}

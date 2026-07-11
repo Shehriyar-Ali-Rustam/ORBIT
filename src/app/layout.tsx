@@ -29,7 +29,7 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: 'ORBIT — AI Software Company in Pakistan | Chatbots, Web & Mobile Apps',
+    default: 'ORBIT - AI Software Company in Pakistan | Chatbots, Web & Mobile Apps',
     template: '%s | ORBIT',
   },
   description:
@@ -55,17 +55,17 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://orbitpk.com',
-    title: 'Orbit — AI-Powered Software Solutions',
+    title: 'Orbit - AI-Powered Software Solutions',
     description:
-      'Full-service AI software company — chatbots, model training, web & mobile development.',
+      'Full-service AI software company - chatbots, model training, web & mobile development.',
     siteName: 'Orbit',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Orbit — AI-Powered Software Solutions',
+    title: 'Orbit - AI-Powered Software Solutions',
     description:
-      'Full-service AI software company — chatbots, model training, web & mobile development.',
+      'Full-service AI software company - chatbots, model training, web & mobile development.',
     images: ['/og-image.png'],
   },
   robots: {
@@ -135,7 +135,7 @@ const websiteSchema = {
   url: SITE_URL,
   name: 'Orbit',
   description:
-    'AI-Powered Software Solutions — chatbots, model training, web & mobile development.',
+    'AI-Powered Software Solutions - chatbots, model training, web & mobile development.',
   publisher: { '@id': `${SITE_URL}/#organization` },
   inLanguage: 'en-US',
 }

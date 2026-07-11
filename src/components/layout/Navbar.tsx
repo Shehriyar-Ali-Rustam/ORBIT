@@ -304,7 +304,7 @@ export function Navbar() {
       </nav>
     </header>
 
-    {/* Mobile Drawer — rendered outside the header so its z-index is not boxed in */}
+    {/* Mobile Drawer - rendered outside the header so its z-index is not boxed in */}
     <AnimatePresence>
       {mobileOpen && (
         <motion.div

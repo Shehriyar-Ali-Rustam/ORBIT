@@ -9,7 +9,7 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 export function PortfolioHero() {
   return (
     <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-background pt-16">
-      {/* Background image — always dark regardless of theme */}
+      {/* Background image - always dark regardless of theme */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1920&q=90"

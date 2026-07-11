@@ -4,7 +4,7 @@ export const testimonials: Testimonial[] = [
   {
     id: 'testimonial-1',
     quote:
-      'Shehriyar is a great designer and artist! I consider him one of the best banner and logo designers. I ordered a banner and a logo for my new eBay store, and he didn\'t just do an outstanding job for me — he also created a banner and a logo for my Etsy store. This is the best quality of banners and logos',
+      'Shehriyar is a great designer and artist! I consider him one of the best banner and logo designers. I ordered a banner and a logo for my new eBay store, and he didn\'t just do an outstanding job for me - he also created a banner and a logo for my Etsy store. This is the best quality of banners and logos',
     author: 'alex23071',
     country: 'United States',
     rating: 5,

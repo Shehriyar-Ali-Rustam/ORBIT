@@ -10,7 +10,7 @@ import { faqs } from '@/data/faqs'
 const SITE_URL = 'https://orbitpk.com'
 
 export const metadata: Metadata = {
-  title: 'Services — AI Chatbots, ML, Web & Mobile Development in Pakistan',
+  title: 'Services - AI Chatbots, ML, Web & Mobile Development in Pakistan',
   description:
     'Full-service software solutions: custom AI chatbots, machine learning model training, Next.js web apps, mobile apps for Android and iOS, and brand design. Delivered fast by ORBIT, Pakistan.',
   keywords: [

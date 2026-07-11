@@ -280,7 +280,7 @@ export default function SellerOnboardingPage() {
                   </div>
                   <div>
                     <span className="text-xs text-text-tertiary">Tagline</span>
-                    <p className="text-sm text-text-primary">{form.tagline || '—'}</p>
+                    <p className="text-sm text-text-primary">{form.tagline || '-'}</p>
                   </div>
                   <div>
                     <span className="text-xs text-text-tertiary">Skills</span>
@@ -294,11 +294,11 @@ export default function SellerOnboardingPage() {
                   </div>
                   <div>
                     <span className="text-xs text-text-tertiary">Country</span>
-                    <p className="text-sm text-text-primary">{form.country || '—'}</p>
+                    <p className="text-sm text-text-primary">{form.country || '-'}</p>
                   </div>
                   <div>
                     <span className="text-xs text-text-tertiary">Bio</span>
-                    <p className="text-sm text-text-primary">{form.bio || '—'}</p>
+                    <p className="text-sm text-text-primary">{form.bio || '-'}</p>
                   </div>
                 </div>
               </div>

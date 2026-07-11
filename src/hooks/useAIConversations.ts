@@ -42,7 +42,7 @@ function saveAll(conversations: AIConversation[]) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations.slice(0, MAX_CONVERSATIONS)))
   } catch {
-    // localStorage full — silently fail
+    // localStorage full - silently fail
   }
 }
 

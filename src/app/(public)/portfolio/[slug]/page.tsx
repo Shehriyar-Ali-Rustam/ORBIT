@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = projects.find((p) => p.slug === params.slug)
   if (!project) return {}
   return {
-    title: `${project.title} — ORBIT Portfolio`,
+    title: `${project.title} - ORBIT Portfolio`,
     description: project.fullDescription,
     keywords: [
       project.title,
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ],
     alternates: { canonical: `/portfolio/${project.slug}` },
     openGraph: {
-      title: `${project.title} — ORBIT Portfolio`,
+      title: `${project.title} - ORBIT Portfolio`,
       description: project.shortDescription,
       images: [{ url: project.coverImage, width: 1280, height: 720 }],
     },

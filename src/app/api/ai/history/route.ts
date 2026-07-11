@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       if (title) existing.title = String(title).slice(0, 200)
       if (Array.isArray(messages)) existing.messages = messages.slice(-100)
     } else {
-      // Enforce size cap — evict oldest when full
+      // Enforce size cap - evict oldest when full
       if (conversations.size >= MAX_CONVERSATIONS) {
         const oldest = Array.from(conversations.entries())
           .sort(([, a], [, b]) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())[0]

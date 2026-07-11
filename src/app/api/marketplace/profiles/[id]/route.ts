@@ -4,7 +4,7 @@ import { requireMarketplaceUser } from '@/lib/marketplace/auth'
 import { getProfile } from '@/lib/marketplace/queries'
 import { updateProfile } from '@/lib/marketplace/mutations'
 
-// H5: Zod schema for profile updates — excludes role, rating, review_count
+// H5: Zod schema for profile updates - excludes role, rating, review_count
 const profileUpdateSchema = z.object({
   display_name: z.string().min(1).max(100).optional(),
   tagline: z.string().max(200).optional(),

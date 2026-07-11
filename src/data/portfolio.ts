@@ -41,7 +41,7 @@ export const projects: Project[] = [
     shortDescription:
       'AI tool that scores how well your resume matches a job posting with improvement tips',
     fullDescription:
-      'An AI-powered tool that analyzes your resume against a job description and gives a compatibility score from 0-100%. It uses sentence transformers for semantic matching, detects missing skills, and suggests specific improvements. Supports PDF and text uploads. All processing happens locally — no data is sent to external servers.',
+      'An AI-powered tool that analyzes your resume against a job description and gives a compatibility score from 0-100%. It uses sentence transformers for semantic matching, detects missing skills, and suggests specific improvements. Supports PDF and text uploads. All processing happens locally - no data is sent to external servers.',
     coverImage: '/images/portfolio/ai-resume-matcher.webp',
     images: ['/images/portfolio/ai-resume-matcher.webp'],
     techStack: ['Python', 'Streamlit', 'FastAPI', 'Sentence Transformers', 'NLTK', 'spaCy'],
@@ -100,7 +100,7 @@ export const projects: Project[] = [
   {
     id: 'wearblend',
     slug: 'wearblend',
-    title: 'WearBlend — AI Virtual Try-On',
+    title: 'WearBlend - AI Virtual Try-On',
     category: 'ai',
     shortDescription:
       'AI-powered virtual try-on app that generates realistic outfit photos using DALL-E and Gemini',
@@ -116,7 +116,7 @@ export const projects: Project[] = [
   {
     id: 'campalpha',
     slug: 'campalpha',
-    title: 'CampAlpha — Adventure Sports Marketplace',
+    title: 'CampAlpha - Adventure Sports Marketplace',
     category: 'web',
     shortDescription:
       'A marketplace connecting adventure sports enthusiasts with trips, gear, and experiences.',
@@ -132,7 +132,7 @@ export const projects: Project[] = [
   {
     id: 'cheezy-heaven',
     slug: 'cheezy-heaven',
-    title: 'Cheezy Heaven — Pizza Delivery',
+    title: 'Cheezy Heaven - Pizza Delivery',
     category: 'web',
     shortDescription:
       'Premium pizza ordering and delivery experience for customers in Rawalpindi.',

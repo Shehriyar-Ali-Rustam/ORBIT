@@ -103,7 +103,7 @@ export default function OrdersPage() {
                   <td className="px-4 py-3 text-text-tertiary">
                     {order.delivery_deadline
                       ? new Date(order.delivery_deadline).toLocaleDateString()
-                      : '—'}
+                      : '-'}
                   </td>
                   <td className="px-4 py-3 text-text-tertiary">
                     {new Date(order.created_at).toLocaleDateString()}

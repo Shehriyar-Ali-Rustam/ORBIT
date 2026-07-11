@@ -58,7 +58,7 @@ export async function deleteFile(bucket: Bucket, path: string): Promise<void> {
 }
 
 export function generateFilePath(userId: string, fileName: string): string {
-  // Sanitize extension — only allow alphanumeric
+  // Sanitize extension - only allow alphanumeric
   const ext = (fileName.split('.').pop() || 'jpg').replace(/[^a-z0-9]/gi, '')
   const timestamp = Date.now()
   return `${userId}/${timestamp}.${ext}`

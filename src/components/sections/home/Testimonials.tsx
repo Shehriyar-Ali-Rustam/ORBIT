@@ -365,7 +365,7 @@ export function Testimonials() {
           </button>
         </div>
 
-        {/* Inline review form — opens below the carousel */}
+        {/* Inline review form - opens below the carousel */}
         <AnimatePresence initial={false}>
           {showForm && (
             <motion.div

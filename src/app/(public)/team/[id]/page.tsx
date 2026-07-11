@@ -19,7 +19,7 @@ export function generateMetadata({ params }: Props): Metadata {
   const member = founders.find((m) => m.id === params.id)
   if (!member) return {}
   return {
-    title: `${member.name} — ${member.role}`,
+    title: `${member.name} - ${member.role}`,
     description: member.bio,
   }
 }

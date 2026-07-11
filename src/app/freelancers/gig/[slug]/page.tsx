@@ -270,7 +270,7 @@ export default function GigDetailPage() {
                 )}
 
                 <Button variant="primary" size="lg" className="mt-6 w-full">
-                  Order Now — ${pricing.price}
+                  Order Now - ${pricing.price}
                 </Button>
 
                 <Link href={`/freelancers/dashboard/messages`}>

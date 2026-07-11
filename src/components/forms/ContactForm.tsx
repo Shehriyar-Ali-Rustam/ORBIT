@@ -214,7 +214,7 @@ export function ContactForm() {
         {/* ── Phone ── */}
         <div>
           <Label>
-            Phone <span className="text-text-tertiary font-normal">— optional</span>
+            Phone <span className="text-text-tertiary font-normal">- optional</span>
           </Label>
           <input
             id="phone"
@@ -254,7 +254,7 @@ export function ContactForm() {
             error={errors.budget?.message}
           />
           <p className="mt-2 text-[0.72rem] text-text-tertiary">
-            Prices auto-convert to your local currency — change it from the navbar.
+            Prices auto-convert to your local currency - change it from the navbar.
           </p>
         </div>
 

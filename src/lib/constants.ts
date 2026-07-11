@@ -65,6 +65,6 @@ export const COMPANY = {
   name: 'Orbit',
   tagline: 'Engineered for the Future. Built for Today.',
   email: 'info@orbitpk.com',
-  location: 'Pakistan — Remote First',
+  location: 'Pakistan - Remote First',
   phone: '+92 327 5362412',
 }

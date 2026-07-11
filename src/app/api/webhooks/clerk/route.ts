@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.CLERK_WEBHOOK_SECRET
 
   if (!SIGNING_SECRET) {
-    console.error('[Clerk Webhook] CLERK_WEBHOOK_SECRET not set — refusing to process unverified payload')
+    console.error('[Clerk Webhook] CLERK_WEBHOOK_SECRET not set - refusing to process unverified payload')
     return new Response('Webhook secret not configured', { status: 500 })
   }
 

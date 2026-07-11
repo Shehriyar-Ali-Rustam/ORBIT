@@ -50,7 +50,7 @@ export interface Testimonial {
 export interface FAQ {
   id: string
   question: string
-  /** Rendered on the page — can include JSX (e.g. inline <Price />) */
+  /** Rendered on the page - can include JSX (e.g. inline <Price />) */
   answer: React.ReactNode
   /** Plain-text version used for FAQPage schema.org JSON-LD (SEO) */
   answerText: string

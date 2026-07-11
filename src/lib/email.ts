@@ -107,7 +107,7 @@ export async function sendContactEmail(data: {
     from: `"ORBIT Contact" <${process.env.EMAIL_USER}>`,
     to: NOTIFY_TO,
     replyTo: data.email,
-    subject: `New Contact: ${name} — ${service}`,
+    subject: `New Contact: ${name} - ${service}`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h2 style="color: #70E6ED; margin-bottom: 20px;">New Contact Form Submission</h2>

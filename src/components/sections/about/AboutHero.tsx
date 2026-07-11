@@ -9,7 +9,7 @@ const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 export function AboutHero() {
   return (
     <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-background pt-16">
-      {/* Background image — always dark regardless of theme */}
+      {/* Background image - always dark regardless of theme */}
       <div className="absolute inset-0 overflow-hidden">
         <Image
           src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=90"
@@ -18,7 +18,7 @@ export function AboutHero() {
           className="object-cover opacity-40"
           priority
         />
-        {/* Overlays pinned to dark values — not CSS vars */}
+        {/* Overlays pinned to dark values - not CSS vars */}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.2) 50%, rgba(10,10,10,0.85) 100%)' }} />
       </div>
 

@@ -82,7 +82,7 @@ const TRUST_STATS = [
 
 const HOW_BUYER = [
   { n: '01', title: 'Search & Browse', desc: 'Explore hundreds of services from vetted professionals across all categories.', color: '#60A5FA' },
-  { n: '02', title: 'Pick Your Expert', desc: 'Review portfolios, ratings, and reviews — then message the perfect freelancer.', color: '#A78BFA' },
+  { n: '02', title: 'Pick Your Expert', desc: 'Review portfolios, ratings, and reviews - then message the perfect freelancer.', color: '#A78BFA' },
   { n: '03', title: 'Get Results, Fast', desc: "Collaborate, review deliverables, and pay only when you're 100% satisfied.", color: '#34D399' },
 ]
 
@@ -181,7 +181,7 @@ export default function MarketplaceHome() {
               transition={{ duration: 0.6, ease, delay: 0.15 }}
               className="mx-auto mt-6 max-w-xl text-lg text-text-secondary"
             >
-              Vetted talent. Real reviews. Secure payments. Get your project done right — every time.
+              Vetted talent. Real reviews. Secure payments. Get your project done right - every time.
             </motion.p>
 
             {/* Search */}
@@ -400,7 +400,7 @@ export default function MarketplaceHome() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--color-surface)]">
                 <Layers className="h-8 w-8 text-text-tertiary" />
               </div>
-              <p className="text-text-secondary">No services yet — be the first to post a gig!</p>
+              <p className="text-text-secondary">No services yet - be the first to post a gig!</p>
               <Link href="/freelancers/onboarding" className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent/80">
                 Start Selling <ArrowRight className="h-4 w-4" />
               </Link>

@@ -14,7 +14,7 @@ const features = [
     image: '/whyorbit/ai.jpg',
     title: 'AI-First Approach',
     subtitle: 'Faster Delivery',
-    description: 'Every solution we build has intelligence at its core — not as an add-on, but as the foundation that powers real business outcomes.',
+    description: 'Every solution we build has intelligence at its core - not as an add-on, but as the foundation that powers real business outcomes.',
     stat: '10×',
     gradient: [
       'radial-gradient(ellipse at 25% 15%, #FF6B6B 0%, transparent 50%)',
@@ -33,7 +33,7 @@ const features = [
     image: '/whyorbit/delivery.jpg',
     title: 'End-to-End Delivery',
     subtitle: '100% Ownership',
-    description: 'From wireframe to launch, we own the entire product lifecycle — strategy, design, engineering, and post-launch support.',
+    description: 'From wireframe to launch, we own the entire product lifecycle - strategy, design, engineering, and post-launch support.',
     stat: '100%',
     gradient: [
       'radial-gradient(ellipse at 20% 25%, #11998E 0%, transparent 52%)',
@@ -142,7 +142,7 @@ function Card({
             sizes="290px"
             className="object-cover"
           />
-          {/* Color-tint overlay — preserves the per-card theme, subtle */}
+          {/* Color-tint overlay - preserves the per-card theme, subtle */}
           <div className="absolute inset-0 mix-blend-overlay" style={{ background: feature.gradient, opacity: 0.4 }} />
         </div>
 
@@ -187,7 +187,7 @@ function Card({
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
         />
 
-        {/* ── Stat badge — top right ── */}
+        {/* ── Stat badge - top right ── */}
         <div
           className="absolute right-4 top-4 rounded-full px-4 py-1.5 font-mono text-sm font-bold text-white"
           style={{
@@ -199,7 +199,7 @@ function Card({
           {feature.stat}
         </div>
 
-        {/* ── Icon — centered upper area ── */}
+        {/* ── Icon - centered upper area ── */}
         <div className="absolute left-0 right-0 top-[28%] flex justify-center">
           <div
             className="flex h-20 w-20 items-center justify-center rounded-3xl"

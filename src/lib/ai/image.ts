@@ -1,6 +1,6 @@
 /**
  * Build a Pollinations AI image URL from a prompt.
- * Pollinations is 100% free — no API key needed.
+ * Pollinations is 100% free - no API key needed.
  * The URL IS the API: images generate when the browser loads the URL.
  */
 export function buildImageUrl(

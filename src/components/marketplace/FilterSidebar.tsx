@@ -111,7 +111,7 @@ export function FilterSidebar({
             placeholder="$0"
             className="w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-text-primary focus:border-orange focus:outline-none"
           />
-          <span className="text-text-tertiary">—</span>
+          <span className="text-text-tertiary">-</span>
           <input
             type="number"
             value={localMax}

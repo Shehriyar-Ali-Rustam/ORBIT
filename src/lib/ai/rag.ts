@@ -1,7 +1,7 @@
 import { orbitKnowledge } from './orbit-knowledge'
 
 /**
- * Synonym map — maps common user words to canonical keywords
+ * Synonym map - maps common user words to canonical keywords
  * that appear in the knowledge base.
  */
 const SYNONYMS: Record<string, string[]> = {

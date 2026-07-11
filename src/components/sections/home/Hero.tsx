@@ -129,10 +129,10 @@ export function Hero() {
 
   return (
     <section ref={sectionRef} className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background">
-      {/* Dynamic background — cycles through tech images */}
+      {/* Dynamic background - cycles through tech images */}
       <motion.div className="absolute inset-0" style={{ y: bgY, scale: bgScale }}>
         <DynamicBackground />
-        {/* Dark overlay — heavier so the hero text reads cleanly */}
+        {/* Dark overlay - heavier so the hero text reads cleanly */}
         <div className="absolute inset-0" style={{ backgroundColor: 'rgba(10,10,10,0.72)' }} />
         {/* Center darkening spotlight behind the heading */}
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(10,10,10,0.55) 0%, transparent 65%)' }} />
@@ -144,7 +144,7 @@ export function Hero() {
       <AnimatedBeams />
       <FloatingOrbs />
 
-      {/* Content — parallax fade on scroll, no card container */}
+      {/* Content - parallax fade on scroll, no card container */}
       <motion.div
         className="relative z-10 mx-auto w-full max-w-6xl px-6 py-32 lg:px-8"
         style={{ opacity: contentOpacity, y: contentY }}
@@ -155,7 +155,7 @@ export function Hero() {
         {/* Editorial corner brackets */}
         <CornerBrackets />
 
-        {/* Side coordinate label — left */}
+        {/* Side coordinate label - left */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -167,7 +167,7 @@ export function Hero() {
           </span>
         </motion.div>
 
-        {/* Side coordinate label — right */}
+        {/* Side coordinate label - right */}
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -209,7 +209,7 @@ export function Hero() {
             </span>
           </h1>
 
-          {/* Subheadline — LCP element, minimal animation for fastest paint */}
+          {/* Subheadline - LCP element, minimal animation for fastest paint */}
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -240,7 +240,7 @@ export function Hero() {
             </Link>
           </motion.div>
 
-          {/* Stats row — vertical separators, no top border */}
+          {/* Stats row - vertical separators, no top border */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -267,7 +267,7 @@ export function Hero() {
             ))}
           </motion.div>
 
-          {/* Orbit AI live pill — minimal, no card */}
+          {/* Orbit AI live pill - minimal, no card */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}

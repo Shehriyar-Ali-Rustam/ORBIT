@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
       console.error('[testimonial submission] email failed:', err)
     }
   } else {
-    console.warn('[testimonial submission] EMAIL_USER or EMAIL_PASS not set — no notification sent')
+    console.warn('[testimonial submission] EMAIL_USER or EMAIL_PASS not set - no notification sent')
   }
 
   return NextResponse.json({ ok: true }, { status: 201 })

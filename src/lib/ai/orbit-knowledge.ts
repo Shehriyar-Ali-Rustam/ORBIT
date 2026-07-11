@@ -21,7 +21,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'svc-chatbot-detail',
     category: 'services',
     content:
-      'Our AI chatbot development process: 1) Discovery — we analyze your business needs, target audience, and existing support workflows. 2) Design — we create conversation flows, define intents, and plan integrations. 3) Build — we develop and train the chatbot on your data, test across scenarios. 4) Deploy — we integrate with your website, app, or messaging platform. 5) Optimize — we monitor performance, refine responses, and improve accuracy over time. Typical timeline: 2-4 weeks for standard chatbots, 4-8 weeks for custom AI solutions with training.',
+      'Our AI chatbot development process: 1) Discovery - we analyze your business needs, target audience, and existing support workflows. 2) Design - we create conversation flows, define intents, and plan integrations. 3) Build - we develop and train the chatbot on your data, test across scenarios. 4) Deploy - we integrate with your website, app, or messaging platform. 5) Optimize - we monitor performance, refine responses, and improve accuracy over time. Typical timeline: 2-4 weeks for standard chatbots, 4-8 weeks for custom AI solutions with training.',
     keywords: [
       'chatbot process', 'how chatbot', 'chatbot timeline', 'build chatbot',
       'chatbot development', 'chatbot steps',
@@ -33,7 +33,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'svc-model-training',
     category: 'services',
     content:
-      'Orbit provides AI model training and fine-tuning services. We go beyond off-the-shelf AI — our team fine-tunes language models on your proprietary data, building RAG systems and custom AI pipelines for your specific industry. Services include: custom dataset collection and preparation, GPT/LLaMA/open-source model fine-tuning, RAG (Retrieval-Augmented Generation) systems, voice-activated AI assistant development, model evaluation and optimization, and API deployment and integration. Pricing: $1,000-$5,000 for fine-tuning projects, $3,000-$15,000 for full RAG system builds.',
+      'Orbit provides AI model training and fine-tuning services. We go beyond off-the-shelf AI - our team fine-tunes language models on your proprietary data, building RAG systems and custom AI pipelines for your specific industry. Services include: custom dataset collection and preparation, GPT/LLaMA/open-source model fine-tuning, RAG (Retrieval-Augmented Generation) systems, voice-activated AI assistant development, model evaluation and optimization, and API deployment and integration. Pricing: $1,000-$5,000 for fine-tuning projects, $3,000-$15,000 for full RAG system builds.',
     keywords: [
       'training', 'fine-tune', 'model', 'rag', 'llm', 'dataset', 'custom ai',
       'machine learning', 'deep learning', 'gpt', 'llama', 'ai model',
@@ -45,7 +45,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'svc-web',
     category: 'services',
     content:
-      'Orbit builds modern, high-performance websites and web applications using Next.js 14, React, TypeScript, and Tailwind CSS. We deliver fast, scalable, and beautiful web experiences — from landing pages to full-stack SaaS platforms. Services include: custom websites and landing pages, full-stack web applications, e-commerce solutions, CMS integration (Sanity, Contentful), performance optimization and SEO, and ongoing maintenance. Pricing: landing pages from $300 (1-2 weeks), mid-sized apps $2,000-$10,000 (4-8 weeks), enterprise/SaaS custom-quoted.',
+      'Orbit builds modern, high-performance websites and web applications using Next.js 14, React, TypeScript, and Tailwind CSS. We deliver fast, scalable, and beautiful web experiences - from landing pages to full-stack SaaS platforms. Services include: custom websites and landing pages, full-stack web applications, e-commerce solutions, CMS integration (Sanity, Contentful), performance optimization and SEO, and ongoing maintenance. Pricing: landing pages from $300 (1-2 weeks), mid-sized apps $2,000-$10,000 (4-8 weeks), enterprise/SaaS custom-quoted.',
     keywords: [
       'website', 'web', 'nextjs', 'react', 'frontend', 'fullstack', 'ecommerce',
       'landing page', 'saas', 'web app', 'next.js', 'typescript', 'tailwind',
@@ -94,7 +94,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'process',
     category: 'process',
     content:
-      'Orbit follows a 4-step process for every project: 1) DISCOVER — We learn about your business, goals, and requirements through in-depth consultation. Free consultation, no obligations. 2) DESIGN — We create wireframes, prototypes, and technical architecture tailored to your needs. You approve before we build. 3) BUILD — Our team develops your solution with agile methodology, regular progress updates, and milestone reviews. 4) LAUNCH — We deploy, test, and optimize your product for the best possible performance. Includes post-launch monitoring and 30 days of free support.',
+      'Orbit follows a 4-step process for every project: 1) DISCOVER - We learn about your business, goals, and requirements through in-depth consultation. Free consultation, no obligations. 2) DESIGN - We create wireframes, prototypes, and technical architecture tailored to your needs. You approve before we build. 3) BUILD - Our team develops your solution with agile methodology, regular progress updates, and milestone reviews. 4) LAUNCH - We deploy, test, and optimize your product for the best possible performance. Includes post-launch monitoring and 30 days of free support.',
     keywords: [
       'process', 'how', 'work', 'steps', 'methodology', 'timeline',
       'delivery', 'workflow', 'agile', 'how long', 'duration', 'time',
@@ -104,7 +104,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'timeline',
     category: 'process',
     content:
-      'Typical project timelines at Orbit: Simple landing page — 1-2 weeks. Business website — 2-4 weeks. AI chatbot (standard) — 2-4 weeks. AI chatbot (custom trained) — 4-8 weeks. Web application — 4-8 weeks. Mobile app — 6-12 weeks. Full brand identity — 2-3 weeks. AI model fine-tuning — 3-6 weeks. RAG system — 4-8 weeks. Timelines may vary based on complexity and feedback cycles. We provide detailed timelines during the discovery phase.',
+      'Typical project timelines at Orbit: Simple landing page - 1-2 weeks. Business website - 2-4 weeks. AI chatbot (standard) - 2-4 weeks. AI chatbot (custom trained) - 4-8 weeks. Web application - 4-8 weeks. Mobile app - 6-12 weeks. Full brand identity - 2-3 weeks. AI model fine-tuning - 3-6 weeks. RAG system - 4-8 weeks. Timelines may vary based on complexity and feedback cycles. We provide detailed timelines during the discovery phase.',
     keywords: [
       'timeline', 'how long', 'duration', 'weeks', 'time', 'delivery',
       'turnaround', 'deadline', 'schedule', 'when', 'fast',
@@ -116,7 +116,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'founder',
     category: 'team',
     content:
-      'ORBIT was built by three software engineering students from Pakistan — Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. What started as freelance projects on Fiverr grew into a full technology company. Shehriyar is also an AI/ML enthusiast and a Fiverr Level 1 Seller. GitHub: github.com/Shehriyar-Ali-Rustam. LinkedIn: linkedin.com/in/shehriyar-ali-rustam-516895246. Fiverr: fiverr.com/sellers/shehriyar01se.',
+      'ORBIT was built by three software engineering students from Pakistan - Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. What started as freelance projects on Fiverr grew into a full technology company. Shehriyar is also an AI/ML enthusiast and a Fiverr Level 1 Seller. GitHub: github.com/Shehriyar-Ali-Rustam. LinkedIn: linkedin.com/in/shehriyar-ali-rustam-516895246. Fiverr: fiverr.com/sellers/shehriyar01se.',
     keywords: [
       'founder', 'shehriyar', 'saqib', 'abdul', 'ahad', 'who', 'ceo', 'owner', 'leader', 'started',
       'created', 'built', 'behind', 'android', 'web developer', 'project management',
@@ -126,7 +126,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'team',
     category: 'team',
     content:
-      'The Orbit team: Team members at Orbit are called "Orbiters". ORBIT was built by three software engineering students — Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. Orbit is actively hiring: AI Engineers (Python, TensorFlow, PyTorch, NLP), UI/UX Designers (Figma, Adobe XD, prototyping), and Backend Developers (Node.js, PostgreSQL, AWS, Docker). Interested in joining? Visit the freelancer marketplace at /freelancers or email info@orbitpk.com.',
+      'The Orbit team: Team members at Orbit are called "Orbiters". ORBIT was built by three software engineering students - Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. Orbit is actively hiring: AI Engineers (Python, TensorFlow, PyTorch, NLP), UI/UX Designers (Figma, Adobe XD, prototyping), and Backend Developers (Node.js, PostgreSQL, AWS, Docker). Interested in joining? Visit the freelancer marketplace at /freelancers or email info@orbitpk.com.',
     keywords: [
       'team', 'orbiter', 'hiring', 'join', 'career', 'job', 'employee',
       'developer', 'engineer', 'designer', 'work at', 'positions',
@@ -138,7 +138,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'about',
     category: 'about',
     content:
-      'ORBIT is an AI-powered software solutions company. Tagline: "Engineered for the Future. Built for Today." Started as freelance projects on Fiverr and evolved into a growing technology company that combines AI innovation with full-service software development. Mission: To deliver world-class AI-powered software solutions that empower businesses to grow, innovate, and compete globally — regardless of their size or location. Vision: To become a globally recognized technology company from Pakistan — proving that innovation knows no borders.',
+      'ORBIT is an AI-powered software solutions company. Tagline: "Engineered for the Future. Built for Today." Started as freelance projects on Fiverr and evolved into a growing technology company that combines AI innovation with full-service software development. Mission: To deliver world-class AI-powered software solutions that empower businesses to grow, innovate, and compete globally - regardless of their size or location. Vision: To become a globally recognized technology company from Pakistan - proving that innovation knows no borders.',
     keywords: [
       'about', 'orbit', 'company', 'who are you', 'what is orbit',
       'mission', 'vision', 'story', 'history',
@@ -148,7 +148,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'values',
     category: 'about',
     content:
-      'Orbit core values: 1) Innovation — Pushing boundaries and embracing new technologies. We stay on the cutting edge. 2) Integrity — Honest, transparent, and client-first. No hidden fees, no surprises. 3) Excellence — Highest standards in every line of code and pixel. We don\'t ship half-baked work. 4) Impact — Building solutions that create real, measurable value for businesses.',
+      'Orbit core values: 1) Innovation - Pushing boundaries and embracing new technologies. We stay on the cutting edge. 2) Integrity - Honest, transparent, and client-first. No hidden fees, no surprises. 3) Excellence - Highest standards in every line of code and pixel. We don\'t ship half-baked work. 4) Impact - Building solutions that create real, measurable value for businesses.',
     keywords: [
       'values', 'culture', 'principles', 'believe', 'stand for',
       'integrity', 'innovation', 'excellence',
@@ -170,7 +170,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'marketplace-seller',
     category: 'platform',
     content:
-      'Want to sell your services on Orbit? Join as a freelancer (Orbiter): 1) Sign up at /freelancers/sign-up. 2) Complete your profile and showcase your skills. 3) Create gigs with packages and pricing. 4) Get discovered by clients and start earning. Features: secure payments via Stripe, real-time messaging, order management dashboard, review system, and earnings tracking. No listing fees — Orbit only takes a small commission on completed orders.',
+      'Want to sell your services on Orbit? Join as a freelancer (Orbiter): 1) Sign up at /freelancers/sign-up. 2) Complete your profile and showcase your skills. 3) Create gigs with packages and pricing. 4) Get discovered by clients and start earning. Features: secure payments via Stripe, real-time messaging, order management dashboard, review system, and earnings tracking. No listing fees - Orbit only takes a small commission on completed orders.',
     keywords: [
       'sell', 'seller', 'gig', 'earn', 'join', 'register', 'sign up',
       'become freelancer', 'create gig', 'start selling',
@@ -182,7 +182,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'contact',
     category: 'contact',
     content:
-      'Contact Orbit: Email: info@orbitpk.com. Based in Pakistan, serving clients globally. We respond within 24 hours. Currently accepting new projects. Visit /contact to send a message directly. For freelancer inquiries, visit /freelancers. Free initial consultation — no obligations. We\'re available on email and scheduled video calls.',
+      'Contact Orbit: Email: info@orbitpk.com. Based in Pakistan, serving clients globally. We respond within 24 hours. Currently accepting new projects. Visit /contact to send a message directly. For freelancer inquiries, visit /freelancers. Free initial consultation - no obligations. We\'re available on email and scheduled video calls.',
     keywords: [
       'contact', 'email', 'reach', 'talk', 'call', 'message', 'connect',
       'get in touch', 'consultation', 'meeting',
@@ -192,7 +192,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'get-started',
     category: 'contact',
     content:
-      'How to get started with Orbit: 1) Reach out — Email us at info@orbitpk.com or visit /contact with a brief description of your project. 2) Free consultation — We\'ll schedule a call to understand your needs, goals, and budget. No obligations. 3) Proposal — We\'ll send a detailed proposal with scope, timeline, and pricing. 4) Kick off — Once approved, we start with 50% upfront and begin development immediately. You can also hire individual freelancers from our marketplace at /freelancers.',
+      'How to get started with Orbit: 1) Reach out - Email us at info@orbitpk.com or visit /contact with a brief description of your project. 2) Free consultation - We\'ll schedule a call to understand your needs, goals, and budget. No obligations. 3) Proposal - We\'ll send a detailed proposal with scope, timeline, and pricing. 4) Kick off - Once approved, we start with 50% upfront and begin development immediately. You can also hire individual freelancers from our marketplace at /freelancers.',
     keywords: [
       'start', 'begin', 'get started', 'hire', 'project', 'quote',
       'proposal', 'consultation', 'onboard', 'kick off', 'work with',
@@ -204,7 +204,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'portfolio-overview',
     category: 'portfolio',
     content:
-      'Orbit portfolio highlights — we have delivered projects across AI, web, mobile, and design: 1) Hello Kitty AI Voice Assistant — Wake-word activated AI assistant using ChatGPT and Gemini (Python, OpenAI API). 2) ORBIT Web Platform — This website, built with Next.js 14, TypeScript, Tailwind CSS, Framer Motion. 3) AI Resume-Job Matcher — AI tool that scores resume-job compatibility using sentence transformers. 4) WearBlend — AI virtual try-on app using DALL-E 3 and Gemini. 5) Face Recognition Attendance System — Automated attendance with anti-spoofing. 6) Movie Recommendation Engine — Content-based recommender using TF-IDF. Visit /portfolio to see all projects with live demos and source code.',
+      'Orbit portfolio highlights - we have delivered projects across AI, web, mobile, and design: 1) Hello Kitty AI Voice Assistant - Wake-word activated AI assistant using ChatGPT and Gemini (Python, OpenAI API). 2) ORBIT Web Platform - This website, built with Next.js 14, TypeScript, Tailwind CSS, Framer Motion. 3) AI Resume-Job Matcher - AI tool that scores resume-job compatibility using sentence transformers. 4) WearBlend - AI virtual try-on app using DALL-E 3 and Gemini. 5) Face Recognition Attendance System - Automated attendance with anti-spoofing. 6) Movie Recommendation Engine - Content-based recommender using TF-IDF. Visit /portfolio to see all projects with live demos and source code.',
     keywords: [
       'portfolio', 'projects', 'work', 'examples', 'case study', 'showcase',
       'built', 'delivered', 'previous work', 'show me',
@@ -214,7 +214,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'portfolio-ai',
     category: 'portfolio',
     content:
-      'Orbit AI portfolio: Hello Kitty AI Voice Assistant — voice-activated personal AI assistant with wake word detection, conversation memory, switchable AI providers (ChatGPT/Gemini), adjustable voice speed. Built with Python, OpenAI API, SpeechRecognition, pyttsx3. AI Resume-Job Matcher — scores resume vs. job description compatibility (0-100%), detects missing skills, suggests improvements. Built with Python, Streamlit, FastAPI, Sentence Transformers. WearBlend — AI virtual try-on that generates realistic outfit photos using DALL-E 3 and Gemini. Face Recognition Attendance — multi-face detection with anti-spoofing (blink/movement detection).',
+      'Orbit AI portfolio: Hello Kitty AI Voice Assistant - voice-activated personal AI assistant with wake word detection, conversation memory, switchable AI providers (ChatGPT/Gemini), adjustable voice speed. Built with Python, OpenAI API, SpeechRecognition, pyttsx3. AI Resume-Job Matcher - scores resume vs. job description compatibility (0-100%), detects missing skills, suggests improvements. Built with Python, Streamlit, FastAPI, Sentence Transformers. WearBlend - AI virtual try-on that generates realistic outfit photos using DALL-E 3 and Gemini. Face Recognition Attendance - multi-face detection with anti-spoofing (blink/movement detection).',
     keywords: [
       'ai project', 'ai work', 'ai portfolio', 'hello kitty', 'wearblend',
       'face recognition', 'resume matcher', 'voice assistant',
@@ -226,7 +226,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'tech-stack',
     category: 'technology',
     content:
-      'Orbit tech stack: Frontend — Next.js 14, React, TypeScript, Tailwind CSS, Framer Motion. Backend — Node.js, Python (FastAPI, Django). Databases — Supabase (PostgreSQL), Firebase, MongoDB. AI/ML — OpenAI API, Google Gemini, Groq (Llama 3.3), LangChain, Sentence Transformers, TensorFlow, PyTorch. Mobile — React Native. Design — Figma, Adobe Creative Suite. DevOps — Vercel, Railway, Docker, GitHub Actions. Auth — Clerk. Payments — Stripe.',
+      'Orbit tech stack: Frontend - Next.js 14, React, TypeScript, Tailwind CSS, Framer Motion. Backend - Node.js, Python (FastAPI, Django). Databases - Supabase (PostgreSQL), Firebase, MongoDB. AI/ML - OpenAI API, Google Gemini, Groq (Llama 3.3), LangChain, Sentence Transformers, TensorFlow, PyTorch. Mobile - React Native. Design - Figma, Adobe Creative Suite. DevOps - Vercel, Railway, Docker, GitHub Actions. Auth - Clerk. Payments - Stripe.',
     keywords: [
       'tech', 'stack', 'technology', 'tools', 'framework', 'language',
       'python', 'javascript', 'next', 'react', 'supabase', 'firebase',
@@ -270,7 +270,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'faq-communication',
     category: 'faq',
     content:
-      'How Orbit communicates with clients: We use email, Slack, and scheduled video calls. You get regular progress updates (usually weekly). For urgent matters, response time is within 24 hours. We work across time zones — our Pakistan-based team serves clients in the US, UK, UAE, Canada, and worldwide. All communication is in English (we also speak Urdu).',
+      'How Orbit communicates with clients: We use email, Slack, and scheduled video calls. You get regular progress updates (usually weekly). For urgent matters, response time is within 24 hours. We work across time zones - our Pakistan-based team serves clients in the US, UK, UAE, Canada, and worldwide. All communication is in English (we also speak Urdu).',
     keywords: [
       'communication', 'update', 'respond', 'time zone', 'meeting',
       'call', 'slack', 'response time', 'available', 'hours',
@@ -280,7 +280,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'faq-location',
     category: 'faq',
     content:
-      'Orbit is headquartered in Pakistan with a remote-first team serving clients globally. We work across time zones — US, UK, UAE, Canada, Europe, and beyond. Our remote-first approach means we hire the best talent regardless of location. We maintain consistent communication through Slack, email, and scheduled calls.',
+      'Orbit is headquartered in Pakistan with a remote-first team serving clients globally. We work across time zones - US, UK, UAE, Canada, Europe, and beyond. Our remote-first approach means we hire the best talent regardless of location. We maintain consistent communication through Slack, email, and scheduled calls.',
     keywords: [
       'location', 'where', 'based', 'pakistan', 'remote', 'country',
       'office', 'global', 'international', 'timezone',
@@ -292,7 +292,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'orbit-ai',
     category: 'orbit-ai',
     content:
-      'Orbit AI is the intelligent workspace built into the Orbit platform. It includes 7 free tools: 1) Orbit Chat — general AI assistant for any question. 2) Orbit Code — write, debug, and explain code in any language. 3) Orbit Write — create marketing copy, blogs, emails, and content. 4) Orbit Translate — professional English and Urdu translation. 5) Orbit Resume — build ATS-optimized resumes and cover letters. 6) Orbit Freelance — optimize Fiverr gigs and Upwork proposals. 7) Orbit Image — generate AI images for free. Powered by Llama 3.3 70B via Groq (fast, free) with Gemini as backup. Visit /ai to try all tools.',
+      'Orbit AI is the intelligent workspace built into the Orbit platform. It includes 7 free tools: 1) Orbit Chat - general AI assistant for any question. 2) Orbit Code - write, debug, and explain code in any language. 3) Orbit Write - create marketing copy, blogs, emails, and content. 4) Orbit Translate - professional English and Urdu translation. 5) Orbit Resume - build ATS-optimized resumes and cover letters. 6) Orbit Freelance - optimize Fiverr gigs and Upwork proposals. 7) Orbit Image - generate AI images for free. Powered by Llama 3.3 70B via Groq (fast, free) with Gemini as backup. Visit /ai to try all tools.',
     keywords: [
       'orbit ai', 'tools', 'features', 'what can you do', 'help', 'capabilities',
       'ai tools', 'free ai', 'workspace',
@@ -304,7 +304,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'testimonials',
     category: 'social-proof',
     content:
-      'What clients say about Orbit: "Exceptional work, fast delivery, and great communication. The team at Orbit exceeded our expectations and delivered a product that truly transformed our business." — John Smith, CTO, TechStartup Inc. "The AI chatbot Orbit built completely transformed our customer support. Response times dropped by 80% and customer satisfaction scores are at an all-time high." — Sarah Johnson, Product Manager, RetailCo. "Professional team with truly world-class quality. They understood our vision perfectly and delivered a brand identity that positions us for global growth." — Ahmed Khan, Founder, DigitalAgency.',
+      'What clients say about Orbit: "Exceptional work, fast delivery, and great communication. The team at Orbit exceeded our expectations and delivered a product that truly transformed our business." - John Smith, CTO, TechStartup Inc. "The AI chatbot Orbit built completely transformed our customer support. Response times dropped by 80% and customer satisfaction scores are at an all-time high." - Sarah Johnson, Product Manager, RetailCo. "Professional team with truly world-class quality. They understood our vision perfectly and delivered a brand identity that positions us for global growth." - Ahmed Khan, Founder, DigitalAgency.',
     keywords: [
       'review', 'testimonial', 'client', 'feedback', 'rating', 'recommend',
       'experience', 'say about', 'opinion', 'reputation', 'trust',
@@ -316,7 +316,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'why-orbit',
     category: 'about',
     content:
-      'Why choose Orbit over others? 1) AI-first approach — AI isn\'t an add-on, it\'s built into everything we do. 2) Full-service — from design to development to deployment, we handle everything. 3) Cost-effective — Pakistan-based team offers world-class quality at competitive rates (60-70% less than US/UK agencies). 4) Founder-led — Shehriyar personally oversees every project, ensuring quality. 5) Modern tech stack — Next.js 14, React, TypeScript, Tailwind — no outdated WordPress templates. 6) Free post-launch support — 30 days of bug fixes included. 7) Fiverr track record — Level 1 Seller with proven client satisfaction.',
+      'Why choose Orbit over others? 1) AI-first approach - AI isn\'t an add-on, it\'s built into everything we do. 2) Full-service - from design to development to deployment, we handle everything. 3) Cost-effective - Pakistan-based team offers world-class quality at competitive rates (60-70% less than US/UK agencies). 4) Founder-led - Shehriyar personally oversees every project, ensuring quality. 5) Modern tech stack - Next.js 14, React, TypeScript, Tailwind - no outdated WordPress templates. 6) Free post-launch support - 30 days of bug fixes included. 7) Fiverr track record - Level 1 Seller with proven client satisfaction.',
     keywords: [
       'why orbit', 'different', 'better', 'advantage', 'compare', 'vs',
       'choose', 'unique', 'special', 'stand out', 'competitor',
@@ -328,7 +328,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'industries',
     category: 'about',
     content:
-      'Industries Orbit serves: We work with businesses across all sectors — startups, SMEs, and enterprises. Key industries: SaaS and technology startups, e-commerce and retail, healthcare and medical tech, education and EdTech, fintech and finance, real estate, agencies and creative studios. We adapt our solutions to your specific industry needs and regulations. Whether you need a customer-facing chatbot, an internal tool, or a complete digital transformation — we have experience.',
+      'Industries Orbit serves: We work with businesses across all sectors - startups, SMEs, and enterprises. Key industries: SaaS and technology startups, e-commerce and retail, healthcare and medical tech, education and EdTech, fintech and finance, real estate, agencies and creative studios. We adapt our solutions to your specific industry needs and regulations. Whether you need a customer-facing chatbot, an internal tool, or a complete digital transformation - we have experience.',
     keywords: [
       'industry', 'sector', 'startup', 'ecommerce', 'healthcare', 'education',
       'fintech', 'saas', 'enterprise', 'small business', 'sme',

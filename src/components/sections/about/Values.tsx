@@ -20,7 +20,7 @@ const values = [
     icon: Heart,
     title: 'Integrity',
     subtitle: 'Client First',
-    description: "We are honest, transparent, and always put our clients' interests first — no shortcuts, ever.",
+    description: "We are honest, transparent, and always put our clients' interests first - no shortcuts, ever.",
     stat: '100%',
     gradient: 'linear-gradient(160deg, #E11D48 0%, #9F1239 55%, #4C0519 100%)',
     orb: '#FDA4AF',
@@ -29,7 +29,7 @@ const values = [
     icon: Award,
     title: 'Excellence',
     subtitle: 'Highest Standards',
-    description: 'Every line of code, every pixel, every interaction — we hold ourselves to the highest standards.',
+    description: 'Every line of code, every pixel, every interaction - we hold ourselves to the highest standards.',
     stat: '5.0★',
     gradient: 'linear-gradient(160deg, #D97706 0%, #92400E 55%, #451A03 100%)',
     orb: '#FDE68A',
@@ -47,7 +47,7 @@ const values = [
     icon: Users,
     title: 'Collaboration',
     subtitle: 'Better Together',
-    description: 'We work as true partners — sharing context, feedback, and ownership at every step of the journey.',
+    description: 'We work as true partners - sharing context, feedback, and ownership at every step of the journey.',
     stat: '∞',
     gradient: 'linear-gradient(160deg, #059669 0%, #064E3B 55%, #022C22 100%)',
     orb: '#6EE7B7',
@@ -147,7 +147,7 @@ export function Values() {
       {/* ── Clean background: single centered radial, no color shifts ── */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[var(--color-surface)]" />
-        {/* Subtle center radial — always white/neutral */}
+        {/* Subtle center radial - always white/neutral */}
         <div
           className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 65%)' }}
@@ -235,7 +235,7 @@ export function Values() {
                         : '0 12px 40px rgba(0,0,0,0.22)',
                     }}
                   >
-                    {/* Single orb — only animated on center card */}
+                    {/* Single orb - only animated on center card */}
                     <div
                       className="absolute rounded-full blur-[60px]"
                       style={{
@@ -246,7 +246,7 @@ export function Values() {
                       }}
                     />
 
-                    {/* Stat badge — top left */}
+                    {/* Stat badge - top left */}
                     <div
                       className="absolute left-4 top-4 rounded-full px-3 py-1 font-mono text-xs font-bold text-white"
                       style={{
@@ -258,7 +258,7 @@ export function Values() {
                       {v.stat}
                     </div>
 
-                    {/* Icon — upper center */}
+                    {/* Icon - upper center */}
                     <div className="absolute left-0 right-0 top-[24%] flex justify-center">
                       <div
                         className="flex h-[68px] w-[68px] items-center justify-center rounded-2xl"
@@ -272,7 +272,7 @@ export function Values() {
                       </div>
                     </div>
 
-                    {/* Content panel — bottom fade */}
+                    {/* Content panel - bottom fade */}
                     <div
                       className="absolute inset-x-0 bottom-0 px-5 pb-6 pt-12"
                       style={{

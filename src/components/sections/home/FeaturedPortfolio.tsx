@@ -101,7 +101,7 @@ export function FeaturedPortfolio() {
         </div>
       </div>
 
-      {/* Marquee rows — full width, no container constraint */}
+      {/* Marquee rows - full width, no container constraint */}
       <motion.div
         className="mt-16 space-y-6"
         initial={{ opacity: 0 }}
