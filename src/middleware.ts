@@ -2,6 +2,7 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { CLERK_ENABLED } from '@/lib/clerk-flag'
+import { MARKETPLACE_ENABLED } from '@/lib/flags'
 
 const isMarketplaceProtected = createRouteMatcher([
   '/freelancers/dashboard(.*)',
@@ -21,6 +22,11 @@ const clerkHandler = clerkMiddleware(async (auth, req: NextRequest) => {
 })
 
 export default function middleware(req: NextRequest, event: Parameters<typeof clerkHandler>[1]) {
+  // Marketplace is disabled → let every /freelancers/* route fall through to
+  // the Coming Soon screen instead of forcing an auth redirect.
+  if (!MARKETPLACE_ENABLED) {
+    return NextResponse.next()
+  }
   if (CLERK_ENABLED) {
     return clerkHandler(req, event)
   }

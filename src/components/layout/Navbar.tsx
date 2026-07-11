@@ -146,6 +146,11 @@ export function Navbar() {
                         New
                       </span>
                     )}
+                    {link.href === '/freelancers' && (
+                      <span className="ml-1.5 inline-flex rounded-full bg-text-tertiary/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-text-tertiary">
+                        Soon
+                      </span>
+                    )}
                   </Link>
                   {hasChildren && (
                     <button
