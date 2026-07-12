@@ -1,0 +1,920 @@
+<title>ORBIT Internship Application</title>
+
+<style>
+  /* ═══════════ ORBIT design tokens (from the live site) ═══════════ */
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface-2: #161616;
+    --border: #1e1e1e;
+    --border-soft: rgba(255, 255, 255, 0.06);
+    --text: #ffffff;
+    --text-2: #a0a0a0;
+    --text-3: #606060;
+    --accent: #ff751f;
+    --accent-hover: #ff8c42;
+    --accent-dim: rgba(255, 117, 31, 0.08);
+    --accent-glow: rgba(255, 117, 31, 0.2);
+    --ok: #22c55e;
+    --err: #f0553f;
+
+    --mono: ui-monospace, "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --r: 10px;
+    --r-lg: 16px;
+  }
+
+  :root[data-theme="light"] {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --surface-2: #f1f3f5;
+    --border: #e0e2e6;
+    --border-soft: rgba(0, 0, 0, 0.06);
+    --text: #0f0f0f;
+    --text-2: #4a4a4a;
+    --text-3: #7a7a7a;
+    --accent-dim: rgba(255, 117, 31, 0.06);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  ::selection { background: var(--accent-glow); color: var(--text); }
+
+  /* ═══════════ Shell ═══════════ */
+  .shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; gap: 36px; padding: 32px 20px 72px; }
+  }
+
+  /* ═══════════ Left rail: the brief ═══════════ */
+  .rail { position: sticky; top: 48px; }
+  @media (max-width: 900px) { .rail { position: static; } }
+
+  .mark {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 28px;
+  }
+  .mark svg { width: 100%; height: 100%; overflow: visible; }
+  .mark .ring { fill: none; stroke: var(--text); stroke-width: 7; }
+  .mark .dot { fill: var(--accent); }
+  /* ambient orbit behind the mark */
+  .mark::before {
+    content: "";
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 190px; height: 190px;
+    margin: -95px 0 0 -95px;
+    border: 1px dashed rgba(255, 117, 31, 0.16);
+    border-radius: 50%;
+    animation: spin 34s linear infinite;
+    pointer-events: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .mark::before { animation: none; }
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  .rail h1 {
+    margin: 16px 0 0;
+    font-size: 34px;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-weight: 800;
+    text-wrap: balance;
+  }
+  .rail h1 em { font-style: normal; color: var(--accent); }
+
+  .rail .lede {
+    margin: 14px 0 0;
+    font-size: 14px;
+    color: var(--text-2);
+    max-width: 34ch;
+  }
+
+  /* program facts — a real dossier, tabular */
+  .facts {
+    margin-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+  .facts dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0;
+  }
+  .facts dt, .facts dd {
+    margin: 0;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .facts dt {
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-3);
+    padding-right: 20px;
+  }
+  .facts dd {
+    color: var(--text);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* live completion meter */
+  .meter { margin-top: 26px; }
+  .meter-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .meter-top b {
+    color: var(--text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .meter-track {
+    margin-top: 9px;
+    height: 3px;
+    background: var(--surface-2);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    border-radius: 99px;
+    box-shadow: 0 0 12px var(--accent-glow);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ═══════════ Form ═══════════ */
+  form { display: flex; flex-direction: column; gap: 24px; }
+
+  fieldset {
+    margin: 0;
+    padding: 26px;
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  @media (max-width: 560px) { fieldset { padding: 20px; } }
+
+  legend {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 600;
+  }
+  legend .code {
+    color: var(--text-3);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 620px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .field { display: flex; flex-direction: column; gap: 7px; }
+
+  label {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-2);
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  label .req { color: var(--accent); }
+  label .opt {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-left: auto;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="date"],
+  input[type="number"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 11px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+    appearance: none;
+  }
+  textarea { resize: vertical; min-height: 108px; }
+
+  input::placeholder, textarea::placeholder { color: var(--text-3); }
+
+  input:hover, select:hover, textarea:hover { border-color: #2c2c2c; }
+  :root[data-theme="light"] input:hover,
+  :root[data-theme="light"] select:hover,
+  :root[data-theme="light"] textarea:hover { border-color: #c9ccd1; }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
+  /* select caret */
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: "";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    width: 7px; height: 7px;
+    margin-top: -5px;
+    border-right: 1.6px solid var(--text-3);
+    border-bottom: 1.6px solid var(--text-3);
+    transform: rotate(45deg);
+    pointer-events: none;
+  }
+  select { padding-right: 36px; cursor: pointer; }
+  select option { background: var(--surface-2); color: var(--text); }
+
+  .hint {
+    font-size: 11.5px;
+    color: var(--text-3);
+  }
+
+  /* track picker — real radio cards */
+  .tracks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 620px) { .tracks { grid-template-columns: 1fr; } }
+
+  .track {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 13px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .track:hover { border-color: #2c2c2c; }
+  :root[data-theme="light"] .track:hover { border-color: #c9ccd1; }
+
+  .track input { position: absolute; opacity: 0; pointer-events: none; }
+
+  .track .box {
+    flex-shrink: 0;
+    width: 15px; height: 15px;
+    margin-top: 2px;
+    border: 1.5px solid var(--text-3);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    transition: border-color 0.18s;
+  }
+  .track .box::after {
+    content: "";
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    transform: scale(0);
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .track .t-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+  }
+  .track .t-desc {
+    font-size: 11.5px;
+    color: var(--text-3);
+    margin-top: 2px;
+  }
+
+  .track input:checked ~ .box { border-color: var(--accent); }
+  .track input:checked ~ .box::after { transform: scale(1); }
+  .track:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .track input:focus-visible ~ .box {
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
+  /* skills — chip toggles */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip span {
+    display: inline-block;
+    padding: 7px 13px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    font-size: 12.5px;
+    color: var(--text-2);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.18s;
+  }
+  .chip span:hover { border-color: #2c2c2c; color: var(--text); }
+  :root[data-theme="light"] .chip span:hover { border-color: #c9ccd1; }
+  .chip input:checked + span {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .chip input:focus-visible + span { box-shadow: 0 0 0 3px var(--accent-dim); }
+
+  /* consent */
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    font-size: 12.5px;
+    color: var(--text-2);
+    cursor: pointer;
+  }
+  .consent input { position: absolute; opacity: 0; pointer-events: none; }
+  .consent .box {
+    flex-shrink: 0;
+    width: 16px; height: 16px;
+    margin-top: 1px;
+    border: 1.5px solid var(--text-3);
+    border-radius: 4px;
+    display: grid;
+    place-items: center;
+    transition: all 0.18s;
+  }
+  .consent .box::after {
+    content: "";
+    width: 9px; height: 5px;
+    border-left: 2px solid var(--bg);
+    border-bottom: 2px solid var(--bg);
+    transform: rotate(-45deg) scale(0);
+    margin-top: -2px;
+    transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .consent input:checked ~ .box {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .consent input:checked ~ .box::after { transform: rotate(-45deg) scale(1); }
+  .consent input:focus-visible ~ .box { box-shadow: 0 0 0 3px var(--accent-dim); }
+  .consent a { color: var(--accent); text-decoration: none; }
+  .consent a:hover { text-decoration: underline; }
+
+  /* actions */
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 26px;
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+    border-radius: 99px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+  .submit:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 24px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+  .submit:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-dim), 0 0 24px var(--accent-glow);
+  }
+  .submit:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .submit .arrow { font-size: 17px; line-height: 1; }
+
+  .actions .note {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+
+  /* validation */
+  .invalid input, .invalid select, .invalid textarea { border-color: var(--err); }
+  .err-msg {
+    display: none;
+    font-size: 11.5px;
+    color: var(--err);
+  }
+  .invalid .err-msg { display: block; }
+
+  /* success panel */
+  .done {
+    display: none;
+    padding: 56px 32px;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+  }
+  .done.show { display: block; }
+  form.hide { display: none; }
+
+  .done .tick {
+    width: 60px; height: 60px;
+    margin: 0 auto 22px;
+    border-radius: 50%;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent);
+    display: grid;
+    place-items: center;
+  }
+  .done .tick::after {
+    content: "";
+    width: 18px; height: 9px;
+    border-left: 2.5px solid var(--accent);
+    border-bottom: 2.5px solid var(--accent);
+    transform: rotate(-45deg);
+    margin-top: -4px;
+  }
+  .done h2 {
+    margin: 0;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+  }
+  .done p {
+    margin: 12px auto 0;
+    max-width: 42ch;
+    font-size: 14px;
+    color: var(--text-2);
+  }
+  .done .ref {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 8px 16px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--text-2);
+  }
+  .done .ref b { color: var(--accent); font-weight: 600; }
+</style>
+
+<div class="shell">
+
+  <!-- ══════════ LEFT: the brief ══════════ -->
+  <aside class="rail">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 64 64">
+        <circle class="ring" cx="36" cy="36" r="18" />
+        <circle class="dot" cx="20" cy="20" r="6" />
+      </svg>
+    </div>
+
+    <p class="eyebrow">Now accepting applications</p>
+
+    <h1>Build with us at <em>ORBIT</em></h1>
+
+    <p class="lede">
+      A hands-on internship where you ship real client work, not
+      throwaway exercises. Mentored directly by the founders.
+    </p>
+
+    <div class="facts">
+      <dl>
+        <dt>Ref</dt>          <dd>ORB-INT-26</dd>
+        <dt>Duration</dt>     <dd>3 months</dd>
+        <dt>Mode</dt>         <dd>Remote / Hybrid</dd>
+        <dt>Base</dt>         <dd>Islamabad, PK</dd>
+        <dt>Commitment</dt>   <dd>20+ hrs / week</dd>
+        <dt>Certificate</dt>  <dd>On completion</dd>
+      </dl>
+    </div>
+
+    <div class="meter">
+      <div class="meter-top">
+        <span>Application</span>
+        <b id="pct">0%</b>
+      </div>
+      <div class="meter-track">
+        <div class="meter-fill" id="fill"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══════════ RIGHT: the form ══════════ -->
+  <main>
+    <form id="app" novalidate>
+
+      <!-- Applicant -->
+      <fieldset>
+        <legend>Applicant <span class="code">/ 01</span></legend>
+
+        <div class="grid-2">
+          <div class="field" data-req>
+            <label for="name">Full name <span class="req">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Ayesha Khan" autocomplete="name" required />
+            <span class="err-msg">Please enter your full name.</span>
+          </div>
+
+          <div class="field" data-req>
+            <label for="email">Email <span class="req">*</span></label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+            <span class="err-msg">Enter a valid email address.</span>
+          </div>
+
+          <div class="field" data-req>
+            <label for="phone">Phone / WhatsApp <span class="req">*</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="+92 3XX XXXXXXX" autocomplete="tel" required />
+            <span class="err-msg">Enter a phone number we can reach you on.</span>
+          </div>
+
+          <div class="field" data-req>
+            <label for="city">City <span class="req">*</span></label>
+            <input type="text" id="city" name="city" placeholder="Islamabad" autocomplete="address-level2" required />
+            <span class="err-msg">Please enter your city.</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Education -->
+      <fieldset>
+        <legend>Education <span class="code">/ 02</span></legend>
+
+        <div class="field" data-req>
+          <label for="uni">University or institution <span class="req">*</span></label>
+          <input type="text" id="uni" name="university" placeholder="NUST, FAST, COMSATS, Air University..." required />
+          <span class="err-msg">Tell us where you study.</span>
+        </div>
+
+        <div class="grid-2">
+          <div class="field" data-req>
+            <label for="degree">Degree / field <span class="req">*</span></label>
+            <input type="text" id="degree" name="degree" placeholder="BS Computer Science" required />
+            <span class="err-msg">Enter your degree or field of study.</span>
+          </div>
+
+          <div class="field" data-req>
+            <label for="year">Current year <span class="req">*</span></label>
+            <div class="select-wrap">
+              <select id="year" name="year" required>
+                <option value="" selected disabled>Select</option>
+                <option>1st year</option>
+                <option>2nd year</option>
+                <option>3rd year</option>
+                <option>4th year</option>
+                <option>Final semester</option>
+                <option>Graduated</option>
+              </select>
+            </div>
+            <span class="err-msg">Select your current year.</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Track -->
+      <fieldset>
+        <legend>Track <span class="code">/ 03</span></legend>
+        <p class="hint" style="margin:-4px 0 0">Pick the one you want to spend three months getting genuinely good at.</p>
+
+        <div class="tracks" id="tracks">
+          <label class="track">
+            <input type="radio" name="track" value="ai-ml" required />
+            <span class="box"></span>
+            <span>
+              <span class="t-name">AI &amp; Machine Learning</span>
+              <span class="t-desc">Chatbots, model training, RAG systems</span>
+            </span>
+          </label>
+
+          <label class="track">
+            <input type="radio" name="track" value="web" />
+            <span class="box"></span>
+            <span>
+              <span class="t-name">Web Development</span>
+              <span class="t-desc">Next.js, React, TypeScript</span>
+            </span>
+          </label>
+
+          <label class="track">
+            <input type="radio" name="track" value="mobile" />
+            <span class="box"></span>
+            <span>
+              <span class="t-name">Mobile Development</span>
+              <span class="t-desc">Android, iOS, cross-platform</span>
+            </span>
+          </label>
+
+          <label class="track">
+            <input type="radio" name="track" value="design" />
+            <span class="box"></span>
+            <span>
+              <span class="t-name">Design</span>
+              <span class="t-desc">UI/UX, brand, product visuals</span>
+            </span>
+          </label>
+        </div>
+        <span class="err-msg" id="track-err">Choose a track to continue.</span>
+      </fieldset>
+
+      <!-- Skills -->
+      <fieldset>
+        <legend>Skills <span class="code">/ 04</span></legend>
+        <p class="hint" style="margin:-4px 0 0">Tick anything you have working knowledge of. Being honest here helps us place you well.</p>
+
+        <div class="chips">
+          <label class="chip"><input type="checkbox" name="skills" value="Python" /><span>Python</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="JavaScript" /><span>JavaScript</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="TypeScript" /><span>TypeScript</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="React" /><span>React</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="Next.js" /><span>Next.js</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="Node.js" /><span>Node.js</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="TensorFlow" /><span>TensorFlow</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="PyTorch" /><span>PyTorch</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="SQL" /><span>SQL</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="Git" /><span>Git</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="Figma" /><span>Figma</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="Flutter" /><span>Flutter</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="Kotlin" /><span>Kotlin</span></label>
+          <label class="chip"><input type="checkbox" name="skills" value="Photoshop" /><span>Photoshop</span></label>
+        </div>
+      </fieldset>
+
+      <!-- Links & availability -->
+      <fieldset>
+        <legend>Work &amp; availability <span class="code">/ 05</span></legend>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="portfolio">Portfolio or GitHub <span class="opt">Optional</span></label>
+            <input type="url" id="portfolio" name="portfolio" placeholder="https://github.com/yourname" />
+          </div>
+
+          <div class="field">
+            <label for="linkedin">LinkedIn <span class="opt">Optional</span></label>
+            <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourname" />
+          </div>
+
+          <div class="field" data-req>
+            <label for="hours">Hours per week <span class="req">*</span></label>
+            <div class="select-wrap">
+              <select id="hours" name="hours" required>
+                <option value="" selected disabled>Select</option>
+                <option>10 to 20 hours</option>
+                <option>20 to 30 hours</option>
+                <option>30 to 40 hours</option>
+                <option>Full time</option>
+              </select>
+            </div>
+            <span class="err-msg">Let us know your availability.</span>
+          </div>
+
+          <div class="field" data-req>
+            <label for="start">Earliest start date <span class="req">*</span></label>
+            <input type="date" id="start" name="start" required />
+            <span class="err-msg">Pick a start date.</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Motivation -->
+      <fieldset>
+        <legend>Why ORBIT <span class="code">/ 06</span></legend>
+
+        <div class="field" data-req>
+          <label for="why">Tell us why you want this <span class="req">*</span></label>
+          <textarea id="why" name="why" placeholder="What are you hoping to build or learn? If you have shipped something you are proud of, tell us about it." required minlength="40"></textarea>
+          <span class="hint">A few honest sentences beat a polished paragraph. Minimum 40 characters.</span>
+          <span class="err-msg">Please write at least 40 characters.</span>
+        </div>
+
+        <label class="consent" data-req>
+          <input type="checkbox" id="consent" name="consent" required />
+          <span class="box"></span>
+          <span>
+            I confirm the information above is accurate, and I agree that ORBIT may contact me
+            about this application. <a href="https://orbitpk.com/privacy" target="_blank" rel="noopener">Privacy policy</a>
+          </span>
+        </label>
+        <span class="err-msg" id="consent-err">Please confirm before submitting.</span>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" class="submit" id="submit">
+          Submit application
+          <span class="arrow" aria-hidden="true">&rarr;</span>
+        </button>
+        <span class="note">We reply within 5 working days</span>
+      </div>
+    </form>
+
+    <!-- success -->
+    <section class="done" id="done" role="status" aria-live="polite">
+      <div class="tick" aria-hidden="true"></div>
+      <h2>Application received</h2>
+      <p id="done-msg">
+        Thanks for applying. We read every single one, and we will get back to you
+        within five working days at the email you gave us.
+      </p>
+      <span class="ref">REF <b id="done-ref">ORB-INT-26</b></span>
+    </section>
+  </main>
+</div>
+
+<script>
+  (function () {
+    const form = document.getElementById('app');
+    const done = document.getElementById('done');
+    const fill = document.getElementById('fill');
+    const pct  = document.getElementById('pct');
+
+    // Every control that counts toward "complete"
+    const required = [
+      '#name', '#email', '#phone', '#city',
+      '#uni', '#degree', '#year',
+      '#hours', '#start', '#why', '#consent'
+    ].map((s) => document.querySelector(s));
+
+    const trackInputs = Array.from(document.querySelectorAll('input[name="track"]'));
+
+    function filled(el) {
+      if (!el) return false;
+      if (el.type === 'checkbox') return el.checked;
+      if (el.id === 'why') return el.value.trim().length >= 40;
+      if (el.type === 'email') return /^\S+@\S+\.\S+$/.test(el.value.trim());
+      return el.value.trim() !== '';
+    }
+
+    function trackChosen() {
+      return trackInputs.some((r) => r.checked);
+    }
+
+    function progress() {
+      const total = required.length + 1; // +1 for the track
+      let n = required.filter(filled).length;
+      if (trackChosen()) n += 1;
+      const p = Math.round((n / total) * 100);
+      fill.style.width = p + '%';
+      pct.textContent = p + '%';
+    }
+
+    // live progress
+    form.addEventListener('input', progress);
+    form.addEventListener('change', progress);
+
+    // clear a field's error as soon as it becomes valid
+    form.addEventListener('input', function (e) {
+      const wrap = e.target.closest('.field, .consent');
+      if (wrap && filled(e.target)) wrap.classList.remove('invalid');
+    });
+    trackInputs.forEach((r) =>
+      r.addEventListener('change', function () {
+        document.getElementById('tracks').classList.remove('invalid');
+        document.getElementById('track-err').style.display = 'none';
+      })
+    );
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      let ok = true;
+
+      required.forEach(function (el) {
+        const wrap = el.closest('.field') || el.closest('.consent');
+        if (!filled(el)) {
+          ok = false;
+          if (wrap) wrap.classList.add('invalid');
+          if (el.id === 'consent') {
+            document.getElementById('consent-err').style.display = 'block';
+          }
+        } else if (wrap) {
+          wrap.classList.remove('invalid');
+          if (el.id === 'consent') {
+            document.getElementById('consent-err').style.display = 'none';
+          }
+        }
+      });
+
+      if (!trackChosen()) {
+        ok = false;
+        document.getElementById('track-err').style.display = 'block';
+      }
+
+      if (!ok) {
+        const firstBad = form.querySelector('.invalid, #track-err[style*="block"]');
+        if (firstBad) firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      // Frontend only: no backend call. Show the confirmation state.
+      const name = document.getElementById('name').value.trim().split(' ')[0];
+      document.getElementById('done-msg').textContent =
+        'Thanks ' + name + '. We read every single application, and we will get back to you within five working days at the email you gave us.';
+
+      // simple readable reference from the chosen track
+      const track = (trackInputs.find((r) => r.checked) || {}).value || 'gen';
+      const stamp = String(Math.floor(Math.random() * 9000) + 1000);
+      document.getElementById('done-ref').textContent =
+        'ORB-INT-' + track.toUpperCase().replace('-', '') + '-' + stamp;
+
+      form.classList.add('hide');
+      done.classList.add('show');
+      done.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      fill.style.width = '100%';
+      pct.textContent = '100%';
+    });
+
+    progress();
+  })();
+</script>
