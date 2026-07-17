@@ -124,7 +124,9 @@ export default function CareersPage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href="/internship.html"
+              href="https://orbit-internship.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
             >
               Apply for the internship
@@ -220,7 +222,9 @@ export default function CareersPage() {
               No cover letter. No CV upload. Just tell us what you want to build.
             </p>
             <a
-              href="/internship.html"
+              href="https://orbit-internship.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-2 inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-bold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
             >
               Start your application
