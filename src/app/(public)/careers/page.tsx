@@ -109,9 +109,9 @@ export default function CareersPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobSchema) }}
       />
 
-      {/* Hero */}
-      <section className="relative overflow-hidden pt-36 pb-20 sm:pb-28">
-        {/* Background image, low opacity, blended into the page */}
+      {/* Hero - intentional dark banner (fixed dark in both themes so the
+          navbar's dark gradient blends and the code photo reads cleanly) */}
+      <section className="relative overflow-hidden bg-[#0a0a0a] pt-36 pb-20 sm:pb-28">
         <div className="pointer-events-none absolute inset-0 -z-0" aria-hidden="true">
           <Image
             src="/fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg"
@@ -119,30 +119,29 @@ export default function CareersPage() {
             fill
             priority
             sizes="100vw"
-            className="object-cover opacity-[0.14] dark:opacity-[0.10]"
+            className="object-cover opacity-[0.22]"
           />
-          {/* fade the image into the page top and bottom */}
+          {/* darken so text is crisp, and fade into the light page below */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(to bottom, var(--color-bg) 0%, transparent 32%, transparent 60%, var(--color-bg) 100%)',
+                'linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.45) 55%, #0a0a0a 100%)',
             }}
           />
-          {/* keep the left side, where the text sits, clean */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(to right, var(--color-bg) 0%, rgba(0,0,0,0) 70%)',
+                'linear-gradient(to right, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.2) 75%)',
             }}
           />
           {/* subtle brand glow, top-right */}
           <div
-            className="absolute right-0 top-0 h-[420px] w-[520px]"
+            className="absolute right-0 top-0 h-[440px] w-[560px]"
             style={{
               background:
-                'radial-gradient(ellipse at top right, rgba(255,117,31,0.10) 0%, transparent 60%)',
+                'radial-gradient(ellipse at top right, rgba(255,117,31,0.16) 0%, transparent 62%)',
             }}
           />
         </div>
@@ -152,10 +151,10 @@ export default function CareersPage() {
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
             Now accepting applications
           </p>
-          <h1 className="mt-5 max-w-3xl text-4xl font-black tracking-tight text-text-primary sm:text-5xl md:text-6xl">
+          <h1 className="mt-5 max-w-3xl text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">
             Build real things, <span className="text-gradient">from day one</span>
           </h1>
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base">
+          <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/70 sm:text-base">
             We are three engineers who started ORBIT from freelance work and grew it
             into a company. We are looking for people who want to ship, not shadow.
           </p>
@@ -171,7 +170,7 @@ export default function CareersPage() {
             </a>
             <a
               href={`mailto:${COMPANY.email}?subject=Career%20enquiry`}
-              className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-text-secondary transition-colors hover:border-accent hover:text-accent"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-medium text-white/80 transition-colors hover:border-accent hover:text-accent"
             >
               Email us instead
             </a>
