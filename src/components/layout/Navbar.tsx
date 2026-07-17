@@ -111,13 +111,11 @@ export function Navbar() {
             const isOpen = activeNavDropdown === link.label
             const isActive = pathname === link.href || (hasChildren && pathname?.startsWith(link.href) && link.href !== '/')
 
-            const textColor = link.href === '/ai'
+            const textColor = isActive
               ? 'text-accent'
-              : isActive
-                ? 'text-accent'
-                : scrolled
-                  ? 'text-text-secondary hover:text-text-primary'
-                  : 'text-white/80 hover:text-white'
+              : scrolled
+                ? 'text-text-secondary hover:text-text-primary'
+                : 'text-white/80 hover:text-white'
 
             return (
               <div
@@ -141,12 +139,7 @@ export function Navbar() {
                     )}
                   >
                     {link.label}
-                    {link.href === '/ai' && (
-                      <span className="ml-1.5 inline-flex rounded-full bg-accent/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-accent">
-                        New
-                      </span>
-                    )}
-                    {link.href === '/freelancers' && (
+                    {link.label === 'Products' && (
                       <span className="ml-1.5 inline-flex rounded-full bg-text-tertiary/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-text-tertiary">
                         Soon
                       </span>

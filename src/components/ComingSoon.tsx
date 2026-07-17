@@ -7,7 +7,18 @@ import { COMPANY } from '@/lib/constants'
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
-export function ComingSoon() {
+interface ComingSoonProps {
+  /** Small eyebrow label, e.g. "Freelancer Marketplace" or "Orbit AI". */
+  label: string
+  /** One-line description of what's coming. */
+  description: string
+  /** Subject line for the "Get notified" mailto. */
+  notifySubject?: string
+}
+
+export function ComingSoon({ label, description, notifySubject }: ComingSoonProps) {
+  const subject = encodeURIComponent(notifySubject || `Notify me when ${label} launches`)
+
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-background px-6 py-24 text-center">
       {/* Ambient orbital rings */}
@@ -25,7 +36,7 @@ export function ComingSoon() {
       >
         <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-          Freelancer Marketplace
+          {label}
         </span>
 
         <h1 className="mt-8 text-4xl font-black tracking-tight text-text-primary sm:text-5xl md:text-6xl">
@@ -33,9 +44,7 @@ export function ComingSoon() {
         </h1>
 
         <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-text-secondary sm:text-base">
-          We&apos;re building a curated marketplace to hire vetted Orbiters -
-          designers, developers, and AI specialists. It&apos;s almost ready.
-          Check back shortly.
+          {description}
         </p>
 
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
@@ -47,7 +56,7 @@ export function ComingSoon() {
             Back to Home
           </Link>
           <a
-            href={`mailto:${COMPANY.email}?subject=Notify%20me%20when%20the%20marketplace%20launches`}
+            href={`mailto:${COMPANY.email}?subject=${subject}`}
             className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-text-secondary transition-colors hover:border-accent hover:text-accent"
           >
             <Mail className="h-4 w-4" />

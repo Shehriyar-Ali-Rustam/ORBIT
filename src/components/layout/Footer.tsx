@@ -91,15 +91,24 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Orbit AI */}
+          {/* Col 4: Products */}
           <div>
-            <h3 className="mb-4 font-mono text-xs font-bold uppercase tracking-widest text-text-primary">Orbit AI</h3>
+            <h3 className="mb-4 font-mono text-xs font-bold uppercase tracking-widest text-text-primary">Products</h3>
             <ul className="space-y-3">
-              <li><Link href="/ai/chat" className="text-sm text-text-secondary transition-colors hover:text-accent">Orbit Chat</Link></li>
-              <li><Link href="/ai/code" className="text-sm text-text-secondary transition-colors hover:text-accent">Orbit Code</Link></li>
-              <li><Link href="/ai/write" className="text-sm text-text-secondary transition-colors hover:text-accent">Orbit Write</Link></li>
-              <li><Link href="/ai/image" className="text-sm text-text-secondary transition-colors hover:text-accent">Orbit Image</Link></li>
-              <li><Link href="/ai" className="group inline-flex items-center gap-1 text-sm font-medium text-accent hover:underline">All Tools <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></Link></li>
+              <li>
+                <Link href="/ai" className="inline-flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-accent">
+                  Orbit AI
+                  <span className="rounded-full bg-text-tertiary/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-text-tertiary">Soon</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/freelancers" className="inline-flex items-center gap-2 text-sm text-text-secondary transition-colors hover:text-accent">
+                  Freelancer Marketplace
+                  <span className="rounded-full bg-text-tertiary/15 px-1.5 py-0.5 text-[9px] font-bold uppercase leading-none text-text-tertiary">Soon</span>
+                </Link>
+              </li>
+              <li><Link href="/blog" className="text-sm text-text-secondary transition-colors hover:text-accent">Blog</Link></li>
+              <li><Link href="/careers" className="text-sm text-text-secondary transition-colors hover:text-accent">Careers</Link></li>
             </ul>
           </div>
 

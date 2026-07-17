@@ -40,19 +40,13 @@ export const NAV_LINKS: NavLink[] = [
     ],
   },
   {
-    label: 'Orbit AI',
+    label: 'Products',
     href: '/ai',
     children: [
-      { label: 'AI Chat', href: '/ai/chat', description: 'Conversational assistant' },
-      { label: 'AI Write', href: '/ai/write', description: 'Content generation' },
-      { label: 'AI Image', href: '/ai/image', description: 'Visuals from text' },
-      { label: 'AI Code', href: '/ai/code', description: 'Code assistant' },
-      { label: 'Resume Tools', href: '/ai/resume', description: 'Build and refine' },
-      { label: 'Translate', href: '/ai/translate', description: 'Multi-language' },
-      { label: 'Freelance Helper', href: '/ai/freelance', description: 'Pitch and proposal AI' },
+      { label: 'Orbit AI', href: '/ai', description: 'Built-in AI tools · coming soon' },
+      { label: 'Freelancer Marketplace', href: '/freelancers', description: 'Hire vetted Orbiters · coming soon' },
     ],
   },
-  { label: 'Freelancers', href: '/freelancers' },
   { label: 'Contact', href: '/contact' },
 ]
 
