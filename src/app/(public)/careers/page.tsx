@@ -109,35 +109,78 @@ export default function CareersPage() {
       />
 
       {/* Hero */}
-      <section className="section-padding pt-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <p className="inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.24em] text-accent">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
-            Now accepting applications
-          </p>
-          <h1 className="mt-5 max-w-3xl text-4xl font-black tracking-tight text-text-primary sm:text-5xl md:text-6xl">
-            Build real things, <span className="text-gradient">from day one</span>
-          </h1>
-          <p className="mt-5 max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base">
-            We are three engineers who started ORBIT from freelance work and grew it
-            into a company. We are looking for people who want to ship, not shadow.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="https://orbit-internship.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
-            >
-              Apply for the internship
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
-            <a
-              href={`mailto:${COMPANY.email}?subject=Career%20enquiry`}
-              className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-text-secondary transition-colors hover:border-accent hover:text-accent"
-            >
-              Email us instead
-            </a>
+      <section className="relative overflow-hidden section-padding pt-32">
+        {/* soft brand glow, right side */}
+        <div
+          className="pointer-events-none absolute right-0 top-1/4 h-[520px] w-[620px]"
+          style={{ background: 'radial-gradient(ellipse at center, rgba(255,117,31,0.10) 0%, transparent 60%)' }}
+          aria-hidden="true"
+        />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+            {/* Left: copy */}
+            <div>
+              <p className="inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.24em] text-accent">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
+                Now accepting applications
+              </p>
+              <h1 className="mt-5 max-w-2xl text-4xl font-black tracking-tight text-text-primary sm:text-5xl md:text-6xl">
+                Build real things, <span className="text-gradient">from day one</span>
+              </h1>
+              <p className="mt-5 max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base">
+                We are three engineers who started ORBIT from freelance work and grew it
+                into a company. We are looking for people who want to ship, not shadow.
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a
+                  href="https://orbit-internship.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
+                >
+                  Apply for the internship
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+                <a
+                  href={`mailto:${COMPANY.email}?subject=Career%20enquiry`}
+                  className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-text-secondary transition-colors hover:border-accent hover:text-accent"
+                >
+                  Email us instead
+                </a>
+              </div>
+            </div>
+
+            {/* Right: orbital graphic */}
+            <div className="relative hidden items-center justify-center lg:flex" aria-hidden="true">
+              <div className="relative h-80 w-80 xl:h-96 xl:w-96">
+                {/* dashed orbit rings */}
+                <div className="absolute inset-0 animate-spin-slow rounded-full border border-dashed border-accent/25" />
+                <div
+                  className="absolute inset-10 animate-spin-slow rounded-full border border-dashed border-accent/35"
+                  style={{ animationDirection: 'reverse' }}
+                />
+                <div className="absolute inset-20 animate-spin-slow rounded-full border border-dashed border-accent/45" />
+
+                {/* orbiting planets */}
+                <div className="absolute inset-0 animate-spin-slow">
+                  <span className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 rounded-full bg-accent shadow-[0_0_14px_rgba(255,117,31,0.7)]" />
+                </div>
+                <div className="absolute inset-10 animate-spin-slow" style={{ animationDirection: 'reverse' }}>
+                  <span className="absolute right-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-text-tertiary" />
+                </div>
+                <div className="absolute inset-20 animate-spin-slow">
+                  <span className="absolute bottom-0 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-accent/70" />
+                </div>
+
+                {/* centre mark: ORBIT ring + orange dot */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative flex h-24 w-24 items-center justify-center rounded-full border-[5px] border-text-primary xl:h-28 xl:w-28">
+                    <span className="absolute -right-1 -top-1 h-5 w-5 rounded-full bg-accent shadow-[0_0_16px_rgba(255,117,31,0.6)]" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
