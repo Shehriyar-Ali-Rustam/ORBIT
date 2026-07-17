@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono, Montserrat } from 'next/font/google'
 import { Toaster } from 'react-hot-toast'
 import './globals.css'
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { AppClerkProvider } from '@/components/providers/AppClerkProvider'
 import { CurrencyProvider } from '@/components/providers/CurrencyProvider'
@@ -177,6 +179,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </AppClerkProvider>
           </CurrencyProvider>
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )

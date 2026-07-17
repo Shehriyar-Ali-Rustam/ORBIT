@@ -70,6 +70,12 @@ export function Footer() {
                   <Link href={link.href} className="text-sm text-text-secondary transition-colors hover:text-accent">{link.label}</Link>
                 </li>
               ))}
+              <li>
+                <Link href="/blog" className="text-sm text-text-secondary transition-colors hover:text-accent">Blog</Link>
+              </li>
+              <li>
+                <Link href="/careers" className="text-sm text-text-secondary transition-colors hover:text-accent">Careers</Link>
+              </li>
             </ul>
           </div>
 

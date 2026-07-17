@@ -14,7 +14,8 @@ export const NAV_LINKS: NavLink[] = [
       { label: 'People Behind Orbit', href: '/about#founders', description: 'Meet the founders' },
       { label: 'Mission & Vision', href: '/about#mission', description: 'What we stand for' },
       { label: 'Our Values', href: '/about#values', description: 'How we work' },
-      { label: 'Join the Team', href: '/about#hiring', description: 'Open roles' },
+      { label: 'Careers', href: '/careers', description: 'Internships and open roles' },
+      { label: 'Blog', href: '/blog', description: 'Notes from the build' },
     ],
   },
   {

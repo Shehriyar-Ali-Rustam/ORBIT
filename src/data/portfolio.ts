@@ -16,6 +16,24 @@ export const projects: Project[] = [
     liveUrl: 'https://personal-assistant-hello-kitty.vercel.app',
     featured: true,
     completedAt: '2024-08-15',
+    caseStudy: {
+      problem:
+        'Most voice assistants are locked to one provider, one voice, and one wake word. We wanted to find out what it takes to build a genuinely personal one: your wake word, your choice of model, running on your own machine.',
+      approach:
+        'We built a full voice loop from scratch: always-listening wake word detection, speech to text, a swappable AI provider layer, then text back to speech. The provider abstraction meant switching between ChatGPT and Gemini became a config change rather than a rewrite.',
+      highlights: [
+        'Built a provider layer so the assistant can switch between OpenAI and Gemini without touching the voice pipeline',
+        'Added conversation memory so it follows context across turns instead of treating every question as the first',
+        'Made the wake word, voice speed, and model user-configurable rather than hardcoded',
+        'Kept the whole loop running locally, so audio is not shipped to a third party unnecessarily',
+      ],
+      results: [
+        { value: '2', label: 'AI providers, swappable' },
+        { value: 'Custom', label: 'wake word and voice' },
+        { value: 'Local', label: 'processing by default' },
+      ],
+      note: 'This project became the foundation for how we build client chatbots now: never hardcode the model provider, always leave room to switch when pricing or quality changes.',
+    },
   },
   {
     id: 'orbit-web-platform',
@@ -128,6 +146,24 @@ export const projects: Project[] = [
     liveUrl: 'https://campalpha.web.app',
     featured: true,
     completedAt: '2025-09-01',
+    caseStudy: {
+      problem:
+        "Pakistan's adventure sports community was scattered across Facebook groups and WhatsApp threads. Gear sellers had no storefront, trip organisers posted into feeds that buried their listings within hours, and there was no single place for any of it to live.",
+      approach:
+        'We built a photo-first marketplace designed around the reality of the audience: mid-range Android phones on patchy connections. Firebase handled data, auth, and hosting so the client could launch fast and iterate rather than wait on backend infrastructure.',
+      highlights: [
+        'Designed the layout around large photography from the start, since adventure sells on imagery',
+        'Chose Firebase over a custom backend to get to launch quickly with real-time data and no servers to maintain',
+        'Built and tested mobile-first against slow connections, not as a desktop afterthought',
+        'Cut the filter panel from six options to two after watching users ignore almost all of them',
+      ],
+      results: [
+        { value: '2 wks', label: 'from design to launch' },
+        { value: '1 place', label: 'for a scattered community' },
+        { value: '100%', label: 'mobile-first traffic ready' },
+      ],
+      note: 'The lesson we keep relearning: the rich filtering we built first was ignored, and the stories section we scoped as a nice-to-have turned out to be what people came back for.',
+    },
   },
   {
     id: 'cheezy-heaven',
@@ -144,6 +180,23 @@ export const projects: Project[] = [
     liveUrl: 'https://cheezy-heaven.web.app',
     featured: true,
     completedAt: '2025-11-01',
+    caseStudy: {
+      problem:
+        'Cheezy Heaven was taking every order by phone. Staff were writing tickets by hand during the dinner rush, mistakes were common, and there was no way for a customer to see the menu without calling and asking.',
+      approach:
+        'We built an ordering site around the actual rush-hour use case: a customer on a phone, hungry, who wants to see the menu and order in under a minute. Menu browsing had to work instantly, and checkout had to survive being tapped by someone in a hurry.',
+      highlights: [
+        'Put the full menu with prices online so customers stop calling to ask what is available',
+        'Built the ordering flow mobile-first, because nobody orders pizza from a desktop',
+        'Kept the brand loud and red rather than sanding it into another generic food template',
+        'Structured the menu so items can be updated without a developer',
+      ],
+      results: [
+        { value: '30+', label: 'menu items online' },
+        { value: '24/7', label: 'ordering, no phone needed' },
+        { value: '<1 min', label: 'menu to checkout' },
+      ],
+    },
   },
   {
     id: 'personal-portfolio',

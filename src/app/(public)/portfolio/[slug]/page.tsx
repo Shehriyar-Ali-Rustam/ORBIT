@@ -111,6 +111,60 @@ export default function ProjectDetailPage({ params }: Props) {
               <p className="mt-6 whitespace-pre-line leading-relaxed text-text-secondary">
                 {project.fullDescription}
               </p>
+
+              {/* ── Case study ── */}
+              {project.caseStudy && (
+                <div className="mt-12 flex flex-col gap-10 border-t border-border pt-10">
+                  {/* Results up top: the numbers are the headline */}
+                  <div className="grid grid-cols-3 gap-3">
+                    {project.caseStudy.results.map((r) => (
+                      <div
+                        key={r.label}
+                        className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-4 text-center"
+                      >
+                        <p className="text-xl font-black tracking-tight text-accent sm:text-2xl">
+                          {r.value}
+                        </p>
+                        <p className="mt-1 text-[11px] leading-tight text-text-tertiary">
+                          {r.label}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <section>
+                    <h2 className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-text-tertiary">
+                      The problem
+                    </h2>
+                    <p className="mt-3 leading-relaxed text-text-secondary">
+                      {project.caseStudy.problem}
+                    </p>
+                  </section>
+
+                  <section>
+                    <h2 className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-text-tertiary">
+                      What we did
+                    </h2>
+                    <p className="mt-3 leading-relaxed text-text-secondary">
+                      {project.caseStudy.approach}
+                    </p>
+                    <ul className="mt-5 flex flex-col gap-3">
+                      {project.caseStudy.highlights.map((h) => (
+                        <li key={h} className="flex gap-3 text-sm leading-relaxed text-text-secondary">
+                          <span className="mt-[0.55em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+
+                  {project.caseStudy.note && (
+                    <blockquote className="border-l-2 border-accent bg-accent/5 py-4 pl-5 pr-4 text-sm leading-relaxed text-text-primary">
+                      {project.caseStudy.note}
+                    </blockquote>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="space-y-8">
