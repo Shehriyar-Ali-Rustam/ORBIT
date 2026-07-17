@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { ArrowUpRight, Check } from 'lucide-react'
 import { HomeCTA } from '@/components/sections/home/HomeCTA'
 import { COMPANY } from '@/lib/constants'
@@ -109,8 +110,44 @@ export default function CareersPage() {
       />
 
       {/* Hero */}
-      <section className="section-padding pt-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <section className="relative overflow-hidden pt-36 pb-20 sm:pb-28">
+        {/* Background image, low opacity, blended into the page */}
+        <div className="pointer-events-none absolute inset-0 -z-0" aria-hidden="true">
+          <Image
+            src="/fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-[0.14] dark:opacity-[0.10]"
+          />
+          {/* fade the image into the page top and bottom */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to bottom, var(--color-bg) 0%, transparent 32%, transparent 60%, var(--color-bg) 100%)',
+            }}
+          />
+          {/* keep the left side, where the text sits, clean */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(to right, var(--color-bg) 0%, rgba(0,0,0,0) 70%)',
+            }}
+          />
+          {/* subtle brand glow, top-right */}
+          <div
+            className="absolute right-0 top-0 h-[420px] w-[520px]"
+            style={{
+              background:
+                'radial-gradient(ellipse at top right, rgba(255,117,31,0.10) 0%, transparent 60%)',
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
           <p className="inline-flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-[0.24em] text-accent">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
             Now accepting applications
