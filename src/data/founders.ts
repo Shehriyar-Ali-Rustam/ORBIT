@@ -7,10 +7,8 @@ export const founders: TeamMember[] = [
     role: 'Founder',
     bio: "Software engineering student from Pakistan and AI/ML enthusiast. Started ORBIT after building a track record on Fiverr as a Level 1 Seller. Drives the company's technical direction - builds the products with Next.js, React, and Python, and shapes the brand.",
     photo: '/images/team/shehriyar.webp',
-    skills: ['Next.js', 'React', 'Python', 'AI/ML', 'TypeScript', 'Design'],
-    github: 'https://github.com/Shehriyar-Ali-Rustam',
+    skills: [],
     linkedin: 'https://www.linkedin.com/in/shehriyar-ali-rustam-516895246',
-    fiverr: 'https://www.fiverr.com/sellers/shehriyar01se',
     isFounder: true,
   },
   {

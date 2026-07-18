@@ -1,12 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Linkedin, ArrowUpRight } from 'lucide-react'
+import { Linkedin } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Badge } from '@/components/ui/Badge'
 import { founders } from '@/data/founders'
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
@@ -60,33 +58,20 @@ export function PeopleBehindOrbit() {
                   <h3 className="mt-5 text-xl font-semibold text-text-primary">{member.name}</h3>
                   <p className="mt-1 text-sm font-medium text-accent">{member.role}</p>
                   <p className="mt-4 text-sm leading-relaxed text-text-secondary">{member.bio}</p>
-                  {member.skills.length > 0 && (
-                    <div className="mt-5 flex flex-wrap justify-center gap-2">
-                      {member.skills.slice(0, 6).map((skill) => (
-                        <Badge key={skill} variant="default">{skill}</Badge>
-                      ))}
-                    </div>
-                  )}
                   {member.linkedin && (
-                    <div className="mt-5 flex items-center justify-center">
+                    <div className="mt-6 flex items-center justify-center">
                       <a
                         href={member.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-text-tertiary transition-colors hover:text-accent"
+                        className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-text-secondary transition-colors hover:border-accent hover:text-accent"
                         aria-label={`${member.name} on LinkedIn`}
                       >
-                        <Linkedin className="h-5 w-5" />
+                        <Linkedin className="h-4 w-4" />
+                        LinkedIn
                       </a>
                     </div>
                   )}
-                  <Link
-                    href={`/team/${member.id}`}
-                    className="mt-6 inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-medium text-text-secondary transition-all hover:border-accent hover:text-accent"
-                  >
-                    View Full Profile
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </Link>
                 </div>
               </div>
             </motion.div>
