@@ -39,8 +39,8 @@ export const teamMembers: TeamMember[] = [
   {
     id: 'moiz-danishmand',
     name: 'Moiz Danishmand',
-    role: 'Social Media Marketing Manager',
-    bio: 'Runs the studio\'s social media, content, and brand presence. Manages engagement, community, and the day-to-day of how ORBIT shows up online.',
+    role: 'Chief Marketing Officer',
+    bio: 'Leads marketing across the studio - brand, social media, content, and campaigns. Shapes how ORBIT shows up online and drives the strategy behind reaching new clients.',
     photo: '',
     skills: [],
     linkedin: '#',
