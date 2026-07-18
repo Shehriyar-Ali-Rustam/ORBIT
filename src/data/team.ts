@@ -1,28 +1,13 @@
 import { TeamMember } from '@/types'
 
+// The "We're Hiring" section currently offers one thing: the internship.
 export const team: TeamMember[] = [
   {
-    id: 'coming-soon-1',
-    name: 'Coming Soon',
-    role: 'AI Engineer',
-    bio: 'We are actively recruiting talented AI engineers to join the Orbit team. Interested? Apply through our freelancer network.',
+    id: 'internship',
+    name: 'Internship Program',
+    role: 'Internship',
+    bio: 'A hands-on program across AI/ML, web, mobile, and design. Ship real client work from day one, mentored directly by the founders.',
     photo: '',
-    skills: ['Python', 'TensorFlow', 'PyTorch', 'NLP'],
-  },
-  {
-    id: 'coming-soon-2',
-    name: 'Coming Soon',
-    role: 'UI/UX Designer',
-    bio: 'We are looking for creative designers who share our passion for world-class digital experiences.',
-    photo: '',
-    skills: ['Figma', 'Adobe XD', 'Prototyping', 'Design Systems'],
-  },
-  {
-    id: 'coming-soon-3',
-    name: 'Coming Soon',
-    role: 'Backend Developer',
-    bio: 'We are searching for backend specialists to help us build scalable, secure infrastructure.',
-    photo: '',
-    skills: ['Node.js', 'PostgreSQL', 'AWS', 'Docker'],
+    skills: [],
   },
 ]

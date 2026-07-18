@@ -1,13 +1,9 @@
 'use client'
 
-import Link from 'next/link'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Github, Linkedin } from 'lucide-react'
+import { GraduationCap, ArrowUpRight } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Badge } from '@/components/ui/Badge'
-import { team } from '@/data/team'
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
@@ -27,75 +23,41 @@ export function Team() {
           </motion.div>
         </div>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((member, i) => (
-            <motion.div
-              key={member.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease }}
-              viewport={{ once: true, margin: '-50px' }}
-            >
-              {member.isFounder ? (
-                <div className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-6 text-center backdrop-blur-sm">
-                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
-                  <div className="relative z-10">
-                    {member.photo ? (
-                      <Image
-                        src={member.photo}
-                        alt={member.name}
-                        width={200}
-                        height={200}
-                        quality={90}
-                        className="mx-auto h-20 w-20 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-brand text-2xl font-black text-text-primary">
-                        {member.name.charAt(0)}
-                      </div>
-                    )}
-                    <h3 className="mt-4 text-lg font-semibold text-text-primary">{member.name}</h3>
-                    <p className="text-sm text-accent">{member.role}</p>
-                    <p className="mt-3 text-sm leading-relaxed text-text-secondary">{member.bio}</p>
-                    <div className="mt-4 flex flex-wrap justify-center gap-2">
-                      {member.skills.slice(0, 4).map((skill) => (
-                        <Badge key={skill} variant="default">{skill}</Badge>
-                      ))}
-                    </div>
-                    <div className="mt-4 flex items-center justify-center gap-3">
-                      {member.github && (
-                        <a href={member.github} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-accent" aria-label="GitHub">
-                          <Github className="h-4 w-4" />
-                        </a>
-                      )}
-                      {member.linkedin && (
-                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-accent" aria-label="LinkedIn">
-                          <Linkedin className="h-4 w-4" />
-                        </a>
-                      )}
-                      {member.fiverr && (
-                        <a href={member.fiverr} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-text-tertiary transition-colors hover:text-accent" aria-label="Fiverr">
-                          Fiverr
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <Link href="/freelancers/apply" className="block">
-                  <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-dashed border-border p-6 text-center transition-colors hover:border-accent/40">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-surface-2 text-2xl text-text-tertiary">
-                      ?
-                    </div>
-                    <h3 className="mt-4 text-lg font-semibold text-text-tertiary">{member.role}</h3>
-                    <p className="mt-2 text-sm text-text-tertiary">{member.bio}</p>
-                    <span className="mt-4 text-sm font-medium text-accent">Join the Team &rarr;</span>
-                  </div>
-                </Link>
-              )}
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease }}
+          viewport={{ once: true, margin: '-50px' }}
+          className="mx-auto mt-14 max-w-2xl"
+        >
+          <div className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-8 text-center backdrop-blur-sm sm:p-10">
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10 text-accent">
+                <GraduationCap className="h-7 w-7" />
+              </div>
+              <p className="mt-5 font-mono text-xs font-bold uppercase tracking-[0.22em] text-accent">
+                Internship
+              </p>
+              <h3 className="mt-3 text-2xl font-bold text-text-primary">
+                Learn by building real things
+              </h3>
+              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-text-secondary">
+                A hands-on program across AI/ML, web, mobile, and design. Ship real client
+                work from day one, mentored directly by the founders.
+              </p>
+              <a
+                href="https://orbit-internship.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-7 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
+              >
+                Apply for the internship
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
