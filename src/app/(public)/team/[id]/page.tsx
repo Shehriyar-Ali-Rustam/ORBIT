@@ -2,10 +2,9 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, Github, Linkedin, Mail } from 'lucide-react'
+import { ArrowLeft, Linkedin } from 'lucide-react'
 import { founders } from '@/data/founders'
 import { Badge } from '@/components/ui/Badge'
-import { COMPANY } from '@/lib/constants'
 
 interface Props {
   params: { id: string }
@@ -102,47 +101,19 @@ export default function TeamMemberPage({ params }: Props) {
               </div>
             )}
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              {member.linkedin && (
+            {member.linkedin && (
+              <div className="mt-8">
                 <a
                   href={member.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-text-secondary transition-colors hover:border-accent hover:text-accent"
+                  className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium text-text-secondary transition-colors hover:border-accent hover:text-accent"
                 >
                   <Linkedin className="h-4 w-4" />
-                  LinkedIn
+                  Connect on LinkedIn
                 </a>
-              )}
-              {member.github && (
-                <a
-                  href={member.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-text-secondary transition-colors hover:border-accent hover:text-accent"
-                >
-                  <Github className="h-4 w-4" />
-                  GitHub
-                </a>
-              )}
-              {member.fiverr && (
-                <a
-                  href={member.fiverr}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm text-text-secondary transition-colors hover:border-accent hover:text-accent"
-                >
-                  Fiverr
-                </a>
-              )}
-              <a
-                href={`mailto:${COMPANY.email}`}
-                className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-medium text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
-              >
-                <Mail className="h-4 w-4" />
-                Get in touch
-              </a>
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

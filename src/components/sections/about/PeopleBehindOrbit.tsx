@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Github, Linkedin, ArrowUpRight } from 'lucide-react'
+import { Linkedin, ArrowUpRight } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Badge } from '@/components/ui/Badge'
@@ -67,23 +67,17 @@ export function PeopleBehindOrbit() {
                       ))}
                     </div>
                   )}
-                  {(member.github || member.linkedin || member.fiverr) && (
-                    <div className="mt-5 flex items-center justify-center gap-4">
-                      {member.github && (
-                        <a href={member.github} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-accent" aria-label="GitHub">
-                          <Github className="h-4 w-4" />
-                        </a>
-                      )}
-                      {member.linkedin && (
-                        <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-text-tertiary transition-colors hover:text-accent" aria-label="LinkedIn">
-                          <Linkedin className="h-4 w-4" />
-                        </a>
-                      )}
-                      {member.fiverr && (
-                        <a href={member.fiverr} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-text-tertiary transition-colors hover:text-accent" aria-label="Fiverr">
-                          Fiverr
-                        </a>
-                      )}
+                  {member.linkedin && (
+                    <div className="mt-5 flex items-center justify-center">
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-text-tertiary transition-colors hover:text-accent"
+                        aria-label={`${member.name} on LinkedIn`}
+                      >
+                        <Linkedin className="h-5 w-5" />
+                      </a>
                     </div>
                   )}
                   <Link
