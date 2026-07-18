@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/portfolio`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/contact`, lastModified: now, changeFrequency: 'yearly', priority: 0.7 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${SITE_URL}/team`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${SITE_URL}/careers`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     // Orbit AI (/ai/*) and the Freelancer Marketplace (/freelancers) are
     // gated behind Coming Soon right now, so they're intentionally left out

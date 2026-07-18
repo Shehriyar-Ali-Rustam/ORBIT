@@ -32,3 +32,38 @@ export const founders: TeamMember[] = [
     isFounder: true,
   },
 ]
+
+// The wider team beyond the founders. Photos are placeholders (letter
+// avatars) until real ones are added; LinkedIn links are placeholders (#).
+export const teamMembers: TeamMember[] = [
+  {
+    id: 'moiz-danishmand',
+    name: 'Moiz Danishmand',
+    role: 'Social Media Marketing Manager',
+    bio: 'Runs the studio\'s social media, content, and brand presence. Manages engagement, community, and the day-to-day of how ORBIT shows up online.',
+    photo: '',
+    skills: [],
+    linkedin: '#',
+  },
+  {
+    id: 'maaz-karim',
+    name: 'Maaz Karim',
+    role: 'Business Development Executive',
+    bio: 'Leads business development - meeting potential clients, building relationships, generating offline leads, and closing the deals that grow the studio.',
+    photo: '',
+    skills: [],
+    linkedin: '#',
+  },
+  {
+    id: 'azan-hayat',
+    name: 'Azan Hayat',
+    role: 'Digital Marketing Specialist',
+    bio: 'Drives online growth through paid advertising on Google and Meta, online client acquisition, lead generation, and campaign optimization.',
+    photo: '',
+    skills: [],
+    linkedin: '#',
+  },
+]
+
+// Everyone, founders first.
+export const fullTeam: TeamMember[] = [...founders, ...teamMembers]

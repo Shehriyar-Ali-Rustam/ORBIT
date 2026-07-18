@@ -1,8 +1,9 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Linkedin } from 'lucide-react'
+import { Linkedin, ArrowRight } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { founders } from '@/data/founders'
@@ -76,6 +77,16 @@ export function PeopleBehindOrbit() {
               </div>
             </motion.div>
           ))}
+        </div>
+
+        <div className="mt-12 text-center">
+          <Link
+            href="/team"
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
+          >
+            Meet the full team
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
     </section>
