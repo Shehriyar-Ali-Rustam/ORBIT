@@ -53,31 +53,37 @@ export default function Capabilities() {
                         onMouseMove={trackPointer}
                         className="group relative flex h-full flex-col overflow-hidden border border-orbit-line/[0.1] bg-orbit-line/[0.015] transition-[transform,border-color,background-color] duration-300 hover:-translate-y-1.5 hover:border-orbit-accInk/50 hover:bg-orbit-line/[0.035]"
                       >
-                        <ParallaxImage
-                          src={cap.image}
-                          alt={cap.imageAlt}
-                          distance={26}
-                          dim
-                          wipe
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 30vw"
-                          className="aspect-[5/4] w-full"
-                        >
-                          {/* keeps the mono label legible whatever the photo does */}
+                        {/* The badge straddles the frame's bottom edge, so it
+                            has to live OUTSIDE ParallaxImage — that clips its
+                            children to contain the parallax drift, which would
+                            slice the badge in half. */}
+                        <div className="relative">
+                          <ParallaxImage
+                            src={cap.image}
+                            alt={cap.imageAlt}
+                            distance={26}
+                            dim
+                            wipe
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 30vw"
+                            className="aspect-[5/4] w-full"
+                          >
+                            {/* keeps the mono label legible whatever the photo does */}
+                            <span
+                              aria-hidden
+                              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-orbit-canvas/70 via-transparent to-orbit-canvas/35"
+                            />
+                            <span className="eyebrow absolute left-4 top-3 !text-orbit-accInk">
+                              {String(i + 1).padStart(2, '0')}
+                            </span>
+                          </ParallaxImage>
+
                           <span
                             aria-hidden
-                            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-orbit-canvas/70 via-transparent to-orbit-canvas/35"
-                          />
-                          <span className="eyebrow absolute left-4 top-3 !text-orbit-accInk">
-                            {String(i + 1).padStart(2, '0')}
-                          </span>
-                          {/* icon badge rides the bottom edge of the frame */}
-                          <span
-                            aria-hidden
-                            className="absolute bottom-0 left-3.5 flex h-9 w-9 translate-y-1/2 sm:left-4 sm:h-11 sm:w-11 items-center justify-center border border-orbit-line/[0.18] bg-orbit-canvas text-orbit-accInk transition-colors duration-300 group-hover:border-orbit-accInk group-hover:bg-orbit-acc group-hover:text-orbit-onAcc"
+                            className="absolute bottom-0 left-3.5 z-10 flex h-9 w-9 translate-y-1/2 items-center justify-center border border-orbit-line/[0.18] bg-orbit-canvas text-orbit-accInk transition-colors duration-300 group-hover:border-orbit-accInk group-hover:bg-orbit-acc group-hover:text-orbit-onAcc sm:left-4 sm:h-11 sm:w-11"
                           >
                             <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.4} />
                           </span>
-                        </ParallaxImage>
+                        </div>
 
                         <div className="relative flex flex-1 flex-col gap-2 px-3.5 pb-4 pt-8 sm:gap-2.5 sm:px-4 sm:pb-5 sm:pt-9">
                           {/* cursor-tracking glow */}
