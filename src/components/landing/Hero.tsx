@@ -16,11 +16,12 @@ const enter = (delay: number) => ({
 export default function Hero() {
   return (
     <section id="top" className="relative overflow-hidden">
-      {/* Photograph. Dark desk, warm ambient light — chosen because it already
-          carries the brand orange rather than having it tinted on afterwards. */}
+      {/* Photograph. Bright daylit desk with code on screen — a light canvas
+          needs a light photograph, or the hero reads as a dark slab bolted to
+          the top of a white page. */}
       <div className="absolute inset-0" aria-hidden>
         <Image
-          src="/fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg"
+          src="/images/landing/hero-light.jpg"
           alt=""
           fill
           priority
@@ -29,23 +30,32 @@ export default function Hero() {
         />
       </div>
 
-      {/* Three stacked scrims — this is what keeps the copy readable over
-          photography at any viewport. Do not remove one and keep the others. */}
+      {/* Stacked scrims — this is what keeps the copy readable over photography
+          at any viewport. On a white canvas they have to be gentler than on a
+          dark one: push them as far as the dark version and the photograph
+          disappears into the page entirely. The copy sits bottom-left, so the
+          veil is heaviest there and the image is left to breathe top-right. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-orbit-black/80 via-orbit-black/70 to-orbit-black"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-orbit-canvas/75 via-orbit-canvas/60 to-orbit-canvas md:from-orbit-canvas/55 md:via-orbit-canvas/25"
+      />
+      {/* Left-weighted veil, desktop only. On mobile the copy runs the full
+          width, so there is no clear side to give back to the photograph. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-orbit-canvas via-orbit-canvas/70 to-transparent md:block"
       />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 85% 75% at 15% 72%, rgba(13,13,13,0.94) 0%, rgba(13,13,13,0.62) 40%, transparent 74%)',
+            'radial-gradient(ellipse 85% 75% at 15% 72%, rgb(var(--canvas-rgb) / 0.92) 0%, rgb(var(--canvas-rgb) / 0.5) 42%, transparent 74%)',
         }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-orbit-black"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-orbit-canvas"
       />
       {/* Fourth, top-left only: the photo has UI clutter up there that fights
           the eyebrow at desktop widths. */}
@@ -54,7 +64,7 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 60% 55% at 0% 20%, rgba(13,13,13,0.85) 0%, transparent 70%)',
+            'radial-gradient(ellipse 60% 55% at 0% 20%, rgb(var(--canvas-rgb) / 0.6) 0%, transparent 70%)',
         }}
       />
 
@@ -63,7 +73,7 @@ export default function Hero() {
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse at 80% 8%, rgba(255,117,31,0.18) 0%, transparent 58%)',
+          background: 'radial-gradient(ellipse at 80% 8%, rgb(var(--acc-rgb) / 0.14) 0%, transparent 58%)',
         }}
       />
       <div aria-hidden className="grid-faint pointer-events-none absolute inset-0 opacity-25" />
@@ -75,15 +85,15 @@ export default function Hero() {
 
         <motion.h1
           {...enter(0.15)}
-          className="h-hero mt-5 max-w-4xl font-bold text-orbit-greyLight md:mt-6"
+          className="h-hero mt-5 max-w-4xl font-bold text-orbit-ink md:mt-6"
         >
           AI, web and mobile products,{' '}
-          <span className="glow-acc text-orbit-acc">built end to end.</span>
+          <span className="glow-acc text-orbit-accInk">built end to end.</span>
         </motion.h1>
 
         <motion.p
           {...enter(0.35)}
-          className="mt-5 max-w-xl text-base leading-relaxed text-orbit-greyLight/85 md:mt-8 md:text-lg"
+          className="mt-5 max-w-xl text-base leading-relaxed text-orbit-ink/85 md:mt-8 md:text-lg"
         >
           A software studio in Islamabad. Ten projects shipped for clients across eight countries —
           chatbots, trained models, web platforms and mobile apps.
@@ -112,7 +122,7 @@ export default function Hero() {
         >
           <span className="eyebrow">Scroll</span>
           <motion.span
-            className="block h-6 w-px bg-orbit-acc/60"
+            className="block h-6 w-px bg-orbit-accInk/60"
             animate={{ y: [0, 5, 0] }}
             transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
           />
@@ -120,10 +130,10 @@ export default function Hero() {
       </div>
 
       {/* Location strip closes the hero and doubles as the first divider */}
-      <div className="relative border-t border-white/5">
+      <div className="relative border-t border-orbit-line/[0.07]">
         <div className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-x-8 gap-y-2 px-5 py-4 sm:px-6 md:px-10">
           <span className="eyebrow">{CARD.hours}</span>
-          <span className="eyebrow !text-orbit-greyLight/35">{CARD.locationDetail}</span>
+          <span className="eyebrow !text-orbit-ink/60">{CARD.locationDetail}</span>
         </div>
       </div>
     </section>

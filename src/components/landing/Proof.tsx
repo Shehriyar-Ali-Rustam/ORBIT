@@ -10,11 +10,11 @@ function QuoteCard({ quote, author, country }: { quote: string; author: string; 
     <li className="card w-[280px] shrink-0 p-5 sm:w-[340px]">
       <div className="flex gap-0.5" aria-label="5 out of 5">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className="h-3 w-3 fill-orbit-acc text-orbit-acc" aria-hidden />
+          <Star key={i} className="h-3 w-3 fill-orbit-accInk text-orbit-accInk" aria-hidden />
         ))}
       </div>
-      <p className="mt-4 text-sm leading-relaxed text-orbit-greyLight/75">&ldquo;{quote}&rdquo;</p>
-      <p className="eyebrow mt-4 !text-orbit-greyLight/40">
+      <p className="mt-4 text-sm leading-relaxed text-orbit-ink/75">&ldquo;{quote}&rdquo;</p>
+      <p className="eyebrow mt-4 !text-orbit-ink/60">
         {author} · {country}
       </p>
     </li>
@@ -23,16 +23,16 @@ function QuoteCard({ quote, author, country }: { quote: string; author: string; 
 
 export default function Proof() {
   return (
-    <section className="overflow-hidden border-t border-white/5">
+    <section className="overflow-hidden border-t border-orbit-line/[0.07]">
       <div className="mx-auto max-w-[1280px] px-5 pt-16 sm:px-6 md:px-10 md:pt-20">
         <MotionReveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow accent-rule">What clients said</p>
-            <h2 className="h-section mt-5 max-w-lg font-semibold text-orbit-greyLight">
-              Thirty reviews, <span className="text-orbit-acc">every one of them five stars.</span>
+            <h2 className="h-section mt-5 max-w-lg font-semibold text-orbit-ink">
+              Thirty reviews, <span className="text-orbit-accInk">every one of them five stars.</span>
             </h2>
           </div>
-          <p className="max-w-xs text-sm leading-relaxed text-orbit-greyLight/55">
+          <p className="max-w-xs text-sm leading-relaxed text-orbit-ink/62">
             Verified feedback from Fiverr clients in the US, UK, Germany, Netherlands, Austria,
             Australia, New Zealand and Pakistan.
           </p>
@@ -43,11 +43,11 @@ export default function Proof() {
         {/* Edge fades so cards enter and leave the canvas instead of clipping */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-orbit-black to-transparent md:w-32"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-orbit-canvas to-transparent md:w-32"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-orbit-black to-transparent md:w-32"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-orbit-canvas to-transparent md:w-32"
         />
 
         <ul className="animate-marquee flex w-max gap-4">

@@ -36,14 +36,14 @@ const SOCIAL_ICONS = { LinkedIn: LinkedInIcon, GitHub: GitHubIcon } as const
 
 export default function LandingFooter() {
   return (
-    <footer className="border-t border-white/5">
+    <footer className="border-t border-orbit-line/[0.07]">
       <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-6 md:px-10">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:gap-12">
           <div className="col-span-2 md:col-span-1">
-            <p className="text-2xl font-semibold uppercase tracking-[0.2em] text-orbit-acc">
+            <p className="text-2xl font-semibold uppercase tracking-[0.2em] text-orbit-accInk">
               Orbit
             </p>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-orbit-greyLight/55">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-orbit-ink/62">
               {CARD.tagline} in {CARD.location}. Building AI, web and mobile products for teams
               worldwide.
             </p>
@@ -57,7 +57,7 @@ export default function LandingFooter() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`ORBIT on ${social.label}`}
-                    className="flex h-10 w-10 items-center justify-center border border-white/10 text-orbit-greyLight/60 transition-colors hover:border-orbit-acc/50 hover:text-orbit-acc"
+                    className="flex h-10 w-10 items-center justify-center border border-orbit-line/[0.12] text-orbit-ink/60 transition-colors hover:border-orbit-accInk/50 hover:text-orbit-accInk"
                   >
                     {Icon ? (
                       <Icon className="h-4 w-4" />
@@ -74,13 +74,13 @@ export default function LandingFooter() {
 
           {COLUMNS.map((col) => (
             <nav key={col.heading} aria-label={col.heading}>
-              <p className="eyebrow !text-orbit-acc">{col.heading}</p>
+              <p className="eyebrow !text-orbit-accInk">{col.heading}</p>
               <ul className="mt-5 space-y-3">
                 {col.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-orbit-greyLight/60 transition-colors hover:text-orbit-acc"
+                      className="text-sm text-orbit-ink/60 transition-colors hover:text-orbit-accInk"
                     >
                       {link.label}
                     </Link>
@@ -92,11 +92,11 @@ export default function LandingFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/5">
+      <div className="border-t border-orbit-line/[0.07]">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-3 px-5 py-6 pb-24 sm:px-6 md:flex-row md:items-center md:justify-between md:px-10 md:pb-6">
           <p className="eyebrow">© {new Date().getFullYear()} Orbit · {CARD.location}</p>
-          <p className="eyebrow !text-orbit-greyLight/35">
-            Photography via Unsplash · Landing v.l.01
+          <p className="eyebrow !text-orbit-ink/60">
+            Photography via Unsplash · Landing v.l.02
           </p>
         </div>
       </div>

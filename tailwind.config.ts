@@ -57,16 +57,24 @@ const config: Config = {
           glow: 'rgba(255, 117, 31, 0.2)',
           border: 'rgba(255, 117, 31, 0.3)',
         },
-        // Landing page (v.l.01) palette. Accent is ORBIT orange so the page
-        // matches the printed business card the QR sits on. Swap `acc` here
-        // and `--acc` in src/styles/landing.css to change it in one move.
+        // Landing page palette (v.l.02). Every token resolves through a CSS
+        // variable defined in src/styles/landing.css, so light and dark are one
+        // block of values rather than a rewrite of every component.
         orbit: {
-          acc: '#FF751F',
-          accDeep: '#B84B0E',
-          black: '#0D0D0D',
-          ink: '#151515',
-          grey: '#4D4D4D',
-          greyLight: '#E8E8E8',
+          /** Brand orange. Fills, and text sitting on a dark surface. */
+          acc: 'rgb(var(--acc-rgb) / <alpha-value>)',
+          /** Contrast-safe accent for text/icons on the canvas. On white,
+           *  brand orange only reaches 2.7:1 — this is 5.1:1. */
+          accInk: 'rgb(var(--acc-ink-rgb) / <alpha-value>)',
+          /** Page background. */
+          canvas: 'rgb(var(--canvas-rgb) / <alpha-value>)',
+          /** Primary text. */
+          ink: 'rgb(var(--ink-rgb) / <alpha-value>)',
+          /** Tint for hairline borders and surface fills. */
+          line: 'rgb(var(--line-rgb) / <alpha-value>)',
+          /** Fixed near-black for text on top of an orange fill — the one
+           *  colour that must NOT flip with the theme. */
+          onAcc: '#0D0D0D',
         },
       },
       backgroundImage: {

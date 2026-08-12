@@ -1,23 +1,39 @@
 /*
- * Landing page design system — v.l.01
- * Ported from DESIGN-SYSTEM-PROMPT.md (technical-brutalist dark).
+ * Landing page design system — v.l.02 (light)
+ * Ported from DESIGN-SYSTEM-PROMPT.md (technical-brutalist), inverted to a
+ * white canvas.
  *
  * EVERYTHING here is scoped under `.ds` so it cannot leak into the rest of
  * the app (marketing pages, marketplace, dashboards all keep their own look).
  *
- * Accent is ORBIT orange rather than the reference neon green, per §11 of the
- * spec — the page has to match the printed card the QR is on. To go back to
- * the reference look, change --acc below and `orbit.acc` in tailwind.config.ts.
+ * The structural rules are unchanged from the spec — zero border radius,
+ * hairline borders instead of shadows, monospace micro-labels, one accent
+ * clause per heading, reveal-on-scroll, the [0.22, 1, 0.36, 1] easing. Only
+ * the palette is inverted.
+ *
+ * TO SWITCH BACK TO DARK: add `ds-dark` to the wrapper div's className in
+ * src/app/(landing)/layout.tsx. Every colour flips from the block below.
+ *
+ * The two photographs are the one thing a class cannot flip — a light canvas
+ * needs light photography and vice versa. Going back to dark also means
+ * swapping Hero.tsx to /fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg and
+ * Process.tsx to /images/landing/studio-desk.jpg, both still in the repo.
  */
 
 .ds {
-  --acc: #ff751f;
-  --acc-rgb: 255, 117, 31;
-  --canvas: #0d0d0d;
-  --ink: #e8e8e8;
+  /* Brand orange — fills, and text on a dark surface. */
+  --acc-rgb: 255 117 31;
+  /* Text-safe accent. Brand orange on white is only 2.7:1, which fails WCAG
+     AA; #C2410C is 5.1:1. Used for every accent word, label and icon that
+     sits directly on the canvas. */
+  --acc-ink-rgb: 194 65 12;
+  --canvas-rgb: 255 255 255;
+  --ink-rgb: 13 13 13;
+  --line-rgb: 13 13 13;
+  --glow: none;
 
-  background: var(--canvas);
-  color: var(--ink);
+  background: rgb(var(--canvas-rgb));
+  color: rgb(var(--ink-rgb));
   font-family: var(--font-grotesk), system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.6;
@@ -26,8 +42,22 @@
   overflow-x: hidden;
 }
 
-/* Keep overscroll / rubber-band area on-canvas instead of showing app theme */
+/* The original dark canvas, kept intact and one class away. */
+.ds.ds-dark {
+  --acc-rgb: 255 117 31;
+  --acc-ink-rgb: 255 117 31;
+  --canvas-rgb: 13 13 13;
+  --ink-rgb: 232 232 232;
+  --line-rgb: 255 255 255;
+  --glow: 0 0 28px rgb(255 117 31 / 0.35);
+}
+
+/* Keep overscroll / rubber-band area on-canvas instead of showing app theme.
+   Cannot read --canvas-rgb here: it is defined on .ds, not on body. */
 body:has(.ds) {
+  background: #ffffff;
+}
+body:has(.ds-dark) {
   background: #0d0d0d;
 }
 
@@ -42,7 +72,7 @@ body:has(.ds) {
   text-wrap: pretty;
 }
 .ds ::selection {
-  background: var(--acc);
+  background: rgb(var(--acc-rgb));
   color: #0d0d0d;
 }
 
@@ -71,16 +101,21 @@ body:has(.ds) {
   font-size: 11px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(232, 232, 232, 0.55);
+  /* 0.55 alpha on the dark canvas read fine; on white the same alpha drops
+     below 4.5:1, so light gets a firmer 0.62. */
+  color: rgb(var(--ink-rgb) / 0.62);
+}
+.ds.ds-dark .eyebrow {
+  color: rgb(var(--ink-rgb) / 0.55);
 }
 
-/* Neon tick to the LEFT of an eyebrow */
+/* Accent tick to the LEFT of an eyebrow */
 .ds .accent-rule::before {
   content: '';
   display: inline-block;
   width: 28px;
   height: 1px;
-  background: var(--acc);
+  background: rgb(var(--acc-ink-rgb));
   vertical-align: middle;
   margin-right: 12px;
 }
@@ -92,7 +127,7 @@ body:has(.ds) {
   display: inline-block;
   width: 28px;
   height: 1px;
-  background: var(--acc);
+  background: rgb(var(--acc-ink-rgb));
   vertical-align: middle;
 }
 .ds .accent-rule-both::before {
@@ -106,28 +141,43 @@ body:has(.ds) {
 
 .ds .grid-faint {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgb(var(--line-rgb) / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--line-rgb) / 0.05) 1px, transparent 1px);
   background-size: 64px 64px;
 }
+.ds.ds-dark .grid-faint {
+  background-image:
+    linear-gradient(rgb(var(--line-rgb) / 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--line-rgb) / 0.035) 1px, transparent 1px);
+}
 
+/* A glow behind orange text only reads on a dark canvas; on white it just
+   muddies the edges, so --glow resolves to `none` in the light palette. */
 .ds .glow-acc {
-  text-shadow: 0 0 28px rgba(var(--acc-rgb), 0.35);
+  text-shadow: var(--glow);
 }
 
 /* ─── Surfaces ───────────────────────────────────────────────── */
 
 .ds .card {
-  background: rgba(255, 255, 255, 0.018);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgb(var(--line-rgb) / 0.022);
+  border: 1px solid rgb(var(--line-rgb) / 0.1);
   transition:
     border-color 0.3s ease,
     background 0.3s ease,
     transform 0.3s ease;
 }
 .ds .card:hover {
-  border-color: rgba(var(--acc-rgb), 0.4);
-  background: rgba(255, 255, 255, 0.035);
+  border-color: rgb(var(--acc-rgb) / 0.5);
+  background: rgb(var(--line-rgb) / 0.045);
+}
+.ds.ds-dark .card {
+  background: rgb(var(--line-rgb) / 0.018);
+  border-color: rgb(var(--line-rgb) / 0.08);
+}
+.ds.ds-dark .card:hover {
+  border-color: rgb(var(--acc-rgb) / 0.4);
+  background: rgb(var(--line-rgb) / 0.035);
 }
 
 /* ─── Buttons ────────────────────────────────────────────────── */
@@ -137,7 +187,7 @@ body:has(.ds) {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: var(--acc);
+  background: rgb(var(--acc-rgb));
   color: #0d0d0d;
   padding: 14px 22px;
   font-family: var(--font-space-mono), ui-monospace, monospace;
@@ -147,10 +197,13 @@ body:has(.ds) {
   text-transform: uppercase;
   transition:
     transform 0.25s ease,
-    background 0.25s ease;
+    background 0.25s ease,
+    color 0.25s ease;
 }
+/* Inverts to ink-on-canvas, which stays legible in both palettes. */
 .ds .btn-primary:hover {
-  background: #e8e8e8;
+  background: rgb(var(--ink-rgb));
+  color: rgb(var(--canvas-rgb));
   transform: translateY(-1px);
 }
 
@@ -160,9 +213,9 @@ body:has(.ds) {
   justify-content: center;
   gap: 10px;
   background: transparent;
-  color: #e8e8e8;
+  color: rgb(var(--ink-rgb));
   padding: 14px 22px;
-  border: 1px solid rgba(232, 232, 232, 0.25);
+  border: 1px solid rgb(var(--ink-rgb) / 0.25);
   font-family: var(--font-space-mono), ui-monospace, monospace;
   font-size: 11px;
   font-weight: 700;
@@ -173,8 +226,8 @@ body:has(.ds) {
     color 0.25s ease;
 }
 .ds .btn-ghost:hover {
-  border-color: var(--acc);
-  color: var(--acc);
+  border-color: rgb(var(--acc-ink-rgb));
+  color: rgb(var(--acc-ink-rgb));
 }
 
 /* ─── Motion ─────────────────────────────────────────────────── */
@@ -191,47 +244,7 @@ body:has(.ds) {
   animation: ds-marquee 45s linear infinite;
 }
 
-@keyframes ds-float-a {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) translateY(0);
-  }
-  50% {
-    transform: translate(-50%, -50%) translateY(-10px);
-  }
-}
-@keyframes ds-float-b {
-  0%,
-  100% {
-    transform: rotate(-4deg) translateY(0);
-  }
-  50% {
-    transform: rotate(-4deg) translateY(8px);
-  }
-}
-@keyframes ds-float-c {
-  0%,
-  100% {
-    transform: rotate(4deg) translateY(0);
-  }
-  50% {
-    transform: rotate(4deg) translateY(-8px);
-  }
-}
-.ds .collage-tile-centre {
-  animation: ds-float-a 7s ease-in-out infinite;
-}
-.ds .collage-tile-left {
-  animation: ds-float-b 6s ease-in-out infinite;
-}
-.ds .collage-tile-right {
-  animation: ds-float-c 8s ease-in-out infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .ds .collage-tile-centre,
-  .ds .collage-tile-left,
-  .ds .collage-tile-right,
   .ds .animate-marquee {
     animation: none;
   }
@@ -240,6 +253,6 @@ body:has(.ds) {
 /* Focus is the accent border, never a default ring */
 .ds a:focus-visible,
 .ds button:focus-visible {
-  outline: 2px solid var(--acc);
+  outline: 2px solid rgb(var(--acc-ink-rgb));
   outline-offset: 3px;
 }

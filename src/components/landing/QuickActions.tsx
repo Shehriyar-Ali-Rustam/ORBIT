@@ -22,11 +22,11 @@ export default function QuickActions({ variant = 'hero' }: Props) {
     return (
       <ul className="grid grid-cols-4">
         {ACTIONS.map(({ key, label, href, Icon }) => (
-          <li key={key} className="border-l border-white/10 first:border-l-0">
+          <li key={key} className="border-l border-orbit-line/[0.12] first:border-l-0">
             <a
               href={href}
               {...(key === 'whatsapp' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              className="flex h-full flex-col items-center justify-center gap-1.5 py-3 text-orbit-greyLight/80 transition-colors active:bg-orbit-acc active:text-orbit-black"
+              className="flex h-full flex-col items-center justify-center gap-1.5 py-3 text-orbit-ink/80 transition-colors active:bg-orbit-acc active:text-orbit-onAcc"
             >
               <Icon className="h-[18px] w-[18px]" strokeWidth={1.5} aria-hidden />
               <span className="font-spacemono text-[9px] uppercase tracking-[0.2em]">{label}</span>
@@ -44,17 +44,17 @@ export default function QuickActions({ variant = 'hero' }: Props) {
           <a
             href={href}
             {...(key === 'whatsapp' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-            className="group flex h-full flex-col gap-2.5 border border-white/12 bg-white/[0.02] p-4 backdrop-blur-sm transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-orbit-acc/60 hover:bg-white/[0.05]"
+            className="group flex h-full flex-col gap-2.5 border border-orbit-line/[0.14] bg-orbit-line/[0.022] p-4 backdrop-blur-sm transition-[border-color,background-color,transform] duration-300 hover:-translate-y-1 hover:border-orbit-accInk/60 hover:bg-orbit-line/[0.05]"
           >
             <Icon
-              className="h-5 w-5 text-orbit-acc transition-transform duration-300 group-hover:scale-110"
+              className="h-5 w-5 text-orbit-accInk transition-transform duration-300 group-hover:scale-110"
               strokeWidth={1.5}
               aria-hidden
             />
-            <span className="font-spacemono text-[10px] font-bold uppercase tracking-[0.24em] text-orbit-greyLight">
+            <span className="font-spacemono text-[10px] font-bold uppercase tracking-[0.24em] text-orbit-ink">
               {label}
             </span>
-            <span className="truncate font-spacemono text-[9px] uppercase tracking-[0.16em] text-orbit-greyLight/40">
+            <span className="truncate font-spacemono text-[9px] uppercase tracking-[0.16em] text-orbit-ink/60">
               {note}
             </span>
           </a>

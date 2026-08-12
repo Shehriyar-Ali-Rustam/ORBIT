@@ -5,8 +5,9 @@ everything is local until you say otherwise.
 
 | Version | What it is | Where it lives |
 |---|---|---|
-| **version main** | The whole site exactly as it was before the v.l.01 landing page work started. This is the restore point. | git tag `version-main` (commit `8700358`), pushed to origin |
-| **v.l.01** | The QR-card landing page at `/`, built on the BOTCORE design system from `DESIGN-SYSTEM-PROMPT.md`. **Live on orbitpk.com.** | git branch `v.l.01`, merged into `main` |
+| **version main** | The whole site exactly as it was before any landing page work. This is the restore point. | git tag `version-main` (commit `8700358`), pushed to origin |
+| **v.l.01** | QR-card landing page at `/`, **dark canvas**. Built on the BOTCORE design system from `DESIGN-SYSTEM-PROMPT.md`. Was live on orbitpk.com, then rolled back. | git branch `v.l.01`, pushed to origin |
+| **v.l.02** | Same page and structure, **white canvas**. Palette moved onto CSS variables so light/dark is one switch. | git branch `v.l.02` |
 
 ## Restoring
 
@@ -70,17 +71,35 @@ git push origin main
 Everything else — marketing pages, the freelancer marketplace, dashboards, AI
 tools — is untouched.
 
+## Light and dark
+
+From v.l.02 the whole palette lives in CSS variables at the top of
+`src/styles/landing.css`. Light is the default.
+
+**To go back to the dark canvas:** add `ds-dark` to the wrapper div in
+`src/app/(landing)/layout.tsx`. Every colour flips. The two photographs are the
+one thing a class cannot flip — dark also wants
+`/fotis-fotopoulos-6sAl6aQ4OWI-unsplash.jpg` in `Hero.tsx` and
+`/images/landing/studio-desk.jpg` in `Process.tsx`, both still in the repo.
+
 ## Accent colour
 
-The reference design system uses neon green `#00FF00`. v.l.01 uses ORBIT orange
-`#FF751F` instead, because this page is the destination for the QR code on the
-printed card and needs to match the card's branding. §11 of the spec allows the
-swap as long as the accent stays high-chroma and low-frequency.
+The reference design system uses neon green `#00FF00`. Both versions use ORBIT
+orange `#FF751F` instead, because this page is the destination for the QR code
+on the printed card and needs to match the card's branding. §11 of the spec
+allows the swap as long as the accent stays high-chroma and low-frequency.
 
-To switch to the reference green, change two values:
+On white, brand orange only reaches **2.7:1** against the background, which
+fails WCAG AA. So v.l.02 carries two accent tokens:
 
-- `--acc` and `--acc-rgb` in `src/styles/landing.css`
-- `orbit.acc` in `tailwind.config.ts`
+- `--acc-rgb` — brand orange `#FF751F`, for fills (buttons, the CTA band) and
+  for text sitting on a dark surface.
+- `--acc-ink-rgb` — `#C2410C` at **5.1:1**, for every accent word, label, icon
+  and rule that sits directly on the white canvas.
+
+In the dark palette both resolve to the same brand orange. Every text node on
+the page was checked against WCAG AA after the inversion; the dark theme's
+opacity ladder does not survive it, so text alphas below 60% were raised.
 
 ## Running locally
 

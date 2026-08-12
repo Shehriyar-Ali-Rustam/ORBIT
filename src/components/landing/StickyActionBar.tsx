@@ -28,7 +28,7 @@ export default function StickyActionBar() {
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ duration: 0.35, ease: DS_EASE }}
-          className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-orbit-black/95 backdrop-blur-md md:hidden"
+          className="fixed inset-x-0 bottom-0 z-50 border-t border-orbit-line/[0.12] bg-orbit-canvas/95 backdrop-blur-md md:hidden"
           style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
         >
           <QuickActions variant="bar" />

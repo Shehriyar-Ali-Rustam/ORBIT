@@ -15,7 +15,7 @@ const selected = PICKS.map((slug) => projects.find((p) => p.slug === slug)).filt
 
 export default function SelectedWork() {
   return (
-    <section id="work" className="border-t border-white/5">
+    <section id="work" className="border-t border-orbit-line/[0.07]">
       <div className="mx-auto max-w-[1280px] px-5 py-24 sm:px-6 md:px-10 md:py-28">
         <MotionReveal>
           <p className="eyebrow accent-rule">Selected work</p>
@@ -23,15 +23,15 @@ export default function SelectedWork() {
 
         <div className="mt-5 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <MotionReveal from="left">
-            <h2 className="h-section max-w-xl font-semibold text-orbit-greyLight">
+            <h2 className="h-section max-w-xl font-semibold text-orbit-ink">
               Ten projects out the door.{' '}
-              <span className="text-orbit-acc">Four of them here.</span>
+              <span className="text-orbit-accInk">Four of them here.</span>
             </h2>
           </MotionReveal>
           <MotionReveal from="right" delay={0.1}>
             <Link
               href="/portfolio"
-              className="group inline-flex items-center gap-2 font-spacemono text-[10px] font-bold uppercase tracking-[0.24em] text-orbit-greyLight/70 transition-colors hover:text-orbit-acc"
+              className="group inline-flex items-center gap-2 font-spacemono text-[10px] font-bold uppercase tracking-[0.24em] text-orbit-ink/70 transition-colors hover:text-orbit-accInk"
             >
               Full portfolio
               <span aria-hidden className="transition-transform group-hover:translate-x-1">
@@ -60,29 +60,29 @@ export default function SelectedWork() {
                     />
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-orbit-black/70 via-transparent to-orbit-black/30"
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-orbit-canvas/70 via-transparent to-orbit-canvas/30"
                     />
-                    <span className="eyebrow absolute left-4 top-3 !text-orbit-greyLight/70">
+                    <span className="eyebrow absolute left-4 top-3 !text-orbit-ink/70">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="eyebrow absolute right-4 top-3 !text-orbit-greyLight/70">
+                    <span className="eyebrow absolute right-4 top-3 !text-orbit-ink/70">
                       {project.completedAt.slice(0, 4)}
                     </span>
                   </div>
 
                   <div className="flex items-start justify-between px-5 py-5">
                     <div className="min-w-0 flex-1">
-                      <h3 className="h-card font-semibold text-orbit-greyLight transition-colors group-hover:text-orbit-acc">
+                      <h3 className="h-card font-semibold text-orbit-ink transition-colors group-hover:text-orbit-accInk">
                         {project.title.split(' - ')[0]}
                       </h3>
-                      <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-orbit-greyLight/60">
+                      <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-orbit-ink/60">
                         {project.shortDescription}
                       </p>
                       <ul className="mt-3 flex flex-wrap gap-1.5">
                         {project.techStack.slice(0, 3).map((tech) => (
                           <li
                             key={tech}
-                            className="border border-white/15 px-2.5 py-1 font-spacemono text-[9px] uppercase tracking-[0.2em] text-orbit-greyLight/65 transition-colors group-hover:border-orbit-acc/40"
+                            className="border border-orbit-line/[0.16] px-2.5 py-1 font-spacemono text-[9px] uppercase tracking-[0.2em] text-orbit-ink/65 transition-colors group-hover:border-orbit-accInk/40"
                           >
                             {tech}
                           </li>
@@ -91,7 +91,7 @@ export default function SelectedWork() {
                     </div>
                     <span
                       aria-hidden
-                      className="ml-3 mt-1 text-orbit-greyLight/40 transition-all group-hover:translate-x-1 group-hover:text-orbit-acc"
+                      className="ml-3 mt-1 text-orbit-ink/60 transition-all group-hover:translate-x-1 group-hover:text-orbit-accInk"
                     >
                       →
                     </span>

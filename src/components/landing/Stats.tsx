@@ -4,7 +4,7 @@ import { STATS } from '@/data/landing'
 
 export default function Stats() {
   return (
-    <section className="border-t border-white/5">
+    <section className="border-t border-orbit-line/[0.07]">
       <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-6 md:px-10 md:py-20">
         <MotionReveal>
           <p className="eyebrow accent-rule">By the numbers</p>

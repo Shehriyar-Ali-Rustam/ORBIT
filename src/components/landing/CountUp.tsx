@@ -48,12 +48,12 @@ export default function CountUp({ value, label, duration = 1400 }: Props) {
   return (
     <div ref={ref}>
       <dt className="sr-only">{label}</dt>
-      <dd className="text-4xl font-semibold tracking-tight text-orbit-greyLight md:text-5xl">
+      <dd className="text-4xl font-semibold tracking-tight text-orbit-ink md:text-5xl">
         {parsed ? (
           <>
             {parsed.sign}
             {current.toFixed(parsed.decimals)}
-            <span className="text-orbit-acc">{parsed.suffix}</span>
+            <span className="text-orbit-accInk">{parsed.suffix}</span>
           </>
         ) : (
           value
