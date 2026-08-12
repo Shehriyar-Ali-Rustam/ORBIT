@@ -32,9 +32,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
+// Tints the mobile browser chrome to match the canvas. Left on the dark
+// values, a phone renders its address bar near-black above a white page.
+// Flip both back to '#0D0D0D' / 'dark' alongside the `ds-dark` class.
 export const viewport: Viewport = {
-  themeColor: '#0D0D0D',
-  colorScheme: 'dark',
+  themeColor: '#FFFFFF',
+  colorScheme: 'light',
 }
 
 export default function LandingLayout({ children }: { children: React.ReactNode }) {
