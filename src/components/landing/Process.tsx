@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import ParallaxImage from './ParallaxImage'
 import MotionReveal from './MotionReveal'
 import { PROCESS } from '@/data/landing'
 
@@ -28,18 +28,17 @@ export default function Process() {
             </MotionReveal>
 
             <MotionReveal from="left" delay={0.15} className="mt-10">
-              <div className="relative aspect-[4/3] overflow-hidden border border-orbit-line/[0.1]">
-                <Image
-                  src="/images/landing/craft-light.jpg"
-                  alt="Designer sketching interface wireframes on a tablet"
-                  fill
-                  loading="lazy"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
-                />
+              <ParallaxImage
+                src="/images/landing/craft-light.jpg"
+                alt="Designer sketching interface wireframes on a tablet"
+                distance={50}
+                wipe
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="group aspect-[4/3] border border-orbit-line/[0.1]"
+              >
                 <span
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-orbit-canvas/80 via-transparent to-transparent"
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-orbit-canvas/70 via-transparent to-transparent"
                 />
                 <span
                   aria-hidden
@@ -49,7 +48,7 @@ export default function Process() {
                       'repeating-linear-gradient(135deg, rgb(var(--acc-ink-rgb) / 0.75) 0 6px, transparent 6px 10px)',
                   }}
                 />
-              </div>
+              </ParallaxImage>
             </MotionReveal>
           </div>
 

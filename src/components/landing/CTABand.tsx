@@ -22,7 +22,7 @@ export default function CTABand() {
           <h2 className="h-hero mt-4 font-bold text-orbit-onAcc">Tell us what you need built.</h2>
           <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-onAcc/80">
             Send a two-line description of the problem. You will get a straight answer on whether we
-            can build it, roughly what it costs, and how long it takes — usually the same day.
+            can build it, roughly what it costs, and how long it takes. Usually the same day.
           </p>
         </MotionReveal>
 

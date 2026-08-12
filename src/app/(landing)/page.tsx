@@ -1,4 +1,5 @@
 import LandingNav from '@/components/landing/LandingNav'
+import ScrollProgress from '@/components/landing/ScrollProgress'
 import Hero from '@/components/landing/Hero'
 import Stats from '@/components/landing/Stats'
 import Capabilities from '@/components/landing/Capabilities'
@@ -27,6 +28,7 @@ export default function LandingPage() {
   return (
     <>
       <LandingNav />
+      <ScrollProgress />
       <main id="main-content">
         <Hero />
         <Stats />

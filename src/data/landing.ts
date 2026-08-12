@@ -13,7 +13,7 @@ export const CARD = {
   phone: PHONE,
   phoneHref: `tel:${PHONE.replace(/\s/g, '')}`,
   whatsappHref: `https://wa.me/${PHONE.replace(/[^\d]/g, '')}?text=${encodeURIComponent(
-    "Hi ORBIT — I scanned your card and I'd like to talk about a project."
+    "Hi ORBIT, I scanned your card and I'd like to talk about a project."
   )}`,
   email: 'info@orbitpk.com',
   emailHref: 'mailto:info@orbitpk.com?subject=Project%20enquiry%20from%20your%20card',
@@ -21,7 +21,7 @@ export const CARD = {
   siteHref: 'https://orbitpk.com',
   location: 'Islamabad, Pakistan',
   locationDetail: 'Islamabad Capital Territory · working remote worldwide',
-  hours: 'Mon–Sat, 10:00–19:00 PKT (UTC+5)',
+  hours: 'Mon to Sat · 10:00 to 19:00 PKT (UTC+5)',
   vcardHref: '/api/vcard',
 } as const
 
@@ -31,37 +31,47 @@ export const SOCIALS = [
   { label: 'Fiverr', href: 'https://www.fiverr.com/users/shehriyar01se' },
 ] as const
 
-/** Icon names map to lucide-react exports — see Capabilities.tsx. */
+/** Icon names map to lucide-react exports. See Capabilities.tsx. */
 export const CAPABILITIES = [
   {
     icon: 'Bot',
     title: 'AI Chatbots',
     blurb: 'Assistants trained on your own docs, wired into your site or WhatsApp.',
     href: '/services#ai-chatbot',
+    image: '/images/landing/cap-chatbots.jpg',
+    imageAlt: 'Messaging apps open on a phone screen',
   },
   {
     icon: 'Brain',
     title: 'Model Training',
     blurb: 'Fine-tuning and RAG pipelines on your data, not a generic API call.',
     href: '/services#model-training',
+    image: '/images/landing/cap-models.jpg',
+    imageAlt: 'Analytics dashboard open on a laptop',
   },
   {
     icon: 'Globe',
     title: 'Web Platforms',
     blurb: 'Next.js products and marketing sites built to load fast and rank.',
     href: '/services#web-development',
+    image: '/images/landing/cap-web.jpg',
+    imageAlt: 'A website open on a laptop at a bright desk',
   },
   {
     icon: 'Smartphone',
     title: 'Mobile Apps',
     blurb: 'One React Native codebase shipped to both App Store and Play.',
     href: '/services#mobile-development',
+    image: '/images/landing/cap-mobile.jpg',
+    imageAlt: 'App icons on a phone home screen',
   },
   {
     icon: 'Palette',
     title: 'Brand & Design',
     blurb: 'Logos, identity systems and interface design that survive contact with code.',
     href: '/services#graphic-design',
+    image: '/images/landing/cap-design.jpg',
+    imageAlt: 'Colour swatches and sketches on a designer desk',
   },
 ] as const
 

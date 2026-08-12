@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import ParallaxImage from './ParallaxImage'
 import Link from 'next/link'
 import MotionReveal from './MotionReveal'
 import { projects } from '@/data/portfolio'
@@ -49,15 +49,14 @@ export default function SelectedWork() {
                   href={`/portfolio/${project.slug}`}
                   className="card group block h-full overflow-hidden"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
-                    <Image
-                      src={project.coverImage}
-                      alt={project.title}
-                      fill
-                      loading="lazy"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    />
+                  <ParallaxImage
+                    src={project.coverImage}
+                    alt={project.title}
+                    distance={22}
+                    wipe
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="aspect-[4/3] w-full"
+                  >
                     <span
                       aria-hidden
                       className="pointer-events-none absolute inset-0 bg-gradient-to-t from-orbit-canvas/70 via-transparent to-orbit-canvas/30"
@@ -68,7 +67,7 @@ export default function SelectedWork() {
                     <span className="eyebrow absolute right-4 top-3 !text-orbit-ink/70">
                       {project.completedAt.slice(0, 4)}
                     </span>
-                  </div>
+                  </ParallaxImage>
 
                   <div className="flex items-start justify-between px-5 py-5">
                     <div className="min-w-0 flex-1">

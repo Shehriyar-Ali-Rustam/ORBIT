@@ -2,7 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import QuickActions from './QuickActions'
 import { DS_EASE } from './MotionReveal'
 import { CARD } from '@/data/landing'
@@ -14,12 +15,27 @@ const enter = (delay: number) => ({
 })
 
 export default function Hero() {
+  const ref = useRef<HTMLElement>(null)
+  const reduce = useReducedMotion()
+
+  // Photo drifts down and dims as the hero leaves; copy lifts slightly faster,
+  // so the two layers separate on the way out instead of moving as one slab.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const photoY = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
+  const photoScale = useTransform(scrollYProgress, [0, 1], [1, 1.12])
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -70])
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0])
+
   return (
-    <section id="top" className="relative overflow-hidden">
+    <section ref={ref} id="top" className="relative overflow-hidden">
       {/* Photograph. Bright daylit desk with code on screen — a light canvas
           needs a light photograph, or the hero reads as a dark slab bolted to
           the top of a white page. */}
-      <div className="absolute inset-0" aria-hidden>
+      <motion.div
+        className="absolute inset-0"
+        aria-hidden
+        style={reduce ? undefined : { y: photoY, scale: photoScale }}
+      >
         <Image
           src="/images/landing/hero-light.jpg"
           alt=""
@@ -28,7 +44,7 @@ export default function Hero() {
           sizes="100vw"
           className="object-cover object-center"
         />
-      </div>
+      </motion.div>
 
       {/* Stacked scrims — this is what keeps the copy readable over photography
           at any viewport. On a white canvas they have to be gentler than on a
@@ -78,9 +94,12 @@ export default function Hero() {
       />
       <div aria-hidden className="grid-faint pointer-events-none absolute inset-0 opacity-25" />
 
-      <div className="relative mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-end px-5 pb-14 pt-28 sm:px-6 md:min-h-[92vh] md:px-10 md:pb-20 md:pt-44">
+      <motion.div
+        style={reduce ? undefined : { y: copyY, opacity: copyOpacity }}
+        className="relative mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-end px-5 pb-14 pt-28 sm:px-6 md:min-h-[92vh] md:px-10 md:pb-20 md:pt-44"
+      >
         <motion.p {...enter(0)} className="eyebrow accent-rule">
-          Orbit — Islamabad, Pakistan
+          Orbit · Islamabad, Pakistan
         </motion.p>
 
         <motion.h1
@@ -95,7 +114,7 @@ export default function Hero() {
           {...enter(0.35)}
           className="mt-5 max-w-xl text-base leading-relaxed text-orbit-ink/85 md:mt-8 md:text-lg"
         >
-          A software studio in Islamabad. Ten projects shipped for clients across eight countries —
+          A software studio in Islamabad. Ten projects shipped for clients across eight countries:
           chatbots, trained models, web platforms and mobile apps.
         </motion.p>
 
@@ -127,7 +146,7 @@ export default function Hero() {
             transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
           />
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Location strip closes the hero and doubles as the first divider */}
       <div className="relative border-t border-orbit-line/[0.07]">

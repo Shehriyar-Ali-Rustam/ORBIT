@@ -25,7 +25,7 @@ export default function ContactCard() {
               Everything on the card, <span className="text-orbit-accInk">one tap away.</span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-ink/65">
-              Save us to your contacts now and the number is there when you need it — no photo of a
+              Save us to your contacts now and the number is there when you need it. No photo of a
               card sitting in your camera roll for six months.
             </p>
             <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-ink/65">

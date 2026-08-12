@@ -4,11 +4,12 @@ import Link from 'next/link'
 import { Bot, Brain, Globe, Smartphone, Palette, ArrowUpRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import MotionReveal from './MotionReveal'
+import ParallaxImage from './ParallaxImage'
 import { CAPABILITIES } from '@/data/landing'
 
 const ICONS: Record<string, LucideIcon> = { Bot, Brain, Globe, Smartphone, Palette }
 
-/** Cards light up under the pointer — CSS vars set on mousemove. */
+/** Cards light up under the pointer. CSS vars set on mousemove. */
 function trackPointer(e: React.MouseEvent<HTMLElement>) {
   const r = e.currentTarget.getBoundingClientRect()
   e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`)
@@ -27,7 +28,7 @@ export default function Capabilities() {
       />
 
       <div className="relative mx-auto max-w-[1280px] px-5 py-24 sm:px-6 md:px-10 md:py-28">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-20">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <MotionReveal from="left" className="lg:col-span-4">
             <p className="eyebrow accent-rule">What we build</p>
             <h2 className="h-section mt-5 font-semibold text-orbit-ink">
@@ -41,62 +42,77 @@ export default function Capabilities() {
           </MotionReveal>
 
           <div className="lg:col-span-8">
-            <ul className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+            <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
               {CAPABILITIES.map((cap, i) => {
                 const Icon = ICONS[cap.icon] ?? Bot
                 return (
                   <li key={cap.title}>
-                    <MotionReveal delay={Math.min(i * 0.05, 0.3)} className="h-full">
+                    <MotionReveal delay={Math.min(i * 0.07, 0.3)} className="h-full">
                       <Link
                         href={cap.href}
                         onMouseMove={trackPointer}
-                        className="group relative flex h-full flex-col items-center gap-4 overflow-hidden border border-orbit-line/[0.1] bg-orbit-line/[0.022] p-4 text-center transition-[transform,border-color,background-color] duration-300 hover:-translate-y-1 hover:border-orbit-accInk/60 hover:bg-orbit-line/[0.045] sm:gap-5 sm:p-6 md:p-7"
+                        className="group relative flex h-full flex-col overflow-hidden border border-orbit-line/[0.1] bg-orbit-line/[0.015] transition-[transform,border-color,background-color] duration-300 hover:-translate-y-1.5 hover:border-orbit-accInk/50 hover:bg-orbit-line/[0.035]"
                       >
-                        {/* diagonal texture band */}
+                        <ParallaxImage
+                          src={cap.image}
+                          alt={cap.imageAlt}
+                          distance={26}
+                          dim
+                          wipe
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 30vw"
+                          className="aspect-[5/4] w-full"
+                        >
+                          {/* keeps the mono label legible whatever the photo does */}
+                          <span
+                            aria-hidden
+                            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-orbit-canvas/70 via-transparent to-orbit-canvas/35"
+                          />
+                          <span className="eyebrow absolute left-4 top-3 !text-orbit-accInk">
+                            {String(i + 1).padStart(2, '0')}
+                          </span>
+                          {/* icon badge rides the bottom edge of the frame */}
+                          <span
+                            aria-hidden
+                            className="absolute bottom-0 left-3.5 flex h-9 w-9 translate-y-1/2 sm:left-4 sm:h-11 sm:w-11 items-center justify-center border border-orbit-line/[0.18] bg-orbit-canvas text-orbit-accInk transition-colors duration-300 group-hover:border-orbit-accInk group-hover:bg-orbit-acc group-hover:text-orbit-onAcc"
+                          >
+                            <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.4} />
+                          </span>
+                        </ParallaxImage>
+
+                        <div className="relative flex flex-1 flex-col gap-2 px-3.5 pb-4 pt-8 sm:gap-2.5 sm:px-4 sm:pb-5 sm:pt-9">
+                          {/* cursor-tracking glow */}
+                          <span
+                            aria-hidden
+                            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                            style={{
+                              background:
+                                'radial-gradient(240px circle at var(--mx,50%) var(--my,50%), rgb(var(--acc-rgb) / 0.14), transparent 70%)',
+                            }}
+                          />
+                          <h3 className="relative font-syne text-[13px] font-bold uppercase tracking-[0.12em] text-orbit-ink sm:text-sm">
+                            {cap.title}
+                          </h3>
+                          <p className="relative text-[11px] leading-relaxed text-orbit-ink/65 sm:text-[13px]">
+                            {cap.blurb}
+                          </p>
+                          <span
+                            aria-hidden
+                            className="relative mt-auto flex items-center gap-2 pt-3 font-spacemono text-[9px] font-bold uppercase tracking-[0.2em] text-orbit-ink/60 transition-colors duration-300 group-hover:text-orbit-accInk"
+                          >
+                            Explore
+                            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                          </span>
+                        </div>
+
+                        {/* hazard-stripe tick grows on hover */}
                         <span
                           aria-hidden
-                          className="pointer-events-none absolute inset-0"
-                          style={{
-                            background:
-                              'repeating-linear-gradient(125deg, transparent 0 38px, rgb(var(--line-rgb) / 0.022) 38px 76px)',
-                          }}
-                        />
-                        {/* cursor-tracking glow */}
-                        <span
-                          aria-hidden
-                          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                          style={{
-                            background:
-                              'radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgb(var(--acc-rgb) / 0.18), transparent 70%)',
-                          }}
-                        />
-                        {/* hazard-stripe corner tick */}
-                        <span
-                          aria-hidden
-                          className="absolute left-4 top-3 h-[3px] w-12 transition-all duration-300 group-hover:w-20"
+                          className="absolute right-0 top-0 h-[3px] w-10 transition-all duration-300 group-hover:w-20"
                           style={{
                             background:
                               'repeating-linear-gradient(135deg, rgb(var(--acc-ink-rgb) / 0.75) 0 6px, transparent 6px 10px)',
                           }}
                         />
-
-                        <Icon
-                          className="relative mt-3 h-10 w-10 text-orbit-ink/80 transition-colors duration-300 group-hover:text-orbit-accInk sm:h-12 sm:w-12 md:h-14 md:w-14"
-                          strokeWidth={1.25}
-                          aria-hidden
-                        />
-                        <h3 className="relative font-syne text-sm font-bold uppercase tracking-[0.16em] text-orbit-ink sm:text-base">
-                          {cap.title}
-                        </h3>
-                        <p className="relative max-w-[22ch] text-xs leading-relaxed text-orbit-ink/60 sm:text-sm">
-                          {cap.blurb}
-                        </p>
-                        <span
-                          aria-hidden
-                          className="relative mt-auto flex h-9 w-9 items-center justify-center border border-orbit-accInk/50 text-orbit-accInk transition-colors duration-300 group-hover:bg-orbit-acc group-hover:text-orbit-onAcc"
-                        >
-                          <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} />
-                        </span>
                       </Link>
                     </MotionReveal>
                   </li>
@@ -108,11 +124,11 @@ export default function Capabilities() {
                 <MotionReveal delay={0.3} className="h-full">
                   <Link
                     href="/services"
-                    className="group relative flex h-full flex-col items-center justify-center gap-4 overflow-hidden border border-orbit-accInk/40 bg-orbit-acc/[0.06] p-6 text-center transition-[transform,background-color] duration-300 hover:-translate-y-1 hover:bg-orbit-acc/[0.12]"
+                    className="group relative flex h-full min-h-[200px] flex-col items-center justify-center gap-4 overflow-hidden border border-orbit-accInk/40 bg-orbit-acc/[0.06] p-6 text-center transition-[transform,background-color] duration-300 hover:-translate-y-1.5 hover:bg-orbit-acc/[0.14]"
                   >
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute inset-0"
+                      className="pointer-events-none absolute inset-0 transition-opacity duration-500 group-hover:opacity-80"
                       style={{
                         background:
                           'radial-gradient(ellipse at 50% 100%, rgb(var(--acc-rgb) / 0.16) 0%, transparent 65%)',
@@ -123,9 +139,9 @@ export default function Capabilities() {
                     </h3>
                     <span
                       aria-hidden
-                      className="relative text-orbit-accInk transition-transform duration-300 group-hover:translate-x-1"
+                      className="relative flex h-9 w-9 items-center justify-center border border-orbit-accInk/50 text-orbit-accInk transition-all duration-300 group-hover:translate-x-1 group-hover:bg-orbit-acc group-hover:text-orbit-onAcc"
                     >
-                      →
+                      <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} />
                     </span>
                   </Link>
                 </MotionReveal>
