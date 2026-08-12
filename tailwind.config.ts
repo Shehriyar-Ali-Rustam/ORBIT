@@ -12,6 +12,10 @@ const config: Config = {
         inter: ['var(--font-inter)', 'sans-serif'],
         mono: ['var(--font-jetbrains)', 'monospace'],
         montserrat: ['var(--font-montserrat)', 'sans-serif'],
+        // Landing page (v.l.01) design system — scoped to .ds
+        grotesk: ['var(--font-grotesk)', 'system-ui', 'sans-serif'],
+        spacemono: ['var(--font-space-mono)', 'ui-monospace', 'monospace'],
+        syne: ['var(--font-syne)', 'var(--font-grotesk)', 'sans-serif'],
       },
       letterSpacing: {
         tightest: '-0.05em',
@@ -52,6 +56,17 @@ const config: Config = {
           dim: 'var(--color-accent-dim)',
           glow: 'rgba(255, 117, 31, 0.2)',
           border: 'rgba(255, 117, 31, 0.3)',
+        },
+        // Landing page (v.l.01) palette. Accent is ORBIT orange so the page
+        // matches the printed business card the QR sits on. Swap `acc` here
+        // and `--acc` in src/styles/landing.css to change it in one move.
+        orbit: {
+          acc: '#FF751F',
+          accDeep: '#B84B0E',
+          black: '#0D0D0D',
+          ink: '#151515',
+          grey: '#4D4D4D',
+          greyLight: '#E8E8E8',
         },
       },
       backgroundImage: {

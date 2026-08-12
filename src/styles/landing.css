@@ -1,0 +1,245 @@
+/*
+ * Landing page design system — v.l.01
+ * Ported from DESIGN-SYSTEM-PROMPT.md (technical-brutalist dark).
+ *
+ * EVERYTHING here is scoped under `.ds` so it cannot leak into the rest of
+ * the app (marketing pages, marketplace, dashboards all keep their own look).
+ *
+ * Accent is ORBIT orange rather than the reference neon green, per §11 of the
+ * spec — the page has to match the printed card the QR is on. To go back to
+ * the reference look, change --acc below and `orbit.acc` in tailwind.config.ts.
+ */
+
+.ds {
+  --acc: #ff751f;
+  --acc-rgb: 255, 117, 31;
+  --canvas: #0d0d0d;
+  --ink: #e8e8e8;
+
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-grotesk), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Keep overscroll / rubber-band area on-canvas instead of showing app theme */
+body:has(.ds) {
+  background: #0d0d0d;
+}
+
+.ds h1,
+.ds h2,
+.ds h3,
+.ds h4 {
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+.ds p {
+  text-wrap: pretty;
+}
+.ds ::selection {
+  background: var(--acc);
+  color: #0d0d0d;
+}
+
+/* ─── Type scale ─────────────────────────────────────────────── */
+
+.ds .h-hero {
+  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+}
+.ds .h-section {
+  font-size: clamp(1.75rem, 2.5vw + 0.25rem, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+.ds .h-card {
+  font-size: clamp(1.125rem, 1vw + 0.25rem, 1.25rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* ─── The eyebrow — most-used element in the system ──────────── */
+
+.ds .eyebrow {
+  font-family: var(--font-space-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(232, 232, 232, 0.55);
+}
+
+/* Neon tick to the LEFT of an eyebrow */
+.ds .accent-rule::before {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--acc);
+  vertical-align: middle;
+  margin-right: 12px;
+}
+
+/* Ticks on BOTH sides — for centred eyebrows */
+.ds .accent-rule-both::before,
+.ds .accent-rule-both::after {
+  content: '';
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--acc);
+  vertical-align: middle;
+}
+.ds .accent-rule-both::before {
+  margin-right: 12px;
+}
+.ds .accent-rule-both::after {
+  margin-left: 12px;
+}
+
+/* ─── Texture ────────────────────────────────────────────────── */
+
+.ds .grid-faint {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.ds .glow-acc {
+  text-shadow: 0 0 28px rgba(var(--acc-rgb), 0.35);
+}
+
+/* ─── Surfaces ───────────────────────────────────────────────── */
+
+.ds .card {
+  background: rgba(255, 255, 255, 0.018);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+.ds .card:hover {
+  border-color: rgba(var(--acc-rgb), 0.4);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+/* ─── Buttons ────────────────────────────────────────────────── */
+
+.ds .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--acc);
+  color: #0d0d0d;
+  padding: 14px 22px;
+  font-family: var(--font-space-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+.ds .btn-primary:hover {
+  background: #e8e8e8;
+  transform: translateY(-1px);
+}
+
+.ds .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: transparent;
+  color: #e8e8e8;
+  padding: 14px 22px;
+  border: 1px solid rgba(232, 232, 232, 0.25);
+  font-family: var(--font-space-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+.ds .btn-ghost:hover {
+  border-color: var(--acc);
+  color: var(--acc);
+}
+
+/* ─── Motion ─────────────────────────────────────────────────── */
+
+@keyframes ds-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ds .animate-marquee {
+  animation: ds-marquee 45s linear infinite;
+}
+
+@keyframes ds-float-a {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-10px);
+  }
+}
+@keyframes ds-float-b {
+  0%,
+  100% {
+    transform: rotate(-4deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-4deg) translateY(8px);
+  }
+}
+@keyframes ds-float-c {
+  0%,
+  100% {
+    transform: rotate(4deg) translateY(0);
+  }
+  50% {
+    transform: rotate(4deg) translateY(-8px);
+  }
+}
+.ds .collage-tile-centre {
+  animation: ds-float-a 7s ease-in-out infinite;
+}
+.ds .collage-tile-left {
+  animation: ds-float-b 6s ease-in-out infinite;
+}
+.ds .collage-tile-right {
+  animation: ds-float-c 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds .collage-tile-centre,
+  .ds .collage-tile-left,
+  .ds .collage-tile-right,
+  .ds .animate-marquee {
+    animation: none;
+  }
+}
+
+/* Focus is the accent border, never a default ring */
+.ds a:focus-visible,
+.ds button:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 3px;
+}
