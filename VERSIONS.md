@@ -5,30 +5,41 @@ everything is local until you say otherwise.
 
 | Version | What it is | Where it lives |
 |---|---|---|
-| **version main** | The whole site exactly as it was before the v.l.01 landing page work started. This is the restore point. | git tag `version-main` (commit `8700358`) |
-| **v.l.01** | The QR-card landing page at `/`, built on the BOTCORE design system from `DESIGN-SYSTEM-PROMPT.md`. | git branch `v.l.01`, tagged `v.l.01` |
+| **version main** | The whole site exactly as it was before the v.l.01 landing page work started. This is the restore point. | git tag `version-main` (commit `8700358`), pushed to origin |
+| **v.l.01** | The QR-card landing page at `/`, built on the BOTCORE design system from `DESIGN-SYSTEM-PROMPT.md`. **Live on orbitpk.com.** | git branch `v.l.01`, merged into `main` |
 
 ## Restoring
 
-**"Undo to main version"** — throw away the v.l.01 work and go back to exactly
-how the site was before:
+v.l.01 is merged into `main` and deployed, so `main` no longer holds the old
+site — the `version-main` tag does.
 
-```bash
-git checkout main          # main branch is untouched, still at version-main
-```
-
-To wipe the v.l.01 branch entirely as well:
+**"Undo to main version"** — put orbitpk.com back exactly how it was before
+v.l.01:
 
 ```bash
 git checkout main
-git branch -D v.l.01
-git tag -d v.l.01
+git reset --hard version-main
+git push --force-with-lease origin main
 ```
 
-To go back to v.l.01 afterwards:
+Vercel redeploys from `main` and the old homepage is live again within a couple
+of minutes. Nothing is lost: the `v.l.01` branch still holds all the work, so
+you can put it back with:
 
 ```bash
-git checkout v.l.01
+git checkout main
+git merge v.l.01
+git push origin main
+```
+
+Prefer not to force-push? This does the same thing by moving forward instead,
+which is safer on a shared branch:
+
+```bash
+git checkout main
+git revert --no-commit 58b7a49
+git commit -m "Revert to version main"
+git push origin main
 ```
 
 ## What v.l.01 changed
