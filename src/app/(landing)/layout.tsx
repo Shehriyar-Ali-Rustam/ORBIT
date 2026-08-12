@@ -24,7 +24,9 @@ const syne = Syne({
 })
 
 export const metadata: Metadata = {
-  title: 'ORBIT — AI, Web & Mobile Software Studio in Islamabad',
+  // `absolute` opts out of the root layout's "%s | ORBIT" template, which
+  // would otherwise render "ORBIT — ... in Islamabad | ORBIT".
+  title: { absolute: 'ORBIT — AI, Web & Mobile Software Studio in Islamabad' },
   description:
     'ORBIT builds AI chatbots, custom models, web platforms and mobile apps from Islamabad, Pakistan. Call, message or save our contact card.',
   alternates: { canonical: '/' },
