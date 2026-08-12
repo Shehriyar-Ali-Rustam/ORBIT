@@ -1,20 +1,26 @@
-import { Phone, Mail, Globe, MapPin, Clock, UserPlus } from 'lucide-react'
+'use client'
+
+import { Phone, Mail, Globe, MapPin, Clock, UserPlus, Copy, Check } from 'lucide-react'
 import MotionReveal from './MotionReveal'
 import { WhatsAppIcon, LinkedInIcon, GitHubIcon } from './icons'
+import { useCopyAction } from './useCopyAction'
 import { CARD, SOCIALS } from '@/data/landing'
 
+/** `copy` marks rows whose scheme can silently no-op on desktop. */
 const ROWS = [
-  { Icon: Phone, label: 'Phone', value: CARD.phone, href: CARD.phoneHref, external: false },
-  { Icon: WhatsAppIcon, label: 'WhatsApp', value: CARD.phone, href: CARD.whatsappHref, external: true },
-  { Icon: Mail, label: 'Email', value: CARD.email, href: CARD.emailHref, external: false },
-  { Icon: Globe, label: 'Website', value: CARD.site, href: CARD.siteHref, external: true },
-  { Icon: MapPin, label: 'Studio', value: CARD.location, href: null, external: false },
-  { Icon: Clock, label: 'Hours', value: CARD.hours, href: null, external: false },
+  { Icon: Phone, label: 'Phone', value: CARD.phone, href: CARD.phoneHref, external: false, copy: CARD.phone },
+  { Icon: WhatsAppIcon, label: 'WhatsApp', value: CARD.phone, href: CARD.whatsappHref, external: true, copy: null },
+  { Icon: Mail, label: 'Email', value: CARD.email, href: CARD.emailHref, external: false, copy: CARD.email },
+  { Icon: Globe, label: 'Website', value: CARD.site, href: CARD.siteHref, external: true, copy: null },
+  { Icon: MapPin, label: 'Studio', value: CARD.location, href: null, external: false, copy: null },
+  { Icon: Clock, label: 'Hours', value: CARD.hours, href: null, external: false, copy: null },
 ] as const
 
 const SOCIAL_ICONS = { LinkedIn: LinkedInIcon, GitHub: GitHubIcon } as const
 
 export default function ContactCard() {
+  const { copied, copy } = useCopyAction()
+
   return (
     <section id="contact" className="border-t border-orbit-line/[0.07]">
       <div className="mx-auto max-w-[1280px] px-5 py-24 sm:px-6 md:px-10 md:py-28">
@@ -67,7 +73,8 @@ export default function ContactCard() {
               </div>
 
               <dl className="divide-y divide-orbit-line/[0.09]">
-                {ROWS.map(({ Icon, label, value, href, external }) => {
+                {ROWS.map(({ Icon, label, value, href, external, copy: copyValue }) => {
+                  const isCopied = copied === label
                   const body = (
                     <>
                       <dt className="flex items-center gap-3">
@@ -82,14 +89,24 @@ export default function ContactCard() {
                       </dt>
                       <dd className="flex min-w-0 items-center gap-3 text-sm text-orbit-ink sm:text-base">
                         <span className="truncate">{value}</span>
-                        {href && (
+                        {isCopied ? (
+                          <span className="flex shrink-0 items-center gap-1.5 font-spacemono text-[9px] uppercase tracking-[0.16em] text-orbit-accInk">
+                            <Check className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />
+                            Copied
+                          </span>
+                        ) : copyValue ? (
+                          <Copy
+                            aria-hidden
+                            className="h-3.5 w-3.5 shrink-0 text-orbit-ink/60 transition-colors group-hover:text-orbit-accInk"
+                          />
+                        ) : href ? (
                           <span
                             aria-hidden
                             className="shrink-0 text-orbit-ink/60 transition-all group-hover:translate-x-1 group-hover:text-orbit-accInk"
                           >
                             ↗
                           </span>
-                        )}
+                        ) : null}
                       </dd>
                     </>
                   )
@@ -99,6 +116,7 @@ export default function ContactCard() {
                       {href ? (
                         <a
                           href={href}
+                          onClick={copyValue ? () => copy(label, copyValue) : undefined}
                           {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                           className="group flex flex-col gap-1.5 py-4 transition-colors sm:flex-row sm:items-center sm:justify-between sm:gap-6"
                         >
