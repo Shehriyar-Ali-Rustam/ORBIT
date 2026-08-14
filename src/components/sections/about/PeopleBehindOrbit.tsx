@@ -24,7 +24,7 @@ export function PeopleBehindOrbit() {
             <SectionLabel>People Behind Orbit</SectionLabel>
             <SectionHeading className="mt-4">The Founding Team</SectionHeading>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-text-secondary sm:text-base">
-              Three software engineering students from Pakistan who built ORBIT from
+              Three software engineering students from Pakistan who built Orbit Innovations from
               the ground up.
             </p>
           </motion.div>

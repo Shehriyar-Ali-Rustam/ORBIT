@@ -8,17 +8,17 @@ import { Team } from '@/components/sections/about/Team'
 import { HomeCTA } from '@/components/sections/home/HomeCTA'
 
 export const metadata: Metadata = {
-  title: 'About ORBIT - The Software Team Behind Our AI & Web Products',
+  title: 'About Orbit Innovations - The Software Team Behind Our AI & Web Products',
   description:
-    'Meet the three software engineering students from Pakistan behind ORBIT - Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. AI, web, and mobile projects delivered fast, worldwide.',
+    'Meet the three software engineering students from Pakistan behind Orbit Innovations - Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. AI, web, and mobile projects delivered fast, worldwide.',
   keywords: [
-    'about ORBIT',
-    'ORBIT founders',
+    'about Orbit Innovations',
+    'Orbit Innovations founders',
     'Pakistan software team',
     'Shehriyar Ali Rustam',
     'Saqib Nawaz Khan',
     'Abdul Ahad',
-    'ORBIT company',
+    'Orbit Innovations company',
   ],
   alternates: { canonical: '/about' },
 }

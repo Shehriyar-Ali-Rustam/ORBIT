@@ -45,7 +45,7 @@ export function GET() {
   return new NextResponse(body, {
     headers: {
       'Content-Type': 'text/vcard; charset=utf-8',
-      'Content-Disposition': 'attachment; filename="ORBIT.vcf"',
+      'Content-Disposition': 'attachment; filename="Orbit-Innovations.vcf"',
       'Cache-Control': 'public, max-age=3600',
     },
   })

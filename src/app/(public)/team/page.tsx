@@ -10,9 +10,9 @@ import type { TeamMember } from '@/types'
 const SITE_URL = 'https://orbitpk.com'
 
 export const metadata: Metadata = {
-  title: 'The Team - The People Building ORBIT',
+  title: 'The Team - The People Building Orbit Innovations',
   description:
-    'Meet the full ORBIT team - the founders and the people driving engineering, design, marketing, and growth across our AI and software work.',
+    'Meet the full Orbit Innovations team - the founders and the people driving engineering, design, marketing, and growth across our AI and software work.',
   alternates: { canonical: '/team' },
 }
 
@@ -84,7 +84,7 @@ export default function TeamPage() {
       <section className="section-padding pt-32">
         <div className="mx-auto max-w-3xl px-6 text-center lg:px-8">
           <SectionLabel>The Team</SectionLabel>
-          <SectionHeading className="mt-4">The people building ORBIT</SectionHeading>
+          <SectionHeading className="mt-4">The people building Orbit Innovations</SectionHeading>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base">
             From engineering and design to marketing and growth - the people who ship
             the work and move the studio forward.

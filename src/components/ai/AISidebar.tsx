@@ -53,14 +53,14 @@ export function AISidebar({
           <Link href="/" className="flex items-center gap-2">
             <Image
               src="/logo.png"
-              alt="ORBIT"
+              alt="Orbit Innovations"
               width={80}
               height={80}
               quality={100}
               className={cn('h-8 w-8 object-contain', theme === 'light' && 'invert hue-rotate-180')}
             />
             <span className="font-montserrat text-sm font-bold tracking-[0.2em] text-text-primary">
-              ORBIT
+              Orbit Innovations
             </span>
           </Link>
           <button

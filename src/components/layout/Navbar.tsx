@@ -96,11 +96,19 @@ export function Navbar() {
               !scrolled ? 'brightness-0 invert' : theme === 'light' ? 'invert hue-rotate-180' : ''
             )}
           />
-          <span className={cn(
-            'text-lg font-bold tracking-[0.2em] transition-colors duration-300',
-            scrolled ? 'text-text-primary' : 'text-white'
-          )}>
-            ORBIT
+          <span className="flex flex-col leading-none">
+            <span className={cn(
+              'text-lg font-bold tracking-[0.2em] transition-colors duration-300',
+              scrolled ? 'text-text-primary' : 'text-white'
+            )}>
+              Orbit
+            </span>
+            <span className={cn(
+              'mt-[3px] text-[8px] font-medium uppercase tracking-[0.3em] transition-colors duration-300',
+              scrolled ? 'text-text-secondary' : 'text-white/70'
+            )}>
+              Innovations
+            </span>
           </span>
         </Link>
 

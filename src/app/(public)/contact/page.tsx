@@ -4,13 +4,13 @@ import { ContactForm } from '@/components/forms/ContactForm'
 import { ContactInfo } from '@/components/sections/contact/ContactInfo'
 
 export const metadata: Metadata = {
-  title: 'Contact ORBIT - Hire Us for AI, Web & Mobile Projects',
+  title: 'Contact Orbit Innovations - Hire Us for AI, Web & Mobile Projects',
   description:
-    'Start a project with ORBIT. AI chatbots, web development, mobile apps, and brand design. We reply within 24 hours. Free initial consultation.',
+    'Start a project with Orbit Innovations. AI chatbots, web development, mobile apps, and brand design. We reply within 24 hours. Free initial consultation.',
   keywords: [
-    'hire ORBIT',
+    'hire Orbit Innovations',
     'hire AI developers Pakistan',
-    'contact ORBIT',
+    'contact Orbit Innovations',
     'software development Pakistan',
     'orbitpk contact',
   ],

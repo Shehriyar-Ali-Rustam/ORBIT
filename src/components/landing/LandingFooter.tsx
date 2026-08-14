@@ -43,6 +43,9 @@ export default function LandingFooter() {
             <p className="text-2xl font-semibold uppercase tracking-[0.2em] text-orbit-accInk">
               Orbit
             </p>
+            <p className="mt-1 font-spacemono text-[10px] uppercase tracking-[0.3em] text-orbit-ink/60">
+              Innovations
+            </p>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-orbit-ink/62">
               {CARD.tagline} in {CARD.location}. Building AI, web and mobile products for teams
               worldwide.
@@ -56,7 +59,7 @@ export default function LandingFooter() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`ORBIT on ${social.label}`}
+                    aria-label={`Orbit Innovations on ${social.label}`}
                     className="flex h-10 w-10 items-center justify-center border border-orbit-line/[0.12] text-orbit-ink/60 transition-colors hover:border-orbit-accInk/50 hover:text-orbit-accInk"
                   >
                     {Icon ? (
@@ -94,7 +97,7 @@ export default function LandingFooter() {
 
       <div className="border-t border-orbit-line/[0.07]">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-3 px-5 py-6 pb-24 sm:px-6 md:flex-row md:items-center md:justify-between md:px-10 md:pb-6">
-          <p className="eyebrow">© {new Date().getFullYear()} Orbit · {CARD.location}</p>
+          <p className="eyebrow">© {new Date().getFullYear()} {CARD.company} · {CARD.location}</p>
           <p className="eyebrow !text-orbit-ink/60">
             Photography via Unsplash · Landing v.l.02
           </p>

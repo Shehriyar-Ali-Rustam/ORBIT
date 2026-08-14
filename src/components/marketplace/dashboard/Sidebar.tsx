@@ -56,7 +56,7 @@ export function DashboardSidebar({ mode, onModeSwitch, userName, userRole }: Das
           <Image src="/logo.png" alt="" width={160} height={160} quality={100} priority className={cn('h-10 w-10 object-contain', theme === 'light' && 'invert hue-rotate-180')} />
           {!collapsed && (
             <span className="font-montserrat text-sm font-bold tracking-[0.2em] text-text-primary">
-              ORBIT
+              Orbit
             </span>
           )}
         </Link>

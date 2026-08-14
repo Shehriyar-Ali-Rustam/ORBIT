@@ -27,7 +27,7 @@ export function Preloader() {
             transition={{ duration: 0.3 }}
             className="text-2xl font-black tracking-[0.3em] text-orange"
           >
-            ORBIT
+            Orbit
           </motion.div>
         </motion.div>
       )}

@@ -204,7 +204,7 @@ export const posts: BlogPost[] = [
       'marketplace development Pakistan',
       'React Firebase marketplace',
       'adventure sports platform',
-      'ORBIT case study',
+      'Orbit Innovations case study',
     ],
     intro:
       'CampAlpha is a marketplace for Pakistan\'s adventure sports community: gear, trips, and stories in one place. Here is how it actually got built, including the parts that did not go to plan.',

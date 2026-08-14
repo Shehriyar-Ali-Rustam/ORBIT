@@ -48,7 +48,7 @@ export default function ContactCard() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`ORBIT on ${social.label}`}
+                    aria-label={`Orbit Innovations on ${social.label}`}
                     className="flex h-10 w-10 items-center justify-center border border-orbit-line/[0.12] text-orbit-ink/60 transition-colors hover:border-orbit-accInk/50 hover:text-orbit-accInk"
                   >
                     {Icon ? (

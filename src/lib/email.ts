@@ -44,7 +44,7 @@ export async function sendTestimonialEmail(data: {
   const comment = escapeHtml(data.comment)
 
   return await transporter.sendMail({
-    from: `"ORBIT Reviews" <${process.env.EMAIL_USER}>`,
+    from: `"Orbit Innovations Reviews" <${process.env.EMAIL_USER}>`,
     to: NOTIFY_TO,
     replyTo: data.email || process.env.EMAIL_USER,
     subject: `New Review: ${rating}★ from ${name}`,
@@ -104,7 +104,7 @@ export async function sendContactEmail(data: {
   const message = escapeHtml(data.message)
 
   return await transporter.sendMail({
-    from: `"ORBIT Contact" <${process.env.EMAIL_USER}>`,
+    from: `"Orbit Innovations Contact" <${process.env.EMAIL_USER}>`,
     to: NOTIFY_TO,
     replyTo: data.email,
     subject: `New Contact: ${name} - ${service}`,
@@ -138,7 +138,7 @@ export async function sendContactEmail(data: {
           </tr>
         </table>
         <hr style="margin-top: 20px; border: none; border-top: 1px solid #eee;" />
-        <p style="font-size: 12px; color: #999; margin-top: 12px;">Sent from ORBIT website contact form</p>
+        <p style="font-size: 12px; color: #999; margin-top: 12px;">Sent from Orbit Innovations website contact form</p>
       </div>
     `,
   })

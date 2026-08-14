@@ -10,7 +10,7 @@ export const NAV_LINKS: NavLink[] = [
     label: 'About',
     href: '/about',
     children: [
-      { label: 'Our Story', href: '/about#story', description: 'How ORBIT started' },
+      { label: 'Our Story', href: '/about#story', description: 'How Orbit Innovations started' },
       { label: 'People Behind Orbit', href: '/about#founders', description: 'Meet the founders' },
       { label: 'Mission & Vision', href: '/about#mission', description: 'What we stand for' },
       { label: 'Our Values', href: '/about#values', description: 'How we work' },
@@ -57,7 +57,10 @@ export const SOCIAL_LINKS = {
 }
 
 export const COMPANY = {
-  name: 'Orbit',
+  /** Full legal name. Use in titles, metadata, structured data and wordmarks. */
+  name: 'Orbit Innovations',
+  /** Short form for running copy, so paragraphs do not repeat the full name. */
+  shortName: 'Orbit',
   tagline: 'Engineered for the Future. Built for Today.',
   email: 'info@orbitpk.com',
   location: 'Pakistan - Remote First',

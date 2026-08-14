@@ -33,32 +33,25 @@ export const founders: TeamMember[] = [
   },
 ]
 
-// The wider team beyond the founders. Photos are placeholders (letter
-// avatars) until real ones are added; LinkedIn links are placeholders (#).
+// The leadership team beyond the founders. Both run outreach: the first
+// conversation a new client has with Orbit Innovations is usually with one of
+// them. Photos are placeholders (letter avatars) until real ones are added;
+// LinkedIn links are placeholders (#).
 export const teamMembers: TeamMember[] = [
   {
     id: 'moiz-danishmand',
     name: 'Moiz Danishmand',
-    role: 'Chief Marketing Officer',
-    bio: 'Leads marketing across the studio - brand, social media, content, and campaigns. Shapes how ORBIT shows up online and drives the strategy behind reaching new clients.',
+    role: 'Outreach Lead',
+    bio: 'Runs outreach and marketing across the studio - brand, campaigns, and the conversations that turn into projects. Shapes how Orbit Innovations shows up, online and off.',
     photo: '',
     skills: [],
     linkedin: '#',
   },
   {
-    id: 'maaz-karim',
-    name: 'Maaz Karim',
-    role: 'Business Development Executive',
-    bio: 'Leads business development - meeting potential clients, building relationships, generating offline leads, and closing the deals that grow the studio.',
-    photo: '',
-    skills: [],
-    linkedin: '#',
-  },
-  {
-    id: 'azan-hayat',
-    name: 'Azan Hayat',
-    role: 'Digital Marketing Specialist',
-    bio: 'Drives online growth through paid advertising on Google and Meta, online client acquisition, lead generation, and campaign optimization.',
+    id: 'musa-khan',
+    name: 'Musa Khan',
+    role: 'Outreach Lead',
+    bio: 'Runs client outreach and partnerships - meeting prospective clients, building the relationships behind new work, and keeping the studio in front of the right people.',
     photo: '',
     skills: [],
     linkedin: '#',

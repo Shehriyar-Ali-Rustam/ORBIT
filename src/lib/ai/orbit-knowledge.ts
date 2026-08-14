@@ -116,7 +116,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'founder',
     category: 'team',
     content:
-      'ORBIT was built by three software engineering students from Pakistan - Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. What started as freelance projects on Fiverr grew into a full technology company. Shehriyar is also an AI/ML enthusiast and a Fiverr Level 1 Seller. GitHub: github.com/Shehriyar-Ali-Rustam. LinkedIn: linkedin.com/in/shehriyar-ali-rustam-516895246. Fiverr: fiverr.com/sellers/shehriyar01se.',
+      'Orbit Innovations was built by three software engineering students from Pakistan - Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. What started as freelance projects on Fiverr grew into a full technology company. Shehriyar is also an AI/ML enthusiast and a Fiverr Level 1 Seller. GitHub: github.com/Shehriyar-Ali-Rustam. LinkedIn: linkedin.com/in/shehriyar-ali-rustam-516895246. Fiverr: fiverr.com/sellers/shehriyar01se.',
     keywords: [
       'founder', 'shehriyar', 'saqib', 'abdul', 'ahad', 'who', 'ceo', 'owner', 'leader', 'started',
       'created', 'built', 'behind', 'android', 'web developer', 'project management',
@@ -126,7 +126,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'team',
     category: 'team',
     content:
-      'The Orbit team: Team members at Orbit are called "Orbiters". ORBIT was built by three software engineering students - Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. Orbit is actively hiring: AI Engineers (Python, TensorFlow, PyTorch, NLP), UI/UX Designers (Figma, Adobe XD, prototyping), and Backend Developers (Node.js, PostgreSQL, AWS, Docker). Interested in joining? Visit the freelancer marketplace at /freelancers or email info@orbitpk.com.',
+      'The Orbit team: Team members at Orbit are called "Orbiters". Orbit Innovations was built by three software engineering students - Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. Outreach and client relationships are led by Moiz Danishmand and Musa Khan, both Outreach Leads. Orbit is actively hiring: AI Engineers (Python, TensorFlow, PyTorch, NLP), UI/UX Designers (Figma, Adobe XD, prototyping), and Backend Developers (Node.js, PostgreSQL, AWS, Docker). Interested in joining? Visit the freelancer marketplace at /freelancers or email info@orbitpk.com.',
     keywords: [
       'team', 'orbiter', 'hiring', 'join', 'career', 'job', 'employee',
       'developer', 'engineer', 'designer', 'work at', 'positions',
@@ -138,7 +138,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'about',
     category: 'about',
     content:
-      'ORBIT is an AI-powered software solutions company. Tagline: "Engineered for the Future. Built for Today." Started as freelance projects on Fiverr and evolved into a growing technology company that combines AI innovation with full-service software development. Mission: To deliver world-class AI-powered software solutions that empower businesses to grow, innovate, and compete globally - regardless of their size or location. Vision: To become a globally recognized technology company from Pakistan - proving that innovation knows no borders.',
+      'Orbit Innovations is an AI-powered software solutions company. Tagline: "Engineered for the Future. Built for Today." Started as freelance projects on Fiverr and evolved into a growing technology company that combines AI innovation with full-service software development. Mission: To deliver world-class AI-powered software solutions that empower businesses to grow, innovate, and compete globally - regardless of their size or location. Vision: To become a globally recognized technology company from Pakistan - proving that innovation knows no borders.',
     keywords: [
       'about', 'orbit', 'company', 'who are you', 'what is orbit',
       'mission', 'vision', 'story', 'history',
@@ -204,7 +204,7 @@ export const orbitKnowledge: KnowledgeEntry[] = [
     id: 'portfolio-overview',
     category: 'portfolio',
     content:
-      'Orbit portfolio highlights - we have delivered projects across AI, web, mobile, and design: 1) Hello Kitty AI Voice Assistant - Wake-word activated AI assistant using ChatGPT and Gemini (Python, OpenAI API). 2) ORBIT Web Platform - This website, built with Next.js 14, TypeScript, Tailwind CSS, Framer Motion. 3) AI Resume-Job Matcher - AI tool that scores resume-job compatibility using sentence transformers. 4) WearBlend - AI virtual try-on app using DALL-E 3 and Gemini. 5) Face Recognition Attendance System - Automated attendance with anti-spoofing. 6) Movie Recommendation Engine - Content-based recommender using TF-IDF. Visit /portfolio to see all projects with live demos and source code.',
+      'Orbit portfolio highlights - we have delivered projects across AI, web, mobile, and design: 1) Hello Kitty AI Voice Assistant - Wake-word activated AI assistant using ChatGPT and Gemini (Python, OpenAI API). 2) Orbit Innovations Web Platform - This website, built with Next.js 14, TypeScript, Tailwind CSS, Framer Motion. 3) AI Resume-Job Matcher - AI tool that scores resume-job compatibility using sentence transformers. 4) WearBlend - AI virtual try-on app using DALL-E 3 and Gemini. 5) Face Recognition Attendance System - Automated attendance with anti-spoofing. 6) Movie Recommendation Engine - Content-based recommender using TF-IDF. Visit /portfolio to see all projects with live demos and source code.',
     keywords: [
       'portfolio', 'projects', 'work', 'examples', 'case study', 'showcase',
       'built', 'delivered', 'previous work', 'show me',

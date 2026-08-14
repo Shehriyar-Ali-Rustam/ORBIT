@@ -99,7 +99,9 @@ export default function Hero() {
         className="relative mx-auto flex min-h-[100svh] max-w-[1280px] flex-col justify-end px-5 pb-14 pt-28 sm:px-6 md:min-h-[92vh] md:px-10 md:pb-20 md:pt-44"
       >
         <motion.p {...enter(0)} className="eyebrow accent-rule">
-          Orbit · Islamabad, Pakistan
+          {/* Location lives in the strip at the foot of this section, so the
+              eyebrow carries the name alone and stays on one line on a phone. */}
+          Orbit Innovations
         </motion.p>
 
         <motion.h1

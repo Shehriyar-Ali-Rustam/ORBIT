@@ -7,13 +7,16 @@
 const PHONE = '+92 327 5362412'
 
 export const CARD = {
-  company: 'ORBIT',
-  legalName: 'ORBIT',
+  /** Full legal name: titles, vCard, structured data. */
+  company: 'Orbit Innovations',
+  legalName: 'Orbit Innovations',
+  /** Short form for running copy and the wordmark. */
+  shortName: 'Orbit',
   tagline: 'AI, web and mobile software studio',
   phone: PHONE,
   phoneHref: `tel:${PHONE.replace(/\s/g, '')}`,
   whatsappHref: `https://wa.me/${PHONE.replace(/[^\d]/g, '')}?text=${encodeURIComponent(
-    "Hi ORBIT, I scanned your card and I'd like to talk about a project."
+    "Hi Orbit Innovations, I scanned your card and I'd like to talk about a project."
   )}`,
   email: 'info@orbitpk.com',
   emailHref: 'mailto:info@orbitpk.com?subject=Project%20enquiry%20from%20your%20card',

@@ -6,11 +6,11 @@ import { COMPANY } from '@/lib/constants'
 const SITE_URL = 'https://orbitpk.com'
 
 export const metadata: Metadata = {
-  title: 'Careers & Internships at ORBIT - Islamabad, Pakistan',
+  title: 'Careers & Internships at Orbit Innovations - Islamabad, Pakistan',
   description:
-    'Join ORBIT. We are hiring AI engineers, web and mobile developers, and designers in Islamabad and Rawalpindi. Paid internships with real client work and founder mentorship.',
+    'Join Orbit Innovations. We are hiring AI engineers, web and mobile developers, and designers in Islamabad and Rawalpindi. Paid internships with real client work and founder mentorship.',
   keywords: [
-    'ORBIT careers',
+    'Orbit Innovations careers',
     'software jobs Islamabad',
     'AI internship Pakistan',
     'web developer jobs Pakistan',
@@ -71,10 +71,10 @@ export default function CareersPage() {
     '@type': 'JobPosting',
     title: 'Software & AI Internship',
     description:
-      'A three month hands-on internship at ORBIT working on real client projects in AI/ML, web development, mobile development, or design. Mentored directly by the founders. Remote or hybrid, based in Islamabad, Pakistan.',
+      'A three month hands-on internship at Orbit Innovations working on real client projects in AI/ML, web development, mobile development, or design. Mentored directly by the founders. Remote or hybrid, based in Islamabad, Pakistan.',
     identifier: {
       '@type': 'PropertyValue',
-      name: 'ORBIT',
+      name: 'Orbit Innovations',
       value: 'ORB-INT-26',
     },
     hiringOrganization: { '@id': `${SITE_URL}/#organization` },
@@ -128,7 +128,7 @@ export default function CareersPage() {
                 Build real things, <span className="text-gradient">from day one</span>
               </h1>
               <p className="mt-5 max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base">
-                We are three engineers who started ORBIT from freelance work and grew it
+                We are three engineers who started Orbit Innovations from freelance work and grew it
                 into a company. We are looking for people who want to ship, not shadow.
               </p>
 
@@ -173,7 +173,7 @@ export default function CareersPage() {
                   <span className="absolute bottom-0 left-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-accent/70" />
                 </div>
 
-                {/* centre mark: ORBIT ring + orange dot */}
+                {/* centre mark: Orbit Innovations ring + orange dot */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative flex h-24 w-24 items-center justify-center rounded-full border-[5px] border-text-primary xl:h-28 xl:w-28">
                     <span className="absolute -right-1 -top-1 h-5 w-5 rounded-full bg-accent shadow-[0_0_16px_rgba(255,117,31,0.6)]" />

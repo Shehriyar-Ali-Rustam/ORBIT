@@ -27,7 +27,12 @@ export function Footer() {
                 quality={100}
                 className={cn('h-10 w-10 object-contain', theme === 'light' && 'invert hue-rotate-180')}
               />
-              <span className="text-lg font-bold tracking-[0.2em] text-text-primary">ORBIT</span>
+              <span className="flex flex-col leading-none">
+                <span className="text-lg font-bold tracking-[0.2em] text-text-primary">Orbit</span>
+                <span className="mt-[3px] text-[8px] font-medium uppercase tracking-[0.3em] text-text-secondary">
+                  Innovations
+                </span>
+              </span>
             </Link>
             <p className="text-sm leading-relaxed text-text-secondary">{COMPANY.tagline}</p>
             <div className="flex items-center gap-3">

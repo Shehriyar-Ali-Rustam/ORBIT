@@ -12,7 +12,7 @@ const SITE_URL = 'https://orbitpk.com'
 export const metadata: Metadata = {
   title: 'Services - AI Chatbots, ML, Web & Mobile Development in Pakistan',
   description:
-    'Full-service software solutions: custom AI chatbots, machine learning model training, Next.js web apps, mobile apps for Android and iOS, and brand design. Delivered fast by ORBIT, Pakistan.',
+    'Full-service software solutions: custom AI chatbots, machine learning model training, Next.js web apps, mobile apps for Android and iOS, and brand design. Delivered fast by Orbit Innovations, Pakistan.',
   keywords: [
     'AI chatbot development Pakistan',
     'custom AI chatbot',

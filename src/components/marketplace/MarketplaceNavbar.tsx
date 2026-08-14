@@ -39,7 +39,7 @@ export function MarketplaceNavbar() {
           <Link href="/freelancers" className="flex items-center gap-3">
             <Image src="/logo.png" alt="" width={160} height={160} quality={100} priority className={cn('h-8 w-8 object-contain', theme === 'light' && 'invert hue-rotate-180')} />
             <span className="font-montserrat text-base font-bold tracking-[0.3em] text-text-primary">
-              ORBIT <span className="text-[10px] font-normal tracking-widest text-text-tertiary">MARKETPLACE</span>
+              Orbit <span className="text-[10px] font-normal tracking-widest text-text-tertiary">MARKETPLACE</span>
             </span>
           </Link>
         </div>

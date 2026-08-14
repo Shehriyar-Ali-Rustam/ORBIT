@@ -8,11 +8,11 @@ import { HomeCTA } from '@/components/sections/home/HomeCTA'
 const SITE_URL = 'https://orbitpk.com'
 
 export const metadata: Metadata = {
-  title: 'Blog - AI, Web & Software Insights from ORBIT',
+  title: 'Blog - AI, Web & Software Insights from Orbit Innovations',
   description:
     'Practical writing on AI chatbots, web development, and building software from Pakistan. Real numbers, real build breakdowns, no fluff.',
   keywords: [
-    'ORBIT blog',
+    'Orbit Innovations blog',
     'AI development Pakistan',
     'web development blog',
     'software development Pakistan',
@@ -37,7 +37,7 @@ export default function BlogIndexPage() {
     '@context': 'https://schema.org',
     '@type': 'Blog',
     '@id': `${SITE_URL}/blog#blog`,
-    name: 'ORBIT Blog',
+    name: 'Orbit Innovations Blog',
     description:
       'Practical writing on AI chatbots, web development, and building software from Pakistan.',
     url: `${SITE_URL}/blog`,

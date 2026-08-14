@@ -38,7 +38,7 @@ export const projects: Project[] = [
   {
     id: 'orbit-web-platform',
     slug: 'orbit-web-platform',
-    title: 'ORBIT Web Platform',
+    title: 'Orbit Innovations Web Platform',
     category: 'web',
     shortDescription:
       'Full-stack company website with AI chatbot, dark/light theme, and glassmorphism design',
