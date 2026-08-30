@@ -10,6 +10,7 @@ import ContactCard from '@/components/landing/ContactCard'
 import CTABand from '@/components/landing/CTABand'
 import LandingFooter from '@/components/landing/LandingFooter'
 import StickyActionBar from '@/components/landing/StickyActionBar'
+import { StoryGate } from '@/components/story/StoryGate'
 
 /**
  * v.l.01 — the destination for the QR code printed on the ORBIT business card.
@@ -41,6 +42,9 @@ export default function LandingPage() {
       </main>
       <LandingFooter />
       <StickyActionBar />
+      {/* Story Mode. Renders nothing until STORY_ENABLED is on, except at
+          ?story=1. The page below is never unmounted. */}
+      <StoryGate />
     </>
   )
 }
