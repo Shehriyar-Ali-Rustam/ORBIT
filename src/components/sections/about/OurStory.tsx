@@ -1,65 +1,72 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
+/**
+ * The right half of this section used to be three dashed rings spinning at
+ * different speeds around a gradient-filled square with an "O" in it. It ran
+ * two counter-rotating CSS animations forever, on every visit, and said
+ * nothing — the same ornament also appears on the Coming Soon screen.
+ *
+ * It is replaced with the actual timeline, which is information: four dated
+ * entries, in a monospace column so the years line up. That also fixes the
+ * `text-text-primary` on `bg-gradient-brand` contrast problem in the old mark.
+ */
+const timeline = [
+  { year: '2023', event: 'Freelance work on Fiverr. Logos and banners, then websites.' },
+  { year: '2024', event: 'Orbit Innovations registered. Three founders, first retained client.' },
+  { year: '2025', event: 'First AI work: chatbots trained on client documents, then fine-tuning.' },
+  { year: '2026', event: 'Five people. Clients across eight countries, most of them repeat.' },
+]
 
 export function OurStory() {
   return (
-    <section id="story" className="section-padding scroll-mt-24">
+    <section id="story" className="scroll-mt-24 border-t border-border bg-background py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease }}
-            viewport={{ once: true, margin: '-50px' }}
-          >
-            <SectionLabel>Our Story</SectionLabel>
-            <SectionHeading className="mt-4 text-3xl md:text-4xl lg:text-5xl">
-              From Students to a{' '}
-              <span className="text-gradient">Growing Company</span>
-            </SectionHeading>
-            <div className="mt-5 space-y-4 text-sm leading-relaxed text-text-secondary sm:text-base">
-              <p>
-                Orbit Innovations was built by three software engineering students from Pakistan:
-                Shehriyar Ali Rustam, Saqib Nawaz Khan, and Abdul Ahad. What
-                started as freelance projects on Fiverr grew into the company you see
-                today.
-              </p>
-              <p>
-                We&apos;re not a big corporate thing. We&apos;re a small, hungry team that
-                takes real projects seriously. From AI tools to full websites to complete
-                brand identities, we ship fast, communicate clearly, and actually care about
-                the work.
-              </p>
-              <p>
-                We&apos;re still growing, still learning, and still building. If you need
-                something built right, we&apos;re the team for it.
-              </p>
-            </div>
-          </motion.div>
+        <div className="grid gap-x-16 gap-y-14 lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <Reveal>
+              <SectionLabel>Story</SectionLabel>
+              <SectionHeading className="mt-5">
+                It started with logo work on <span className="text-accent">Fiverr</span>
+              </SectionHeading>
+            </Reveal>
 
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease }}
-            viewport={{ once: true, margin: '-50px' }}
-            className="flex items-center justify-center"
-          >
-            <div className="relative h-56 w-56 sm:h-64 sm:w-64 lg:h-80 lg:w-80">
-              <div className="absolute inset-0 animate-spin-slow rounded-full border border-dashed border-accent/20" />
-              <div className="absolute inset-6 animate-spin-slow rounded-full border border-dashed border-accent/30 sm:inset-8" style={{ animationDirection: 'reverse' }} />
-              <div className="absolute inset-12 animate-spin-slow rounded-full border border-dashed border-accent/40 sm:inset-16" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-brand sm:h-20 sm:w-20">
-                  <span className="text-2xl font-black text-text-primary sm:text-3xl">O</span>
-                </div>
+            <Reveal delay={0.06}>
+              <div className="mt-6 max-w-[58ch] space-y-4 leading-relaxed text-text-secondary">
+                <p>
+                  Shehriyar Ali Rustam, Saqib Nawaz Khan and Abdul Ahad were software engineering
+                  students taking design jobs on Fiverr. The banners paid better than the internships
+                  did, and the clients kept coming back asking for the website next.
+                </p>
+                <p>
+                  Orbit Innovations is what that turned into. We are five people now, not an agency,
+                  and the founders still write code. The Fiverr profile is still up, which is where
+                  a fair amount of the review history lives.
+                </p>
               </div>
-            </div>
-          </motion.div>
+            </Reveal>
+          </div>
+
+          <div className="lg:col-span-5 lg:col-start-8">
+            <Stagger as="dl" className="lg:pt-2">
+              {timeline.map((item) => (
+                <StaggerItem
+                  key={item.year}
+                  className="grid grid-cols-[3.5rem_1fr] gap-x-5 border-t border-border py-5 first:border-t-0 first:pt-0 last:pb-0"
+                >
+                  <dt className="font-mono text-sm font-medium tabular-nums text-accent">
+                    {item.year}
+                  </dt>
+                  <dd className="text-[0.9375rem] leading-relaxed text-text-secondary">
+                    {item.event}
+                  </dd>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
         </div>
       </div>
     </section>

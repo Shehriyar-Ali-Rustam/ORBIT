@@ -1,54 +1,55 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Target, Eye } from 'lucide-react'
+import { SectionLabel } from '@/components/ui/SectionLabel'
+import { Reveal } from '@/components/motion/Reveal'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
-
+/**
+ * Was two equal glass cards, each with an icon in a tinted rounded square, a
+ * bold heading, and a paragraph — the mission/vision pair every company page
+ * ships. The copy was the real problem: "deliver world-class AI-powered
+ * software solutions that empower businesses to grow, innovate, and compete
+ * globally" is four filler verbs and no claim a reader can check.
+ *
+ * It is now a single statement set at reading size against a hairline, which
+ * is what a position actually looks like on the page. One idea, stated once,
+ * with the specific part — where the work is done and who it competes with —
+ * carrying the accent instead of a gradient.
+ */
 export function MissionVision() {
   return (
-    <section id="mission" className="section-padding bg-surface scroll-mt-24">
+    <section id="mission" className="border-t border-border bg-background py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
-            viewport={{ once: true, margin: '-50px' }}
-            className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-8 backdrop-blur-sm"
-          >
-            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
-            <div className="relative z-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
-                <Target className="h-6 w-6 text-accent" />
-              </div>
-              <h3 className="mt-6 text-2xl font-bold text-text-primary">Our Mission</h3>
-              <p className="mt-4 leading-relaxed text-text-secondary">
-                To deliver world-class AI-powered software solutions that empower businesses to grow,
-                innovate, and compete globally, regardless of their size or location.
-              </p>
-            </div>
-          </motion.div>
+        <div className="grid gap-x-16 gap-y-10 lg:grid-cols-12">
+          <div className="lg:col-span-3">
+            <Reveal>
+              <SectionLabel>Position</SectionLabel>
+            </Reveal>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease }}
-            viewport={{ once: true, margin: '-50px' }}
-            className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-8 backdrop-blur-sm"
-          >
-            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
-            <div className="relative z-10">
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10">
-                <Eye className="h-6 w-6 text-accent" />
-              </div>
-              <h3 className="mt-6 text-2xl font-bold text-text-primary">Our Vision</h3>
-              <p className="mt-4 leading-relaxed text-text-secondary">
-                To become a globally recognized technology company from Pakistan, proving that
-                innovation knows no borders and that the best solutions can come from anywhere.
+          <div className="lg:col-span-9">
+            <Reveal delay={0.05}>
+              <p className="max-w-[30ch] text-balance text-[1.75rem] font-medium leading-[1.25] tracking-[-0.025em] text-text-primary sm:text-[2.125rem] sm:max-w-[24ch]">
+                Good software is not cheaper because it was built in{' '}
+                <span className="text-accent">Islamabad</span>. It is just built here.
               </p>
-            </div>
-          </motion.div>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <div className="mt-10 max-w-[64ch] space-y-5 border-t border-border pt-8 leading-relaxed text-text-secondary">
+                <p>
+                  Most of our clients are not in Pakistan. They come to us because the work holds up
+                  against studios charging four times as much, and they stay because the second
+                  project runs the same way as the first.
+                </p>
+                <p>
+                  That is the whole position. We are not trying to be the cheapest option on a
+                  freelancing platform, and we are not pretending to be an agency with three floors
+                  and an account team. Five people, named on the site, who write the code they sold
+                  you.
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

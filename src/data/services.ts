@@ -6,7 +6,7 @@ export const services: Service[] = [
     icon: 'Bot',
     title: 'AI Chatbot Development',
     shortDescription:
-      'Intelligent chatbots powered by OpenAI, Gemini, and custom models that transform your customer experience.',
+      'Assistants trained on your own documents and wired into your site, app or WhatsApp.',
     fullDescription:
       'We design, build, and deploy intelligent chatbots that understand your business context and engage your customers naturally. From WhatsApp bots to website widgets, our chatbots are trained on your data to provide accurate, helpful responses 24/7.',
     includes: [
@@ -25,7 +25,7 @@ export const services: Service[] = [
     icon: 'Brain',
     title: 'AI Model Training & Fine-Tuning',
     shortDescription:
-      'Custom AI models trained on your data for classification, generation, and intelligent automation.',
+      'Fine-tuning and RAG pipelines on your data, not a generic API call.',
     fullDescription:
       'We go beyond off-the-shelf AI. Our team fine-tunes language models on your proprietary data, building RAG systems and custom AI pipelines that deliver results specific to your industry and use case.',
     includes: [
@@ -44,9 +44,9 @@ export const services: Service[] = [
     icon: 'Globe',
     title: 'Web Development',
     shortDescription:
-      'Modern, high-performance websites and web applications built with Next.js, React, and cutting-edge tech.',
+      'Next.js platforms and marketing sites, built to load fast and rank.',
     fullDescription:
-      'We build fast, scalable, and beautiful web experiences. From landing pages to full-stack SaaS platforms, every project is engineered for performance, accessibility, and conversion.',
+      'From a landing page to a full SaaS platform. Server-rendered where it helps ranking, measured against Core Web Vitals before handover, and accessible enough to pass an audit rather than just look like it would.',
     includes: [
       'Custom websites and landing pages',
       'Full-stack web applications',

@@ -71,7 +71,7 @@ export default function TeamMemberPage({ params }: Props) {
                 className="h-48 w-48 rounded-2xl object-cover md:h-56 md:w-56"
               />
             ) : (
-              <div className="flex h-48 w-48 items-center justify-center rounded-2xl bg-gradient-brand text-6xl font-black text-text-primary md:h-56 md:w-56">
+              <div className="flex h-48 w-48 items-center justify-center rounded-2xl bg-accent text-5xl font-semibold text-[#0a0a0a] md:h-56 md:w-56">
                 {member.name.charAt(0)}
               </div>
             )}

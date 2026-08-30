@@ -241,7 +241,7 @@ export function Navbar() {
                 <div className="relative hidden md:block" ref={dropdownRef}>
                   <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-brand text-sm font-bold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
+                    className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-sm font-semibold text-[#0a0a0a] transition-colors hover:bg-accent-hover"
                   >
                     {photoUrl ? (
                       <Image

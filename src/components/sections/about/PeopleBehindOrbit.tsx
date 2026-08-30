@@ -39,9 +39,8 @@ export function PeopleBehindOrbit() {
               transition={{ duration: 0.6, delay: i * 0.1, ease }}
               viewport={{ once: true, margin: '-50px' }}
             >
-              <div className="group relative h-full overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-6 text-center backdrop-blur-sm">
-                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
-                <div className="relative z-10">
+              <div className="group relative h-full overflow-hidden rounded-xl border border-border bg-surface p-6 text-center transition-colors hover:border-accent/40">
+                                <div className="relative z-10">
                   {member.photo ? (
                     <Image
                       src={member.photo}
@@ -52,7 +51,7 @@ export function PeopleBehindOrbit() {
                       className="mx-auto h-24 w-24 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gradient-brand text-3xl font-black text-text-primary">
+                    <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-accent text-2xl font-semibold text-[#0a0a0a]">
                       {member.name.charAt(0)}
                     </div>
                   )}
@@ -82,7 +81,7 @@ export function PeopleBehindOrbit() {
         <div className="mt-12 text-center">
           <Link
             href="/team"
-            className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
+            className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-colors hover:bg-accent-hover"
           >
             Meet the full team
             <ArrowRight className="h-4 w-4" />

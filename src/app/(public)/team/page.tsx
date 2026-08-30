@@ -29,9 +29,8 @@ function MemberCard({ member }: { member: TeamMember }) {
   const hasLinkedIn = member.linkedin && member.linkedin !== '#'
 
   return (
-    <div className="group relative flex h-full flex-col items-center overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-6 text-center backdrop-blur-sm">
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
-      <div className="relative z-10 flex flex-col items-center">
+    <div className="group relative flex h-full flex-col items-center overflow-hidden rounded-xl border border-border bg-surface p-6 text-center transition-colors hover:border-accent/40">
+            <div className="relative z-10 flex flex-col items-center">
         {member.photo ? (
           <Image
             src={member.photo}
@@ -42,7 +41,7 @@ function MemberCard({ member }: { member: TeamMember }) {
             className="h-24 w-24 rounded-full object-cover"
           />
         ) : (
-          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-brand text-3xl font-black text-text-primary">
+          <div className="flex h-24 w-24 items-center justify-center rounded-full bg-accent text-2xl font-semibold text-[#0a0a0a]">
             {member.name.charAt(0)}
           </div>
         )}
