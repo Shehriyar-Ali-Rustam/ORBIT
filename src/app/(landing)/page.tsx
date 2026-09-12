@@ -10,7 +10,8 @@ import ContactCard from '@/components/landing/ContactCard'
 import CTABand from '@/components/landing/CTABand'
 import LandingFooter from '@/components/landing/LandingFooter'
 import StickyActionBar from '@/components/landing/StickyActionBar'
-import { StoryGate } from '@/components/story/StoryGate'
+import { StoryCover } from '@/components/story/StoryCover'
+import { StoryEntry } from '@/components/story/StoryEntry'
 
 /**
  * v.l.01 — the destination for the QR code printed on the ORBIT business card.
@@ -42,9 +43,16 @@ export default function LandingPage() {
       </main>
       <LandingFooter />
       <StickyActionBar />
-      {/* Story Mode. Renders nothing until STORY_ENABLED is on, except at
-          ?story=1. The page below is never unmounted. */}
-      <StoryGate />
+      {/*
+        Story Mode. The walkthrough is what a first-time visitor lands in, and
+        everything above is what stays in the HTML underneath it: crawlers and
+        no-JS visitors get the full landing page, and anyone who exits the tour
+        lands on it. The page is never unmounted.
+
+        StoryCover paints before hydration so the page never flashes up first.
+      */}
+      <StoryCover />
+      <StoryEntry />
     </>
   )
 }

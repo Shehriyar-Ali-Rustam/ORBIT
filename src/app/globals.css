@@ -330,6 +330,13 @@
   }
 }
 
+/* While the pre-paint story cover is up, the page behind it must not
+   scroll. Set by the inline script in StoryCover, cleared by StoryEntry. */
+html.story-covered,
+html.story-covered body {
+  overflow: hidden;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

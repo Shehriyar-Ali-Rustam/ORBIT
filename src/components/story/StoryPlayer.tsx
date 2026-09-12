@@ -43,6 +43,14 @@ export function StoryPlayer({ onExit }: StoryPlayerProps) {
 
   useEffect(() => {
     track('story_start')
+    // Clear the pre-paint cover here rather than on a timer in StoryEntry.
+    // This component is behind a dynamic import, so "we decided to mount the
+    // player" and "the player is on screen" are not the same moment; on a slow
+    // connection a timer drops the cover into the gap and the landing page
+    // flashes before the story arrives. Removing it from the player's own
+    // mount means the cover survives exactly as long as it is needed.
+    document.getElementById('story-cover')?.remove()
+    document.documentElement.classList.remove('story-covered')
   }, [])
 
   useEffect(() => {

@@ -5,10 +5,14 @@
 
 /**
  * Master switch. While `false`, `/` renders exactly as it always has and the
- * story is reachable only at `/?story=1` — which is how it stays testable in
- * production without being shown to visitors.
+ * story is reachable only at `/?story=1`.
+ *
+ * While `true`, the walkthrough IS the landing: a first-time visitor arrives
+ * inside it rather than being offered it. The landing page still renders
+ * underneath in the same HTML document, which is what keeps `/` indexable and
+ * gives anyone who exits somewhere to land.
  */
-export const STORY_ENABLED = false
+export const STORY_ENABLED = true
 
 /**
  * Narration audio. The engine runs on a timeline clock while this is `false`;
@@ -22,8 +26,18 @@ export const STORY_AUDIO_ENABLED = false
 /** Query param that force-opens the player regardless of `STORY_ENABLED`. */
 export const STORY_QUERY_PARAM = 'story'
 
-/** localStorage key holding the visitor's "no thanks" choice. */
-export const STORY_CHOICE_KEY = 'orbit-story-choice-v1'
+/** localStorage key recording that this visitor has already seen the tour. */
+export const STORY_SEEN_KEY = 'orbit-story-seen-v1'
+
+/**
+ * Replay the walkthrough on every single visit, not just the first.
+ *
+ * Left `false` deliberately. Someone who scanned the business card to get a
+ * phone number should not sit through the tour a second time to reach it, and
+ * a repeat visitor who has already watched it has told you they are past the
+ * introduction. Set to `true` if you want it unconditional.
+ */
+export const STORY_REPLAY_EVERY_VISIT = false
 
 /**
  * The tour length, in seconds, as advertised on the entry gate.
