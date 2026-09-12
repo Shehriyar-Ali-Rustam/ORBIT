@@ -1,9 +1,9 @@
 'use client'
 
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { track } from '@vercel/analytics'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, MessageCircle } from 'lucide-react'
 import { StoryProgress } from '@/components/story/StoryProgress'
 import { StoryControls } from '@/components/story/StoryControls'
 import { StoryCaptions } from '@/components/story/StoryCaptions'
@@ -14,7 +14,10 @@ import { CrossroadsView } from './views/CrossroadsView'
 import { ServicesView } from './views/ServicesView'
 import { WorkView } from './views/WorkView'
 import { AboutView } from './views/AboutView'
+import { ContactView } from './views/ContactView'
+import { ChatView } from './views/ChatView'
 import { OrbieDock } from './OrbieDock'
+import { ORBIE_CHAT_ENABLED } from '@/lib/orbie-flags'
 import type { OptionCard } from '@/data/orbie-graph'
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -42,6 +45,7 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
   const reduce = useReducedMotion()
   const nav = useOrbieNavigator()
   const { node, clock } = nav
+  const [celebrating, setCelebrating] = useState(false)
 
   const exit = useCallback(() => {
     track('orbie_exit', { node: node.id })
@@ -147,6 +151,14 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
         </button>
       )}
 
+      {/* Chat overlays the current node rather than being one of them, so
+          closing it puts the visitor back exactly where they were. */}
+      {nav.mode === 'chat' && (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-orbit-canvas/95 px-6 pb-32 pt-20 backdrop-blur-sm">
+          <ChatView onClose={nav.closeChat} />
+        </div>
+      )}
+
       <AnimatePresence mode="wait">
         <motion.div
           key={node.id}
@@ -158,15 +170,34 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
         >
           <div className="flex w-full flex-col items-center gap-8">
             {node.view === 'crossroads' && node.options && (
-              <CrossroadsView options={node.options} ready={clock.isWaiting} onPick={onPick} />
+              <>
+                <CrossroadsView options={node.options} ready={clock.isWaiting} onPick={onPick} />
+                {/* The fifth, smaller prompt the spec asks for. Only offered
+                    where the visitor is already choosing, so it reads as
+                    another door rather than an interruption. */}
+                {clock.isWaiting && ORBIE_CHAT_ENABLED && (
+                  <motion.button
+                    type="button"
+                    onClick={nav.openChat}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4, delay: 0.5 }}
+                    className="inline-flex items-center gap-2 font-spacemono text-[10px] uppercase tracking-[0.18em] text-orbit-ink/50 transition-colors hover:text-orbit-accInk"
+                  >
+                    <MessageCircle className="h-3 w-3" aria-hidden />
+                    or just ask me anything
+                  </motion.button>
+                )}
+              </>
             )}
             {node.view === 'services' && <ServicesView focus={node.focus} />}
             {node.view === 'work' && <WorkView />}
             {node.view === 'about' && <AboutView />}
+            {node.view === 'contact' && <ContactView onDone={() => setCelebrating(true)} />}
 
             {/* Arrival and the orientation beats stage the character itself;
                 everything else keeps it docked in the corner. */}
-            {(node.view === 'arrival' || node.view === 'beat' || node.view === 'contact') && (
+            {(node.view === 'arrival' || node.view === 'beat') && (
               <Orbie
                 pose={node.pose ?? 'idle'}
                 emotion={node.emotion}
@@ -199,12 +230,16 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
 
       {/* Docked wherever the view owns the stage, so Orbie stays present as
           the narrator without competing with the content it is describing. */}
-      {!['arrival', 'beat', 'contact'].includes(node.view) && (
+      {!['arrival', 'beat'].includes(node.view) && (
         <div className="pointer-events-none absolute bottom-6 left-5 z-30 md:bottom-8 md:left-8">
           <Orbie
-            pose={clock.isPaused ? 'sleep' : (node.pose ?? 'idle')}
-            emotion={node.emotion}
+            pose={celebrating ? 'celebrate' : clock.isPaused ? 'sleep' : (node.pose ?? 'idle')}
+            emotion={celebrating ? 'star' : node.emotion}
             size="dock"
+            // celebrate is one-shot, so it returns to idle by itself. Clearing
+            // the flag on its own end keeps the two in step rather than having
+            // a timer here guess at the animation's length.
+            onPoseEnd={(p) => p === 'celebrate' && setCelebrating(false)}
           />
         </div>
       )}
