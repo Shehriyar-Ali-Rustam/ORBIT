@@ -21,11 +21,11 @@ export const metadata: Metadata = {
 }
 
 const perks = [
-  'Real client projects from week one, not throwaway exercises',
-  'Direct mentorship from the founders, not a layer of managers',
-  'Remote or hybrid, whatever actually works for you',
-  'A certificate and a portfolio piece you can show anyone',
-  'A genuine shot at joining the team full time',
+  'Real client projects from week one',
+  'Direct mentorship from the founders',
+  'Remote or hybrid',
+  'A certificate and a portfolio piece',
+  'A real shot at joining full time',
 ]
 
 const tracks = [
@@ -122,8 +122,7 @@ export default function CareersPage() {
                 Build real things, <span className="text-accent">from day one</span>
               </h1>
               <p className="mt-5 max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base">
-                We are three engineers who started Orbit Innovations from freelance work and grew it
-                into a company. We are looking for people who want to ship, not shadow.
+                We are looking for people who want to ship, not shadow.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -219,17 +218,15 @@ export default function CareersPage() {
             <div className="rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-6 sm:p-8">
               <h2 className="text-lg font-bold text-text-primary">Who this suits</h2>
               <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-                You are probably a student or recent graduate. You have built something,
-                even if it is small and a bit broken. You would rather be given a real
-                problem than a tutorial.
+                A student or recent graduate who has built something, even if it is small
+                and a bit broken.
               </p>
               <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-                We care more about what you have made than where you studied. Show us a
-                repo, a design file, a half-finished app. That tells us more than a CV.
+                Show us a repo, a design file, a half-finished app. It tells us more than
+                a CV.
               </p>
               <p className="mt-4 text-sm leading-relaxed text-text-secondary">
-                We are a small team, so we read every application ourselves and reply
-                within five working days either way.
+                We read every application ourselves and reply within five working days.
               </p>
             </div>
           </div>

@@ -33,8 +33,7 @@ export default function Proof() {
             </h2>
           </div>
           <p className="max-w-xs text-sm leading-relaxed text-orbit-ink/62">
-            Verified feedback from Fiverr clients in the US, UK, Germany, Netherlands, Austria,
-            Australia, New Zealand and Pakistan.
+            Verified Fiverr feedback, from clients in eight countries.
           </p>
         </MotionReveal>
       </div>

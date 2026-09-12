@@ -30,23 +30,23 @@ import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal'
 const values = [
   {
     title: 'Say the hard thing early',
-    body: 'If a scope is wrong, a deadline is unrealistic, or we are not the right studio for the job, you hear it in the first conversation. A late no costs you more than an early one.',
+    body: 'Wrong scope, unrealistic deadline, wrong studio: you hear it in the first conversation. A late no costs you more than an early one.',
   },
   {
     title: 'Ship something every week',
-    body: 'You get a working link from week one and a demo every week after. No month of silence followed by a reveal, and no invoice for work you have not seen running.',
+    body: 'A working link from week one, a demo every week after. No invoice for work you have not seen running.',
   },
   {
     title: 'Write it down',
-    body: 'Scope, price and delivery date are fixed in writing before any money moves. Changes get their own written estimate rather than quietly absorbing into the timeline.',
+    body: 'Scope, price and date fixed in writing before any money moves. Changes get their own estimate.',
   },
   {
     title: 'Build it to be handed over',
-    body: 'Code, accounts and documentation are yours at the end. We stay on for support when you want it, not because the project cannot run without us.',
+    body: 'Code, accounts and docs are yours at the end. Support is because you want it, not because you are stuck.',
   },
   {
     title: 'Small team, named people',
-    body: 'The people who scope your project are the people who write it. There is no account layer between you and whoever is actually in the codebase.',
+    body: 'The people who scope your project are the people who write it. No account layer in between.',
   },
 ]
 
@@ -61,8 +61,7 @@ export function Values() {
               <SectionLabel>How we work</SectionLabel>
               <SectionHeading className="mt-5">Five rules we do not bend</SectionHeading>
               <p className="mt-5 max-w-[42ch] leading-relaxed text-text-secondary">
-                Every studio publishes values. These are the five that have actually cost us work,
-                which is the only test that means anything.
+                The five that have actually cost us work.
               </p>
             </Reveal>
           </div>

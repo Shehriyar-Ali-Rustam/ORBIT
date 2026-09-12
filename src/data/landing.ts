@@ -89,21 +89,21 @@ export const PROCESS = [
   {
     n: '01',
     title: 'Call',
-    body: 'Twenty minutes on the phone. You describe the problem, we tell you honestly whether we are the right people for it.',
+    body: 'Twenty minutes. You describe the problem, we say honestly whether it is ours to build.',
   },
   {
     n: '02',
     title: 'Scope',
-    body: 'A written breakdown: what gets built, what it costs, what date it lands. Fixed, before any money moves.',
+    body: 'What gets built, what it costs, what date it lands. Fixed before any money moves.',
   },
   {
     n: '03',
     title: 'Build',
-    body: 'You get a working link from week one and a demo every week after. No black box, no month of silence.',
+    body: 'A working link in week one, a demo every week after.',
   },
   {
     n: '04',
     title: 'Hand over',
-    body: 'Code, accounts and documentation go to you. We stay on for support if you want it, not because you are locked in.',
+    body: 'Code, accounts and docs go to you. Support afterwards is optional.',
   },
 ] as const

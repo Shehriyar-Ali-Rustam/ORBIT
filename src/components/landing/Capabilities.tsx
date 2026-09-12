@@ -36,8 +36,7 @@ export default function Capabilities() {
               <span className="text-orbit-accInk">nothing we don&apos;t.</span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-ink/65">
-              We are a small studio, so we stay narrow on purpose. If your project falls outside
-              this list we will say so on the first call rather than learn it on your budget.
+              Outside this list, we will say so on the first call.
             </p>
           </MotionReveal>
 

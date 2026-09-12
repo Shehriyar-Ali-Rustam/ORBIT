@@ -82,8 +82,7 @@ export default function BlogIndexPage() {
             Notes from the <span className="text-accent">build</span>
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base">
-            Real numbers, honest tradeoffs, and breakdowns of things we actually
-            shipped. No thought leadership, no fluff.
+            Real numbers and honest tradeoffs from things we shipped.
           </p>
         </div>
       </section>

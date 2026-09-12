@@ -85,8 +85,7 @@ export default function TeamPage() {
           <SectionLabel>The Team</SectionLabel>
           <SectionHeading className="mt-4">The people building Orbit Innovations</SectionHeading>
           <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base">
-            From engineering and design to marketing and growth - the people who ship
-            the work and move the studio forward.
+            The people who ship the work.
           </p>
         </div>
       </section>

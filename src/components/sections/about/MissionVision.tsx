@@ -37,15 +37,9 @@ export function MissionVision() {
             <Reveal delay={0.12}>
               <div className="mt-10 max-w-[64ch] space-y-5 border-t border-border pt-8 leading-relaxed text-text-secondary">
                 <p>
-                  Most of our clients are not in Pakistan. They come to us because the work holds up
-                  against studios charging four times as much, and they stay because the second
-                  project runs the same way as the first.
-                </p>
-                <p>
-                  That is the whole position. We are not trying to be the cheapest option on a
-                  freelancing platform, and we are not pretending to be an agency with three floors
-                  and an account team. Five people, named on the site, who write the code they sold
-                  you.
+                  Most of our clients are not in Pakistan. They come because the work holds up
+                  against studios charging four times as much, and stay because the second project
+                  runs like the first.
                 </p>
               </div>
             </Reveal>

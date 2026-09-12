@@ -25,22 +25,22 @@ const steps = [
   {
     n: '01',
     title: 'Call',
-    body: 'Twenty minutes, no deck. You describe the problem and we tell you whether it is something we should be building. If it is not, we say so on this call rather than after a proposal.',
+    body: 'Twenty minutes, no deck. If it is not ours to build, you hear it on this call.',
   },
   {
     n: '02',
     title: 'Scope',
-    body: 'A written breakdown: what gets built, what it costs, what date it lands. Fixed before any money moves, so the number you approve is the number you pay.',
+    body: 'What gets built, what it costs, what date it lands. The number you approve is the number you pay.',
   },
   {
     n: '03',
     title: 'Build',
-    body: 'A working link in week one and a demo every week after. You see the thing running while it is still cheap to change your mind about it.',
+    body: 'A working link in week one, then a demo every week while changes are still cheap.',
   },
   {
     n: '04',
     title: 'Hand over',
-    body: 'Repository, hosting, domains and credentials transferred to your accounts, with the documentation to run it. Support afterwards is a choice, not a dependency.',
+    body: 'Repo, hosting, domains and credentials move to your accounts. Support is a choice, not a dependency.',
   },
 ]
 
@@ -54,7 +54,7 @@ export function Process() {
               <SectionLabel>Process</SectionLabel>
               <SectionHeading className="mt-5">Four steps, about six weeks</SectionHeading>
               <p className="mt-5 max-w-[40ch] leading-relaxed text-text-secondary">
-                The same sequence on every project, whether it is a chatbot or a full platform.
+                The same sequence on every project.
               </p>
             </Reveal>
           </div>

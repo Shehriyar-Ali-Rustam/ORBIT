@@ -1,60 +1,65 @@
 import { FAQ } from '@/types'
 import { Price } from '@/components/Price'
 
+/**
+ * `answer` renders on the page and may contain components; `answerText` is the
+ * plain twin that feeds the FAQPage JSON-LD on /services. Keep the two saying
+ * the same thing, or the structured data and the page disagree.
+ */
 export const faqs: FAQ[] = [
   {
     id: 'faq-1',
     question: 'How long does a project take?',
     answer:
-      'Project timelines depend on scope and complexity. A simple landing page can be delivered in 1-2 weeks, while a full-stack application or AI solution typically takes 4-8 weeks. We provide detailed timelines during the discovery phase and keep you updated throughout.',
+      'A landing page is one to two weeks. A full application or AI build is four to eight. You get the date in writing before any money moves.',
     answerText:
-      'Project timelines depend on scope and complexity. A simple landing page can be delivered in 1-2 weeks, while a full-stack application or AI solution typically takes 4-8 weeks. We provide detailed timelines during the discovery phase and keep you updated throughout.',
+      'A landing page is one to two weeks. A full application or AI build is four to eight. You get the date in writing before any money moves.',
   },
   {
     id: 'faq-2',
     question: 'What is your pricing model?',
     answer: (
       <>
-        We offer flexible pricing based on project scope. Small projects start from{' '}
-        <Price usd={500} className="font-semibold text-text-primary" />, mid-sized applications range from{' '}
-        <Price usd={2000} usdEnd={10000} className="font-semibold text-text-primary" />, and
-        enterprise solutions are custom-quoted. We also offer hourly rates for ongoing development
-        and support.
+        Fixed price per project. Small builds start from{' '}
+        <Price usd={500} className="font-semibold text-text-primary" />, most applications land
+        between <Price usd={2000} usdEnd={10000} className="font-semibold text-text-primary" />.
       </>
     ),
     answerText:
-      'We offer flexible pricing based on project scope. Small projects start from $500, mid-sized applications range from $2,000-$10,000, and enterprise solutions are custom-quoted. We also offer hourly rates for ongoing development and support. Prices auto-convert to your local currency on the site.',
+      'Fixed price per project. Small builds start from $500, most applications land between $2,000 and $10,000. Prices convert to your local currency on the site.',
   },
   {
     id: 'faq-3',
     question: 'Do you offer post-launch support?',
     answer:
-      'Absolutely. Every project includes 30 days of free bug fixes and support after launch. We also offer ongoing maintenance plans for hosting, updates, security patches, and feature additions at competitive monthly rates.',
+      'Thirty days of bug fixes are included. Ongoing maintenance is available monthly, but it is optional.',
     answerText:
-      'Absolutely. Every project includes 30 days of free bug fixes and support after launch. We also offer ongoing maintenance plans for hosting, updates, security patches, and feature additions at competitive monthly rates.',
+      'Thirty days of bug fixes are included. Ongoing maintenance is available monthly, but it is optional.',
   },
   {
     id: 'faq-4',
-    question: 'Can I hire a single freelancer from your network?',
+    // Was: "Our freelancer marketplace lets you browse and hire vetted
+    // professionals individually." The marketplace is behind
+    // MARKETPLACE_ENABLED = false and renders a Coming Soon screen, so that
+    // answer invited people to do something the site cannot do.
+    question: 'Can I hire one person rather than the studio?',
     answer:
-      'Yes! Our freelancer marketplace lets you browse and hire vetted professionals individually. Each freelancer has been personally reviewed by our team for quality, communication, and reliability. You can hire them for hourly or project-based work.',
+      'Not yet. A marketplace for hiring individual Orbiters is in progress. For now, email us and we will scope it as a studio project.',
     answerText:
-      'Yes! Our freelancer marketplace lets you browse and hire vetted professionals individually. Each freelancer has been personally reviewed by our team for quality, communication, and reliability. You can hire them for hourly or project-based work.',
+      'Not yet. A marketplace for hiring individual Orbiters is in progress. For now, email us and we will scope it as a studio project.',
   },
   {
     id: 'faq-5',
     question: 'Do you sign NDAs?',
-    answer:
-      'Yes, we take confidentiality seriously. We are happy to sign NDAs and any other legal agreements before starting any project. Your ideas and data are always protected.',
-    answerText:
-      'Yes, we take confidentiality seriously. We are happy to sign NDAs and any other legal agreements before starting any project. Your ideas and data are always protected.',
+    answer: 'Yes. Send yours over, or we will provide one.',
+    answerText: 'Yes. Send yours over, or we will provide one.',
   },
   {
     id: 'faq-6',
     question: 'Where is your team based?',
     answer:
-      'Orbit is headquartered in Pakistan with a remote-first team serving clients globally. We work across time zones and maintain consistent communication through Slack, email, and scheduled calls to ensure smooth collaboration.',
+      'Islamabad, Pakistan, working remote-first. Most of our clients are in other time zones.',
     answerText:
-      'Orbit is headquartered in Pakistan with a remote-first team serving clients globally. We work across time zones and maintain consistent communication through Slack, email, and scheduled calls to ensure smooth collaboration.',
+      'Islamabad, Pakistan, working remote-first. Most of our clients are in other time zones.',
   },
 ]

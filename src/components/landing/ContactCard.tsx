@@ -31,12 +31,7 @@ export default function ContactCard() {
               Everything on the card, <span className="text-orbit-accInk">one tap away.</span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-ink/65">
-              Save us to your contacts now and the number is there when you need it. No photo of a
-              card sitting in your camera roll for six months.
-            </p>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-ink/65">
-              When you call, you get the people who write the code. There is no account manager
-              layer between you and the build.
+              Save the number now, and when you call you get the people who write the code.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">

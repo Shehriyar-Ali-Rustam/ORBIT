@@ -37,14 +37,11 @@ export function OurStory() {
             <Reveal delay={0.06}>
               <div className="mt-6 max-w-[58ch] space-y-4 leading-relaxed text-text-secondary">
                 <p>
-                  Shehriyar Ali Rustam, Saqib Nawaz Khan and Abdul Ahad were software engineering
-                  students taking design jobs on Fiverr. The banners paid better than the internships
-                  did, and the clients kept coming back asking for the website next.
+                  Shehriyar Ali Rustam, Saqib Nawaz Khan and Abdul Ahad were engineering students
+                  taking design jobs on Fiverr. Clients kept coming back asking for the website next.
                 </p>
                 <p>
-                  Orbit Innovations is what that turned into. We are five people now, not an agency,
-                  and the founders still write code. The Fiverr profile is still up, which is where
-                  a fair amount of the review history lives.
+                  Five people now, not an agency, and the founders still write code.
                 </p>
               </div>
             </Reveal>
