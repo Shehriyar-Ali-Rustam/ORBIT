@@ -2,6 +2,10 @@
  * Content for the v.l.01 landing page — the destination for the QR code on the
  * ORBIT business card. Kept separate from the marketing-site data so the two
  * can drift independently.
+ *
+ * Deliberately imports nothing. `CARD` is pulled in by small components that
+ * only want a phone number, so a data import here lands in their chunks too.
+ * The derived stats live in `./stats` for that reason.
  */
 
 const PHONE = '+92 327 5362412'
@@ -76,13 +80,6 @@ export const CAPABILITIES = [
     image: '/images/landing/cap-design.jpg',
     imageAlt: 'Colour swatches and sketches on a designer desk',
   },
-] as const
-
-export const STATS = [
-  { value: '10', label: 'Projects shipped' },
-  { value: '30', label: 'Five-star reviews' },
-  { value: '8', label: 'Countries served' },
-  { value: '24h', label: 'Reply window' },
 ] as const
 
 export const PROCESS = [

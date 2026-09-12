@@ -1,6 +1,6 @@
 import MotionReveal from './MotionReveal'
 import CountUp from './CountUp'
-import { STATS } from '@/data/landing'
+import { STATS } from '@/data/stats'
 
 export default function Stats() {
   return (

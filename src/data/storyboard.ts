@@ -117,4 +117,28 @@ if (process.env.NODE_ENV !== 'production') {
         'Update STORY_SECONDS in src/lib/story-flags.ts.'
     )
   }
+
+  // ── No digits in narration ──────────────────────────────────────────
+  // The rule this enforces: src/data is canonical for facts, and narration
+  // never restates one. A typed "10" here is a second copy of a number that
+  // already exists in portfolio.ts, and second copies are how the site came
+  // to claim ten projects on one page and 101+ on another.
+  //
+  // Interpolate from data instead (see SHIPPED above), or spell it with
+  // `spell()` — spoken narration wants "ten" rather than "10" anyway, so the
+  // rule and the writing pull in the same direction.
+  //
+  // Deliberately a warning, not a throw: a bad number should not be able to
+  // take the site down, and this only ever runs in development.
+  for (const scene of STORYBOARD) {
+    const offenders = [scene.narration, ...scene.lines.map((l) => l.text)].filter((t) =>
+      /\d/.test(t)
+    )
+    for (const text of offenders) {
+      console.warn(
+        `[storyboard] Scene "${scene.id}" has a digit in its narration: ${JSON.stringify(text)}. ` +
+          'Derive it from src/data or spell it with spell().'
+      )
+    }
+  }
 }
