@@ -11,6 +11,7 @@ import {
   STORY_SEEN_KEY,
   STORY_SECONDS,
 } from '@/lib/story-flags'
+import { orbieWantsTheScreen } from '@/components/orbie/OrbieEntry'
 
 /**
  * The player is code-split. `/` is the printed QR code's destination, so its
@@ -67,6 +68,12 @@ export function StoryEntry() {
       setMode('player')
       return
     }
+
+    // Orbie supersedes Story Mode where both would fire. Two full-screen
+    // experiences on one page is not a degraded state, it is a broken one —
+    // and this is the seam where they overlap until Story Mode is retired.
+    // Orbie drops the pre-paint cover from its own player's mount.
+    if (orbieWantsTheScreen()) return
 
     if (!STORY_ENABLED) {
       setMode('site')

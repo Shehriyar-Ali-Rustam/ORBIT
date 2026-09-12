@@ -12,6 +12,7 @@ import LandingFooter from '@/components/landing/LandingFooter'
 import StickyActionBar from '@/components/landing/StickyActionBar'
 import { StoryCover } from '@/components/story/StoryCover'
 import { StoryEntry } from '@/components/story/StoryEntry'
+import { OrbieEntry } from '@/components/orbie/OrbieEntry'
 import { OrbieDevTools } from '@/components/orbie/OrbieDevTools'
 
 /**
@@ -53,6 +54,10 @@ export default function LandingPage() {
         StoryCover paints before hydration so the page never flashes up first.
       */}
       <StoryCover />
+      {/* Orbie supersedes Story Mode where both would fire; StoryEntry stands
+          down rather than both rendering full-screen. While ORBIE_ENABLED is
+          false this is reachable only at ?orbie=1. */}
+      <OrbieEntry />
       <StoryEntry />
       {/* Dev-only. Compiles to nothing in a production build. */}
       <OrbieDevTools />

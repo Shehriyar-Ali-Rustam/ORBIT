@@ -2,10 +2,26 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, type MotionValue } from 'framer-motion'
-import type { Scene } from '@/data/storyboard'
+import type { CaptionLine } from '@/data/storyboard'
+
+/**
+ * The minimum needed to render captions.
+ *
+ * Deliberately not `Scene`. This component only ever reads an identity, the
+ * lines and the full narration, so asking for a whole scene would mean Orbie's
+ * graph nodes had to pretend to be Story Mode scenes to reuse it. Same
+ * reasoning as `ClockNode` in useStoryClock.
+ */
+export interface CaptionSource {
+  /** Only used to key the reveal, so any stable string works. */
+  id: string
+  lines: CaptionLine[]
+  /** Announced once to screen readers, in full. */
+  narration: string
+}
 
 interface StoryCaptionsProps {
-  scene: Scene
+  scene: CaptionSource
   elapsedMs: MotionValue<number>
 }
 

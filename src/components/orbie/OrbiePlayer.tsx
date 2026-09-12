@@ -1,0 +1,216 @@
+'use client'
+
+import { useCallback, useEffect, useMemo } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { track } from '@vercel/analytics'
+import { ArrowLeft } from 'lucide-react'
+import { StoryProgress } from '@/components/story/StoryProgress'
+import { StoryControls } from '@/components/story/StoryControls'
+import { StoryCaptions } from '@/components/story/StoryCaptions'
+import { useStoryInput } from '@/components/story/useStoryInput'
+import { Orbie } from './character/Orbie'
+import { useOrbieNavigator } from './useOrbieNavigator'
+import { CrossroadsView } from './views/CrossroadsView'
+import type { OptionCard } from '@/data/orbie-graph'
+
+const EASE = [0.22, 1, 0.36, 1] as const
+
+interface OrbiePlayerProps {
+  onExit(): void
+}
+
+/**
+ * Orbie's player.
+ *
+ * A deliberate fork of `StoryPlayer` rather than a parameterised version of
+ * it. The two diverge on enough axes — routing, waiting, options, back — that
+ * sharing one component would make it mostly branches, and branches in the
+ * thing that orchestrates everything else is how both experiences end up
+ * fragile. What they genuinely share (`StoryProgress`, `StoryControls`,
+ * `StoryCaptions`, `useStoryInput`, the clock) is imported, not copied.
+ *
+ * The layer contract is inherited exactly, because it was worked out against
+ * real touch targets: progress owns the top edge, controls sit top-right at
+ * z-40, captions own the bottom third, the character sits bottom-left, and the
+ * tap layer is z-10 underneath all of them.
+ */
+export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
+  const reduce = useReducedMotion()
+  const nav = useOrbieNavigator()
+  const { node, clock } = nav
+
+  const exit = useCallback(() => {
+    track('orbie_exit', { node: node.id })
+    onExit()
+  }, [onExit, node.id])
+
+  // Tapping advances only while something is running. On a `hold` node the
+  // next step is a choice, and a stray tap must not stand in for one.
+  const tappable = !clock.isWaiting && !node.options?.length
+
+  const input = useStoryInput({
+    next: clock.next,
+    prev: clock.prev,
+    pause: clock.pause,
+    play: clock.play,
+    exit,
+    isPaused: clock.isPaused,
+  })
+
+  useEffect(() => {
+    track('orbie_start')
+    // Clear the pre-paint cover from here rather than on a timer: this
+    // component is behind a dynamic import, so "we decided to mount" and "we
+    // are on screen" are different moments, and a timer drops the cover into
+    // the gap on a slow connection.
+    document.getElementById('story-cover')?.remove()
+    document.documentElement.classList.remove('story-covered')
+  }, [])
+
+  useEffect(() => {
+    track('orbie_node', { node: node.id })
+  }, [node.id])
+
+  useEffect(() => {
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [])
+
+  const onPick = useCallback(
+    (option: OptionCard) => {
+      track('orbie_pick', { from: node.id, to: option.to })
+      nav.go(option.to)
+    },
+    [nav, node.id]
+  )
+
+  // A returning visitor hears the short version. Without this, coming back to
+  // the crossroads a third time replays the same introduction each time.
+  const scene = useMemo(
+    () => ({
+      id: node.id,
+      narration: nav.isRepeat && node.repeat ? node.repeat.narration : node.narration,
+      lines: nav.isRepeat && node.repeat ? node.repeat.lines : node.lines,
+      durationMs: 0,
+    }),
+    [node, nav.isRepeat]
+  )
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Orbit Innovations guided tour"
+      className="fixed inset-0 z-[100] min-h-dvh overflow-hidden bg-orbit-canvas"
+    >
+      {/* Screen-reader escape hatch, deliberately first in the DOM. */}
+      <button
+        type="button"
+        onClick={exit}
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:border focus:border-orbit-accInk focus:bg-orbit-canvas focus:px-4 focus:py-2 focus:text-sm focus:text-orbit-accInk"
+      >
+        Skip the tour and read the site
+      </button>
+
+      <div className="grid-faint pointer-events-none absolute inset-0 opacity-60" aria-hidden />
+
+      {/* Chapter position, not tour position — a graph has no linear place. */}
+      <StoryProgress
+        count={nav.chapterLength}
+        activeIndex={nav.chapterIndex}
+        progress={clock.progress}
+      />
+
+      <StoryControls
+        isPaused={clock.isPaused}
+        isComplete={false}
+        onTogglePlay={clock.isPaused ? clock.play : clock.pause}
+        onRestart={nav.restart}
+        onExit={exit}
+      />
+
+      {nav.canGoBack && (
+        <button
+          type="button"
+          onClick={nav.back}
+          aria-label="Back"
+          className="absolute left-3 top-6 z-40 flex h-11 w-11 items-center justify-center border border-orbit-ink/15 bg-orbit-canvas/70 text-orbit-ink/70 backdrop-blur-sm transition-colors hover:border-orbit-accInk/50 hover:text-orbit-accInk"
+        >
+          <ArrowLeft className="h-4 w-4" aria-hidden />
+        </button>
+      )}
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={node.id}
+          className="absolute inset-0 flex items-center justify-center px-6 pb-56 pt-16"
+          initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.99 }}
+          transition={{ duration: 0.45, ease: EASE }}
+        >
+          {node.view === 'crossroads' && node.options && (
+            <CrossroadsView options={node.options} ready={clock.isWaiting} onPick={onPick} />
+          )}
+
+          {/* Phase 3 fills these in. Until then a node still narrates, still
+              offers its way back, and the graph is navigable end to end. */}
+          {node.view !== 'crossroads' && (
+            <div className="flex flex-col items-center gap-8">
+              <Orbie
+                pose={node.pose ?? 'idle'}
+                emotion={node.emotion}
+                size={node.view === 'arrival' ? 'hero' : 'stage'}
+              />
+              {clock.isWaiting && node.options && (
+                <div className="flex flex-wrap justify-center gap-3">
+                  {node.options.map((o) => (
+                    <button key={o.id} type="button" onClick={() => onPick(o)} className="btn-ghost">
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
+
+      <StoryCaptions scene={scene} elapsedMs={clock.elapsedMs} />
+
+      {/* The character sits in the corner except on nodes that stage it. */}
+      {node.view === 'crossroads' && (
+        <div className="pointer-events-none absolute bottom-6 left-5 z-30 md:bottom-8 md:left-8">
+          <Orbie
+            pose={clock.isPaused ? 'sleep' : (node.pose ?? 'idle')}
+            emotion={node.emotion}
+            size="dock"
+          />
+        </div>
+      )}
+
+      {tappable && (
+        <div
+          className="absolute inset-0 z-10"
+          style={{ touchAction: 'none' }}
+          onPointerDown={input.onPointerDown}
+          onPointerUp={input.onPointerUp}
+          onPointerCancel={input.onPointerCancel}
+        />
+      )}
+
+      {clock.isPaused && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="pointer-events-none absolute left-1/2 top-16 z-30 -translate-x-1/2 font-spacemono text-[10px] uppercase tracking-[0.24em] text-orbit-ink/50"
+        >
+          Paused
+        </motion.p>
+      )}
+    </div>
+  )
+}
