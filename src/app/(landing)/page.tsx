@@ -12,6 +12,7 @@ import LandingFooter from '@/components/landing/LandingFooter'
 import StickyActionBar from '@/components/landing/StickyActionBar'
 import { StoryCover } from '@/components/story/StoryCover'
 import { StoryEntry } from '@/components/story/StoryEntry'
+import { OrbieDevTools } from '@/components/orbie/OrbieDevTools'
 
 /**
  * v.l.01 — the destination for the QR code printed on the ORBIT business card.
@@ -53,6 +54,8 @@ export default function LandingPage() {
       */}
       <StoryCover />
       <StoryEntry />
+      {/* Dev-only. Compiles to nothing in a production build. */}
+      <OrbieDevTools />
     </>
   )
 }

@@ -9,7 +9,10 @@ import { useStoryInput } from './useStoryInput'
 import { StoryProgress } from './StoryProgress'
 import { StoryControls } from './StoryControls'
 import { StoryCaptions } from './StoryCaptions'
-import { OrbitAI } from './OrbitAI'
+// Story Mode runs on the Orbie character rather than its own `OrbitAI`. That
+// swap is the proof the character boundary holds: it happens here, before any
+// of the Orbie engine exists, while the blast radius is still one prop.
+import { Orbie } from '@/components/orbie/character/Orbie'
 import { WelcomeScene } from './scenes/WelcomeScene'
 import { SoftwareScene } from './scenes/SoftwareScene'
 import { AIScene } from './scenes/AIScene'
@@ -127,7 +130,10 @@ export function StoryPlayer({ onExit }: StoryPlayerProps) {
       <StoryCaptions scene={scene} elapsedMs={clock.elapsedMs} />
 
       <div className="pointer-events-none absolute bottom-6 left-5 z-30 md:bottom-8 md:left-8">
-        <OrbitAI isPaused={clock.isPaused} />
+        {/* Paused reads as asleep. It is the one state where a hovering,
+            blinking character would be actively misleading about whether the
+            tour is still running. */}
+        <Orbie pose={clock.isPaused ? 'sleep' : 'idle'} size="dock" />
       </div>
 
       {/*
