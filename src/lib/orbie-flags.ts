@@ -13,7 +13,7 @@
  * reachable only at `/?orbie=1`. That is how it stays reviewable in production
  * before it is shown to anyone.
  */
-export const ORBIE_ENABLED = false
+export const ORBIE_ENABLED = true
 
 /**
  * Free-form chat. Gated separately from the tour because it is the only part
@@ -43,3 +43,21 @@ export const ORBIE_SEEN_KEY = 'orbie-seen-v1'
 
 /** localStorage key for the sound preference. Muted until the visitor opts in. */
 export const ORBIE_SOUND_KEY = 'orbie-sound-v1'
+
+/**
+ * Narration audio.
+ *
+ * While `false` the tour runs on a timeline clock and the captions carry the
+ * narration alone. Flipping it swaps in `useAudioClock`, which returns the
+ * identical `StoryClock` shape — nothing downstream changes.
+ *
+ * Two things must be true before this goes on:
+ *  1. `public/orbie/audio/<nodeId>.mp3` exists for every node, generated from
+ *     each node's `narration` string verbatim.
+ *  2. The script is frozen. Regenerating twenty-five clips after every copy
+ *     edit is the failure mode this flag exists to defer.
+ *
+ * A node with no clip still works — the clock falls back to its duration — so
+ * a partial set degrades rather than breaks.
+ */
+export const ORBIE_AUDIO_ENABLED = false

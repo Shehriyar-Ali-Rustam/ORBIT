@@ -10,6 +10,8 @@ import {
   type StoryNode,
 } from '@/data/orbie-graph'
 import { useTimelineClock, type StoryClock } from '@/components/story/useStoryClock'
+import { useAudioClock } from '@/components/story/useAudioClock'
+import { ORBIE_AUDIO_ENABLED, ORBIE_SOUND_KEY } from '@/lib/orbie-flags'
 
 export type OrbieMode = 'tour' | 'chat'
 
@@ -23,6 +25,9 @@ export interface OrbieNavigator {
   chapterIndex: number
   chapterLength: number
   canGoBack: boolean
+  /** Sound is off by default; browsers block autoplay with sound. */
+  muted: boolean
+  toggleSound(): void
   go(to: NodeId): void
   back(): void
   restart(): void
@@ -80,12 +85,53 @@ export function useOrbieNavigator(): OrbieNavigator {
     if (target) navigateRef.current(target, { push: true })
   }, [])
 
-  const clock = useTimelineClock(
-    // `ORBIE_ORDER` is a module constant, so this maps once rather than
-    // building a new array on every render and retriggering the clock's loop.
-    useMemo(() => ORBIE_ORDER.map((id) => ORBIE_GRAPH[id]), []),
-    { onNodeEnd }
-  )
+  // `ORBIE_ORDER` is a module constant, so this maps once rather than building
+  // a new array on every render and retriggering the clock's loop.
+  const clockNodes = useMemo(() => ORBIE_ORDER.map((id) => ORBIE_GRAPH[id]), [])
+
+  /**
+   * Sound is off until the visitor asks for it. That is not a preference, it
+   * is a browser rule: audio cannot autoplay with sound before a gesture, and
+   * trying silently fails.
+   */
+  const [muted, setMuted] = useState(true)
+
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(ORBIE_SOUND_KEY) === 'on') setMuted(false)
+    } catch {
+      // Blocked storage just means sound stays off, which is the safe default.
+    }
+  }, [])
+
+  const toggleSound = useCallback(() => {
+    setMuted((m) => {
+      const next = !m
+      try {
+        window.localStorage.setItem(ORBIE_SOUND_KEY, next ? 'off' : 'on')
+      } catch {
+        // Not remembering is not a reason to refuse the toggle.
+      }
+      return next
+    })
+  }, [])
+
+  /**
+   * Which clock drives the tour.
+   *
+   * This is a conditional hook call, and it is safe for one specific reason:
+   * `ORBIE_AUDIO_ENABLED` is a build-time constant, so the branch collapses
+   * at build time and hook order is fixed for the life of a bundle. The same
+   * pattern and the same justification as `useNavbarAuth`.
+   *
+   * It is written this way rather than always calling both because the unused
+   * clock would still run a rAF loop or hold an Audio element.
+   */
+  const clock = ORBIE_AUDIO_ENABLED
+    ? // eslint-disable-next-line react-hooks/rules-of-hooks
+      useAudioClock(clockNodes, { onNodeEnd, muted })
+    : // eslint-disable-next-line react-hooks/rules-of-hooks
+      useTimelineClock(clockNodes, { onNodeEnd })
 
   const clockRef = useRef(clock)
   clockRef.current = clock
@@ -183,6 +229,8 @@ export function useOrbieNavigator(): OrbieNavigator {
     chapterIndex,
     chapterLength,
     canGoBack: history.length > 0,
+    muted,
+    toggleSound,
     go,
     back,
     restart,

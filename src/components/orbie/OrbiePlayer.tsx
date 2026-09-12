@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { track } from '@vercel/analytics'
-import { ArrowLeft, MessageCircle } from 'lucide-react'
+import { ArrowLeft, MessageCircle, Volume2, VolumeX } from 'lucide-react'
 import { StoryProgress } from '@/components/story/StoryProgress'
 import { StoryControls } from '@/components/story/StoryControls'
 import { StoryCaptions } from '@/components/story/StoryCaptions'
@@ -17,7 +17,7 @@ import { AboutView } from './views/AboutView'
 import { ContactView } from './views/ContactView'
 import { ChatView } from './views/ChatView'
 import { OrbieDock } from './OrbieDock'
-import { ORBIE_CHAT_ENABLED } from '@/lib/orbie-flags'
+import { ORBIE_AUDIO_ENABLED, ORBIE_CHAT_ENABLED } from '@/lib/orbie-flags'
 import type { OptionCard } from '@/data/orbie-graph'
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -139,6 +139,19 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
         onRestart={nav.restart}
         onExit={exit}
       />
+
+      {/* Sound lives with the other controls. The caption container is
+          pointer-events-none, and one control group beats two. */}
+      {ORBIE_AUDIO_ENABLED && (
+        <button
+          type="button"
+          onClick={nav.toggleSound}
+          aria-label={nav.muted ? 'Turn narration on' : 'Mute narration'}
+          className="absolute right-3 top-[4.75rem] z-40 flex h-11 w-11 items-center justify-center border border-orbit-ink/15 bg-orbit-canvas/70 text-orbit-ink/70 backdrop-blur-sm transition-colors hover:border-orbit-accInk/50 hover:text-orbit-accInk"
+        >
+          {nav.muted ? <VolumeX className="h-4 w-4" aria-hidden /> : <Volume2 className="h-4 w-4" aria-hidden />}
+        </button>
+      )}
 
       {nav.canGoBack && (
         <button

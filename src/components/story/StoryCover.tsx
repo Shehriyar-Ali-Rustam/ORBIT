@@ -1,4 +1,5 @@
 import { STORY_ENABLED, STORY_QUERY_PARAM, STORY_REPLAY_EVERY_VISIT, STORY_SEEN_KEY } from '@/lib/story-flags'
+import { ORBIE_ENABLED, ORBIE_QUERY_PARAM, ORBIE_SEEN_KEY } from '@/lib/orbie-flags'
 
 /**
  * The pre-paint cover.
@@ -22,7 +23,10 @@ import { STORY_ENABLED, STORY_QUERY_PARAM, STORY_REPLAY_EVERY_VISIT, STORY_SEEN_
  *     load — offline, blocked, a bad deploy — the visitor still gets the site.
  */
 export function StoryCover() {
-  if (!STORY_ENABLED) return null
+  // One cover for both experiences. Whichever is about to take the screen, the
+  // page underneath must not flash first — and the two can never both run, so
+  // there is nothing to disambiguate beyond "is anything going to cover this".
+  if (!STORY_ENABLED && !ORBIE_ENABLED) return null
 
   // Runs before paint, inline, with no dependencies. Mirrors the theme script
   // already in the root layout.
@@ -31,10 +35,19 @@ export function StoryCover() {
   try{
     var c=document.getElementById('story-cover');
     if(!c)return;
-    var forced=new URLSearchParams(location.search).get(${JSON.stringify(STORY_QUERY_PARAM)})==='1';
-    var seen=false;
-    try{seen=localStorage.getItem(${JSON.stringify(STORY_SEEN_KEY)})==='1';}catch(e){}
-    if(!forced&&seen&&!${STORY_REPLAY_EVERY_VISIT}){c.remove();return;}
+    var q=new URLSearchParams(location.search);
+    var forced=q.get(${JSON.stringify(STORY_QUERY_PARAM)})==='1'||q.get(${JSON.stringify(ORBIE_QUERY_PARAM)})==='1';
+    // Orbie supersedes Story Mode, so it decides first. Someone who already
+    // saw Story Mode has NOT seen Orbie, and still gets it once.
+    var willRun=false;
+    try{
+      if(${ORBIE_ENABLED}){
+        willRun=localStorage.getItem(${JSON.stringify(ORBIE_SEEN_KEY)})!=='1';
+      }else if(${STORY_ENABLED}){
+        willRun=${STORY_REPLAY_EVERY_VISIT}||localStorage.getItem(${JSON.stringify(STORY_SEEN_KEY)})!=='1';
+      }
+    }catch(e){willRun=true;}
+    if(!forced&&!willRun){c.remove();return;}
     document.documentElement.classList.add('story-covered');
     // Failsafe: never leave a visitor staring at a cover that outlived its player.
     setTimeout(function(){
