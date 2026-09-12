@@ -11,6 +11,10 @@ import { useStoryInput } from '@/components/story/useStoryInput'
 import { Orbie } from './character/Orbie'
 import { useOrbieNavigator } from './useOrbieNavigator'
 import { CrossroadsView } from './views/CrossroadsView'
+import { ServicesView } from './views/ServicesView'
+import { WorkView } from './views/WorkView'
+import { AboutView } from './views/AboutView'
+import { OrbieDock } from './OrbieDock'
 import type { OptionCard } from '@/data/orbie-graph'
 
 const EASE = [0.22, 1, 0.36, 1] as const
@@ -152,37 +156,50 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
           exit={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.99 }}
           transition={{ duration: 0.45, ease: EASE }}
         >
-          {node.view === 'crossroads' && node.options && (
-            <CrossroadsView options={node.options} ready={clock.isWaiting} onPick={onPick} />
-          )}
+          <div className="flex w-full flex-col items-center gap-8">
+            {node.view === 'crossroads' && node.options && (
+              <CrossroadsView options={node.options} ready={clock.isWaiting} onPick={onPick} />
+            )}
+            {node.view === 'services' && <ServicesView focus={node.focus} />}
+            {node.view === 'work' && <WorkView />}
+            {node.view === 'about' && <AboutView />}
 
-          {/* Phase 3 fills these in. Until then a node still narrates, still
-              offers its way back, and the graph is navigable end to end. */}
-          {node.view !== 'crossroads' && (
-            <div className="flex flex-col items-center gap-8">
+            {/* Arrival and the orientation beats stage the character itself;
+                everything else keeps it docked in the corner. */}
+            {(node.view === 'arrival' || node.view === 'beat' || node.view === 'contact') && (
               <Orbie
                 pose={node.pose ?? 'idle'}
                 emotion={node.emotion}
                 size={node.view === 'arrival' ? 'hero' : 'stage'}
               />
-              {clock.isWaiting && node.options && (
-                <div className="flex flex-wrap justify-center gap-3">
-                  {node.options.map((o) => (
-                    <button key={o.id} type="button" onClick={() => onPick(o)} className="btn-ghost">
-                      {o.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+            )}
+
+            {/* Options on a content node. The crossroads renders its own,
+                because there the choice is the whole view rather than a
+                footer under something else. */}
+            {node.view !== 'crossroads' && clock.isWaiting && node.options && (
+              <motion.div
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, ease: EASE }}
+                className="flex flex-wrap justify-center gap-3"
+              >
+                {node.options.map((o) => (
+                  <button key={o.id} type="button" onClick={() => onPick(o)} className="btn-ghost">
+                    {o.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </div>
         </motion.div>
       </AnimatePresence>
 
       <StoryCaptions scene={scene} elapsedMs={clock.elapsedMs} />
 
-      {/* The character sits in the corner except on nodes that stage it. */}
-      {node.view === 'crossroads' && (
+      {/* Docked wherever the view owns the stage, so Orbie stays present as
+          the narrator without competing with the content it is describing. */}
+      {!['arrival', 'beat', 'contact'].includes(node.view) && (
         <div className="pointer-events-none absolute bottom-6 left-5 z-30 md:bottom-8 md:left-8">
           <Orbie
             pose={clock.isPaused ? 'sleep' : (node.pose ?? 'idle')}
@@ -191,6 +208,11 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
           />
         </div>
       )}
+
+      {/* Call, WhatsApp, Save — present at every moment of the tour. `/` is
+          the URL on the business card, and a card scanner must never have to
+          finish a walkthrough to reach a phone number. */}
+      <OrbieDock />
 
       {tappable && (
         <div

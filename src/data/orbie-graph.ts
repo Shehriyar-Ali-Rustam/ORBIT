@@ -54,7 +54,14 @@ export const NODE_IDS = [
   'orient-ai',
   'orient-process',
   'crossroads',
-  'services',
+  // Services is walked one practice at a time, per the spec. Five beats
+  // sharing one view, distinguished by `focus`, not five components.
+  'svc-chatbots',
+  'svc-models',
+  'svc-web',
+  'svc-mobile',
+  'svc-design',
+  'svc-done',
   'work',
   'about',
   'contact',
@@ -183,60 +190,176 @@ export const ORBIE_GRAPH: Record<NodeId, StoryNode> = {
       lines: [{ text: 'Anywhere else?', atMs: 0 }],
     },
     options: [
-      { id: 'services', label: 'What we do', hint: 'Five practices', to: 'services', href: '/services' },
+      { id: 'services', label: 'What we do', hint: 'Five practices', to: 'svc-chatbots', href: '/services' },
       { id: 'work', label: 'Our work', hint: 'Shipped projects', to: 'work', href: '/portfolio' },
       { id: 'about', label: 'Who we are', hint: 'The studio', to: 'about', href: '/about' },
       { id: 'contact', label: 'Talk to us', hint: 'Usually same day', to: 'contact', href: '/contact' },
     ],
   },
 
-  // ── Section stubs ──────────────────────────────────────────────────
-  // Phase 2 wires the graph; Phase 3 writes these properly. Each one already
-  // narrates and returns to the crossroads, so the loop is complete and
-  // navigable now rather than after the content lands.
-  services: {
-    id: 'services',
+  // ── Services ───────────────────────────────────────────────────────
+  // Five auto beats, one practice each, then a hold. Roughly twenty seconds
+  // for the chapter: short enough that nobody is waiting for it to end, long
+  // enough that each practice gets a sentence of its own.
+  //
+  // `focus` is a slug from services.ts. The view resolves it, so the names and
+  // descriptions have exactly one home and adding a sixth service adds a beat
+  // rather than a component.
+  'svc-chatbots': {
+    id: 'svc-chatbots',
     chapter: 'services',
     view: 'services',
-    narration: 'Chatbots, model training, web platforms, mobile apps, and the brand work around them.',
+    focus: 'ai-chatbot',
+    // The wink the spec asks for, and the only line in the tour where Orbie
+    // is the product being described.
+    narration: 'Assistants trained on your own documents. That is what I am, by the way. Orbit built me.',
     lines: [
-      { text: 'Chatbots, model training, web platforms,', atMs: 0 },
-      { text: 'mobile apps, and the brand work around them.', atMs: 1800 },
+      { text: 'Assistants trained on your own documents.', atMs: 0 },
+      { text: 'That is what I am, by the way.', atMs: 2100 },
     ],
-    advance: { kind: 'hold', durationMs: 4000 },
-    pose: 'point',
-    emotion: 'neutral',
-    options: [{ id: 'back', label: 'Back to options', to: 'crossroads' }],
+    advance: { kind: 'auto', durationMs: 4600 },
+    next: 'svc-models',
+    pose: 'wave',
+    emotion: 'happy',
   },
 
+  'svc-models': {
+    id: 'svc-models',
+    chapter: 'services',
+    view: 'services',
+    focus: 'model-training',
+    narration: 'Fine-tuning and retrieval pipelines on your data, rather than a generic API call.',
+    lines: [
+      { text: 'Fine-tuning and retrieval on your data.', atMs: 0 },
+      { text: 'Not a generic API call.', atMs: 2200 },
+    ],
+    advance: { kind: 'auto', durationMs: 4400 },
+    next: 'svc-web',
+    pose: 'idle',
+    emotion: 'curious',
+  },
+
+  'svc-web': {
+    id: 'svc-web',
+    chapter: 'services',
+    view: 'services',
+    focus: 'web-development',
+    narration: 'Next.js platforms and marketing sites, built to load fast and to rank.',
+    lines: [
+      { text: 'Next.js platforms and marketing sites.', atMs: 0 },
+      { text: 'Built to load fast, and to rank.', atMs: 2100 },
+    ],
+    advance: { kind: 'auto', durationMs: 4200 },
+    next: 'svc-mobile',
+    pose: 'idle',
+    emotion: 'neutral',
+  },
+
+  'svc-mobile': {
+    id: 'svc-mobile',
+    chapter: 'services',
+    view: 'services',
+    focus: 'mobile-development',
+    narration: 'One React Native codebase, shipped to both the App Store and Play.',
+    lines: [
+      { text: 'One React Native codebase.', atMs: 0 },
+      { text: 'Shipped to both stores.', atMs: 1900 },
+    ],
+    advance: { kind: 'auto', durationMs: 4000 },
+    next: 'svc-design',
+    pose: 'idle',
+    emotion: 'neutral',
+  },
+
+  'svc-design': {
+    id: 'svc-design',
+    chapter: 'services',
+    view: 'services',
+    focus: 'graphic-design',
+    narration: 'And the brand work around all of it, built to survive contact with code.',
+    lines: [
+      { text: 'And the brand work around all of it,', atMs: 0 },
+      { text: 'built to survive contact with code.', atMs: 1800 },
+    ],
+    advance: { kind: 'auto', durationMs: 4200 },
+    next: 'svc-done',
+    pose: 'idle',
+    emotion: 'happy',
+  },
+
+  'svc-done': {
+    id: 'svc-done',
+    chapter: 'services',
+    view: 'services',
+    narration: 'That is all five. If your project falls outside them, we will say so on the first call.',
+    lines: [
+      { text: 'That is all five.', atMs: 0 },
+      { text: 'Outside them, we say so on the first call.', atMs: 1700 },
+    ],
+    advance: { kind: 'hold', durationMs: 4400 },
+    pose: 'point',
+    emotion: 'neutral',
+    repeat: {
+      narration: 'The same five. Where next?',
+      lines: [{ text: 'The same five. Where next?', atMs: 0 }],
+    },
+    options: [
+      { id: 'work', label: 'See the work', to: 'work', href: '/portfolio' },
+      { id: 'contact', label: 'Talk to us', to: 'contact', href: '/contact' },
+      { id: 'back', label: 'Back to options', to: 'crossroads' },
+    ],
+  },
+
+  // ── Work ───────────────────────────────────────────────────────────
   work: {
     id: 'work',
     chapter: 'work',
     view: 'work',
-    narration: 'Marketplaces, try-on tools, booking platforms. Every one of them shipped.',
+    narration:
+      'A marketplace, a virtual try-on tool, a delivery platform. Every one of them live, with real users.',
     lines: [
-      { text: 'Marketplaces, try-on tools, booking platforms.', atMs: 0 },
-      { text: 'Every one of them shipped.', atMs: 2200 },
+      { text: 'A marketplace. A virtual try-on tool.', atMs: 0 },
+      { text: 'A delivery platform.', atMs: 2100 },
+      { text: 'Every one live, with real users.', atMs: 3600 },
     ],
-    advance: { kind: 'hold', durationMs: 4000 },
-    pose: 'idle',
+    advance: { kind: 'hold', durationMs: 6000 },
+    pose: 'point',
     emotion: 'star',
-    options: [{ id: 'back', label: 'Back to options', to: 'crossroads' }],
+    repeat: {
+      narration: 'The same four. Want the full list?',
+      lines: [{ text: 'The same four. Want the full list?', atMs: 0 }],
+    },
+    options: [
+      { id: 'all', label: 'See every project', hint: 'The full portfolio', to: 'crossroads', href: '/portfolio' },
+      { id: 'contact', label: 'Talk to us', to: 'contact', href: '/contact' },
+      { id: 'back', label: 'Back to options', to: 'crossroads' },
+    ],
   },
 
+  // ── About ──────────────────────────────────────────────────────────
   about: {
     id: 'about',
     chapter: 'about',
     view: 'about',
-    narration: 'A small studio in Islamabad. The people who scope your project are the people who write it.',
+    narration:
+      'Three founders, in Islamabad. The people who scope your project are the people who write it.',
     lines: [
-      { text: 'A small studio in Islamabad.', atMs: 0 },
-      { text: 'The people who scope your project write it.', atMs: 1900 },
+      { text: 'Three founders, in Islamabad.', atMs: 0 },
+      { text: 'The people who scope your project', atMs: 2000 },
+      { text: 'are the people who write it.', atMs: 3300 },
     ],
-    advance: { kind: 'hold', durationMs: 4200 },
+    advance: { kind: 'hold', durationMs: 5600 },
     pose: 'idle',
     emotion: 'happy',
-    options: [{ id: 'back', label: 'Back to options', to: 'crossroads' }],
+    repeat: {
+      narration: 'Still the same three of us.',
+      lines: [{ text: 'Still the same three of us.', atMs: 0 }],
+    },
+    options: [
+      { id: 'team', label: 'Meet the team', to: 'crossroads', href: '/team' },
+      { id: 'contact', label: 'Talk to us', to: 'contact', href: '/contact' },
+      { id: 'back', label: 'Back to options', to: 'crossroads' },
+    ],
   },
 
   contact: {
