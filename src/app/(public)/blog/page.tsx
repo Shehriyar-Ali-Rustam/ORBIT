@@ -78,12 +78,11 @@ export default function BlogIndexPage() {
           <p className="font-mono text-xs font-bold uppercase tracking-[0.24em] text-accent">
             Writing
           </p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-black tracking-tight text-text-primary sm:text-5xl md:text-6xl">
-            Notes from the <span className="text-gradient">build</span>
+          <h1 className="mt-4 max-w-3xl text-[2.25rem] font-semibold tracking-[-0.03em] text-text-primary sm:text-5xl md:text-[3.5rem]">
+            Notes from the <span className="text-accent">build</span>
           </h1>
           <p className="mt-5 max-w-xl text-sm leading-relaxed text-text-secondary sm:text-base">
-            Real numbers, honest tradeoffs, and breakdowns of things we actually
-            shipped. No thought leadership, no fluff.
+            Real numbers and honest tradeoffs from things we shipped.
           </p>
         </div>
       </section>

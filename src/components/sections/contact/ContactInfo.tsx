@@ -59,11 +59,15 @@ export function ContactInfo() {
         </div>
       </div>
 
-      <div>
-        <div className="flex items-center gap-2">
-          <GlowDot />
-          <span className="text-sm text-green-500">Currently accepting projects</span>
-        </div>
+      {/* Green-on-canvas at `text-green-500` was the only non-accent colour on
+          the page and sat around 3:1 in light mode. The dot carries the state;
+          the label reads at full contrast. */}
+      <div className="flex items-center gap-2.5">
+        <GlowDot />
+        <span className="text-sm text-text-primary">
+          Accepting projects for{' '}
+          <span className="text-text-secondary">October onwards</span>
+        </span>
       </div>
 
       <div className="flex items-center gap-4">

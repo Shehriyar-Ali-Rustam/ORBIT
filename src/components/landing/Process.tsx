@@ -22,8 +22,7 @@ export default function Process() {
                 No mystery, <span className="text-orbit-accInk">no surprise invoice.</span>
               </h2>
               <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-ink/65">
-                Most people who scan this card have been burned by an agency before. So here is
-                exactly how a project runs with us, start to finish.
+                Exactly how a project runs, start to finish.
               </p>
             </MotionReveal>
 

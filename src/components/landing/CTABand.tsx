@@ -21,8 +21,7 @@ export default function CTABand() {
           <span className="eyebrow !text-orbit-onAcc/80">Get in touch</span>
           <h2 className="h-hero mt-4 font-bold text-orbit-onAcc">Tell us what you need built.</h2>
           <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-onAcc/80">
-            Send a two-line description of the problem. You will get a straight answer on whether we
-            can build it, roughly what it costs, and how long it takes. Usually the same day.
+            Two lines on the problem. You get scope, cost and timeline, usually same day.
           </p>
         </MotionReveal>
 

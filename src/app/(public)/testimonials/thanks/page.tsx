@@ -73,7 +73,7 @@ export default function TestimonialThanksPage({ searchParams }: Props) {
         <p className="mt-4 leading-relaxed text-text-secondary">{cfg.body(name)}</p>
         <Link
           href="/"
-          className="mt-8 inline-block rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
+          className="mt-8 inline-block rounded-full bg-accent px-6 py-2.5 text-sm font-medium text-[#0a0a0a] transition-colors hover:bg-accent-hover"
         >
           Back to orbitpk.com
         </Link>

@@ -1,98 +1,107 @@
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { Bot, Brain, Globe, Smartphone, Palette, Check } from 'lucide-react'
+import { Bot, Brain, Globe, Smartphone, Palette } from 'lucide-react'
 import { services } from '@/data/services'
+import { Reveal, Stagger, StaggerItem } from '@/components/motion/Reveal'
 
 const iconMap: Record<string, React.ElementType> = {
-  Bot, Brain, Globe, Smartphone, Palette,
+  Bot,
+  Brain,
+  Globe,
+  Smartphone,
+  Palette,
 }
 
+/**
+ * Three of these were remote Unsplash URLs. Local files for all five already
+ * existed in `public/images/landing/` — they were downloaded for the QR
+ * landing page — so the services page was paying for a third-party image fetch
+ * on a photograph that was already sitting in the repo, and showing different
+ * imagery for the same five capabilities as the landing page.
+ */
 const serviceImages: Record<string, string> = {
-  'ai-chatbot': '/chatbot-examples.webp',
-  'model-training': '/ai-model-training.png',
-  'web-development':
-    'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&q=85',
-  'mobile-development':
-    'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&q=85',
-  'graphic-design':
-    'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=1200&q=85',
+  'ai-chatbot': '/images/landing/cap-chatbots.jpg',
+  'model-training': '/images/landing/cap-models.jpg',
+  'web-development': '/images/landing/cap-web.jpg',
+  'mobile-development': '/images/landing/cap-mobile.jpg',
+  'graphic-design': '/images/landing/cap-design.jpg',
 }
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
-
+/**
+ * The zig-zag stays — alternating sides is the right shape for five items that
+ * each need a paragraph. What came off the image:
+ *
+ *  - A title pill sitting over the photograph, repeating the `h2` that is
+ *    already 400px to its left. The same words twice in one viewport.
+ *  - Two stacked scrims (`#0a0a0a/30` plus a bottom gradient) that existed
+ *    only to make that pill legible. With the pill gone they darkened the
+ *    photo for nothing, and both were pinned to dark literals, so in light
+ *    mode every image was dimmed against a white page.
+ *  - A `bg-gradient-brand` icon badge, the site's only remaining gradient fill.
+ *
+ * The green check marks are also gone. They put a third colour on a page with
+ * one accent, and a list of things a service includes does not need a tick
+ * beside each line to be read as a list.
+ */
 export function ServiceBlock() {
   return (
-    <section className="section-padding">
+    <section className="bg-background py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="space-y-24">
+        <div className="space-y-24 md:space-y-32">
           {services.map((service, i) => {
             const Icon = iconMap[service.icon]
             const isReversed = i % 2 !== 0
-            const imgSrc = serviceImages[service.id]
 
             return (
-              <motion.div
+              <Reveal
                 key={service.id}
-                id={service.id}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease }}
-                viewport={{ once: true, margin: '-50px' }}
-                className={`grid scroll-mt-24 items-center gap-12 lg:grid-cols-2 lg:gap-16`}
+                as="article"
+                amount={0.15}
+                className="grid scroll-mt-28 items-start gap-x-16 gap-y-10 lg:grid-cols-2"
               >
-                <div className={isReversed ? 'lg:order-2' : ''}>
-                  <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10">
-                    {Icon && <Icon className="h-7 w-7 text-accent" />}
+                <div id={service.id} className={isReversed ? 'lg:order-2' : ''}>
+                  <div className="flex items-center gap-3">
+                    {Icon && <Icon className="h-5 w-5 shrink-0 text-accent" strokeWidth={1.5} />}
+                    <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-text-tertiary">
+                      {service.category}
+                    </span>
                   </div>
-                  <h2 className="mt-6 text-3xl font-bold tracking-tight text-text-primary">
+
+                  <h2 className="mt-5 text-balance text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.025em] text-text-primary md:text-[2rem]">
                     {service.title}
                   </h2>
-                  <p className="mt-4 leading-relaxed text-text-secondary">{service.fullDescription}</p>
-                  <ul className="mt-6 space-y-3">
+
+                  <p className="mt-4 max-w-[58ch] leading-relaxed text-text-secondary">
+                    {service.fullDescription}
+                  </p>
+
+                  <Stagger as="ul" className="mt-8 border-t border-border">
                     {service.includes.map((item) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
-                        <span className="text-sm text-text-secondary">{item}</span>
-                      </li>
+                      <StaggerItem
+                        key={item}
+                        as="li"
+                        className="border-b border-border py-3 text-[0.9375rem] text-text-secondary"
+                      >
+                        {item}
+                      </StaggerItem>
                     ))}
-                  </ul>
+                  </Stagger>
                 </div>
 
                 <div className={isReversed ? 'lg:order-1' : ''}>
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.97 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6, delay: 0.15, ease }}
-                    viewport={{ once: true }}
-                    className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)]"
-                  >
-                    <div className="relative aspect-[4/3] w-full overflow-hidden">
-                      <Image
-                        src={imgSrc}
-                        alt={service.title}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        sizes="(max-width: 1024px) 100vw, 50vw"
-                      />
-                      {/* Dark overlay */}
-                      <div className="absolute inset-0 bg-[#0a0a0a]/30" />
-                      {/* Orange accent gradient at bottom */}
-                      <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a0a0a]/70 to-transparent" />
-                      {/* Icon badge */}
-                      <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-brand shadow-lg">
-                          {Icon && <Icon className="h-5 w-5 text-[#0a0a0a]" />}
-                        </div>
-                        <span className="rounded-full bg-black/50 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
-                          {service.title}
-                        </span>
-                      </div>
-                    </div>
-                  </motion.div>
+                  <div className="group relative aspect-[4/3] overflow-hidden rounded-xl border border-border">
+                    <Image
+                      src={serviceImages[service.id]}
+                      alt=""
+                      fill
+                      loading="lazy"
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    />
+                  </div>
                 </div>
-              </motion.div>
+              </Reveal>
             )
           })}
         </div>

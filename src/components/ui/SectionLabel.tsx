@@ -3,17 +3,32 @@ import { cn } from '@/lib/utils'
 interface SectionLabelProps {
   children: React.ReactNode
   className?: string
+  /** Centre the rule and label. Only for genuinely centred sections. */
+  centered?: boolean
 }
 
-export function SectionLabel({ children, className }: SectionLabelProps) {
+/**
+ * The eyebrow above a section heading.
+ *
+ * Was a rounded pill with a tinted background and a small filled dot — the
+ * badge shape every generated landing page reaches for. It is now a monospace
+ * label preceded by a short accent rule, which is the same device the QR
+ * landing page uses, so the two halves of the site finally agree on what a
+ * section label looks like.
+ *
+ * The rule carries the accent so the text can stay at full contrast instead of
+ * being tinted orange against the canvas, where it failed AA.
+ */
+export function SectionLabel({ children, className, centered = false }: SectionLabelProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border border-accent/20 bg-accent/[0.08] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-accent',
+        'inline-flex items-center gap-3 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-text-secondary',
+        centered && 'justify-center',
         className
       )}
     >
-      <span className="h-1 w-1 rounded-full bg-accent" />
+      <span aria-hidden className="h-px w-7 shrink-0 bg-accent" />
       {children}
     </span>
   )

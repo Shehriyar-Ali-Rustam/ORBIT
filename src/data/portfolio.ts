@@ -7,9 +7,9 @@ export const projects: Project[] = [
     title: 'Hello Kitty AI Voice Assistant',
     category: 'ai',
     shortDescription:
-      'Wake-word activated personal AI assistant powered by ChatGPT and Google Gemini',
+      'Wake-word personal assistant, built on ChatGPT and Gemini',
     fullDescription:
-      'A voice-activated AI assistant that responds to the wake word "Hello Kitty". It listens through the microphone, converts speech to text, sends it to ChatGPT or Gemini for a response, and speaks the answer back. Supports conversation memory, customizable wake word, adjustable voice speed, and switchable AI providers.',
+      'A voice-activated AI assistant that responds to the wake word "Hello Kitty". It listens through the microphone, converts speech to text, sends it to ChatGPT or Gemini for a response, and speaks the answer back.',
     coverImage: '/images/portfolio/hello-kitty-ai.webp',
     images: ['/images/portfolio/hello-kitty-ai.webp'],
     techStack: ['Python', 'OpenAI API', 'Google Gemini', 'SpeechRecognition', 'pyttsx3', 'PyAudio'],
@@ -41,9 +41,9 @@ export const projects: Project[] = [
     title: 'Orbit Innovations Web Platform',
     category: 'web',
     shortDescription:
-      'Full-stack company website with AI chatbot, dark/light theme, and glassmorphism design',
+      'Company site with a built-in AI assistant',
     fullDescription:
-      'The website you are browsing right now. Built from scratch with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion. Features an AI chatbot powered by Gemini, dark/light theme toggle, contact and freelancer application forms, animated sections, and a complete design system with glassmorphism effects.',
+      'The website you are browsing right now. Built from scratch with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion.',
     coverImage: '/images/portfolio/orbit-web-platform.webp',
     images: ['/images/portfolio/orbit-web-platform.webp'],
     techStack: ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Gemini AI'],
@@ -57,9 +57,9 @@ export const projects: Project[] = [
     title: 'AI Resume-Job Matcher',
     category: 'ai',
     shortDescription:
-      'AI tool that scores how well your resume matches a job posting with improvement tips',
+      'Scores a resume against a job posting, and says what to fix',
     fullDescription:
-      'An AI-powered tool that analyzes your resume against a job description and gives a compatibility score from 0-100%. It uses sentence transformers for semantic matching, detects missing skills, and suggests specific improvements. Supports PDF and text uploads. All processing happens locally - no data is sent to external servers.',
+      'An AI-powered tool that analyzes your resume against a job description and gives a compatibility score from 0-100%. It uses sentence transformers for semantic matching, detects missing skills, and suggests specific improvements.',
     coverImage: '/images/portfolio/ai-resume-matcher.webp',
     images: ['/images/portfolio/ai-resume-matcher.webp'],
     techStack: ['Python', 'Streamlit', 'FastAPI', 'Sentence Transformers', 'NLTK', 'spaCy'],
@@ -73,9 +73,9 @@ export const projects: Project[] = [
     title: 'Movie Recommendation Engine',
     category: 'ai',
     shortDescription:
-      'Content-based movie recommender using TF-IDF and cosine similarity across 290+ films',
+      'Content-based recommender across 290 films',
     fullDescription:
-      'A content-based movie recommendation system that suggests films based on genre, rating, and release year. Uses TF-IDF vectorization and cosine similarity to find matches. Features adjustable weighting so users can prioritize what matters most, title and director search, genre filtering across 20+ categories, and pre-computed similarity matrices for instant results.',
+      'A content-based movie recommendation system that suggests films based on genre, rating, and release year. Uses TF-IDF vectorization and cosine similarity to find matches.',
     coverImage: '/images/portfolio/movie-recommendation.webp',
     images: ['/images/portfolio/movie-recommendation.webp'],
     techStack: ['Python', 'Streamlit', 'Scikit-learn', 'Pandas', 'TF-IDF'],
@@ -89,7 +89,7 @@ export const projects: Project[] = [
     title: 'Face Recognition Attendance System',
     category: 'ai',
     shortDescription:
-      'Automated attendance system using facial recognition with anti-spoofing and reporting',
+      'Face-recognition attendance, with anti-spoofing',
     fullDescription:
       'A Python-based attendance system that uses facial recognition to automatically mark attendance. Supports student enrollment with multi-angle face capture, real-time multi-face detection, two recognition engines (Dlib deep learning and LBPH), anti-spoofing with blink and movement detection, and data export to Excel, CSV, and PDF.',
     coverImage: '/images/portfolio/face-recognition.webp',
@@ -105,9 +105,9 @@ export const projects: Project[] = [
     title: 'E-Voting Console for Students',
     category: 'web',
     shortDescription:
-      'Secure online voting app for student elections built with React and Firebase',
+      'Online voting for student elections',
     fullDescription:
-      'A React.js application for secure online voting in educational institutions. Students can cast votes through a clean interface, view live election results, and browse detailed candidate profiles. Built with Firebase Firestore for real-time database operations, responsive design for mobile and desktop, and modular component architecture.',
+      'A React.js application for secure online voting in educational institutions. Students can cast votes through a clean interface, view live election results, and browse detailed candidate profiles.',
     coverImage: '/images/portfolio/e-voting-console.webp',
     images: ['/images/portfolio/e-voting-console.webp'],
     techStack: ['React.js', 'Vite', 'Firebase', 'JavaScript', 'CSS3'],
@@ -121,9 +121,9 @@ export const projects: Project[] = [
     title: 'WearBlend - AI Virtual Try-On',
     category: 'ai',
     shortDescription:
-      'AI-powered virtual try-on app that generates realistic outfit photos using DALL-E and Gemini',
+      'Virtual try-on that generates realistic outfit photos',
     fullDescription:
-      'An AI virtual try-on application where users upload clothing images, compose outfits, and generate realistic fashion photos. Classic Mode offers professional flat-lay composition with automatic background removal and color extraction. AI Mode uses DALL-E 3 or Gemini to generate realistic outfit visualizations from custom prompts.',
+      'An AI virtual try-on application where users upload clothing images, compose outfits, and generate realistic fashion photos. Classic Mode offers professional flat-lay composition with automatic background removal and color extraction.',
     coverImage: '/images/portfolio/wearblend.webp',
     images: ['/images/portfolio/wearblend.webp'],
     techStack: ['Python', 'Streamlit', 'OpenAI DALL-E 3', 'Google Gemini', 'Pillow', 'rembg'],
@@ -137,9 +137,9 @@ export const projects: Project[] = [
     title: 'CampAlpha - Adventure Sports Marketplace',
     category: 'web',
     shortDescription:
-      'A marketplace connecting adventure sports enthusiasts with trips, gear, and experiences.',
+      'Marketplace for adventure sports trips and gear',
     fullDescription:
-      'CampAlpha is a community-focused marketplace built for the adventure sports world. Users can browse and book trips, discover gear, and connect with other enthusiasts. Designed for fast performance on mobile and a clean, photo-forward UI that puts the outdoors first.',
+      'CampAlpha is a community-focused marketplace built for the adventure sports world. Users can browse and book trips, discover gear, and connect with other enthusiasts.',
     coverImage: '/images/portfolio/campalpha.webp',
     images: ['/images/portfolio/campalpha.webp'],
     techStack: ['React', 'Firebase', 'JavaScript', 'CSS3'],
@@ -171,7 +171,7 @@ export const projects: Project[] = [
     title: 'Cheezy Heaven - Pizza Delivery',
     category: 'web',
     shortDescription:
-      'Premium pizza ordering and delivery experience for customers in Rawalpindi.',
+      'Pizza ordering and delivery, in Rawalpindi',
     fullDescription:
       'Cheezy Heaven is an online ordering and home delivery platform for a premium pizza brand in Rawalpindi. Customers can browse the menu, customize their order, and place delivery requests with a smooth, mobile-friendly checkout flow.',
     coverImage: '/images/portfolio/cheezy-heaven.webp',
@@ -204,9 +204,9 @@ export const projects: Project[] = [
     title: 'Personal Portfolio Website',
     category: 'web',
     shortDescription:
-      'Interactive portfolio website with particle backgrounds, scroll animations, and contact form',
+      'Interactive portfolio site with scroll animation',
     fullDescription:
-      'A personal portfolio website built from scratch with HTML, CSS, and JavaScript. Features particle.js animated backgrounds, scroll reveal animations, tilt effects on cards, animated typing for skills display, a working contact form via EmailJS, and sections for projects, education, and work experience. Fully responsive across all devices.',
+      'A personal portfolio website built from scratch with HTML, CSS, and JavaScript. Features particle.js animated backgrounds, scroll reveal animations, tilt effects on cards, animated typing for skills display, a working contact form via EmailJS, and sections for projects, education, and work experience.',
     coverImage: '/images/portfolio/personal-portfolio.webp',
     images: ['/images/portfolio/personal-portfolio.webp'],
     techStack: ['HTML5', 'CSS3', 'JavaScript', 'Particles.js', 'ScrollReveal', 'EmailJS'],

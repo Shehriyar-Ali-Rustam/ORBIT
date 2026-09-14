@@ -30,9 +30,8 @@ export function Team() {
           viewport={{ once: true, margin: '-50px' }}
           className="mx-auto mt-14 max-w-2xl"
         >
-          <div className="group relative overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] p-8 text-center backdrop-blur-sm sm:p-10">
-            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-br from-accent/5 to-transparent" />
-            <div className="relative z-10 flex flex-col items-center">
+          <div className="group relative overflow-hidden rounded-xl border border-border bg-surface p-8 text-center transition-colors hover:border-accent/40 sm:p-10">
+                        <div className="relative z-10 flex flex-col items-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent/10 text-accent">
                 <GraduationCap className="h-7 w-7" />
               </div>
@@ -50,7 +49,7 @@ export function Team() {
                 href="https://orbit-internship.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-7 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
+                className="mt-7 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-colors hover:bg-accent-hover"
               >
                 Apply for the internship
                 <ArrowUpRight className="h-4 w-4" />

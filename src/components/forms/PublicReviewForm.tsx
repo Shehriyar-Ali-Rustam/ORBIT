@@ -246,7 +246,7 @@ export function PublicReviewForm() {
             <button
               type="submit"
               disabled={submitting}
-              className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white shadow-accent-glow transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+              className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#0a0a0a] transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-60"
             >
               {submitting ? (
                 <>

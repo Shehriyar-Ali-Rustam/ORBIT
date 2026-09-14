@@ -113,7 +113,7 @@ export default function BlogPostPage({ params }: Props) {
               </span>
             </div>
 
-            <h1 className="mt-5 text-3xl font-black leading-[1.15] tracking-tight text-text-primary sm:text-4xl md:text-5xl">
+            <h1 className="mt-5 text-[1.875rem] font-semibold leading-[1.15] tracking-[-0.03em] text-text-primary sm:text-4xl md:text-[2.75rem]">
               {post.title}
             </h1>
 
@@ -206,7 +206,7 @@ export default function BlogPostPage({ params }: Props) {
               <p className="text-base leading-[1.75] text-text-secondary">{post.conclusion}</p>
               <Link
                 href="/contact"
-                className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-[#0a0a0a] transition-shadow hover:shadow-accent-glow"
+                className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-[#0a0a0a] transition-colors hover:bg-accent-hover"
               >
                 Start a project
                 <ArrowUpRight className="h-4 w-4" />
