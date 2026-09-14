@@ -9,6 +9,7 @@ import { OrbieControls } from './OrbieControls'
 import { OrbieCaptions } from './OrbieCaptions'
 import { useOrbieInput } from './useOrbieInput'
 import { Orbie } from './character/Orbie'
+import type { OrbieEmotion, OrbieMood, OrbiePose } from './character/types'
 import { useOrbieNavigator } from './useOrbieNavigator'
 import { CrossroadsView } from './views/CrossroadsView'
 import { ServicesView } from './views/ServicesView'
@@ -35,11 +36,73 @@ interface OrbiePlayerProps {
  * sits bottom-left, and the tap layer is z-10 underneath all of them. Anything
  * interactive placed below z-40 will have its taps swallowed by that layer.
  */
+/**
+ * How long Orbie waits on a choice before dozing off. Long enough to read a
+ * short list of options twice over, so it reads as patience rather than as the
+ * page having given up.
+ */
+const DOZE_AFTER_MS = 20_000
+
 export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
   const reduce = useReducedMotion()
   const nav = useOrbieNavigator()
   const { node, clock } = nav
-  const [celebrating, setCelebrating] = useState(false)
+  const [mood, setMood] = useState<OrbieMood | null>(null)
+
+  const [dozing, setDozing] = useState(false)
+
+  // Orbie dozes while waiting on a choice. Not on the contact node, where the
+  // visitor is typing rather than deciding, and not while chat is open, for
+  // the same reason - falling asleep at someone mid-sentence is a different
+  // character than the one this is meant to be.
+  //
+  // No activity listeners, and that is not an oversight. On a waiting node a
+  // tap does nothing by design, so the only things a visitor can do are pick
+  // an option, which changes `node.id`, or open chat, which changes `mode`.
+  // Both are already dependencies here, so both wake it.
+  const canDoze = clock.isWaiting && nav.mode === 'tour' && node.view !== 'contact'
+
+  useEffect(() => {
+    setDozing(false)
+    if (!canDoze) return
+    const t = setTimeout(() => setDozing(true), DOZE_AFTER_MS)
+    return () => clearTimeout(t)
+  }, [canDoze, node.id])
+
+  // A mood outlives the view that set it, so a brief that failed on the
+  // contact node would leave Orbie apologising three chapters later. Navigation
+  // clears it; the views set it again on their own terms.
+  useEffect(() => setMood(null), [node.id])
+
+  // One place decides what a state looks like, so the two views cannot drift
+  // into different personalities. Order is precedence, highest first.
+  //
+  // Pose and emotion are resolved separately on purpose - the character
+  // contract says the visor is independent of the body, so `sorry` colours a
+  // face that is still doing whatever the node asked, and `thinking` runs
+  // under whatever the node's visor was.
+  const pose: OrbiePose =
+    mood === 'celebrating'
+      ? 'celebrate'
+      : mood === 'thinking'
+        ? 'thinking'
+        : // Paused is the visitor holding the screen, dozing is Orbie waiting
+          // on them. Both lose to a live mood, because a mood means something
+          // is actually happening.
+          clock.isPaused || dozing
+          ? 'sleep'
+          : (node.pose ?? 'idle')
+
+  const emotion: OrbieEmotion | undefined =
+    mood === 'celebrating' ? 'star' : mood === 'sorry' ? 'sorry' : node.emotion
+
+  // `celebrate` is one-shot and returns to idle by itself, so the mood that
+  // triggered it clears on its own end rather than on a timer here guessing at
+  // the animation's length. `thinking` and `sleep` loop instead, and are
+  // cleared by whoever set them.
+  const onPoseEnd = useCallback((p: OrbiePose) => {
+    if (p === 'celebrate') setMood(null)
+  }, [])
 
   const exit = useCallback(() => {
     track('orbie_exit', { node: node.id })
@@ -162,7 +225,7 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
           closing it puts the visitor back exactly where they were. */}
       {nav.mode === 'chat' && (
         <div className="absolute inset-0 z-30 flex items-center justify-center bg-orbit-canvas/95 px-6 pb-32 pt-20 backdrop-blur-sm">
-          <ChatView onClose={nav.closeChat} />
+          <ChatView onClose={nav.closeChat} onMood={setMood} />
         </div>
       )}
 
@@ -200,15 +263,16 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
             {node.view === 'services' && <ServicesView focus={node.focus} />}
             {node.view === 'work' && <WorkView />}
             {node.view === 'about' && <AboutView />}
-            {node.view === 'contact' && <ContactView onDone={() => setCelebrating(true)} />}
+            {node.view === 'contact' && <ContactView onMood={setMood} />}
 
             {/* Arrival and the orientation beats stage the character itself;
                 everything else keeps it docked in the corner. */}
             {(node.view === 'arrival' || node.view === 'beat') && (
               <Orbie
-                pose={node.pose ?? 'idle'}
-                emotion={node.emotion}
+                pose={pose}
+                emotion={emotion}
                 size={node.view === 'arrival' ? 'hero' : 'stage'}
+                onPoseEnd={onPoseEnd}
               />
             )}
 
@@ -239,15 +303,7 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
           the narrator without competing with the content it is describing. */}
       {!['arrival', 'beat'].includes(node.view) && (
         <div className="pointer-events-none absolute bottom-6 left-5 z-30 md:bottom-8 md:left-8">
-          <Orbie
-            pose={celebrating ? 'celebrate' : clock.isPaused ? 'sleep' : (node.pose ?? 'idle')}
-            emotion={celebrating ? 'star' : node.emotion}
-            size="dock"
-            // celebrate is one-shot, so it returns to idle by itself. Clearing
-            // the flag on its own end keeps the two in step rather than having
-            // a timer here guess at the animation's length.
-            onPoseEnd={(p) => p === 'celebrate' && setCelebrating(false)}
-          />
+          <Orbie pose={pose} emotion={emotion} size="dock" onPoseEnd={onPoseEnd} />
         </div>
       )}
 

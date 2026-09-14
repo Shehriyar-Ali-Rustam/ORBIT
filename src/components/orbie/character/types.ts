@@ -48,6 +48,22 @@ export const ONE_SHOT_POSES: readonly OrbiePose[] = [
 ]
 
 /**
+ * What a view is doing, when that should reach Orbie's face.
+ *
+ * Views report a mood; the player decides what it looks like. The split is the
+ * point. A view knows it is waiting on a network call. It does not know whether
+ * waiting should read as `thinking` with the visor left alone, or as something
+ * else entirely, and it should not have to - that decision belongs with the
+ * character, in one place, or the two views drift into different personalities.
+ *
+ * This exists because the only channel a view had was `ContactView`'s
+ * `onDone`, which could say exactly one thing. So Orbie celebrated a sent
+ * brief and then sat perfectly still through the sending, through a failure,
+ * and through every chat answer it was streaming.
+ */
+export type OrbieMood = 'thinking' | 'sorry' | 'celebrating'
+
+/**
  * Shown on the visor. Independent of pose: Orbie can be `thinking` and
  * `curious` at once, or `celebrate` and `star`.
  */

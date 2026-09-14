@@ -7,6 +7,7 @@ import { ArrowRight, ArrowLeft } from 'lucide-react'
 import { contactSchema } from '@/lib/validations'
 import { BUDGET_LABELS, SERVICE_LABELS } from '@/data/orbie-contact'
 import { CARD } from '@/data/landing'
+import type { OrbieMood } from '../character/types'
 import { useConversationalContact } from '../contact/useConversationalContact'
 import { EASE } from '@/components/motion/motion-config'
 
@@ -28,7 +29,7 @@ const BUDGET_OPTIONS = contactSchema.shape.budget.options
  * sits under every step, and every failure surfaces WhatsApp, because a brief
  * that vanishes into an error is worse than no form at all.
  */
-export function ContactView({ onDone }: { onDone?: () => void }) {
+export function ContactView({ onMood }: { onMood?: (m: OrbieMood | null) => void }) {
   const reduce = useReducedMotion()
   const c = useConversationalContact()
   const [value, setValue] = useState('')
@@ -43,9 +44,21 @@ export function ContactView({ onDone }: { onDone?: () => void }) {
     if (!isChips) inputRef.current?.focus()
   }, [c.step, isChips])
 
+  // The whole lifecycle reaches Orbie's face, not just the happy ending.
+  // `onDone` could only say "sent", so Orbie sat perfectly still through the
+  // sending and through every failure - the two moments a person is most
+  // likely to be watching it for a reaction.
   useEffect(() => {
-    if (c.status === 'sent') onDone?.()
-  }, [c.status, onDone])
+    onMood?.(
+      c.status === 'sent'
+        ? 'celebrating'
+        : c.status === 'sending'
+          ? 'thinking'
+          : c.status === 'error'
+            ? 'sorry'
+            : null
+    )
+  }, [c.status, onMood])
 
   if (c.status === 'sent' || c.status === 'sending' || c.status === 'error') {
     return (

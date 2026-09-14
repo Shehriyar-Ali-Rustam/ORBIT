@@ -6,6 +6,7 @@ import { ArrowRight, X } from 'lucide-react'
 import { track } from '@vercel/analytics'
 import { CARD } from '@/data/landing'
 import { CHAT_SCRIPT, EDGE_LINES } from '@/data/orbie-edge'
+import type { OrbieMood } from '../character/types'
 import { EASE } from '@/components/motion/motion-config'
 
 
@@ -27,7 +28,13 @@ interface Turn {
  * provider, a rate limiter and a network, so every way it can fail ends with a
  * way to reach a human that does not depend on any of them.
  */
-export function ChatView({ onClose }: { onClose(): void }) {
+export function ChatView({
+  onClose,
+  onMood,
+}: {
+  onClose(): void
+  onMood?: (m: OrbieMood | null) => void
+}) {
   const reduce = useReducedMotion()
   const [turns, setTurns] = useState<Turn[]>([])
   const [value, setValue] = useState('')
@@ -38,6 +45,17 @@ export function ChatView({ onClose }: { onClose(): void }) {
 
   useEffect(() => inputRef.current?.focus(), [])
   useEffect(() => endRef.current?.scrollIntoView({ behavior: 'smooth' }), [turns])
+
+  // Orbie thinks while the answer streams and looks sorry when it does not
+  // arrive. The panel covers the stage, but the docked character paints above
+  // it, so this is the one part of Orbie a visitor can still see from here.
+  //
+  // Cleared on unmount as well as on change: closing the chat mid-answer would
+  // otherwise leave it thinking about a question nobody is waiting on.
+  useEffect(() => {
+    onMood?.(busy ? 'thinking' : failed ? 'sorry' : null)
+    return () => onMood?.(null)
+  }, [busy, failed, onMood])
 
   const send = useCallback(async () => {
     const text = value.trim()
