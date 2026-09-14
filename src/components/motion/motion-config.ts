@@ -8,8 +8,16 @@
  * that the file is missing an entry.
  */
 
-/** The site's signature curve. Fast out, long settle. Never `linear`. */
-export const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]
+/**
+ * The site's signature curve. Fast out, long settle. Never `linear`.
+ *
+ * There used to be two: this one and `[0.16, 1, 0.3, 1]`, split roughly along
+ * the line between the landing page and the marketing sections. Two curves is
+ * how two halves of one site end up not moving alike — so this is the one, and
+ * it is the landing page's, because that is the surface the motion language
+ * was actually designed on.
+ */
+export const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
 /**
  * Weighty spring for anything with visual mass — cards entering, panels

@@ -6,6 +6,7 @@ import {
   Bot, Code2, PenTool, Languages, FileText, Briefcase, ImageIcon, ArrowRight,
 } from 'lucide-react'
 import type { AITool } from '@/lib/ai/prompts'
+import { EASE } from '@/components/motion/motion-config'
 
 const TOOL_ICONS: Record<AITool, typeof Bot> = {
   chat: Bot,
@@ -31,7 +32,7 @@ export function ToolCard({ tool, name, description, href }: ToolCardProps) {
     <Link href={href}>
       <motion.div
         whileHover={{ y: -4 }}
-        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.2, ease: EASE }}
         className="group cursor-pointer rounded-xl border border-border bg-surface p-6 transition-all hover:border-[#FF751F]/30 hover:shadow-[0_0_30px_-10px_rgba(112,230,237,0.15)]"
       >
         {/* Icon */}

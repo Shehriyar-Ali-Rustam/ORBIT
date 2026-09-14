@@ -4,8 +4,8 @@ import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import { founders } from '@/data/founders'
 import { CARD } from '@/data/landing'
+import { EASE } from '@/components/motion/motion-config'
 
-const EASE = [0.22, 1, 0.36, 1] as const
 
 /**
  * The people.

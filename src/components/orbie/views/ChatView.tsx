@@ -5,8 +5,8 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, X } from 'lucide-react'
 import { track } from '@vercel/analytics'
 import { CARD } from '@/data/landing'
+import { EASE } from '@/components/motion/motion-config'
 
-const EASE = [0.22, 1, 0.36, 1] as const
 
 interface Turn {
   role: 'user' | 'assistant'

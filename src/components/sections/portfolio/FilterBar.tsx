@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { EASE } from '@/components/motion/motion-config'
 
 interface FilterBarProps {
   active: string
@@ -34,7 +35,7 @@ export function FilterBar({ active, onChange }: FilterBarProps) {
             <motion.div
               layoutId="filter-pill"
               className="absolute inset-0 rounded-full bg-accent"
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.3, ease: EASE }}
             />
           )}
           <span className="relative z-10">{filter.label}</span>

@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 import { GraduationCap, ArrowUpRight } from 'lucide-react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
+import { EASE } from '@/components/motion/motion-config'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function Team() {
   return (
@@ -15,7 +15,7 @@ export function Team() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
+            transition={{ duration: 0.6, ease: EASE }}
             viewport={{ once: true, margin: '-50px' }}
           >
             <SectionLabel>Join the Team</SectionLabel>
@@ -26,7 +26,7 @@ export function Team() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease }}
+          transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
           viewport={{ once: true, margin: '-50px' }}
           className="mx-auto mt-14 max-w-2xl"
         >

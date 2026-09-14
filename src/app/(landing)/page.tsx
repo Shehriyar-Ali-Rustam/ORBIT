@@ -1,5 +1,5 @@
 import LandingNav from '@/components/landing/LandingNav'
-import ScrollProgress from '@/components/landing/ScrollProgress'
+import { ScrollProgress } from '@/components/ui/ScrollProgress'
 import Hero from '@/components/landing/Hero'
 import Stats from '@/components/landing/Stats'
 import Capabilities from '@/components/landing/Capabilities'
@@ -38,7 +38,8 @@ export default function LandingPage() {
   return (
     <>
       <LandingNav />
-      <ScrollProgress />
+      {/* Sits under the fixed nav so the two read as one edge. */}
+      <ScrollProgress className="fixed inset-x-0 top-[67px] z-50 h-[2px] bg-orbit-acc md:top-[79px]" />
       <main id="main-content">
         <Hero />
         <Stats />

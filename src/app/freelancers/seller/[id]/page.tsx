@@ -14,8 +14,8 @@ import { SellerBadge } from '@/components/marketplace/SellerBadge'
 import { EmptyState } from '@/components/marketplace/EmptyState'
 import { getProfile, getSellerGigs, getSellerReviews } from '@/lib/marketplace/queries'
 import type { Profile, Gig, Review } from '@/types/marketplace'
+import { EASE } from '@/components/motion/motion-config'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export default function SellerProfilePage() {
   const params = useParams()
@@ -66,7 +66,7 @@ export default function SellerProfilePage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease }}
+        transition={{ duration: 0.5, ease: EASE }}
         className="flex flex-col items-start gap-6 sm:flex-row"
       >
         {profile.photo_url ? (

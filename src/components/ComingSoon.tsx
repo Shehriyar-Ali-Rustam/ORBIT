@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Mail } from 'lucide-react'
 import { COMPANY } from '@/lib/constants'
+import { EASE } from '@/components/motion/motion-config'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 interface ComingSoonProps {
   /** Small eyebrow label, e.g. "Freelancer Marketplace" or "Orbit AI". */
@@ -31,7 +31,7 @@ export function ComingSoon({ label, description, notifySubject }: ComingSoonProp
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease }}
+        transition={{ duration: 0.6, ease: EASE }}
         className="relative z-10 flex flex-col items-center"
       >
         <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-accent">

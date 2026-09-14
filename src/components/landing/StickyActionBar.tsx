@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import QuickActions from './QuickActions'
-import { DS_EASE } from './MotionReveal'
+import { EASE } from '@/components/motion/motion-config'
 
 /**
  * Phone-only dock. Nearly every visit to this page comes from a camera pointed
@@ -27,7 +27,7 @@ export default function StickyActionBar() {
           initial={{ y: '100%' }}
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
-          transition={{ duration: 0.35, ease: DS_EASE }}
+          transition={{ duration: 0.35, ease: EASE }}
           className="fixed inset-x-0 bottom-0 z-50 border-t border-orbit-line/[0.12] bg-orbit-canvas/95 backdrop-blur-md md:hidden"
           style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
         >

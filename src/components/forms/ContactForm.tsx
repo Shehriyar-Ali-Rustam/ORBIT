@@ -8,6 +8,7 @@ import { CheckCircle2, Loader2, Send } from 'lucide-react'
 import { contactSchema, ContactFormData } from '@/lib/validations'
 import { cn } from '@/lib/utils'
 import { useCurrency } from '@/components/providers/CurrencyProvider'
+import { EASE } from '@/components/motion/motion-config'
 
 const serviceOptions = [
   { value: 'ai-chatbot',         label: 'AI Chatbot' },
@@ -173,7 +174,7 @@ export function ContactForm() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.5, ease: EASE }}
       viewport={{ once: true }}
       className="overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)]"
     >

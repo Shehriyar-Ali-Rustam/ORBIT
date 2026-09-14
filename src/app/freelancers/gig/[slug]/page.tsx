@@ -15,8 +15,8 @@ import { getGigBySlug, getGigReviews } from '@/lib/marketplace/queries'
 import { CATEGORY_LABELS } from '@/lib/marketplace/constants'
 import { cn } from '@/lib/utils'
 import type { Gig, Review, PricingTier } from '@/types/marketplace'
+import { EASE } from '@/components/motion/motion-config'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 const TIERS: PricingTier[] = ['basic', 'standard', 'premium']
 const TIER_LABELS: Record<PricingTier, string> = { basic: 'Basic', standard: 'Standard', premium: 'Premium' }
 
@@ -83,7 +83,7 @@ export default function GigDetailPage() {
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease }}
+            transition={{ duration: 0.5, ease: EASE }}
             className="text-2xl font-bold text-text-primary lg:text-3xl"
           >
             {gig.title}

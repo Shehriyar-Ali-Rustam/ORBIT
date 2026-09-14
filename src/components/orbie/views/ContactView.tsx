@@ -8,8 +8,8 @@ import { contactSchema } from '@/lib/validations'
 import { BUDGET_LABELS, SERVICE_LABELS } from '@/data/orbie-contact'
 import { CARD } from '@/data/landing'
 import { useConversationalContact } from '../contact/useConversationalContact'
+import { EASE } from '@/components/motion/motion-config'
 
-const EASE = [0.22, 1, 0.36, 1] as const
 
 /** Read off the schema, so an invalid value cannot be offered in the first place. */
 const SERVICE_OPTIONS = contactSchema.shape.service.options

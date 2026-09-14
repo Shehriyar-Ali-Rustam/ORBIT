@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import MotionReveal from './MotionReveal'
+import { Reveal } from '@/components/motion/Reveal'
 import { CARD } from '@/data/landing'
 
 /** The one place the palette flips. Used once, near the end of the page. */
@@ -17,15 +17,15 @@ export default function CTABand() {
       />
 
       <div className="relative mx-auto flex max-w-[1280px] flex-col items-start gap-8 px-5 py-20 sm:px-6 md:flex-row md:items-end md:justify-between md:px-10 md:py-28">
-        <MotionReveal from="left" className="max-w-2xl">
+        <Reveal from="left" className="max-w-2xl">
           <span className="eyebrow !text-orbit-onAcc/80">Get in touch</span>
           <h2 className="h-hero mt-4 font-bold text-orbit-onAcc">Tell us what you need built.</h2>
           <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-onAcc/80">
             Two lines on the problem. You get scope, cost and timeline, usually same day.
           </p>
-        </MotionReveal>
+        </Reveal>
 
-        <MotionReveal from="right" delay={0.15} className="w-full md:w-auto">
+        <Reveal from="right" delay={0.15} className="w-full md:w-auto">
           <div className="flex flex-col gap-3 sm:flex-row md:flex-col lg:flex-row">
             <a
               href={CARD.whatsappHref}
@@ -42,7 +42,7 @@ export default function CTABand() {
               Project brief <span aria-hidden>↗</span>
             </Link>
           </div>
-        </MotionReveal>
+        </Reveal>
       </div>
     </section>
   )

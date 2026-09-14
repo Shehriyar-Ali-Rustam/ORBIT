@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Download, RotateCcw, ChevronDown, ChevronUp, Loader2 } from 'lucide-react'
+import { EASE } from '@/components/motion/motion-config'
 
 interface ImageResultProps {
   imageUrl: string
@@ -61,7 +62,7 @@ export function ImageResult({
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.4, ease: EASE }}
       className="overflow-hidden rounded-xl border border-border"
     >
       {/* Image */}

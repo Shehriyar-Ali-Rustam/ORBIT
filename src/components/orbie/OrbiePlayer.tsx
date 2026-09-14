@@ -19,8 +19,8 @@ import { ChatView } from './views/ChatView'
 import { OrbieDock } from './OrbieDock'
 import { ORBIE_AUDIO_ENABLED, ORBIE_CHAT_ENABLED } from '@/lib/orbie-flags'
 import type { OptionCard } from '@/data/orbie-graph'
+import { EASE } from '@/components/motion/motion-config'
 
-const EASE = [0.22, 1, 0.36, 1] as const
 
 interface OrbiePlayerProps {
   onExit(): void

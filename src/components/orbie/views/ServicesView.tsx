@@ -3,8 +3,8 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { Bot, Brain, Globe, Smartphone, Palette, type LucideIcon } from 'lucide-react'
 import { services } from '@/data/services'
+import { EASE } from '@/components/motion/motion-config'
 
-const EASE = [0.22, 1, 0.36, 1] as const
 
 /** `services.ts` stores a lucide name as a string; this is where it becomes a
  *  component. Keeping the data free of imports is what lets it be read by the

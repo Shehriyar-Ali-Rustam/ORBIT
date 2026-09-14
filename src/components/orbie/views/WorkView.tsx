@@ -3,8 +3,8 @@
 import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
 import { projects } from '@/data/portfolio'
+import { EASE } from '@/components/motion/motion-config'
 
-const EASE = [0.22, 1, 0.36, 1] as const
 
 /** Real shipped work with local cover images, not stock. */
 const PICKS = projects.filter((p) => p.featured).slice(0, 4)

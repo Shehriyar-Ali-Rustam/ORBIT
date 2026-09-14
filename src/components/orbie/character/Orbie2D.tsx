@@ -9,8 +9,8 @@ import {
   type OrbiePose,
   type OrbieProps,
 } from './types'
+import { EASE } from '@/components/motion/motion-config'
 
-const EASE = [0.22, 1, 0.36, 1] as const
 
 /* ── Eyes ──────────────────────────────────────────────────────────────
  * Framer can only tween an SVG `d` when both paths share a command

@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { EASE } from '@/components/motion/motion-config'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function CTASection() {
   return (
@@ -34,7 +34,7 @@ export function CTASection() {
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease }}
+          transition={{ duration: 0.7, ease: EASE }}
           viewport={{ once: true }}
           className="text-4xl font-bold tracking-tight text-[#0a0a0a] dark:text-white sm:text-5xl md:text-6xl"
         >
@@ -47,7 +47,7 @@ export function CTASection() {
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease, delay: 0.1 }}
+          transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
           viewport={{ once: true }}
           className="mx-auto mt-5 max-w-md text-base leading-relaxed text-[#6b6b7b] dark:text-[#8a8a9a]"
         >
@@ -60,7 +60,7 @@ export function CTASection() {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease, delay: 0.2 }}
+          transition={{ duration: 0.5, ease: EASE, delay: 0.2 }}
           viewport={{ once: true }}
           className="mt-8"
         >
@@ -77,7 +77,7 @@ export function CTASection() {
         <motion.div
           initial={{ opacity: 0, y: 48, scale: 0.92 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, ease, delay: 0.35 }}
+          transition={{ duration: 1, ease: EASE, delay: 0.35 }}
           viewport={{ once: true }}
           className="relative mx-auto mt-24 flex items-center justify-center pb-16 sm:mt-28"
         >

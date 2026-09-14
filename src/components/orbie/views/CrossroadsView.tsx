@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import type { OptionCard } from '@/data/orbie-graph'
+import { EASE } from '@/components/motion/motion-config'
 
-const EASE = [0.22, 1, 0.36, 1] as const
 
 interface CrossroadsViewProps {
   options: OptionCard[]

@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { track } from '@vercel/analytics'
 import { ACTIONS } from '@/components/landing/QuickActions'
+import { EASE } from '@/components/motion/motion-config'
 
 /** Call, WhatsApp, Save. Email is dropped — the contact node covers it, and it
  *  serves a card scanner least of the four. Filtered by key rather than
@@ -41,7 +42,7 @@ export function OrbieDock() {
     <motion.div
       initial={reduce ? { opacity: 0 } : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
+      transition={{ duration: 0.5, ease: EASE, delay: 0.6 }}
       className="absolute bottom-0 right-0 z-40 flex items-center gap-2 p-3 md:p-5"
       style={{ paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom))' }}
     >

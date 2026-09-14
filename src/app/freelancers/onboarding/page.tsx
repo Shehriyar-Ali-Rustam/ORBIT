@@ -8,8 +8,8 @@ import { Check, ArrowLeft, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { upsertProfile } from '@/lib/marketplace/mutations'
 import { cn } from '@/lib/utils'
+import { EASE } from '@/components/motion/motion-config'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const STEPS = ['Personal Info', 'Professional', 'About You', 'Confirm']
 
@@ -116,7 +116,7 @@ export default function SellerOnboardingPage() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3, ease }}
+          transition={{ duration: 0.3, ease: EASE }}
         >
           {/* Step 1: Personal Info */}
           {step === 0 && (

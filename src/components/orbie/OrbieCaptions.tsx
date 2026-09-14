@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, type MotionValue } from 'framer-motion'
 import type { CaptionLine } from '@/data/orbie-graph'
+import { EASE } from '@/components/motion/motion-config'
 
 /**
  * The minimum needed to render captions.
@@ -73,7 +74,7 @@ export function OrbieCaptions({ scene, elapsedMs }: StoryCaptionsProps) {
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.28, ease: EASE }}
             className="text-balance font-grotesk text-[1.375rem] font-medium leading-[1.3] tracking-[-0.02em] text-orbit-ink md:text-[1.75rem]"
           >
             {line?.text}

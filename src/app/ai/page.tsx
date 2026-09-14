@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { ToolCard } from '@/components/ai/ToolCard'
 import { AISidebar } from '@/components/ai/AISidebar'
 import { TOOL_CONFIG, type AITool } from '@/lib/ai/prompts'
+import { EASE } from '@/components/motion/motion-config'
 
 const TOOL_ORDER: { tool: AITool; href: string }[] = [
   { tool: 'chat', href: '/ai/chat' },
@@ -25,7 +26,7 @@ export default function AIDashboardPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.5, ease: EASE }}
         className="text-center"
       >
         <p className="text-xs font-semibold uppercase tracking-widest text-[#FF751F]">
@@ -43,7 +44,7 @@ export default function AIDashboardPage() {
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.5, delay: 0.1, ease: EASE }}
         className="mt-12 grid w-full max-w-5xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
       >
         {TOOL_ORDER.map(({ tool, href }) => (
