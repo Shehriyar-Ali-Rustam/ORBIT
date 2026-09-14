@@ -1,5 +1,5 @@
-import { STORYBOARD, type CaptionLine } from './storyboard'
-import type { Advance } from '@/components/story/useStoryClock'
+import { projects } from './portfolio'
+import type { Advance } from '@/components/orbie/useOrbieClock'
 import type { OrbieEmotion, OrbiePose } from '@/components/orbie/character/types'
 
 /**
@@ -9,15 +9,33 @@ import type { OrbieEmotion, OrbiePose } from '@/components/orbie/character/types
  * orientation, then a crossroads, then a section, then back to the crossroads —
  * so the script needs edges rather than an order.
  *
- * The orientation chapter is not rewritten here. It reuses Story Mode's scenes
- * directly, so the arrival narration exists in exactly one place and editing
- * `storyboard.ts` changes both experiences. Only the ending differs: Story Mode
- * finishes on a call to action, Orbie hands over to the crossroads.
- *
- * Facts still come from `src/data`, never from this file. See the no-digits
- * assertion at the bottom of `storyboard.ts` — it applies to the same writing
- * rule these nodes follow.
+ * Facts come from `src/data`, never from the narration here. The assertions at
+ * the bottom of this file enforce that mechanically: no digit may appear in any
+ * spoken line, so a count is interpolated or spelled rather than typed. That is
+ * what stops the tour becoming a second place the site states figures about
+ * itself — which is how it once claimed ten projects on one page and 101+ on
+ * another.
  */
+
+export interface CaptionLine {
+  text: string
+  /** Offset from the start of the node, in ms, when this line appears. */
+  atMs: number
+}
+
+/** Spells a small number, so narration reads as speech rather than a spec. */
+function spell(n: number): string {
+  const words = [
+    'zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight',
+    'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen',
+    'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty',
+  ]
+  return words[n] ?? String(n)
+}
+
+/** Derived, not typed. Ship an eleventh project and Orbie says "Eleven". */
+const SHIPPED = spell(projects.length)
+const SHIPPED_TITLE = SHIPPED.charAt(0).toUpperCase() + SHIPPED.slice(1)
 
 export type ChapterId =
   | 'orientation'
@@ -115,19 +133,20 @@ export interface StoryNode {
   repeat?: { narration: string; lines: CaptionLine[] }
 }
 
-// ── Orientation ──────────────────────────────────────────────────────
-// Reused from Story Mode rather than rewritten. `cta` is deliberately not
-// mapped: that is where the two experiences diverge.
-const [welcome, software, ai, journey] = STORYBOARD
-
 export const ORBIE_GRAPH: Record<NodeId, StoryNode> = {
   arrival: {
     id: 'arrival',
     chapter: 'orientation',
     view: 'arrival',
-    narration: welcome.narration,
-    lines: welcome.lines,
-    advance: { kind: 'auto', durationMs: welcome.durationMs },
+    // Orbie, not "Orbit AI". The old line came from Story Mode, where the
+    // narrator had no name; it introduced the character as the wrong thing.
+    narration: "Hi, I'm Orbie. Welcome to Orbit Innovations. Give me half a minute and I'll show you what we build.",
+    lines: [
+      { text: "Hi, I'm Orbie.", atMs: 0 },
+      { text: 'Welcome to Orbit Innovations.', atMs: 1400 },
+      { text: "Give me half a minute and I'll show you what we build.", atMs: 2900 },
+    ],
+    advance: { kind: 'auto', durationMs: 5000 },
     next: 'orient-build',
     pose: 'wave',
     emotion: 'happy',
@@ -141,9 +160,13 @@ export const ORBIE_GRAPH: Record<NodeId, StoryNode> = {
     id: 'orient-build',
     chapter: 'orientation',
     view: 'beat',
-    narration: software.narration,
-    lines: software.lines,
-    advance: { kind: 'auto', durationMs: software.durationMs },
+    narration: `We engineer custom software end to end. ${SHIPPED_TITLE} products shipped for clients in eight countries.`,
+    lines: [
+      { text: 'We engineer custom software end to end.', atMs: 0 },
+      { text: 'Next.js platforms. React Native apps.', atMs: 2200 },
+      { text: `${SHIPPED_TITLE} shipped, for clients in eight countries.`, atMs: 4200 },
+    ],
+    advance: { kind: 'auto', durationMs: 6500 },
     next: 'orient-ai',
     pose: 'idle',
     emotion: 'neutral',
@@ -153,9 +176,14 @@ export const ORBIE_GRAPH: Record<NodeId, StoryNode> = {
     id: 'orient-ai',
     chapter: 'orientation',
     view: 'beat',
-    narration: ai.narration,
-    lines: ai.lines,
-    advance: { kind: 'auto', durationMs: ai.durationMs },
+    narration:
+      'AI is our home turf. Chatbots trained on your own documents, fine-tuned models, and voice assistants.',
+    lines: [
+      { text: 'AI is our home turf.', atMs: 0 },
+      { text: 'Chatbots trained on your own documents.', atMs: 1600 },
+      { text: 'Fine-tuned models. Voice assistants.', atMs: 3600 },
+    ],
+    advance: { kind: 'auto', durationMs: 7000 },
     next: 'orient-process',
     pose: 'idle',
     emotion: 'curious',
@@ -165,9 +193,13 @@ export const ORBIE_GRAPH: Record<NodeId, StoryNode> = {
     id: 'orient-process',
     chapter: 'orientation',
     view: 'beat',
-    narration: journey.narration,
-    lines: journey.lines,
-    advance: { kind: 'auto', durationMs: journey.durationMs },
+    narration:
+      'From the first call to handover, we run the whole build. Code and accounts end up yours.',
+    lines: [
+      { text: 'From the first call to handover, we run the whole build.', atMs: 0 },
+      { text: 'Code and accounts end up yours.', atMs: 2600 },
+    ],
+    advance: { kind: 'auto', durationMs: 5000 },
     next: 'crossroads',
     pose: 'idle',
     emotion: 'neutral',

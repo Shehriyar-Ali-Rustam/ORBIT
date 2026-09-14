@@ -5,9 +5,9 @@ import dynamic from 'next/dynamic'
 import { ORBIE_ENABLED, ORBIE_QUERY_PARAM, ORBIE_SEEN_KEY } from '@/lib/orbie-flags'
 
 /**
- * Code-split for the same reason Story Mode's player is: `/` is the URL
- * printed on the business card, so its bundle is the one that matters. The
- * whole engine, the graph and the views load on the tap that opens them.
+ * Code-split because `/` is the URL printed on the business card, so its
+ * bundle is the one that matters. The whole engine, the graph and the views
+ * load only when the tour actually opens.
  */
 const OrbiePlayer = dynamic(() => import('./OrbiePlayer').then((m) => m.OrbiePlayer), {
   ssr: false,
@@ -18,7 +18,7 @@ const OrbiePlayer = dynamic(() => import('./OrbiePlayer').then((m) => m.OrbiePla
  *
  * While `ORBIE_ENABLED` is false this renders nothing at all except for
  * `/?orbie=1`, which is how the tour stays reviewable in production before it
- * is shown to anyone. Story Mode keeps running in the meantime, unchanged.
+ * is shown to anyone.
  *
  * Reads the query param from `window.location` rather than `useSearchParams()`
  * — the hook opts the whole route into dynamic rendering, and `/` is
@@ -61,8 +61,8 @@ export function OrbieEntry({ onExit }: { onExit?: () => void }) {
     }
     setOpen(false)
     // Reveal the landing page underneath, which was never unmounted.
-    document.getElementById('story-cover')?.remove()
-    document.documentElement.classList.remove('story-covered')
+    document.getElementById('orbie-cover')?.remove()
+    document.documentElement.classList.remove('orbie-covered')
     onExit?.()
   }, [onExit])
 
@@ -70,19 +70,3 @@ export function OrbieEntry({ onExit }: { onExit?: () => void }) {
   return <OrbiePlayer onExit={exit} />
 }
 
-/**
- * True when Orbie should own `/`, so Story Mode can stand down rather than the
- * two both trying to render a full-screen experience.
- *
- * Must be called from an effect: it reads `window`.
- */
-export function orbieWantsTheScreen(): boolean {
-  if (typeof window === 'undefined') return false
-  if (new URLSearchParams(window.location.search).get(ORBIE_QUERY_PARAM) === '1') return true
-  if (!ORBIE_ENABLED) return false
-  try {
-    return window.localStorage.getItem(ORBIE_SEEN_KEY) !== '1'
-  } catch {
-    return true
-  }
-}

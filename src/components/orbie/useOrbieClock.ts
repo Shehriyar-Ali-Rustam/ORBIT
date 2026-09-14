@@ -50,7 +50,7 @@ function durationOf(node: ClockNode | undefined): number {
   return a.kind === 'auto' ? a.durationMs : (a.durationMs ?? 0)
 }
 
-export interface StoryClock {
+export interface OrbieClock {
   /** Which scene is on screen. Changes 5 times in a whole run. */
   sceneIndex: number
   /** 0..1 through the current scene. A MotionValue, so it never re-renders React. */
@@ -102,14 +102,14 @@ interface ClockOptions {
  * value; putting that in state would re-render the whole story sixty times a
  * second. Only genuinely discrete things (which scene, paused or not) are state.
  *
- * Swapping in narration audio later means writing a `useAudioClock` that reads
+ * Swapping in narration audio later means writing a `useOrbieAudioClock` that reads
  * `audio.currentTime` and advances on `ended`, then returning the same shape.
  * No consumer changes.
  */
-export function useTimelineClock(
+export function useOrbieTimelineClock(
   scenes: ClockNode[],
   options: ClockOptions | (() => void) = {}
-): StoryClock {
+): OrbieClock {
   // A bare function was the original signature. Kept working so the clock can
   // gain graph support without every existing caller changing shape.
   const { onComplete, onNodeEnd } =

@@ -16,7 +16,7 @@ interface StoryProgressProps {
  * updates every frame without React re-rendering. Segments behind the active
  * one are full, ahead of it are empty, and both are plain CSS.
  */
-export function StoryProgress({ count, activeIndex, progress }: StoryProgressProps) {
+export function OrbieProgress({ count, activeIndex, progress }: StoryProgressProps) {
   return (
     <div
       className="pointer-events-none absolute inset-x-0 top-0 z-30 flex gap-1 px-3 pt-3"

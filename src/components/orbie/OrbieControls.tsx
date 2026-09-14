@@ -20,7 +20,7 @@ const BTN =
  *
  * Exit is deliberately first in the DOM, so it is also first in tab order.
  */
-export function StoryControls({
+export function OrbieControls({
   isPaused,
   isComplete,
   onTogglePlay,

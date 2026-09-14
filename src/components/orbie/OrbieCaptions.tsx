@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, type MotionValue } from 'framer-motion'
-import type { CaptionLine } from '@/data/storyboard'
+import type { CaptionLine } from '@/data/orbie-graph'
 
 /**
  * The minimum needed to render captions.
@@ -40,7 +40,7 @@ interface StoryCaptionsProps {
  * screen reader announcing three separate fragments as they appear reads as
  * three interruptions rather than one sentence.
  */
-export function StoryCaptions({ scene, elapsedMs }: StoryCaptionsProps) {
+export function OrbieCaptions({ scene, elapsedMs }: StoryCaptionsProps) {
   const [lineIndex, setLineIndex] = useState(0)
   const reduce = useReducedMotion()
 

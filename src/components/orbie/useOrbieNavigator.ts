@@ -9,15 +9,15 @@ import {
   type NodeId,
   type StoryNode,
 } from '@/data/orbie-graph'
-import { useTimelineClock, type StoryClock } from '@/components/story/useStoryClock'
-import { useAudioClock } from '@/components/story/useAudioClock'
+import { useOrbieTimelineClock, type OrbieClock } from './useOrbieClock'
+import { useOrbieAudioClock } from './useOrbieAudioClock'
 import { ORBIE_AUDIO_ENABLED, ORBIE_SOUND_KEY } from '@/lib/orbie-flags'
 
 export type OrbieMode = 'tour' | 'chat'
 
 export interface OrbieNavigator {
   node: StoryNode
-  clock: StoryClock
+  clock: OrbieClock
   mode: OrbieMode
   /** True the second time a visitor reaches a node — drives `repeat` narration. */
   isRepeat: boolean
@@ -129,9 +129,9 @@ export function useOrbieNavigator(): OrbieNavigator {
    */
   const clock = ORBIE_AUDIO_ENABLED
     ? // eslint-disable-next-line react-hooks/rules-of-hooks
-      useAudioClock(clockNodes, { onNodeEnd, muted })
+      useOrbieAudioClock(clockNodes, { onNodeEnd, muted })
     : // eslint-disable-next-line react-hooks/rules-of-hooks
-      useTimelineClock(clockNodes, { onNodeEnd })
+      useOrbieTimelineClock(clockNodes, { onNodeEnd })
 
   const clockRef = useRef(clock)
   clockRef.current = clock

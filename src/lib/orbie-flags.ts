@@ -48,8 +48,8 @@ export const ORBIE_SOUND_KEY = 'orbie-sound-v1'
  * Narration audio.
  *
  * While `false` the tour runs on a timeline clock and the captions carry the
- * narration alone. Flipping it swaps in `useAudioClock`, which returns the
- * identical `StoryClock` shape — nothing downstream changes.
+ * narration alone. Flipping it swaps in `useOrbieAudioClock`, which returns the
+ * identical `OrbieClock` shape — nothing downstream changes.
  *
  * Two things must be true before this goes on:
  *  1. `public/orbie/audio/<nodeId>.mp3` exists for every node, generated from

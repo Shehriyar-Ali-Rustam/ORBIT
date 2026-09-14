@@ -4,10 +4,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { track } from '@vercel/analytics'
 import { ArrowLeft, MessageCircle, Volume2, VolumeX } from 'lucide-react'
-import { StoryProgress } from '@/components/story/StoryProgress'
-import { StoryControls } from '@/components/story/StoryControls'
-import { StoryCaptions } from '@/components/story/StoryCaptions'
-import { useStoryInput } from '@/components/story/useStoryInput'
+import { OrbieProgress } from './OrbieProgress'
+import { OrbieControls } from './OrbieControls'
+import { OrbieCaptions } from './OrbieCaptions'
+import { useOrbieInput } from './useOrbieInput'
 import { Orbie } from './character/Orbie'
 import { useOrbieNavigator } from './useOrbieNavigator'
 import { CrossroadsView } from './views/CrossroadsView'
@@ -29,17 +29,11 @@ interface OrbiePlayerProps {
 /**
  * Orbie's player.
  *
- * A deliberate fork of `StoryPlayer` rather than a parameterised version of
- * it. The two diverge on enough axes — routing, waiting, options, back — that
- * sharing one component would make it mostly branches, and branches in the
- * thing that orchestrates everything else is how both experiences end up
- * fragile. What they genuinely share (`StoryProgress`, `StoryControls`,
- * `StoryCaptions`, `useStoryInput`, the clock) is imported, not copied.
- *
- * The layer contract is inherited exactly, because it was worked out against
- * real touch targets: progress owns the top edge, controls sit top-right at
- * z-40, captions own the bottom third, the character sits bottom-left, and the
- * tap layer is z-10 underneath all of them.
+ * The layer contract here was worked out against real touch targets and is
+ * the part most easily broken by a casual edit: progress owns the top edge,
+ * controls sit top-right at z-40, captions own the bottom third, the character
+ * sits bottom-left, and the tap layer is z-10 underneath all of them. Anything
+ * interactive placed below z-40 will have its taps swallowed by that layer.
  */
 export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
   const reduce = useReducedMotion()
@@ -56,7 +50,7 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
   // next step is a choice, and a stray tap must not stand in for one.
   const tappable = !clock.isWaiting && !node.options?.length
 
-  const input = useStoryInput({
+  const input = useOrbieInput({
     next: clock.next,
     prev: clock.prev,
     pause: clock.pause,
@@ -71,8 +65,8 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
     // component is behind a dynamic import, so "we decided to mount" and "we
     // are on screen" are different moments, and a timer drops the cover into
     // the gap on a slow connection.
-    document.getElementById('story-cover')?.remove()
-    document.documentElement.classList.remove('story-covered')
+    document.getElementById('orbie-cover')?.remove()
+    document.documentElement.classList.remove('orbie-covered')
   }, [])
 
   useEffect(() => {
@@ -126,13 +120,13 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
       <div className="grid-faint pointer-events-none absolute inset-0 opacity-60" aria-hidden />
 
       {/* Chapter position, not tour position — a graph has no linear place. */}
-      <StoryProgress
+      <OrbieProgress
         count={nav.chapterLength}
         activeIndex={nav.chapterIndex}
         progress={clock.progress}
       />
 
-      <StoryControls
+      <OrbieControls
         isPaused={clock.isPaused}
         isComplete={false}
         onTogglePlay={clock.isPaused ? clock.play : clock.pause}
@@ -239,7 +233,7 @@ export function OrbiePlayer({ onExit }: OrbiePlayerProps) {
         </motion.div>
       </AnimatePresence>
 
-      <StoryCaptions scene={scene} elapsedMs={clock.elapsedMs} />
+      <OrbieCaptions scene={scene} elapsedMs={clock.elapsedMs} />
 
       {/* Docked wherever the view owns the stage, so Orbie stays present as
           the narrator without competing with the content it is describing. */}

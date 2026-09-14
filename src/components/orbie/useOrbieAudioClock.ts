@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useMotionValue } from 'framer-motion'
-import type { ClockNode, StoryClock } from './useStoryClock'
+import type { ClockNode, OrbieClock } from './useOrbieClock'
 
-/** A node that may carry a narration file. */
-interface AudioNode extends ClockNode {
+/** A node that may carry a narration file. Deliberately not named
+ *  `AudioNode` — that is a Web Audio DOM global, and the collision resolved
+ *  silently to the wrong type rather than erroring on the name. */
+interface NarratedNode extends ClockNode {
   audio?: string
 }
 
@@ -20,7 +22,7 @@ interface AudioClockOptions {
  * The same clock, driven by narration audio instead of a timeline.
  *
  * This is the swap `useStoryClock` was built to accept. It returns an
- * identical `StoryClock`, so no scene, caption, progress bar or navigator
+ * identical `OrbieClock`, so no scene, caption, progress bar or navigator
  * changes — `OrbiePlayer` swaps one hook call and everything downstream is
  * unaware.
  *
@@ -41,10 +43,10 @@ interface AudioClockOptions {
  * default — and the captions still have to advance. Muting sets the element's
  * `muted`, it does not bypass the clock.
  */
-export function useAudioClock(
-  nodes: AudioNode[],
+export function useOrbieAudioClock(
+  nodes: NarratedNode[],
   options: AudioClockOptions = {}
-): StoryClock {
+): OrbieClock {
   const { onComplete, onNodeEnd, muted = true } = options
 
   const [sceneIndex, setSceneIndex] = useState(0)

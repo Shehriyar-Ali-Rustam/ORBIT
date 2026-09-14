@@ -26,7 +26,7 @@ interface StoryInputHandlers {
  * timer fires, and `pointerup` checks it before advancing. A hold therefore
  * consumes its own release.
  */
-export function useStoryInput({
+export function useOrbieInput({
   next,
   prev,
   pause,
