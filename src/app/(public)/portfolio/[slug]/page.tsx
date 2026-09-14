@@ -6,7 +6,7 @@ import { ArrowLeft, ExternalLink } from 'lucide-react'
 import { projects } from '@/data/portfolio'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
-import { HomeCTA } from '@/components/sections/home/HomeCTA'
+import { CTASection } from '@/components/sections/CTASection'
 
 interface Props {
   params: { slug: string }
@@ -219,7 +219,7 @@ export default function ProjectDetailPage({ params }: Props) {
         </div>
       </section>
 
-      <HomeCTA />
+      <CTASection />
     </>
   )
 }

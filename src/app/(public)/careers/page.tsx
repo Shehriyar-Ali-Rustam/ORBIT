@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { ArrowUpRight, Check } from 'lucide-react'
-import { HomeCTA } from '@/components/sections/home/HomeCTA'
+import { CTASection } from '@/components/sections/CTASection'
 import { COMPANY } from '@/lib/constants'
 
 const SITE_URL = 'https://orbitpk.com'
@@ -259,7 +259,7 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <HomeCTA />
+      <CTASection />
     </>
   )
 }

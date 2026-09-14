@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
-export function HomeCTA() {
+export function CTASection() {
   return (
     <section className="relative overflow-hidden bg-white dark:bg-[#04040e]">
       {/* ── Ambient glow behind the glowing element ── */}

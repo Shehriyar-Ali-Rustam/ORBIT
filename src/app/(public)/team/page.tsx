@@ -4,7 +4,7 @@ import { Linkedin } from 'lucide-react'
 import { founders, teamMembers } from '@/data/founders'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { HomeCTA } from '@/components/sections/home/HomeCTA'
+import { CTASection } from '@/components/sections/CTASection'
 import type { TeamMember } from '@/types'
 
 const SITE_URL = 'https://orbitpk.com'
@@ -118,7 +118,7 @@ export default function TeamPage() {
         </div>
       </section>
 
-      <HomeCTA />
+      <CTASection />
     </>
   )
 }

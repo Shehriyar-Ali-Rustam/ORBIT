@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { ContactHero } from '@/components/sections/contact/ContactHero'
 import { ContactForm } from '@/components/forms/ContactForm'
 import { ContactInfo } from '@/components/sections/contact/ContactInfo'
+import { LeaveAReview } from '@/components/sections/contact/LeaveAReview'
 
 export const metadata: Metadata = {
   title: 'Contact Orbit Innovations - Hire Us for AI, Web & Mobile Projects',
@@ -33,6 +34,7 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      <LeaveAReview />
     </>
   )
 }

@@ -5,7 +5,7 @@ import { MissionVision } from '@/components/sections/about/MissionVision'
 import { Values } from '@/components/sections/about/Values'
 import { PeopleBehindOrbit } from '@/components/sections/about/PeopleBehindOrbit'
 import { Team } from '@/components/sections/about/Team'
-import { HomeCTA } from '@/components/sections/home/HomeCTA'
+import { CTASection } from '@/components/sections/CTASection'
 
 export const metadata: Metadata = {
   title: 'About Orbit Innovations - The Software Team Behind Our AI & Web Products',
@@ -32,7 +32,7 @@ export default function AboutPage() {
       <Values />
       <PeopleBehindOrbit />
       <Team />
-      <HomeCTA />
+      <CTASection />
     </>
   )
 }

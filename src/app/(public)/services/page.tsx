@@ -3,7 +3,7 @@ import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { ServiceBlock } from '@/components/sections/services/ServiceBlock'
 import { Process } from '@/components/sections/services/Process'
 import { FAQ } from '@/components/sections/services/FAQ'
-import { HomeCTA } from '@/components/sections/home/HomeCTA'
+import { CTASection } from '@/components/sections/CTASection'
 import { services } from '@/data/services'
 import { faqs } from '@/data/faqs'
 
@@ -84,7 +84,7 @@ export default function ServicesPage() {
       <ServiceBlock />
       <Process />
       <FAQ />
-      <HomeCTA />
+      <CTASection />
     </>
   )
 }

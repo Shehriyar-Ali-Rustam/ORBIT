@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { ArrowLeft, Clock, ArrowUpRight } from 'lucide-react'
 import { getPost, getSortedPosts } from '@/data/blog'
 import { CATEGORY_LABELS } from '@/types/blog'
-import { HomeCTA } from '@/components/sections/home/HomeCTA'
+import { CTASection } from '@/components/sections/CTASection'
 
 const SITE_URL = 'https://orbitpk.com'
 
@@ -239,7 +239,7 @@ export default function BlogPostPage({ params }: Props) {
         </div>
       </article>
 
-      <HomeCTA />
+      <CTASection />
     </>
   )
 }
