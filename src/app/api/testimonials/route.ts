@@ -72,9 +72,37 @@ export async function POST(req: NextRequest) {
     console.error('[testimonial submission] supabase error:', err)
   }
 
-  console.log('[testimonial submission]', { id: testimonialId, name, email, role, projectType, rating, commentLength: comment.length })
+  const canEmail = Boolean(process.env.EMAIL_USER && process.env.EMAIL_PASS)
 
-  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  // Routine logging carries no personal data. The name, email and comment are
+  // already in Supabase and already in the notification email; repeating them
+  // here only copied them into the hosting provider's log retention, where
+  // nobody reads them and nobody can delete one on request.
+  //
+  // This mattered more than it looks: the form that posts here used to live on
+  // /home, which nothing linked to and the sitemap did not list. It is on
+  // /contact now, so this path went from "reachable if you guess the URL" to
+  // every visitor.
+  console.log('[testimonial submission]', {
+    id: testimonialId,
+    projectType,
+    rating,
+    commentLength: comment.length,
+  })
+
+  // The one case where the log is the only copy: the insert failed and there is
+  // no mailer configured, so nothing else recorded the submission. Losing a
+  // real person's review is worse than the log entry, so it goes in - marked,
+  // so it is clear this is a fallback and not routine.
+  if (!testimonialId && !canEmail) {
+    console.error(
+      '[testimonial submission] NOT PERSISTED - no database row and no mailer. ' +
+        'This log is the only copy:',
+      { name, email, role, projectType, rating, comment }
+    )
+  }
+
+  if (canEmail) {
     try {
       const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://orbitpk.com'
       let approveUrl: string | undefined
