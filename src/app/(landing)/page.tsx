@@ -12,6 +12,13 @@ import LandingFooter from '@/components/landing/LandingFooter'
 import StickyActionBar from '@/components/landing/StickyActionBar'
 import { StoryCover } from '@/components/story/StoryCover'
 import { StoryEntry } from '@/components/story/StoryEntry'
+// Side-effect import, on purpose. This is a server component, so evaluating
+// the graph here runs its integrity checks during prerender — unreachable
+// nodes, hold nodes with no way out, auto nodes with no `next`, digits in
+// narration. Without it those warnings only ever reach a browser console
+// somebody has to remember to open, which is not where a build-time mistake
+// should be found. Types only, so nothing is added to the client bundle.
+import '@/data/orbie-graph'
 import { OrbieEntry } from '@/components/orbie/OrbieEntry'
 import { OrbieDevTools } from '@/components/orbie/OrbieDevTools'
 
