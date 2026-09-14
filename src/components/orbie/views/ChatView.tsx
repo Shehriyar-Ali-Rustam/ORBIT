@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, X } from 'lucide-react'
 import { track } from '@vercel/analytics'
 import { CARD } from '@/data/landing'
+import { CHAT_SCRIPT, EDGE_LINES } from '@/data/orbie-edge'
 import { EASE } from '@/components/motion/motion-config'
 
 
@@ -58,15 +59,13 @@ export function ChatView({ onClose }: { onClose(): void }) {
       })
 
       if (!res.ok) {
-        // 503 is the flag or a missing limiter; 429 is the per-IP cap. Both are
-        // worth naming, because "something went wrong" invites a retry into
-        // the same wall.
-        const data = await res.json().catch(() => ({}))
-        setFailed(
-          res.status === 429
-            ? 'That is a lot of questions in a short window. Give it a moment, or message us directly.'
-            : (data.error ?? 'I cannot reach my brain right now.')
-        )
+        // Named per status, because "something went wrong" invites a retry
+        // into the same wall. The body is deliberately not read: the route
+        // answers in the API's voice, and those sentences used to come out of
+        // Orbie's mouth verbatim.
+        if (res.status === 429) setFailed(EDGE_LINES.rateLimited)
+        else if (res.status === 503) setFailed(EDGE_LINES.unavailable)
+        else setFailed(EDGE_LINES.failed)
         setBusy(false)
         return
       }
@@ -91,7 +90,11 @@ export function ChatView({ onClose }: { onClose(): void }) {
         })
       }
     } catch {
-      setFailed('I cannot reach my brain right now.')
+      // `fetch` rejects the same way for a dead network and a dead server, so
+      // ask the browser which one it was. Only `false` is meaningful here:
+      // `navigator.onLine` true means "has a link", not "has the internet".
+      const offline = typeof navigator !== 'undefined' && navigator.onLine === false
+      setFailed(offline ? EDGE_LINES.offline : EDGE_LINES.failed)
     } finally {
       setBusy(false)
     }
@@ -119,7 +122,7 @@ export function ChatView({ onClose }: { onClose(): void }) {
       <div className="flex max-h-[38vh] flex-col gap-3 overflow-y-auto">
         {turns.length === 0 && !failed && (
           <p className="text-sm leading-relaxed text-orbit-ink/55">
-            Ask about what we build, how a project runs, or what something costs.
+            {CHAT_SCRIPT.intro}
           </p>
         )}
 
@@ -173,7 +176,7 @@ export function ChatView({ onClose }: { onClose(): void }) {
           ref={inputRef}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Ask me anything"
+          placeholder={CHAT_SCRIPT.placeholder}
           disabled={busy}
           className="w-full bg-transparent font-grotesk text-base text-orbit-ink outline-none placeholder:text-orbit-ink/35 disabled:opacity-50"
         />
