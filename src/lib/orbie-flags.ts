@@ -33,7 +33,7 @@ export const ORBIE_CHAT_ENABLED = false
  * Do not flip this for a GLB that misses the size budget. The 2D character is
  * the shipped product, not a placeholder waiting to be replaced.
  */
-export const ORBIE_3D_ENABLED = false
+export const ORBIE_3D_ENABLED = true
 
 /** Query param that force-opens Orbie regardless of `ORBIE_ENABLED`. */
 export const ORBIE_QUERY_PARAM = 'orbie'

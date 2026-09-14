@@ -28,6 +28,7 @@
     "@anthropic-ai/sdk": "^0.105.0",
     "@clerk/nextjs": "^6.39.0",
     "@hookform/resolvers": "^5.2.2",
+    "@react-three/fiber": "^8.18.0",
     "@supabase/supabase-js": "^2.98.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.36.2",
@@ -49,6 +50,7 @@
     "stripe": "^20.3.1",
     "svix": "^1.96.1",
     "tailwind-merge": "^3.5.0",
+    "three": "^0.169.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -56,6 +58,7 @@
     "@types/nodemailer": "^7.0.11",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.169.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.35",
     "husky": "^9.1.7",
