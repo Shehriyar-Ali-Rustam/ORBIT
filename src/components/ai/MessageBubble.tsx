@@ -4,14 +4,11 @@ import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Copy, Check, RotateCcw } from 'lucide-react'
-import { ModelBadge } from './ModelBadge'
 import { CodeBlock } from './CodeBlock'
-import type { AIProvider } from '@/lib/ai/router'
 
 interface MessageBubbleProps {
   role: 'user' | 'assistant'
   content: string
-  provider?: AIProvider
   isLast?: boolean
   onRegenerate?: () => void
 }
@@ -19,7 +16,6 @@ interface MessageBubbleProps {
 export function MessageBubble({
   role,
   content,
-  provider,
   isLast,
   onRegenerate,
 }: MessageBubbleProps) {
@@ -39,7 +35,6 @@ export function MessageBubble({
         {!isUser && (
           <div className="mb-1.5 flex items-center gap-2">
             <span className="text-xs text-text-secondary">Orbit AI</span>
-            {provider && <ModelBadge provider={provider} />}
           </div>
         )}
 

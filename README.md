@@ -137,11 +137,12 @@ ORBIT/
 
 ## AI System
 
-ORBIT's AI uses a multi-provider architecture with automatic fallback:
+ORBIT's AI runs on a single provider: **Anthropic** (claude-sonnet-4-6).
 
-1. **Groq** (Llama 3.3 70B) — Primary, fast and free
-2. **Google Gemini** (gemini-2.0-flash) — Backup
-3. **OpenAI** (gpt-4o-mini) — Fallback
+There were four, chained as automatic fallbacks. The chain was removed: the
+prompts are written and tuned for one model, and silently answering in a
+different voice because the first vendor returned a 429 is a worse failure
+than saying so.
 
 Features:
 - RAG with synonym expansion and intent detection

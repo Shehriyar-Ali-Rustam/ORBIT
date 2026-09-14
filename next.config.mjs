@@ -24,10 +24,10 @@ const nextConfig = {
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.google.com https://www.gstatic.com https://*.clerk.accounts.dev https://clerk.orbitpk.com https://challenges.cloudflare.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
+              "style-src 'self' 'unsafe-inline'",
+              "font-src 'self'",
               "img-src 'self' data: https:",
-              "connect-src 'self' https://api.resend.com https://*.googleapis.com https://*.supabase.co wss://*.supabase.co https://*.clerk.accounts.dev https://clerk.orbitpk.com https://api.clerk.com https://clerk-telemetry.com",
+              "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.clerk.accounts.dev https://clerk.orbitpk.com https://api.clerk.com https://clerk-telemetry.com",
               "frame-src https://www.google.com https://*.clerk.accounts.dev https://clerk.orbitpk.com https://accounts.orbitpk.com https://challenges.cloudflare.com",
               "worker-src 'self' blob:",
             ].join('; '),
@@ -37,11 +37,14 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: ['avatars.githubusercontent.com', 'images.unsplash.com', 'lh3.googleusercontent.com', 'firebasestorage.googleapis.com', 'img.clerk.com', 'img.freepik.com'],
     remotePatterns: [
+      // Uploaded gig images and seller photos.
       { protocol: 'https', hostname: '*.supabase.co', pathname: '/storage/v1/object/public/**' },
-      { protocol: 'https', hostname: 'img.freepik.com' },
+      // Clerk avatars — `user.imageUrl`, rendered in the navbar.
+      { protocol: 'https', hostname: 'img.clerk.com' },
+      // Category art on /freelancers.
       { protocol: 'https', hostname: 'images.unsplash.com' },
+      // The /ai image tool's output.
       { protocol: 'https', hostname: 'image.pollinations.ai' },
     ],
     formats: ['image/avif', 'image/webp'],

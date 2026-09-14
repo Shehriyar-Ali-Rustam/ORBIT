@@ -14,8 +14,6 @@ export default function robots(): MetadataRoute.Robots {
           '/freelancers/onboarding',
           '/freelancers/sign-in',
           '/freelancers/sign-up',
-          '/login',
-          '/register',
         ],
       },
     ],

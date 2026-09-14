@@ -1,7 +1,12 @@
 import Anthropic from '@anthropic-ai/sdk'
-import type { ChatMessage } from './router'
+import { ANTHROPIC_MODEL } from './model'
 
-const MODEL = 'claude-sonnet-4-6'
+/** The shape both AI routes speak. Lived in `router.ts` until the router
+ *  turned out to be routing to one place. */
+export interface ChatMessage {
+  role: 'system' | 'user' | 'assistant'
+  content: string
+}
 
 let _anthropic: Anthropic | null = null
 
@@ -17,11 +22,10 @@ export function isAnthropicConfigured(): boolean {
   return Boolean(process.env.ANTHROPIC_API_KEY)
 }
 
-export const ANTHROPIC_MODEL = MODEL
-
 export async function streamAnthropic(
   messages: ChatMessage[],
-  maxTokens = 2048
+  maxTokens = 2048,
+  temperature?: number
 ): Promise<ReadableStream> {
   const client = getAnthropic()
 
@@ -58,8 +62,12 @@ export async function streamAnthropic(
   // tokenization, and the margin here is thin enough that the distinction
   // matters.
   const stream = client.messages.stream({
-    model: MODEL,
+    model: ANTHROPIC_MODEL,
     max_tokens: maxTokens,
+    // Both callers have always passed this. The router accepted it and then
+    // handed it to a function that had no parameter for it, so the code tool
+    // has been running at the default 1.0 rather than the 0.3 it asks for.
+    ...(temperature !== undefined && { temperature }),
     ...(systemText && { system: systemText }),
     messages: conversation,
   })

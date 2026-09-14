@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
-import { routeToAI, type ChatMessage } from '@/lib/ai/router'
+import { streamAnthropic, isAnthropicConfigured, type ChatMessage } from '@/lib/ai/anthropic'
 import { buildSystemPrompt, type PromptTool } from '@/lib/ai/prompts'
 import { searchKnowledge } from '@/lib/ai/rag'
 import {
@@ -116,12 +116,18 @@ export async function POST(req: NextRequest) {
       })),
     ]
 
-    // Route to AI provider with fallback
-    const { stream } = await routeToAI({
-      messages: fullMessages,
-      maxTokens: isOrbie ? ORBIE_MAX_TOKENS : tool === 'code' ? 4096 : 2048,
-      temperature: tool === 'code' ? 0.3 : 0.7,
-    })
+    if (!isAnthropicConfigured()) {
+      return Response.json(
+        { error: 'Orbit AI is not configured right now.' },
+        { status: 503 }
+      )
+    }
+
+    const stream = await streamAnthropic(
+      fullMessages,
+      isOrbie ? ORBIE_MAX_TOKENS : tool === 'code' ? 4096 : 2048,
+      tool === 'code' ? 0.3 : 0.7
+    )
 
     return new Response(stream, {
       headers: {
