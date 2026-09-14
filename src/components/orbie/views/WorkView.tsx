@@ -2,12 +2,10 @@
 
 import Image from 'next/image'
 import { motion, useReducedMotion } from 'framer-motion'
-import { projects } from '@/data/portfolio'
+import { WORK_PICKS } from '@/data/portfolio'
 import { EASE } from '@/components/motion/motion-config'
 
 
-/** Real shipped work with local cover images, not stock. */
-const PICKS = projects.filter((p) => p.featured).slice(0, 4)
 
 /**
  * The work, dealt out like a hand of cards.
@@ -28,8 +26,8 @@ export function WorkView() {
   return (
     <div className="flex w-full max-w-3xl flex-col items-center gap-8">
       <div className="flex items-start justify-center">
-        {PICKS.map((project, i) => {
-          const offset = i - (PICKS.length - 1) / 2
+        {WORK_PICKS.map((project, i) => {
+          const offset = i - (WORK_PICKS.length - 1) / 2
           const rotate = offset * 7
           const y = Math.abs(offset) * 14
 
@@ -44,7 +42,7 @@ export function WorkView() {
               animate={{ opacity: 1, x: 0, y, rotate, scale: 1 }}
               transition={{ duration: 0.85, ease: EASE, delay: 0.15 + i * 0.13 }}
               className="relative -mx-3 w-[27%] max-w-[168px] shrink-0 md:-mx-4 md:w-[24%]"
-              style={{ zIndex: PICKS.length - Math.abs(offset) }}
+              style={{ zIndex: WORK_PICKS.length - Math.abs(offset) }}
             >
               <div className="relative aspect-[3/4] overflow-hidden border border-orbit-ink/12 bg-orbit-canvas">
                 <Image

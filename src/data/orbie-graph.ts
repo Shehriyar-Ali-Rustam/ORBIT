@@ -1,4 +1,5 @@
-import { projects } from './portfolio'
+import { founders } from './founders'
+import { projects, WORK_PICKS } from './portfolio'
 import type { Advance } from '@/components/orbie/useOrbieClock'
 import type { OrbieEmotion, OrbiePose } from '@/components/orbie/character/types'
 
@@ -36,6 +37,17 @@ function spell(n: number): string {
 /** Derived, not typed. Ship an eleventh project and Orbie says "Eleven". */
 const SHIPPED = spell(projects.length)
 const SHIPPED_TITLE = SHIPPED.charAt(0).toUpperCase() + SHIPPED.slice(1)
+
+/** How many the work node deals out, counted off the same array the view
+ *  renders. The digit rule cannot catch a typed project identity, which is how
+ *  that node came to describe two projects it was not showing. */
+const PICKED = spell(WORK_PICKS.length)
+const PICKED_TITLE = PICKED.charAt(0).toUpperCase() + PICKED.slice(1)
+
+/** The about node counts the same array its view maps. Correct while typed,
+ *  but only until someone joins. */
+const FOUNDERS = spell(founders.length)
+const FOUNDERS_TITLE = FOUNDERS.charAt(0).toUpperCase() + FOUNDERS.slice(1)
 
 export type ChapterId =
   | 'orientation'
@@ -347,19 +359,22 @@ export const ORBIE_GRAPH: Record<NodeId, StoryNode> = {
     id: 'work',
     chapter: 'work',
     view: 'work',
-    narration:
-      'A marketplace, a virtual try-on tool, a delivery platform. Every one of them live, with real users.',
+    // Counts, not identities. The cards underneath are captioned with their
+    // own titles, so naming them here only duplicated what the screen already
+    // said - and duplication is what drifted. Orbie gives the scale and the
+    // claim; the picture gives the names.
+    narration: `${PICKED_TITLE} of the ${SHIPPED} we have shipped. Every one of them live, with real users.`,
     lines: [
-      { text: 'A marketplace. A virtual try-on tool.', atMs: 0 },
-      { text: 'A delivery platform.', atMs: 2100 },
-      { text: 'Every one live, with real users.', atMs: 3600 },
+      { text: `${PICKED_TITLE} of the ${SHIPPED} we have shipped.`, atMs: 0 },
+      { text: 'Every one of them live,', atMs: 2100 },
+      { text: 'with real users.', atMs: 3600 },
     ],
     advance: { kind: 'hold', durationMs: 6000 },
     pose: 'point',
     emotion: 'star',
     repeat: {
-      narration: 'The same four. Want the full list?',
-      lines: [{ text: 'The same four. Want the full list?', atMs: 0 }],
+      narration: `The same ${PICKED}. Want the full list?`,
+      lines: [{ text: `The same ${PICKED}. Want the full list?`, atMs: 0 }],
     },
     options: [
       { id: 'all', label: 'See every project', hint: 'The full portfolio', to: 'crossroads', href: '/portfolio' },
@@ -373,10 +388,9 @@ export const ORBIE_GRAPH: Record<NodeId, StoryNode> = {
     id: 'about',
     chapter: 'about',
     view: 'about',
-    narration:
-      'Three founders, in Islamabad. The people who scope your project are the people who write it.',
+    narration: `${FOUNDERS_TITLE} founders, in Islamabad. The people who scope your project are the people who write it.`,
     lines: [
-      { text: 'Three founders, in Islamabad.', atMs: 0 },
+      { text: `${FOUNDERS_TITLE} founders, in Islamabad.`, atMs: 0 },
       { text: 'The people who scope your project', atMs: 2000 },
       { text: 'are the people who write it.', atMs: 3300 },
     ],
@@ -384,8 +398,8 @@ export const ORBIE_GRAPH: Record<NodeId, StoryNode> = {
     pose: 'idle',
     emotion: 'happy',
     repeat: {
-      narration: 'Still the same three of us.',
-      lines: [{ text: 'Still the same three of us.', atMs: 0 }],
+      narration: `Still the same ${FOUNDERS} of us.`,
+      lines: [{ text: `Still the same ${FOUNDERS} of us.`, atMs: 0 }],
     },
     options: [
       { id: 'team', label: 'Meet the team', to: 'crossroads', href: '/team' },

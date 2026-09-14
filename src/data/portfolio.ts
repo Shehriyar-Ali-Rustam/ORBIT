@@ -215,3 +215,20 @@ export const projects: Project[] = [
     completedAt: '2024-05-20',
   },
 ]
+
+/**
+ * The projects the walkthrough deals out on its work node.
+ *
+ * Exported rather than computed at the point of use, because it was computed
+ * at the point of use and the two points disagreed. `WorkView` picked the
+ * first four featured projects; the narration beside it named a virtual
+ * try-on tool and a delivery platform, which are WearBlend and Cheezy Heaven
+ * - one of them not featured at all, the other featured but cut off by the
+ * fourth slot. Two of the three things Orbie named were not on the screen it
+ * was describing, and its repeat line said "the same four" while its first
+ * line named three.
+ *
+ * Both now read this. Change the slice or feature a fifth project and the
+ * picture and the script move together.
+ */
+export const WORK_PICKS = projects.filter((p) => p.featured).slice(0, 4)
