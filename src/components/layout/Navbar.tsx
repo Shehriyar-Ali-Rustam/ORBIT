@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 import { useTheme } from '@/components/ThemeProvider'
 import { useNavbarAuth } from '@/hooks/useNavbarAuth'
+import { EASE } from '@/components/motion/motion-config'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -173,7 +174,7 @@ export function Navbar() {
                     <motion.div
                       layoutId="navbar-indicator"
                       className="absolute inset-0 rounded-full bg-accent/10"
-                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.3, ease: EASE }}
                     />
                   ) : (
                     <span className="absolute inset-0 rounded-full transition-colors duration-300 group-hover:bg-text-primary/5" />
@@ -312,7 +313,7 @@ export function Navbar() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.3, ease: EASE }}
           className="fixed inset-0 top-16 z-[65] overflow-y-auto md:hidden"
           style={{ backgroundColor: 'var(--color-bg)' }}
         >

@@ -289,14 +289,53 @@ Return ONLY the enhanced prompt text - nothing else. No explanations, no markdow
 }
 
 /**
+ * Orbie's identity, which is not `BASE_IDENTITY`.
+ *
+ * The shared one is wrong for this surface in three specific ways: it pushes
+ * visitors to `/freelancers` and `/ai`, both of which are flag-gated to a
+ * Coming Soon screen; it calls Orbit a "world-class AI-powered software
+ * solutions company", which is not the plain voice the rest of the site uses;
+ * and it is written for a chat window rather than a speech bubble.
+ *
+ * The length rule is the load-bearing one. Orbie's answers render as a caption
+ * over a scene, so a four-paragraph reply with headings has nowhere to go.
+ */
+/**
+ * Anything that can ask for a system prompt.  is the seven /ai tool
+ * pages; Orbie is a separate surface that happens to share the router, the
+ * RAG index and this builder. Keeping them as different types is what stops a
+ * change here from rippling through components/ai/*.
+ */
+export type PromptTool = AITool | 'orbie'
+
+export const ORBIE_IDENTITY = `You are Orbie, the assistant built into the Orbit Innovations website. You are speaking aloud, in a speech bubble, to someone who is being shown around.
+
+## Voice
+- Two or three sentences. Never more. This is a speech bubble, not a chat window.
+- Plain sentences. No markdown, no bullet points, no headings, no bold.
+- Warm and direct. You are a helpful colleague, not a support agent.
+- If the visitor writes in Urdu or Roman Urdu, reply in the same language.
+
+## What Orbit is
+A five-person software studio in Islamabad, Pakistan. Three founders: Shehriyar Ali Rustam, Saqib Nawaz Khan, Abdul Ahad. Work is AI chatbots, model fine-tuning and RAG, Next.js web platforms, React Native mobile apps, and brand and interface design. Clients are mostly outside Pakistan.
+
+## Rules
+- Answer only from the Orbit knowledge given to you. If it is not there, say you do not know and offer to put them in touch at info@orbitpk.com.
+- Never invent a price, a timeline, a client name, or a number. If asked for a price and you have no figure, say projects are fixed-price and quoted after a short call.
+- Never mention a freelancer marketplace or a suite of AI tools as things a visitor can use. Both are still being built.
+- Never claim to be human, and never say you are "just an AI" either. You are Orbie.
+- If the question is not about Orbit, answer it in one sentence and then offer to show them something here.
+- End with a suggested next step: seeing the work, the services, or talking to the team.`
+
+/**
  * Build the full system prompt for a given tool, injecting RAG context.
  */
 export function buildSystemPrompt(
-  tool: AITool,
+  tool: PromptTool,
   ragContext: string,
   userMemory: string
 ): string {
-  const parts = [BASE_IDENTITY]
+  const parts = [tool === 'orbie' ? ORBIE_IDENTITY : BASE_IDENTITY]
 
   if (ragContext) {
     parts.push(`\nRelevant Orbit knowledge:\n${ragContext}`)
@@ -306,7 +345,9 @@ export function buildSystemPrompt(
     parts.push(`\nUser memory:\n${userMemory}`)
   }
 
-  parts.push(`\n${TOOL_PROMPTS[tool]}`)
+  // Orbie carries everything it needs in its identity, so there is no second
+  // block to append — a tool prompt on top would only repeat it at the model.
+  if (tool !== 'orbie') parts.push(`\n${TOOL_PROMPTS[tool]}`)
 
   return parts.join('\n')
 }

@@ -6,6 +6,7 @@ import { X, Send, RotateCcw } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ChatMessage } from './ChatMessage'
 import type { Message } from '@/hooks/useChat'
+import { EASE } from '@/components/motion/motion-config'
 
 interface ChatWindowProps {
   messages: Message[]
@@ -46,7 +47,7 @@ export function ChatWindow({ messages, isLoading, onSend, onClear, onClose }: Ch
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 20, scale: 0.95 }}
-      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+      transition={{ duration: 0.2, ease: EASE }}
       className={cn(
         'fixed bottom-24 right-6 z-50 flex h-[500px] w-[380px] flex-col overflow-hidden rounded-2xl border border-border shadow-2xl',
         'bg-background',

@@ -6,8 +6,8 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { CurrencySwitcher } from '@/components/CurrencySwitcher'
 import { faqs } from '@/data/faqs'
+import { EASE } from '@/components/motion/motion-config'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function FAQ() {
   const [openId, setOpenId] = useState<string | null>(faqs[0]?.id ?? null)
@@ -20,7 +20,7 @@ export function FAQ() {
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease }}
+            transition={{ duration: 0.6, ease: EASE }}
             viewport={{ once: true }}
           >
             <SectionLabel>FAQ</SectionLabel>
@@ -37,7 +37,7 @@ export function FAQ() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease, delay: 0.1 }}
+          transition={{ duration: 0.5, ease: EASE, delay: 0.1 }}
           viewport={{ once: true }}
           className="mt-12 overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)]"
         >
@@ -76,7 +76,7 @@ export function FAQ() {
                       viewBox="0 0 12 12"
                       fill="none"
                       animate={{ rotate: isOpen ? 45 : 0 }}
-                      transition={{ duration: 0.22, ease }}
+                      transition={{ duration: 0.22, ease: EASE }}
                     >
                       <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                     </motion.svg>
@@ -91,7 +91,7 @@ export function FAQ() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.28, ease }}
+                      transition={{ duration: 0.28, ease: EASE }}
                       style={{ overflow: 'hidden' }}
                     >
                       <div className="px-6 pb-5 text-sm leading-relaxed text-text-secondary">

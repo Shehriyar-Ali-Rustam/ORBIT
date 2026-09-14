@@ -34,6 +34,13 @@ export const aiChatRatelimit = buildLimiter('orbit:ai-chat', 30, '1 h')
 export const aiImageRatelimit = buildLimiter('orbit:ai-image', 10, '1 h')
 
 /**
+ * Orbie's free-form chat. Tighter than the AI tools because it sits on `/` —
+ * the page a scraper hits first — and because twelve exchanges is already a
+ * generous real conversation with a site assistant.
+ */
+export const orbieChatRatelimit = buildLimiter('orbit:orbie', 12, '1 h')
+
+/**
  * Legacy alias.
  */
 export const freelancerRatelimit = buildLimiter('orbit:freelancer', 2, '1 h')
@@ -55,6 +62,32 @@ export function getClientIp(req: NextRequest): string {
  * limiter is null and this function no-ops - fail open, not closed, so a
  * missing side-channel doesn't take the whole site offline.
  */
+/**
+ * Same check, but refuses when the limiter is missing instead of waving it
+ * through.
+ *
+ * `enforceRateLimit` fails open, which is right for a contact form: losing
+ * spam protection is better than losing the form. It is wrong for anything
+ * that costs money per call. An unset `UPSTASH_REDIS_REST_URL` on a preview
+ * deploy would otherwise mean an LLM endpoint with no ceiling at all, and the
+ * first you would know is the bill.
+ *
+ * Use this for metered endpoints and `enforceRateLimit` for everything else.
+ */
+export async function enforceRateLimitStrict(
+  limiter: Ratelimit | null,
+  identifier: string,
+): Promise<NextResponse | null> {
+  if (!limiter) {
+    console.error('[ratelimit] Metered endpoint called with no limiter configured. Refusing.')
+    return NextResponse.json(
+      { error: 'This is unavailable right now. Email info@orbitpk.com and a human will pick it up.' },
+      { status: 503 },
+    )
+  }
+  return enforceRateLimit(limiter, identifier)
+}
+
 export async function enforceRateLimit(
   limiter: Ratelimit | null,
   identifier: string,

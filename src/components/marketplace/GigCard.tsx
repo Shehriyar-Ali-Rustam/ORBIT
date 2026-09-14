@@ -7,6 +7,7 @@ import { Star, Heart, Briefcase, Clock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CATEGORY_LABELS } from '@/lib/marketplace/constants'
 import type { Gig } from '@/types/marketplace'
+import { EASE } from '@/components/motion/motion-config'
 
 const CATEGORY_COLORS: Record<string, { color: string; bg: string }> = {
   ai:         { color: '#A78BFA', bg: 'linear-gradient(135deg, #4C1D95 0%, #6D28D9 100%)' },
@@ -37,7 +38,7 @@ export function GigCard({ gig, onSave, isSaved = false }: GigCardProps) {
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.6, ease: EASE }}
         viewport={{ once: true, margin: '-50px' }}
         className="overflow-hidden rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
       >

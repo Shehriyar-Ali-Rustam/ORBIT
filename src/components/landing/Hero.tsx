@@ -5,13 +5,13 @@ import Link from 'next/link'
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import QuickActions from './QuickActions'
-import { DS_EASE } from './MotionReveal'
+import { EASE } from '@/components/motion/motion-config'
 import { CARD } from '@/data/landing'
 
 const enter = (delay: number) => ({
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, ease: DS_EASE, delay },
+  transition: { duration: 0.7, ease: EASE, delay },
 })
 
 export default function Hero() {

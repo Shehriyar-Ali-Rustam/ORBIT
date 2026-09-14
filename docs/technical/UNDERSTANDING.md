@@ -188,9 +188,6 @@ ORBIT/
 │   │   ├── prompts.ts               # System prompts for all 7 tools
 │   │   ├── orbit-knowledge.ts       # Knowledge base (27 entries)
 │   │   ├── rag.ts                    # RAG search with synonym expansion
-│   │   ├── groq.ts                   # Groq streaming client
-│   │   ├── gemini.ts                 # Gemini streaming client
-│   │   ├── openai.ts                 # OpenAI streaming client
 │   │   ├── memory.ts                 # Session memory management
 │   │   └── image.ts                  # Pollinations image URL builder
 │   ├── supabase/
@@ -256,7 +253,7 @@ ORBIT/
 
 - **Main site** → Static data from `data/` files
 - **Marketplace** → Supabase (PostgreSQL) via `lib/marketplace/queries.ts` and `mutations.ts`
-- **AI chatbot** → Groq/Gemini/OpenAI via `lib/ai/router.ts` with RAG context from `lib/ai/orbit-knowledge.ts`
+- **AI chatbot** → Anthropic via `lib/ai/anthropic.ts` with RAG context from `lib/ai/orbit-knowledge.ts`
 - **Payments** → Stripe checkout + webhooks
 - **File uploads** → Supabase Storage (4 buckets: gig-images, profile-images, deliverables, message-attachments)
 
@@ -388,13 +385,10 @@ ReadableStream → useChat reads chunks → Updates UI
 
 | File | Purpose |
 |---|---|
-| `lib/ai/router.ts` | Multi-provider router: Groq → Gemini → OpenAI with auto-fallback |
+| `lib/ai/anthropic.ts` | The one streaming client (claude-sonnet-4-6) |
 | `lib/ai/prompts.ts` | Base identity + 7 tool-specific prompts with guardrails |
 | `lib/ai/orbit-knowledge.ts` | Knowledge base (27 entries: services, pricing, portfolio, FAQs, etc.) |
 | `lib/ai/rag.ts` | RAG search with synonym expansion, bigram matching, category boosting |
-| `lib/ai/groq.ts` | Groq streaming (Llama 3.3 70B) |
-| `lib/ai/gemini.ts` | Gemini streaming (gemini-2.0-flash) |
-| `lib/ai/openai.ts` | OpenAI streaming (gpt-4o-mini) |
 | `lib/ai/memory.ts` | Session memory (localStorage) |
 | `lib/ai/image.ts` | Pollinations.ai free image generation |
 
@@ -527,9 +521,6 @@ STRIPE_SECRET_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 
 # AI Providers
-GROQ_API_KEY=gsk_...
-GEMINI_API_KEY=AIza...
-AI_PROVIDER=groq  # preferred provider
 
 # Clerk
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...

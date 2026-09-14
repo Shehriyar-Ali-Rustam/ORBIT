@@ -1,6 +1,6 @@
 import ParallaxImage from './ParallaxImage'
 import Link from 'next/link'
-import MotionReveal from './MotionReveal'
+import { Reveal } from '@/components/motion/Reveal'
 import { projects } from '@/data/portfolio'
 
 /**
@@ -17,18 +17,18 @@ export default function SelectedWork() {
   return (
     <section id="work" className="border-t border-orbit-line/[0.07]">
       <div className="mx-auto max-w-[1280px] px-5 py-24 sm:px-6 md:px-10 md:py-28">
-        <MotionReveal>
+        <Reveal>
           <p className="eyebrow accent-rule">Selected work</p>
-        </MotionReveal>
+        </Reveal>
 
         <div className="mt-5 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <MotionReveal from="left">
+          <Reveal from="left">
             <h2 className="h-section max-w-xl font-semibold text-orbit-ink">
               Ten projects out the door.{' '}
               <span className="text-orbit-accInk">Four of them here.</span>
             </h2>
-          </MotionReveal>
-          <MotionReveal from="right" delay={0.1}>
+          </Reveal>
+          <Reveal from="right" delay={0.1}>
             <Link
               href="/portfolio"
               className="group inline-flex items-center gap-2 font-spacemono text-[10px] font-bold uppercase tracking-[0.24em] text-orbit-ink/70 transition-colors hover:text-orbit-accInk"
@@ -38,13 +38,13 @@ export default function SelectedWork() {
                 →
               </span>
             </Link>
-          </MotionReveal>
+          </Reveal>
         </div>
 
         <ul className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {selected.map((project, i) => (
             <li key={project.slug}>
-              <MotionReveal delay={Math.min(i * 0.06, 0.3)} className="h-full">
+              <Reveal delay={Math.min(i * 0.06, 0.3)} className="h-full">
                 <Link
                   href={`/portfolio/${project.slug}`}
                   className="card group block h-full overflow-hidden"
@@ -96,7 +96,7 @@ export default function SelectedWork() {
                     </span>
                   </div>
                 </Link>
-              </MotionReveal>
+              </Reveal>
             </li>
           ))}
         </ul>

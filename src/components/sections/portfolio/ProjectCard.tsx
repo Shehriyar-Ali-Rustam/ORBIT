@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Badge } from '@/components/ui/Badge'
 import { Project } from '@/types'
+import { EASE } from '@/components/motion/motion-config'
 
 interface ProjectCardProps {
   project: Project
@@ -18,7 +19,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.4, ease: EASE }}
         className="card-hover overflow-hidden rounded-2xl border border-border bg-surface"
       >
         <div className="relative aspect-video overflow-hidden bg-surface-2">

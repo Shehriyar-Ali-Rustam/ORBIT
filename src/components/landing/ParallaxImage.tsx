@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useRef } from 'react'
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion'
-import { DS_EASE } from './MotionReveal'
+import { EASE } from '@/components/motion/motion-config'
 
 type Props = {
   src: string
@@ -75,7 +75,7 @@ export default function ParallaxImage({
           initial={{ scaleY: 1 }}
           whileInView={{ scaleY: 0 }}
           viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.8, ease: DS_EASE }}
+          transition={{ duration: 0.8, ease: EASE }}
         />
       )}
 

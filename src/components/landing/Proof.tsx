@@ -1,5 +1,5 @@
 import { Star } from 'lucide-react'
-import MotionReveal from './MotionReveal'
+import { Reveal } from '@/components/motion/Reveal'
 import { testimonials } from '@/data/testimonials'
 
 /** Short enough to read at marquee speed without stopping. */
@@ -25,7 +25,7 @@ export default function Proof() {
   return (
     <section className="overflow-hidden border-t border-orbit-line/[0.07]">
       <div className="mx-auto max-w-[1280px] px-5 pt-16 sm:px-6 md:px-10 md:pt-20">
-        <MotionReveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <Reveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="eyebrow accent-rule">What clients said</p>
             <h2 className="h-section mt-5 max-w-lg font-semibold text-orbit-ink">
@@ -35,7 +35,7 @@ export default function Proof() {
           <p className="max-w-xs text-sm leading-relaxed text-orbit-ink/62">
             Verified Fiverr feedback, from clients in eight countries.
           </p>
-        </MotionReveal>
+        </Reveal>
       </div>
 
       <div className="relative mt-10 pb-16 md:pb-20">

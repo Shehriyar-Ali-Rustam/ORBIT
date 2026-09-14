@@ -11,7 +11,6 @@ import { ModelBadge } from './ModelBadge'
 import { AISidebar } from './AISidebar'
 import type { AttachmentFile } from './AttachmentPreview'
 import { TOOL_CONFIG, type AITool } from '@/lib/ai/prompts'
-import type { AIProvider } from '@/lib/ai/router'
 import { useAIConversations, type AIMessage } from '@/hooks/useAIConversations'
 import {
   Bot, Code2, PenTool, Languages, FileText, Briefcase, ImageIcon,
@@ -31,7 +30,6 @@ interface Message {
   id: string
   role: 'user' | 'assistant'
   content: string
-  provider?: AIProvider
   imageData?: {
     imageUrl: string
     enhancedPrompt: string
@@ -50,7 +48,6 @@ export function ChatInterface({ tool }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [currentProvider, setCurrentProvider] = useState<AIProvider>('groq')
   const [attachments, setAttachments] = useState<AttachmentFile[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const abortControllerRef = useRef<AbortController | null>(null)
@@ -227,15 +224,12 @@ export function ChatInterface({ tool }: ChatInterfaceProps) {
     }
 
     const data = await res.json()
-    setCurrentProvider(data.provider || 'groq')
-
     setMessages((prev) => [
       ...prev,
       {
         id: `image-${Date.now()}`,
         role: 'assistant',
         content: `Generated image for: "${prompt}"`,
-        provider: data.provider,
         imageData: {
           imageUrl: data.imageUrl,
           enhancedPrompt: data.enhancedPrompt,
@@ -288,7 +282,6 @@ export function ChatInterface({ tool }: ChatInterfaceProps) {
           id: `image-${Date.now()}`,
           role: 'assistant',
           content: `Regenerated image for: "${originalPrompt}"`,
-          provider: data.provider,
           imageData: {
             imageUrl: data.imageUrl,
             enhancedPrompt: data.enhancedPrompt,
@@ -329,7 +322,6 @@ export function ChatInterface({ tool }: ChatInterfaceProps) {
         id: m.id,
         role: m.role as 'user' | 'assistant',
         content: m.content,
-        provider: m.provider as AIProvider | undefined,
         imageData: m.imageData,
       })))
     }
@@ -370,7 +362,7 @@ export function ChatInterface({ tool }: ChatInterfaceProps) {
           <span className="text-sm font-semibold text-text-primary">{config.name}</span>
         </div>
         <div className="flex items-center gap-3">
-          <ModelBadge provider={currentProvider} />
+          <ModelBadge />
           {messages.length > 0 && (
             <button
               onClick={clearChat}
@@ -404,7 +396,6 @@ export function ChatInterface({ tool }: ChatInterfaceProps) {
                         <MessageBubble
                           role="assistant"
                           content={msg.content}
-                          provider={msg.provider}
                         />
                       </div>
                     )}
@@ -426,7 +417,6 @@ export function ChatInterface({ tool }: ChatInterfaceProps) {
                   key={msg.id}
                   role={msg.role}
                   content={msg.content}
-                  provider={msg.provider}
                   isLast={
                     idx === messages.length - 1 && msg.role === 'assistant'
                   }

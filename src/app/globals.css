@@ -16,25 +16,19 @@
     --color-text-tertiary: #7a7a7a;
     --color-text-disabled: #bcbcbc;
     --color-accent: #FF751F;
-    --color-accent-rgb: 255, 117, 31;
     --color-accent-dim: rgba(255, 117, 31, 0.06);
-    --color-primary: #FF751F;
     --color-primary-dim: rgba(255, 117, 31, 0.06);
-    --color-dot-grid: rgba(0, 0, 0, 0.03);
     --color-glass-bg: rgba(255, 255, 255, 0.75);
     --color-glass-border: rgba(0, 0, 0, 0.06);
     --color-selection-bg: rgba(255, 117, 31, 0.15);
     --color-selection-fg: #c45a10;
     --color-scrollbar-track: #f8f9fa;
     --color-scrollbar-thumb: rgba(255, 117, 31, 0.3);
-    --color-input-bg: #f1f3f5;
     --color-card-bg: rgba(255, 255, 255, 0.7);
     --color-card-border: rgba(0, 0, 0, 0.06);
-    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
     /* Accent hairline ring plus a neutral shadow tinted to the warm canvas.
        The old third layer was an orange bloom, which is the glow tell. */
     --shadow-card-hover: 0 0 0 1px rgba(255, 117, 31, 0.22), 0 6px 20px rgba(24, 18, 12, 0.07);
-    --shadow-glossy: 0 1px 2px rgba(255, 255, 255, 0.6) inset, 0 4px 16px rgba(0, 0, 0, 0.06);
   }
 
   /* ─── DARK THEME ─────────────────────────── */
@@ -49,18 +43,14 @@
     --color-text-tertiary: #606060;
     --color-text-disabled: #2a2a2a;
     --color-accent: #FF751F;
-    --color-accent-rgb: 255, 117, 31;
     --color-accent-dim: rgba(255, 117, 31, 0.06);
-    --color-primary: #FF751F;
     --color-primary-dim: rgba(255, 117, 31, 0.06);
-    --color-dot-grid: #ffffff05;
     --color-glass-bg: rgba(10, 10, 10, 0.8);
     --color-glass-border: rgba(255, 255, 255, 0.06);
     --color-selection-bg: rgba(255, 117, 31, 0.2);
     --color-selection-fg: #FF751F;
     --color-scrollbar-track: #0a0a0a;
     --color-scrollbar-thumb: rgba(255, 117, 31, 0.3);
-    --color-input-bg: #161616;
     --color-card-bg: rgba(255, 255, 255, 0.03);
     --color-card-border: rgba(255, 255, 255, 0.06);
     --shadow-card-hover: 0 0 0 1px rgba(255, 117, 31, 0.22), 0 6px 20px rgba(0, 0, 0, 0.4);
@@ -145,30 +135,12 @@
 }
 
 @layer utilities {
-  .dot-grid {
-    background-image: radial-gradient(circle, var(--color-dot-grid) 1px, transparent 1px);
-    background-size: 32px 32px;
-  }
 
   .text-gradient {
     background: linear-gradient(135deg, #FF751F, #FFAD70);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-
-  .text-gradient-warm {
-    background: linear-gradient(135deg, #FF751F, #FF4D00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .border-gradient {
-    border: 1px solid transparent;
-    background:
-      linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
-      linear-gradient(135deg, #FF751F, #FF9A56) border-box;
   }
 
   .glass {
@@ -180,10 +152,6 @@
 
   .accent-glow {
     box-shadow: 0 0 30px rgba(255, 117, 31, 0.25);
-  }
-
-  .primary-glow {
-    box-shadow: 0 0 40px rgba(255, 117, 31, 0.3);
   }
 
   .card-hover {
@@ -208,80 +176,6 @@
     }
   }
 
-  /* Animated gradient border for cards */
-  .gradient-border-animated {
-    position: relative;
-    border-color: transparent;
-  }
-
-  .gradient-border-animated::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(
-      var(--gradient-angle, 135deg),
-      #FF751F,
-      #FF9A56,
-      #FF751F
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-
-  .gradient-border-animated:hover::before {
-    opacity: 1;
-    animation: gradient-rotate 3s linear infinite;
-  }
-
-  /* Glass card */
-  .glass-card {
-    background: var(--color-card-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--color-card-border);
-  }
-
-  /* Gradient sweep on hover */
-  .gradient-sweep::after {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    background: linear-gradient(135deg, rgba(255, 117, 31, 0) 0%, rgba(255, 117, 31, 0.06) 50%, rgba(255, 117, 31, 0) 100%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    border-radius: inherit;
-    pointer-events: none;
-  }
-
-  .gradient-sweep:hover::after {
-    opacity: 1;
-  }
-
-  /* Lamp glow */
-  .lamp-glow {
-    background: radial-gradient(circle at center, rgba(255, 117, 31, 0.15) 0%, rgba(255, 117, 31, 0) 70%);
-  }
-
-  /* Glossy light-mode card */
-  .glossy-card {
-    background: var(--color-card-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--color-card-border);
-    box-shadow: var(--shadow-glossy, none);
-  }
-
-  .glossy-card:hover {
-    box-shadow: var(--shadow-card-hover);
-    border-color: rgba(255, 117, 31, 0.2);
-  }
-
   /* Button ripple */
   .ripple {
     position: absolute;
@@ -293,47 +187,10 @@
   }
 }
 
-@property --gradient-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes gradient-rotate {
-  to {
-    --gradient-angle: 360deg;
-  }
-}
-
-@keyframes ripple-effect {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-@keyframes marquee-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes marquee-right {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
 /* While the pre-paint story cover is up, the page behind it must not
    scroll. Set by the inline script in StoryCover, cleared by StoryEntry. */
-html.story-covered,
-html.story-covered body {
+html.orbie-covered,
+html.orbie-covered body {
   overflow: hidden;
 }
 

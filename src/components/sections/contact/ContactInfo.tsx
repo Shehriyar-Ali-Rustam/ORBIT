@@ -4,15 +4,15 @@ import { motion } from 'framer-motion'
 import { Mail, MapPin, Phone, Github, Linkedin } from 'lucide-react'
 import { COMPANY, SOCIAL_LINKS } from '@/lib/constants'
 import { GlowDot } from '@/components/ui/GlowDot'
+import { EASE } from '@/components/motion/motion-config'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export function ContactInfo() {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease }}
+      transition={{ duration: 0.6, ease: EASE }}
       viewport={{ once: true }}
       className="space-y-8"
     >

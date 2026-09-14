@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Sparkles, Zap, MessageSquare, Globe } from 'lucide-react'
 import type { AITool } from '@/lib/ai/prompts'
+import { EASE } from '@/components/motion/motion-config'
 
 const TOOL_SUBTITLES: Record<AITool, string> = {
   chat:      'Type a command or ask a question',
@@ -47,7 +48,7 @@ export function WelcomeScreen({ tool, suggestions, onSuggestionClick }: WelcomeS
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, ease: EASE }}
           className="text-4xl font-light tracking-tight text-text-primary sm:text-5xl"
         >
           How can{' '}
@@ -60,7 +61,7 @@ export function WelcomeScreen({ tool, suggestions, onSuggestionClick }: WelcomeS
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
           className="mt-3 text-sm text-text-tertiary"
         >
           {TOOL_SUBTITLES[tool]}
@@ -70,7 +71,7 @@ export function WelcomeScreen({ tool, suggestions, onSuggestionClick }: WelcomeS
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.6, delay: 0.22, ease: EASE }}
           className="mt-10 flex flex-wrap justify-center gap-2"
         >
           {suggestions.slice(0, 4).map((s, i) => {

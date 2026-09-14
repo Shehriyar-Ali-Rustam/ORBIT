@@ -12,6 +12,7 @@ import { useState } from 'react'
 import { useClerk } from '@clerk/nextjs'
 import { useTheme } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'
+import { EASE } from '@/components/motion/motion-config'
 
 const sellerLinks = [
   { label: 'Overview', href: '/freelancers/dashboard', icon: LayoutDashboard },
@@ -91,7 +92,7 @@ export function DashboardSidebar({ mode, onModeSwitch, userName, userRole }: Das
                   <motion.div
                     layoutId="sidebar-active"
                     className="absolute inset-0 rounded-lg bg-orange-dim"
-                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.2, ease: EASE }}
                   />
                 )}
                 <Icon className="relative z-10 h-4 w-4 shrink-0" />

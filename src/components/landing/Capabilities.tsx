@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Bot, Brain, Globe, Smartphone, Palette, ArrowUpRight } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import MotionReveal from './MotionReveal'
+import { Reveal } from '@/components/motion/Reveal'
 import ParallaxImage from './ParallaxImage'
 import { CAPABILITIES } from '@/data/landing'
 
@@ -29,7 +29,7 @@ export default function Capabilities() {
 
       <div className="relative mx-auto max-w-[1280px] px-5 py-24 sm:px-6 md:px-10 md:py-28">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-          <MotionReveal from="left" className="lg:col-span-4">
+          <Reveal from="left" className="lg:col-span-4">
             <p className="eyebrow accent-rule">What we build</p>
             <h2 className="h-section mt-5 font-semibold text-orbit-ink">
               Five things we do, and{' '}
@@ -38,7 +38,7 @@ export default function Capabilities() {
             <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-ink/65">
               Outside this list, we will say so on the first call.
             </p>
-          </MotionReveal>
+          </Reveal>
 
           <div className="lg:col-span-8">
             <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
@@ -46,7 +46,7 @@ export default function Capabilities() {
                 const Icon = ICONS[cap.icon] ?? Bot
                 return (
                   <li key={cap.title}>
-                    <MotionReveal delay={Math.min(i * 0.07, 0.3)} className="h-full">
+                    <Reveal delay={Math.min(i * 0.07, 0.3)} className="h-full">
                       <Link
                         href={cap.href}
                         onMouseMove={trackPointer}
@@ -119,14 +119,14 @@ export default function Capabilities() {
                           }}
                         />
                       </Link>
-                    </MotionReveal>
+                    </Reveal>
                   </li>
                 )
               })}
 
               {/* Inverted "see all" card closes the grid */}
               <li>
-                <MotionReveal delay={0.3} className="h-full">
+                <Reveal delay={0.3} className="h-full">
                   <Link
                     href="/services"
                     className="group relative flex h-full min-h-[200px] flex-col items-center justify-center gap-4 overflow-hidden border border-orbit-accInk/40 bg-orbit-acc/[0.06] p-6 text-center transition-[transform,background-color] duration-300 hover:-translate-y-1.5 hover:bg-orbit-acc/[0.14]"
@@ -149,7 +149,7 @@ export default function Capabilities() {
                       <ArrowUpRight className="h-4 w-4" strokeWidth={1.75} />
                     </span>
                   </Link>
-                </MotionReveal>
+                </Reveal>
               </li>
             </ul>
           </div>

@@ -1,5 +1,5 @@
 import ParallaxImage from './ParallaxImage'
-import MotionReveal from './MotionReveal'
+import { Reveal } from '@/components/motion/Reveal'
 import { PROCESS } from '@/data/landing'
 
 export default function Process() {
@@ -16,7 +16,7 @@ export default function Process() {
       <div className="relative mx-auto max-w-[1280px] px-5 py-24 sm:px-6 md:px-10 md:py-28">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
           <div>
-            <MotionReveal from="left">
+            <Reveal from="left">
               <p className="eyebrow accent-rule">How it goes</p>
               <h2 className="h-section mt-5 font-semibold text-orbit-ink">
                 No mystery, <span className="text-orbit-accInk">no surprise invoice.</span>
@@ -24,9 +24,9 @@ export default function Process() {
               <p className="mt-6 max-w-md text-base leading-relaxed text-orbit-ink/65">
                 Exactly how a project runs, start to finish.
               </p>
-            </MotionReveal>
+            </Reveal>
 
-            <MotionReveal from="left" delay={0.15} className="mt-10">
+            <Reveal from="left" delay={0.15} className="mt-10">
               <ParallaxImage
                 src="/images/landing/craft-light.jpg"
                 alt="Designer sketching interface wireframes on a tablet"
@@ -48,13 +48,13 @@ export default function Process() {
                   }}
                 />
               </ParallaxImage>
-            </MotionReveal>
+            </Reveal>
           </div>
 
           <ol className="divide-y divide-orbit-line/[0.12] border-y border-orbit-line/[0.12]">
             {PROCESS.map((step, i) => (
               <li key={step.n}>
-                <MotionReveal delay={Math.min(i * 0.06, 0.3)}>
+                <Reveal delay={Math.min(i * 0.06, 0.3)}>
                   <div className="group flex gap-5 py-7 transition-colors md:gap-8 md:py-9">
                     <span className="font-spacemono text-[11px] font-bold uppercase tracking-[0.24em] text-orbit-accInk">
                       {step.n}
@@ -68,7 +68,7 @@ export default function Process() {
                       </p>
                     </div>
                   </div>
-                </MotionReveal>
+                </Reveal>
               </li>
             ))}
           </ol>

@@ -1,7 +1,7 @@
 'use client'
 
 import { Phone, Mail, Globe, MapPin, Clock, UserPlus, Copy, Check } from 'lucide-react'
-import MotionReveal from './MotionReveal'
+import { Reveal } from '@/components/motion/Reveal'
 import { WhatsAppIcon, LinkedInIcon, GitHubIcon } from './icons'
 import { useCopyAction } from './useCopyAction'
 import { CARD, SOCIALS } from '@/data/landing'
@@ -25,7 +25,7 @@ export default function ContactCard() {
     <section id="contact" className="border-t border-orbit-line/[0.07]">
       <div className="mx-auto max-w-[1280px] px-5 py-24 sm:px-6 md:px-10 md:py-28">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-20">
-          <MotionReveal from="left" className="lg:col-span-4">
+          <Reveal from="left" className="lg:col-span-4">
             <p className="eyebrow accent-rule">The card, digitally</p>
             <h2 className="h-section mt-5 font-semibold text-orbit-ink">
               Everything on the card, <span className="text-orbit-accInk">one tap away.</span>
@@ -57,9 +57,9 @@ export default function ContactCard() {
                 )
               })}
             </div>
-          </MotionReveal>
+          </Reveal>
 
-          <MotionReveal from="right" delay={0.12} className="lg:col-span-8">
+          <Reveal from="right" delay={0.12} className="lg:col-span-8">
             <div className="card p-6 md:p-8">
               <div className="flex items-center justify-between gap-4 border-b border-orbit-line/[0.12] pb-5">
                 {/* The `//` prefix is the design system's code-comment motif. */}
@@ -142,7 +142,7 @@ export default function ContactCard() {
                 </a>
               </div>
             </div>
-          </MotionReveal>
+          </Reveal>
         </div>
       </div>
     </section>

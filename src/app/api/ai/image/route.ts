@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
-import { routeToAI, type ChatMessage } from '@/lib/ai/router'
+import { streamAnthropic, isAnthropicConfigured, type ChatMessage } from '@/lib/ai/anthropic'
 import { buildImageUrl } from '@/lib/ai/image'
 import { aiImageRatelimit, enforceRateLimit, getClientIp } from '@/lib/ratelimit'
 
@@ -32,12 +32,16 @@ export async function POST(req: NextRequest) {
       { role: 'user', content: prompt },
     ]
 
-    // Get enhanced prompt from AI (non-streaming, collect full response)
-    const { stream } = await routeToAI({
-      messages,
-      maxTokens: 300,
-      temperature: 0.8,
-    })
+    if (!isAnthropicConfigured()) {
+      return Response.json(
+        { error: 'Image generation is not configured right now.' },
+        { status: 503 }
+      )
+    }
+
+    // Enhance the prompt, then collect the full stream — this one is not
+    // streamed to the browser, it just feeds the image URL below.
+    const stream = await streamAnthropic(messages, 300, 0.8)
 
     // Read the full stream to get the enhanced prompt
     const reader = stream.getReader()

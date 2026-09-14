@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { PortfolioHero } from '@/components/sections/portfolio/PortfolioHero'
 import { ProjectGrid } from '@/components/sections/portfolio/ProjectGrid'
-import { HomeCTA } from '@/components/sections/home/HomeCTA'
+import { CTASection } from '@/components/sections/CTASection'
 
 export const metadata: Metadata = {
   title: 'Portfolio - AI, Web & Mobile Projects Built by Orbit Innovations',
@@ -21,7 +21,7 @@ export default function PortfolioPage() {
     <>
       <PortfolioHero />
       <ProjectGrid />
-      <HomeCTA />
+      <CTASection />
     </>
   )
 }

@@ -13,8 +13,8 @@ import { SearchBar } from '@/components/marketplace/SearchBar'
 import { GigCard } from '@/components/marketplace/GigCard'
 import { getActiveGigs } from '@/lib/marketplace/queries'
 import type { Gig } from '@/types/marketplace'
+import { EASE } from '@/components/motion/motion-config'
 
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const CATEGORIES = [
   {
@@ -153,7 +153,7 @@ export default function MarketplaceHome() {
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease }}
+              transition={{ duration: 0.5, ease: EASE }}
               className="mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold uppercase tracking-widest"
               style={{ borderColor: 'rgba(255,117,31,0.3)', background: 'rgba(255,117,31,0.08)', color: '#FF751F' }}
             >
@@ -165,7 +165,7 @@ export default function MarketplaceHome() {
             <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease, delay: 0.05 }}
+              transition={{ duration: 0.7, ease: EASE, delay: 0.05 }}
               className="text-4xl font-bold tracking-tight text-text-primary sm:text-5xl md:text-6xl lg:text-7xl"
             >
               Hire World-Class
@@ -178,7 +178,7 @@ export default function MarketplaceHome() {
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease, delay: 0.15 }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
               className="mx-auto mt-6 max-w-xl text-lg text-text-secondary"
             >
               Vetted talent. Real reviews. Secure payments. Get your project done right - every time.
@@ -188,7 +188,7 @@ export default function MarketplaceHome() {
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease, delay: 0.22 }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.22 }}
               className="mx-auto mt-8 max-w-xl"
             >
               <SearchBar showPopular />
@@ -198,7 +198,7 @@ export default function MarketplaceHome() {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease, delay: 0.3 }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.3 }}
               className="mt-5 flex flex-wrap items-center justify-center gap-2"
             >
               <span className="text-xs text-text-tertiary">Trending:</span>
@@ -218,7 +218,7 @@ export default function MarketplaceHome() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease, delay: 0.4 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.4 }}
             className="mx-auto mt-16 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4"
           >
             {TRUST_STATS.map((s) => {
@@ -260,7 +260,7 @@ export default function MarketplaceHome() {
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease }}
+                transition={{ duration: 0.5, ease: EASE }}
                 viewport={{ once: true }}
                 className="text-xs font-semibold uppercase tracking-widest text-accent"
               >
@@ -269,7 +269,7 @@ export default function MarketplaceHome() {
               <motion.h2
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease, delay: 0.05 }}
+                transition={{ duration: 0.5, ease: EASE, delay: 0.05 }}
                 viewport={{ once: true }}
                 className="mt-2 text-3xl font-bold text-text-primary lg:text-4xl"
               >
@@ -291,7 +291,7 @@ export default function MarketplaceHome() {
                   key={cat.value}
                   initial={{ opacity: 0, y: 32 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease, delay: i * 0.06 }}
+                  transition={{ duration: 0.6, ease: EASE, delay: i * 0.06 }}
                   viewport={{ once: true, margin: '-40px' }}
                 >
                   <Link
@@ -356,7 +356,7 @@ export default function MarketplaceHome() {
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease }}
+                transition={{ duration: 0.5, ease: EASE }}
                 viewport={{ once: true }}
                 className="text-xs font-semibold uppercase tracking-widest text-accent"
               >
@@ -365,7 +365,7 @@ export default function MarketplaceHome() {
               <motion.h2
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease, delay: 0.05 }}
+                transition={{ duration: 0.5, ease: EASE, delay: 0.05 }}
                 viewport={{ once: true }}
                 className="mt-2 text-3xl font-bold text-text-primary lg:text-4xl"
               >
@@ -426,7 +426,7 @@ export default function MarketplaceHome() {
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease }}
+              transition={{ duration: 0.5, ease: EASE }}
               viewport={{ once: true }}
               className="text-xs font-semibold uppercase tracking-widest text-accent"
             >
@@ -435,7 +435,7 @@ export default function MarketplaceHome() {
             <motion.h2
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease, delay: 0.05 }}
+              transition={{ duration: 0.5, ease: EASE, delay: 0.05 }}
               viewport={{ once: true }}
               className="mt-2 text-3xl font-bold text-text-primary lg:text-4xl"
             >
@@ -448,7 +448,7 @@ export default function MarketplaceHome() {
             <motion.div
               initial={{ opacity: 0, x: -32 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease }}
+              transition={{ duration: 0.7, ease: EASE }}
               viewport={{ once: true }}
               className="overflow-hidden rounded-3xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)]"
             >
@@ -472,7 +472,7 @@ export default function MarketplaceHome() {
                     key={step.n}
                     initial={{ opacity: 0, x: -16 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, ease, delay: i * 0.1 }}
+                    transition={{ duration: 0.5, ease: EASE, delay: i * 0.1 }}
                     viewport={{ once: true }}
                     className="flex items-start gap-5 px-8 py-5"
                   >
@@ -503,7 +503,7 @@ export default function MarketplaceHome() {
             <motion.div
               initial={{ opacity: 0, x: 32 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease }}
+              transition={{ duration: 0.7, ease: EASE }}
               viewport={{ once: true }}
               className="overflow-hidden rounded-3xl border border-[var(--color-card-border)] bg-[var(--color-card-bg)]"
             >
@@ -527,7 +527,7 @@ export default function MarketplaceHome() {
                     key={step.n}
                     initial={{ opacity: 0, x: 16 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, ease, delay: i * 0.1 }}
+                    transition={{ duration: 0.5, ease: EASE, delay: i * 0.1 }}
                     viewport={{ once: true }}
                     className="flex items-start gap-5 px-8 py-5"
                   >
@@ -564,7 +564,7 @@ export default function MarketplaceHome() {
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease }}
+            transition={{ duration: 0.7, ease: EASE }}
             viewport={{ once: true }}
             className="relative overflow-hidden rounded-3xl"
             style={{
