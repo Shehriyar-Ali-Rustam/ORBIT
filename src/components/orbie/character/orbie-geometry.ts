@@ -17,8 +17,13 @@ import type { OrbieEmotion } from './types'
 
 /** Warm palette read off the mascot sheet. */
 export const C = {
-  body: '#e7dbd0',
-  bodyDark: '#cbbcae',
+  // Warmer and lighter than the first pass, which rendered grey. Two causes,
+  // both fixed: the canvas was tone mapping with ACES, which pulls the
+  // saturation straight out of a soft beige, and the body carried a little
+  // metalness with no environment map to reflect - metalness with nothing to
+  // reflect only darkens.
+  body: '#f3e3d0',
+  bodyDark: '#dcc4a9',
   visor: '#2b1b11',
   glow: '#ffc06a',
   glowHot: '#ffe3b8',

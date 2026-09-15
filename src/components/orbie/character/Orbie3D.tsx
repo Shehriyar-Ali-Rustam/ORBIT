@@ -102,8 +102,9 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
     }
 
     // The ring turns regardless of pose. It is the one thing that says "orbit"
-    // without anybody having to narrate it.
-    if (ring.current) ring.current.rotation.y += delta * 0.45
+    // without anybody having to narrate it. About Z, the torus's own axis, so
+    // the ring holds its attitude and the planets travel around it.
+    if (ring.current) ring.current.rotation.z += delta * 0.4
 
     // Ease the face at a fixed rate rather than with a spring: it has to be
     // frame-rate independent, and nobody is watching closely enough to want
@@ -147,8 +148,8 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
         <latheGeometry args={[profile, 48]} />
         <meshStandardMaterial
           color={C.body}
-          roughness={0.62}
-          metalness={0.04}
+          roughness={0.58}
+          metalness={0}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -230,16 +231,20 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
         />
       </mesh>
 
-      <mesh position={[-0.92, -0.04, 0.16]} scale={[1, 0.78, 0.9]}>
-        <sphereGeometry args={[0.14, 18, 18]} />
-        <meshStandardMaterial color={C.body} roughness={0.62} />
+      {/* Arms. The first pass put these at x = 0.92 with a 0.14 radius, which
+          reaches 1.06 - and the body is already 1.02 wide at that height, so
+          they were two dimples rather than two arms. They sit clear of the
+          surface now and are stubbier, which is what the mascot sheet shows. */}
+      <mesh position={[-1.02, -0.02, 0.1]} rotation={[0, 0, 0.22]} scale={[1.25, 0.85, 0.85]}>
+        <sphereGeometry args={[0.185, 20, 20]} />
+        <meshStandardMaterial color={C.body} roughness={0.58} metalness={0} />
       </mesh>
-      <mesh position={[0.92, -0.04, 0.16]} scale={[1, 0.78, 0.9]}>
-        <sphereGeometry args={[0.14, 18, 18]} />
-        <meshStandardMaterial color={C.body} roughness={0.62} />
+      <mesh position={[1.02, -0.02, 0.1]} rotation={[0, 0, -0.22]} scale={[1.25, 0.85, 0.85]}>
+        <sphereGeometry args={[0.185, 20, 20]} />
+        <meshStandardMaterial color={C.body} roughness={0.58} metalness={0} />
       </mesh>
 
-      <mesh position={[0, -0.34, 0.86]} scale={[0.5, 0.82, 0.32]}>
+      <mesh position={[0, -0.34, 0.96]} scale={[0.5, 0.82, 0.3]}>
         <sphereGeometry args={[0.2, 20, 20]} />
         <meshStandardMaterial
           color={C.glowHot}
@@ -264,8 +269,22 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
       </mesh>
 
       {/* The ring and its planets share a group, so they tilt and turn as one
-          system rather than as three things that have to be kept in step. */}
-      <group ref={ring} rotation={[-0.34, 0, 0.22]}>
+          system rather than as three things that have to be kept in step.
+          
+          Two groups, not one, and the outer rotation is the fix for a ring
+          that came out vertical. `torusGeometry` is built in the XY plane -
+          it faces the camera - so the first pass tilted it as though it were
+          already lying flat, and a small tilt on a vertical ring leaves it
+          vertical. The outer group lays it down with -PI/2 about X and then
+          opens it back toward the viewer, because a perfectly level ring seen
+          from a level camera is a straight line.
+          
+          The inner group spins, and about Z rather than Y. Z is the torus's
+          own axis, so the ring stays put and the planets ride around it,
+          which is the motion that reads as an orbit. Spinning about Y just
+          tumbles the whole thing end over end. */}
+      <group rotation={[-Math.PI / 2 + 0.38, 0, 0.16]}>
+        <group ref={ring}>
         <mesh>
           <torusGeometry args={[1.3, 0.036, 12, 64, Math.PI]} />
           <meshStandardMaterial
@@ -284,14 +303,17 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
             toneMapped={false}
           />
         </mesh>
-        <mesh position={[-1.28, 0.18, 0]}>
+        {/* Both planets must sit at z = 0 and radius 1.3, or they are not on
+            the ring - they are near it. Placed by angle for that reason. */}
+        <mesh position={[-1.3, 0, 0]}>
           <sphereGeometry args={[0.16, 22, 22]} />
-          <meshStandardMaterial color={C.planet} roughness={0.45} />
+          <meshStandardMaterial color={C.planet} roughness={0.45} metalness={0} />
         </mesh>
-        <mesh position={[1.3, -0.1, 0]}>
+        <mesh position={[1.207, 0.482, 0]}>
           <sphereGeometry args={[0.13, 22, 22]} />
-          <meshStandardMaterial color={C.planetDark} roughness={0.45} />
+          <meshStandardMaterial color={C.planetDark} roughness={0.45} metalness={0} />
         </mesh>
+        </group>
       </group>
     </group>
   )
@@ -304,13 +326,19 @@ export function Orbie3D({ size = 'dock', className, ...rest }: OrbieProps) {
     <div className={className} style={{ width: px, height: px }} aria-hidden>
       <Canvas
         dpr={[1, 2]}
+        // `flat` turns off tone mapping. R3F defaults to ACES Filmic, which is
+        // built for photographic scenes with real highlights and which rolls
+        // the life out of a flat pastel - the body was authored beige and came
+        // out grey. A stylised character wants its colours delivered as
+        // written.
+        flat
         gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
         camera={{ position: [0, 0.05, 5.8], fov: 32 }}
         style={{ width: px, height: px }}
       >
-        <ambientLight intensity={0.62} />
-        <directionalLight position={[2.5, 3.5, 4]} intensity={1.15} />
-        <directionalLight position={[-3, 1, -2.5]} intensity={0.4} />
+        <ambientLight intensity={0.72} />
+        <directionalLight position={[2.5, 3.5, 4]} intensity={1.05} />
+        <directionalLight position={[-3, 1, -2.5]} intensity={0.45} />
         {/* Warms the body from the chest and the thruster, so the glows look
             like they are lighting the character rather than painted on it. */}
         <pointLight position={[0, -0.5, 1.4]} color={C.glow} intensity={1.1} distance={3} />
