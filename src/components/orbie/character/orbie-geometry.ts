@@ -17,13 +17,18 @@ import type { OrbieEmotion } from './types'
 
 /** Warm palette read off the mascot sheet. */
 export const C = {
-  // Warmer and lighter than the first pass, which rendered grey. Two causes,
-  // both fixed: the canvas was tone mapping with ACES, which pulls the
-  // saturation straight out of a soft beige, and the body carried a little
-  // metalness with no environment map to reflect - metalness with nothing to
-  // reflect only darkens.
-  body: '#f3e3d0',
-  bodyDark: '#dcc4a9',
+  // Deeper than it looks like it should be, and that is the point.
+  //
+  // The first two attempts authored a pale beige and rendered grey. Tone
+  // mapping was part of it, but the real cause was exposure: the lights summed
+  // to 1.77 on the lit side, and 0.95 albedo times 1.77 clips at 1.0 in every
+  // channel. Clipping is what removes the colour - once all three channels
+  // pin to white the warm/cool gap that makes beige beige is simply gone.
+  //
+  // So the albedo sits near 0.88 and the lights sum to about 1.1. The surface
+  // still reads bright, but it has somewhere left to go before it clips.
+  body: '#e3c7a0',
+  bodyDark: '#c4a179',
   visor: '#2b1b11',
   glow: '#ffc06a',
   glowHot: '#ffe3b8',

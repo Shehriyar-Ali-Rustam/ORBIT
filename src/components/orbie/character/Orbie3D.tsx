@@ -34,7 +34,7 @@ import { ORBIE_SIZE_PX, type OrbieProps, type OrbiePose } from './types'
  * character has to sit on it rather than inside a black box.
  */
 
-const EYE = roundedRect(0.115, 0.2, 0.052)
+const EYE = roundedRect(0.145, 0.25, 0.066)
 const EYE_EXTRUDE = { depth: 0.02, bevelEnabled: false }
 
 /**
@@ -180,7 +180,7 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
         />
       </mesh>
 
-      <mesh ref={eyeL} position={[-0.17, 0.34, 1.01]}>
+      <mesh ref={eyeL} position={[-0.185, 0.34, 1.01]}>
         <extrudeGeometry args={[EYE, EYE_EXTRUDE]} />
         <meshStandardMaterial
           ref={faceMat}
@@ -190,7 +190,7 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
           toneMapped={false}
         />
       </mesh>
-      <mesh ref={eyeR} position={[0.17, 0.34, 1.01]}>
+      <mesh ref={eyeR} position={[0.185, 0.34, 1.01]}>
         <extrudeGeometry args={[EYE, EYE_EXTRUDE]} />
         <meshStandardMaterial
           color={C.glowHot}
@@ -235,12 +235,12 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
           reaches 1.06 - and the body is already 1.02 wide at that height, so
           they were two dimples rather than two arms. They sit clear of the
           surface now and are stubbier, which is what the mascot sheet shows. */}
-      <mesh position={[-1.02, -0.02, 0.1]} rotation={[0, 0, 0.22]} scale={[1.25, 0.85, 0.85]}>
-        <sphereGeometry args={[0.185, 20, 20]} />
+      <mesh position={[-1.09, -0.02, 0.08]} rotation={[0, 0, 0.26]} scale={[1.35, 0.92, 0.92]}>
+        <sphereGeometry args={[0.205, 20, 20]} />
         <meshStandardMaterial color={C.body} roughness={0.58} metalness={0} />
       </mesh>
-      <mesh position={[1.02, -0.02, 0.1]} rotation={[0, 0, -0.22]} scale={[1.25, 0.85, 0.85]}>
-        <sphereGeometry args={[0.185, 20, 20]} />
+      <mesh position={[1.09, -0.02, 0.08]} rotation={[0, 0, -0.26]} scale={[1.35, 0.92, 0.92]}>
+        <sphereGeometry args={[0.205, 20, 20]} />
         <meshStandardMaterial color={C.body} roughness={0.58} metalness={0} />
       </mesh>
 
@@ -336,9 +336,12 @@ export function Orbie3D({ size = 'dock', className, ...rest }: OrbieProps) {
         camera={{ position: [0, 0.05, 5.8], fov: 32 }}
         style={{ width: px, height: px }}
       >
-        <ambientLight intensity={0.72} />
-        <directionalLight position={[2.5, 3.5, 4]} intensity={1.05} />
-        <directionalLight position={[-3, 1, -2.5]} intensity={0.45} />
+        {/* These sum to about 1.1 on the lit side, not 1.77. Anything much
+            above 1.0 against a light albedo clips to white, and a clipped
+            surface has no colour left to show. */}
+        <hemisphereLight args={['#fff3e0', '#c9a274', 0.5]} />
+        <directionalLight position={[2.5, 3.5, 4]} intensity={0.62} />
+        <directionalLight position={[-3, 1, -2.5]} intensity={0.24} />
         {/* Warms the body from the chest and the thruster, so the glows look
             like they are lighting the character rather than painted on it. */}
         <pointLight position={[0, -0.5, 1.4]} color={C.glow} intensity={1.1} distance={3} />
