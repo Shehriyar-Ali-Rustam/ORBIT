@@ -17,18 +17,20 @@ import type { OrbieEmotion } from './types'
 
 /** Warm palette read off the mascot sheet. */
 export const C = {
-  // Deeper than it looks like it should be, and that is the point.
+  // Three attempts at this colour, and the first two were really attempts to
+  // hand-balance lighting.
   //
-  // The first two attempts authored a pale beige and rendered grey. Tone
-  // mapping was part of it, but the real cause was exposure: the lights summed
-  // to 1.77 on the lit side, and 0.95 albedo times 1.77 clips at 1.0 in every
-  // channel. Clipping is what removes the colour - once all three channels
-  // pin to white the warm/cool gap that makes beige beige is simply gone.
+  // A pale beige under lights summing to 1.77 clipped every channel to white
+  // and rendered grey. Dropping the albedo to 0.88 then rendered brown,
+  // because I had treated a hemisphere light as if it were flat ambient when
+  // it actually falls away with the surface normal - the front of the body was
+  // getting far less light than my arithmetic claimed.
   //
-  // So the albedo sits near 0.88 and the lights sum to about 1.1. The surface
-  // still reads bright, but it has somewhere left to go before it clips.
-  body: '#e3c7a0',
-  bodyDark: '#c4a179',
+  // The environment map settles it. Light arrives from every direction now
+  // rather than from three numbers I keep guessing at, so the albedo can just
+  // be the colour the character is supposed to be.
+  body: '#efdcc0',
+  bodyDark: '#d3b591',
   visor: '#2b1b11',
   glow: '#ffc06a',
   glowHot: '#ffe3b8',

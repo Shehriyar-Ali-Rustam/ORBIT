@@ -1,8 +1,9 @@
 'use client'
 
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { C, eggProfile, roundedRect, FACES } from './orbie-geometry'
 import { POSE_SECONDS, poseFrame } from './orbie-poses'
 import { ORBIE_SIZE_PX, type OrbieProps, type OrbiePose } from './types'
@@ -47,6 +48,46 @@ const VISOR = {
   phiLength: 1.04,
   thetaStart: 1.2 - 0.36,
   thetaLength: 0.72,
+}
+
+/**
+ * Image-based lighting, which is what the look actually depends on.
+ *
+ * Three hand-placed lights were never going to get there. The soft studio
+ * finish these mascot renders have comes from lighting a surface with a whole
+ * environment rather than with a few points - every direction contributes
+ * something, so the shading rolls instead of banding, and there is no single
+ * intensity number to get wrong. The last three attempts at the body colour
+ * were all really attempts to hand-balance what an environment does for free.
+ *
+ * `RoomEnvironment` is procedural: a box with some emissive panels in it,
+ * built in memory and prefiltered by `PMREMGenerator`. No HDR to download, no
+ * CDN, nothing added to the payload beyond the code.
+ *
+ * Disposed on unmount because both the render target and the generator hold
+ * GPU memory, and this component mounts and unmounts as the tour moves.
+ */
+function Studio() {
+  const gl = useThree((s) => s.gl)
+  const scene = useThree((s) => s.scene)
+
+  useEffect(() => {
+    const pmrem = new THREE.PMREMGenerator(gl)
+    const room = new RoomEnvironment()
+    const target = pmrem.fromScene(room, 0.04)
+    scene.environment = target.texture
+    return () => {
+      scene.environment = null
+      target.dispose()
+      pmrem.dispose()
+      room.traverse((o) => {
+        const m = o as THREE.Mesh
+        if (m.geometry) m.geometry.dispose()
+      })
+    }
+  }, [gl, scene])
+
+  return null
 }
 
 function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: OrbieProps) {
@@ -148,8 +189,9 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
         <latheGeometry args={[profile, 48]} />
         <meshStandardMaterial
           color={C.body}
-          roughness={0.58}
+          roughness={0.85}
           metalness={0}
+          envMapIntensity={0.9}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -166,7 +208,7 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
             VISOR.thetaLength + 0.1,
           ]}
         />
-        <meshStandardMaterial color={C.bodyDark} roughness={0.5} side={THREE.DoubleSide} />
+        <meshStandardMaterial color={C.bodyDark} roughness={0.8} metalness={0} envMapIntensity={0.9} side={THREE.DoubleSide} />
       </mesh>
       <mesh>
         <sphereGeometry
@@ -174,8 +216,9 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
         />
         <meshStandardMaterial
           color={C.visor}
-          roughness={0.14}
-          metalness={0.25}
+          roughness={0.12}
+          metalness={0.15}
+          envMapIntensity={0.7}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -219,7 +262,7 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
           of a character. */}
       <mesh position={[0.02, 1.16, 0.02]} rotation={[0, 0, -0.12]}>
         <cylinderGeometry args={[0.014, 0.018, 0.42, 10]} />
-        <meshStandardMaterial color={C.bodyDark} roughness={0.6} />
+        <meshStandardMaterial color={C.bodyDark} roughness={0.8} metalness={0} envMapIntensity={0.9} />
       </mesh>
       <mesh position={[-0.02, 1.4, 0.03]}>
         <sphereGeometry args={[0.072, 20, 20]} />
@@ -237,11 +280,11 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
           surface now and are stubbier, which is what the mascot sheet shows. */}
       <mesh position={[-1.09, -0.02, 0.08]} rotation={[0, 0, 0.26]} scale={[1.35, 0.92, 0.92]}>
         <sphereGeometry args={[0.205, 20, 20]} />
-        <meshStandardMaterial color={C.body} roughness={0.58} metalness={0} />
+        <meshStandardMaterial color={C.body} roughness={0.85} metalness={0} envMapIntensity={0.9} />
       </mesh>
       <mesh position={[1.09, -0.02, 0.08]} rotation={[0, 0, -0.26]} scale={[1.35, 0.92, 0.92]}>
         <sphereGeometry args={[0.205, 20, 20]} />
-        <meshStandardMaterial color={C.body} roughness={0.58} metalness={0} />
+        <meshStandardMaterial color={C.body} roughness={0.85} metalness={0} envMapIntensity={0.9} />
       </mesh>
 
       <mesh position={[0, -0.34, 0.96]} scale={[0.5, 0.82, 0.3]}>
@@ -256,7 +299,7 @@ function Model({ pose, emotion = 'neutral', direction, speaking, onPoseEnd }: Or
 
       <mesh position={[0, -0.93, 0]}>
         <cylinderGeometry args={[0.3, 0.26, 0.16, 24]} />
-        <meshStandardMaterial color={C.bodyDark} roughness={0.55} />
+        <meshStandardMaterial color={C.bodyDark} roughness={0.8} metalness={0} envMapIntensity={0.9} />
       </mesh>
       <mesh ref={thruster} position={[0, -1.08, 0]}>
         <sphereGeometry args={[0.2, 22, 18]} />
@@ -336,12 +379,11 @@ export function Orbie3D({ size = 'dock', className, ...rest }: OrbieProps) {
         camera={{ position: [0, 0.05, 5.8], fov: 32 }}
         style={{ width: px, height: px }}
       >
-        {/* These sum to about 1.1 on the lit side, not 1.77. Anything much
-            above 1.0 against a light albedo clips to white, and a clipped
-            surface has no colour left to show. */}
-        <hemisphereLight args={['#fff3e0', '#c9a274', 0.5]} />
-        <directionalLight position={[2.5, 3.5, 4]} intensity={0.62} />
-        <directionalLight position={[-3, 1, -2.5]} intensity={0.24} />
+        <Studio />
+        {/* One key on top of the environment, and a soft one. The environment
+            is doing the lighting; this only gives the form a direction so it
+            does not read flat. */}
+        <directionalLight position={[2.2, 3, 4]} intensity={0.55} />
         {/* Warms the body from the chest and the thruster, so the glows look
             like they are lighting the character rather than painted on it. */}
         <pointLight position={[0, -0.5, 1.4]} color={C.glow} intensity={1.1} distance={3} />
