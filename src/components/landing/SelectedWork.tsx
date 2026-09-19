@@ -24,7 +24,7 @@ export default function SelectedWork() {
         <div className="mt-5 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <Reveal from="left">
             <h2 className="h-section max-w-xl font-semibold text-orbit-ink">
-              Ten projects out the door.{' '}
+              Eleven projects out the door.{' '}
               <span className="text-orbit-accInk">Four of them here.</span>
             </h2>
           </Reveal>

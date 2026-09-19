@@ -2,6 +2,43 @@ import { Project } from '@/types'
 
 export const projects: Project[] = [
   {
+    id: 'agentflow',
+    slug: 'agentflow',
+    title: 'AgentFlow - Agentic AI for Business Workflows',
+    category: 'ai',
+    shortDescription:
+      'Procurement agent, 1st place at HackHorizon IIUI SENSE 2026',
+    fullDescription:
+      'An agentic AI that turns a plain-English request into a scored, validated purchase order, then stops for a human to approve it. Built for HackHorizon at IIUI SENSE 2026, where it took first place.',
+    coverImage: '/images/portfolio/agentflow.webp',
+    images: ['/images/portfolio/agentflow.webp'],
+    techStack: ['LangGraph', 'FastAPI', 'Next.js 15', 'Flutter', 'Supabase', 'Claude API', 'TypeScript', 'Tailwind CSS'],
+    // Not featured: WORK_PICKS narrates its four as "live, with real users",
+    // and this one is a hackathon build with no public deployment.
+    featured: false,
+    completedAt: '2026-08-29',
+    caseStudy: {
+      problem:
+        'In most organisations, buying something still happens over email threads, spreadsheets, and phone calls. Someone asks suppliers for quotes, someone else compares them in a sheet, finance checks the budget, and a manager signs off. It takes days, and the reason one supplier won over another is rarely written down anywhere. The AI tools that promise to automate this either just draft text, or they act on their own with no accountability. No finance team will hand spending decisions to a system like that.',
+      approach:
+        'We built an agent that does the slow parts of the job and leaves the final call to a person. An employee describes the request in a sentence. Claude reads it, decides whether it is procurement or reimbursement, and shows the steps before anything runs. Once the employee confirms, a LangGraph state machine sources quotes from the supplier catalog, scores each supplier on weights the admin controls, generates the purchase order, and runs five validation checks. It corrects itself when a check fails. Then it stops and waits for an admin to approve. Every decision it makes along the way comes with a written reason and a timestamp, so anyone can see exactly why the agent chose what it chose.',
+      highlights: [
+        'Built a human approval gate the agent cannot pass by itself, so no purchase order goes out without a person signing it off',
+        'Logged every autonomous decision with a justification and a timestamped audit trail, shown as a readable timeline',
+        'Kept the agent reading supplier data only from our own database, never calling out mid-run, so every run is fast, repeatable, and can be replayed',
+        'Made workflow types YAML config and tools a registry, so adding a new kind of workflow is a config change instead of a rewrite',
+        'Turned "no supplier matches" from a dead end into a quote request that goes out to every verified vendor. In our demo, a run that had failed came back with a purchase order PKR 450,000 cheaper',
+        'Refused to fake data: vendors with no order history show "No history yet" instead of a made-up star rating, and incomplete quotes show a data-confidence score instead of being quietly penalised',
+      ],
+      results: [
+        { value: '1st', label: 'place, HackHorizon IIUI SENSE 2026' },
+        { value: '3', label: 'portals: employee, admin, vendor' },
+        { value: '100%', label: 'of purchase orders approved by a human' },
+      ],
+      note: 'The decision that mattered most was what the agent is not allowed to do. It plans, compares, and drafts, but it cannot approve its own purchase order. That limit is what makes it something a real finance team could trust.',
+    },
+  },
+  {
     id: 'hello-kitty-ai',
     slug: 'hello-kitty-ai-assistant',
     title: 'Hello Kitty AI Voice Assistant',

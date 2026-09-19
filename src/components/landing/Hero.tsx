@@ -116,7 +116,7 @@ export default function Hero() {
           {...enter(0.35)}
           className="mt-5 max-w-xl text-base leading-relaxed text-orbit-ink/85 md:mt-8 md:text-lg"
         >
-          A software studio in Islamabad. Ten projects, eight countries.
+          A software studio in Islamabad. Eleven projects, eight countries.
         </motion.p>
 
         {/* Contact before navigation: this page is reached by pointing a camera
